@@ -1,0 +1,36 @@
+
+.spectrum { padding:2px; width: 230px; position:absolute; display:none; -webkit-user-select:none; }
+.spectrum-placeholder { display:inline-block; position:relative; width: 20px; height:20px; border:solid 2px #000; }
+.spectrum-input { visibility:hidden; }
+.spectrum.show { display: block; }
+.spectrum { border: solid 1px #eee; background: #ddd; }
+.spectrum-controls { float:left; width: 40px; }
+.spectrum .spectrum-hue { float:left; width:15px; height: 150px; margin-left: 3px; position:relative; }
+.spectrum .spectrum-overlay { width: 150px; height:150px; float:left; background: none top left no-repeat; position:relative; }
+.spectrum .spectrum-overlay.no-canvas { background-image: url('overlay.png'); }
+.spectrum .remember-color { width: 40px; margin:0 auto; height:30px; margin:3px; }
+.spectrum .enter-color { width: 210px; padding:5px; margin:0; margin-top:5px; 
+	border: 2px inset; -webkit-user-select:auto;
+}
+.spectrum .spectrum-noselect {-webkit-user-select:none; -moz-user-select: none; }
+.spectrum .color-select {
+ background-color: transparent;
+ border: 3px solid #fff;
+ height: 6px;
+ -moz-border-radius:3px;
+ -webkit-border-radius: 3px;
+ width: 6px;
+ position:absolute;
+}
+.spectrum .hue-select {
+	width:15px;
+	height:3px;
+	background:white;
+	position:absolute;
+}
+.spectrum .old-color {background-color:red; }
+.spectrum .new-color {background-color:green; }
+
+.spectrum-overlay, .spectrum-hue {border: 3px solid #666; }
+
+.spectrum.dark { border-color: #555; background-color:#333;}
