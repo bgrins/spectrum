@@ -56,10 +56,8 @@
 			if (visible) { return; }
 			visible = true;
 			
-			$(doc).bind("mouseup",   docMouseup);
-			$(doc).bind("mousemove", docMousemove);
-			$(doc).bind("click",     docClick);
-			
+			$(doc).bind("click", docClick);
+
 			var elOffset = el.offset();
 			elOffset.left += el.width();
             container.show().offset(elOffset);
@@ -76,10 +74,7 @@
 			if (!visible) { return; }
 			visible = false;
 			
-			$(doc).unbind("mouseup",   docMouseup);
-			$(doc).unbind("mousemove", docMousemove);
-			$(doc).unbind("click",     docClick);
-			
+			$(doc).unbind("click", docClick);
             container.hide();    
         });
 		
@@ -102,22 +97,10 @@
         
         /* DOM event handlers */
 		
-        function docMouseup() {
-            dragging = false; 
-			sliding = false;
-		}
 		function docClick() {
 			el.trigger("spectrum.hide");
 		}
-		function docMousemove(e) {
-            if (dragging) {
-                 drag(e);   
-            }
-			if (sliding) {
-				slide(e);
-			}
-            $("#console").text(e.layerX + " " + e.layerY + " " + e.clientX+ " " + e.clientY);
-		}
+		
 		function move() {
 			var h = getCurrentHue();
 			var s = getCurrentSaturation();
@@ -133,18 +116,8 @@
 			e.stopPropagation();
 		});
 		
-        slider.mousedown(function(e) {
-			if (e.button == 0) {
-				sliding = true;
-				slide(e);
-			}
-		});
-        dragger.mousedown(function(e) {
-			if (e.button == 0) {
-				dragging = true;
-				drag(e);
-			}
-        });
+		draggable(slider, function(e) { slide(e.dragX, e.dragY); });
+		draggable(dragger, function(e) { drag(e.dragX, e.dragY); });
         
         function coordinatesFromEvent(e, maxHeight, maxWidth) {
             var top = e.pageY - offsetY;
@@ -156,26 +129,23 @@
             };
         }
         
-        function drag(e) {
+        function drag(x, y) {
             var h = dragHelper.height();
-            var c = coordinatesFromEvent(e, dragHeight, dragWidth);
-			
-			currentX = c.top;
-			currentY = c.left;
+			currentX = x;
+			currentY = y;
 			
             dragHelper.css({
-                "top": currentX - (h / 2),
-                "left": currentY - (h / 2)
+                "top": currentY - (h / 2),
+                "left": currentX - (h / 2)
             });
 			
+            $("#console").text(currentX + " " + currentY);
 			move();
         }
 		
-        function slide(e) {
+        function slide(x, y) {
             var h = slideHelper.height();
-            var c = coordinatesFromEvent(e, slideHeight, slideWidth);
-			
-			currentHue = c.top;
+			currentHue = y;
             
             slideHelper.css({
                 "top": currentHue - (h / 2)
@@ -187,10 +157,10 @@
         }
 		
 		function getCurrentSaturation() {
-			return currentY / dragWidth;
+			return currentX / dragWidth;
 		}
 		function getCurrentValue() {
-			return (dragHeight - currentX) / dragHeight
+			return (dragHeight - currentY) / dragHeight
 		}
 		function getCurrentHue() {
 			return (currentHue / slideHeight) * 360;
@@ -255,6 +225,48 @@
         S = C == 0 ? 0 : C / V;
         return { h: H, s: S, v: V };
     }
+    
+    function draggable(element, onmove, onstart, onstop) {
+		onmove = onmove || function() { };
+		onstart = onstart || function() { };
+		onstop = onstop || function() { };
+		var doc = element.ownerDocument || document;
+		var dragging = false;
+		var offset = { };
+		var maxHeight = 0;
+		var maxWidth = 0;
+            
+		function move(e) { 
+			if (dragging) {
+				e.dragX = Math.max(0, Math.min(e.pageX - offset.left, maxWidth));
+				e.dragY = Math.max(0, Math.min(e.pageY - offset.top, maxHeight));
+				
+				onmove.apply(element, [e]); 
+			} 
+		}
+		function start(e) { 
+			if (e.button == 0 && !dragging) { 
+				maxHeight = $(element).height();
+				maxWidth = $(element).width();
+				offset = $(element).offset();
+				$(doc).bind({ 
+					"mouseup": stop,
+					"mousemove": move
+				});
+				onstart.apply(element, arguments); 
+			} 
+			dragging = true; 
+		}
+		function stop() { 
+			if (dragging) { 
+				$(doc).unbind("mouseup", stop);
+				onstop.apply(element, arguments); 
+			}
+			dragging = false; 
+		}
+	
+		$(element).bind("mousedown", start);
+	}	
     
     window.spectrum = spectrum;
 
