@@ -1,32 +1,32 @@
-.picker-color { 
+.spectrum-color { 
 	position:relative; 
 }
-.picker-g1 {
+.spectrum-g1 {
     background-image: -webkit-gradient(linear,  0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
 }
-.picker-g2 {
+.spectrum-g2 {
     background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#000000), to(rgba(204, 154, 129, 0)));
 }
-.picker-drag-helper { 
+.spectrum-drag-helper { 
 	position:absolute; 
 	top:0; 
 	left: 0;
     -webkit-user-select:none;
 }
-.picker-color { 
+.spectrum-color { 
 	float:left;
 }
-.picker-container { 
+.spectrum-container { 
 	position:absolute; 
 	top:0; 
 	left:0; 
 }
-.picker-slide {
+.spectrum-slide {
     float:left;
     background: -webkit-linear-gradient(bottom, #ff0000 0%, #ff00ff 13%, #8000ff 25%, #0040ff 38%, #00FFFF 50%, #00FF40 63%, #0BED00 75%, #FFFF00 88%, #FF0000 100%); 
     position:relative;
 }
-.picker-slide-helper { 
+.spectrum-slide-helper { 
 	position: absolute; 
 	top:0; 
 	-webkit-user-select: none;
@@ -35,33 +35,33 @@
 }
 
 /* Themable options */
-.picker-g2, .picker-slide { 
+.spectrum-g2, .spectrum-slide { 
 	width: 200px; 
 	height: 200px; 
 }
-.picker-container { 
+.spectrum-container { 
 	background-color: #333; 
 	padding:10px; 
 	border-radius: 5px; 
 }
-.picker-drag-helper {
+.spectrum-drag-helper {
    border-radius: 5px; 
    height:5px; 
    width: 5px; 
    border: solid black 3px; pointer: cursor;
 }
-.picker-slide  { 
+.spectrum-slide  { 
 	margin-left: 10px; 
 	width: 30px; 
 }
-.picker-slide-helper { 
+.spectrum-slide-helper { 
 	width: 40px; 
 	height: 5px; 
 	background: white; 
 	opacity: .8; 
 	left:-5px; 
 }
-.picker-element {
+.spectrum-element {
 	width: 30px;
 	height: 30px;
 	border: solid 2px #333;

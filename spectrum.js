@@ -2,9 +2,9 @@
    
    var replaceInput = "<div></div>";
    var markup = [
-    "<div class='picker-container'>",
-        "<div class='picker-color'><div class='picker-g1'><div class='picker-g2'><div class='picker-drag-helper'></div></div></div></div>",
-        "<div class='picker-slide'><div class='picker-slide-helper'></div></div>",
+    "<div class='spectrum-container'>",
+        "<div class='spectrum-color'><div class='spectrum-g1'><div class='spectrum-g2'><div class='spectrum-drag-helper'></div></div></div></div>",
+        "<div class='spectrum-slide'><div class='spectrum-slide-helper'></div></div>",
         "<br style='clear:both;' />",
     "</div>"
     ].join("");
@@ -17,16 +17,16 @@
 		flat: false
     };
     
-    function picker(element, o) {
+    function spectrum(element, o) {
 
         var opts = $.extend({ }, defaultOpts, o),
             doc = element.ownerDocument,
             body = doc.body,
-            picker = $(markup),
-            dragger = picker.find(".picker-color"),
-            dragHelper = picker .find(".picker-drag-helper"),
-			slider = picker.find(".picker-slide"),
-			slideHelper = picker.find(".picker-slide-helper"),
+            container = $(markup),
+            dragger = container.find(".spectrum-color"),
+            dragHelper = container.find(".spectrum-drag-helper"),
+			slider = container.find(".spectrum-slide"),
+			slideHelper = container.find(".spectrum-slide-helper"),
             dragging = false,
 			sliding = false,
 			visible = false,
@@ -49,10 +49,10 @@
 			el = $(element);
 		}
 		
-		el.addClass("picker-element");
+		el.addClass("spectrum-element");
 		
         /* Public API */
-        el.bind("picker.show", function() {
+        el.bind("spectrum.show", function() {
 			if (visible) { return; }
 			visible = true;
 			
@@ -62,7 +62,7 @@
 			
 			var elOffset = el.offset();
 			elOffset.left += el.width();
-            picker.show().offset(elOffset);
+            container.show().offset(elOffset);
             var off = dragger.offset();  
             offsetX = off.left;
             offsetY = off.top;
@@ -72,7 +72,7 @@
             slideHeight = slider.height();
         });
 		
-        el.bind("picker.hide", function() {
+        el.bind("spectrum.hide", function() {
 			if (!visible) { return; }
 			visible = false;
 			
@@ -80,10 +80,10 @@
 			$(doc).unbind("mousemove", docMousemove);
 			$(doc).unbind("click",     docClick);
 			
-            picker.hide();    
+            container.hide();    
         });
 		
-        el.bind("picker.set", function(e, c) {
+        el.bind("spectrum.set", function(e, c) {
             dragger.css("background-color", c);
 			if (true) {
 			
@@ -92,10 +92,10 @@
 		
 		el.click(function(e){
 			if (visible) {
-				$(this).trigger("picker.hide");
+				$(this).trigger("spectrum.hide");
 			}
 			else {
-				$(this).trigger("picker.show");
+				$(this).trigger("spectrum.show");
 			}
 			e.stopPropagation();
 		});
@@ -107,7 +107,7 @@
 			sliding = false;
 		}
 		function docClick() {
-			el.trigger("picker.hide");
+			el.trigger("spectrum.hide");
 		}
 		function docMousemove(e) {
             if (dragging) {
@@ -129,7 +129,7 @@
 		}
 		
 		// Don't let click event go up to document
-		picker.bind("click", function(e) {
+		container.bind("click", function(e) {
 			e.stopPropagation();
 		});
 		
@@ -196,17 +196,17 @@
 			return (currentHue / slideHeight) * 360;
 		}
         
-        $(body).append(picker.hide());
+        $(body).append(container.hide());
 		
 		if (opts.flat) {
-			el.trigger("picker.show");
+			el.trigger("spectrum.show");
 		}
-        el.trigger("picker.set", opts.color);
+        el.trigger("spectrum.set", opts.color);
     }
 	
-    $.fn.picker = function(opts) {
+    $.fn.spectrum = function(opts) {
         return this.each(function() {
-            picker(this, opts);
+            spectrum(this, opts);
         }); 
     };
 	
@@ -255,6 +255,8 @@
         S = C == 0 ? 0 : C / V;
         return { h: H, s: S, v: V };
     }
+    
+    window.spectrum = spectrum;
 
 })();
 
