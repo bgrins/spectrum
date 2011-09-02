@@ -111,23 +111,13 @@
 			e.stopPropagation();
 		});
 		
-		draggable(slider, function(e) { slide(e.dragX, e.dragY); });
-		draggable(dragger, function(e) { drag(e.dragX, e.dragY); });
+		draggable(slider, slide);
+		draggable(dragger, drag);
         
-        function coordinatesFromEvent(e, maxHeight, maxWidth) {
-            var top = e.pageY - offsetY;
-            var left = e.pageX - offsetX;
-            
-            return { 
-                top: Math.max(0, Math.min(maxHeight, top)),
-                left: Math.max(0, Math.min(maxWidth, left))
-            };
-        }
-        
-        function drag(x, y) {
+        function drag(e) {
             var h = dragHelper.height();
-			currentX = x;
-			currentY = y;
+			currentX = e.dragX;
+			currentY = e.dragY;
 			
             dragHelper.css({
                 "top": currentY - (h / 2),
@@ -138,9 +128,9 @@
 			move();
         }
 		
-        function slide(x, y) {
+        function slide(e) {
             var h = slideHelper.height();
-			currentHue = y;
+			currentHue = e.dragY;
             
             slideHelper.css({
                 "top": currentHue - (h / 2)
