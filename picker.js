@@ -1,0 +1,261 @@
+(function() {
+   
+   var replaceInput = "<div></div>";
+   var markup = [
+    "<div class='picker-container'>",
+        "<div class='picker-color'><div class='picker-g1'><div class='picker-g2'><div class='picker-drag-helper'></div></div></div></div>",
+        "<div class='picker-slide'><div class='picker-slide-helper'></div></div>",
+        "<br style='clear:both;' />",
+    "</div>"
+    ].join("");
+    
+    var defaultOpts = {
+        color: "red",
+        move: function() { },
+        close: function() { },
+        open: function() { },
+		flat: false
+    };
+    
+    function picker(element, o) {
+
+        var opts = $.extend({ }, defaultOpts, o),
+            doc = element.ownerDocument,
+            body = doc.body,
+            picker = $(markup),
+            dragger = picker.find(".picker-color"),
+            dragHelper = picker .find(".picker-drag-helper"),
+			slider = picker.find(".picker-slide"),
+			slideHelper = picker.find(".picker-slide-helper"),
+            dragging = false,
+			sliding = false,
+			visible = false,
+            offsetX = 0,
+            offsetY = 0,
+			dragWidth = 0,
+            dragHeight = 0,
+			slideHeight = 0,
+			slideWidth = 0,
+			currentX = 0,
+			currentY = 0,
+			currentHue = 0;
+        
+		var el;
+		if ($(element).is("input")) {
+			el = $(replaceInput);
+			$(element).hide().after(el);
+		}
+		else {
+			el = $(element);
+		}
+		
+		el.addClass("picker-element");
+		
+        /* Public API */
+        el.bind("picker.show", function() {
+			if (visible) { return; }
+			visible = true;
+			
+			$(doc).bind("mouseup",   docMouseup);
+			$(doc).bind("mousemove", docMousemove);
+			$(doc).bind("click",     docClick);
+			
+			var elOffset = el.offset();
+			elOffset.left += el.width();
+            picker.show().offset(elOffset);
+            var off = dragger.offset();  
+            offsetX = off.left;
+            offsetY = off.top;
+            dragWidth = dragger.width();
+            dragHeight = dragger.height();
+            slideWidth = slider.width();
+            slideHeight = slider.height();
+        });
+		
+        el.bind("picker.hide", function() {
+			if (!visible) { return; }
+			visible = false;
+			
+			$(doc).unbind("mouseup",   docMouseup);
+			$(doc).unbind("mousemove", docMousemove);
+			$(doc).unbind("click",     docClick);
+			
+            picker.hide();    
+        });
+		
+        el.bind("picker.set", function(e, c) {
+            dragger.css("background-color", c);
+			if (true) {
+			
+			}
+        });
+		
+		el.click(function(e){
+			if (visible) {
+				$(this).trigger("picker.hide");
+			}
+			else {
+				$(this).trigger("picker.show");
+			}
+			e.stopPropagation();
+		});
+        
+        /* DOM event handlers */
+		
+        function docMouseup() {
+            dragging = false; 
+			sliding = false;
+		}
+		function docClick() {
+			el.trigger("picker.hide");
+		}
+		function docMousemove(e) {
+            if (dragging) {
+                 drag(e);   
+            }
+			if (sliding) {
+				slide(e);
+			}
+            $("#console").text(e.layerX + " " + e.layerY + " " + e.clientX+ " " + e.clientY);
+		}
+		function move() {
+			var h = getCurrentHue();
+			var s = getCurrentSaturation();
+            var v = getCurrentValue();
+			
+            var c = hsv2rgb(h, s, v);
+			
+			$("#console").css('background-color', c.hex);
+		}
+		
+		// Don't let click event go up to document
+		picker.bind("click", function(e) {
+			e.stopPropagation();
+		});
+		
+        slider.mousedown(function(e) {
+			if (e.button == 0) {
+				sliding = true;
+				slide(e);
+			}
+		});
+        dragger.mousedown(function(e) {
+			if (e.button == 0) {
+				dragging = true;
+				drag(e);
+			}
+        });
+        
+        function coordinatesFromEvent(e, maxHeight, maxWidth) {
+            var top = e.pageY - offsetY;
+            var left = e.pageX - offsetX;
+            
+            return { 
+                top: Math.max(0, Math.min(maxHeight, top)),
+                left: Math.max(0, Math.min(maxWidth, left))
+            };
+        }
+        
+        function drag(e) {
+            var h = dragHelper.height();
+            var c = coordinatesFromEvent(e, dragHeight, dragWidth);
+			
+			currentX = c.top;
+			currentY = c.left;
+			
+            dragHelper.css({
+                "top": currentX - (h / 2),
+                "left": currentY - (h / 2)
+            });
+			
+			move();
+        }
+		
+        function slide(e) {
+            var h = slideHelper.height();
+            var c = coordinatesFromEvent(e, slideHeight, slideWidth);
+			
+			currentHue = c.top;
+            
+            slideHelper.css({
+                "top": currentHue - (h / 2)
+            });
+			
+			var c = hsv2rgb(getCurrentHue(), 1, 1);
+			dragger.css("background-color", c.hex);
+			move();
+        }
+		
+		function getCurrentSaturation() {
+			return currentY / dragWidth;
+		}
+		function getCurrentValue() {
+			return (dragHeight - currentX) / dragHeight
+		}
+		function getCurrentHue() {
+			return (currentHue / slideHeight) * 360;
+		}
+        
+        $(body).append(picker.hide());
+		
+		if (opts.flat) {
+			el.trigger("picker.show");
+		}
+        el.trigger("picker.set", opts.color);
+    }
+	
+    $.fn.picker = function(opts) {
+        return this.each(function() {
+            picker(this, opts);
+        }); 
+    };
+	
+	
+    /**
+     * Convert HSV representation to RGB HEX string.
+     * Credits to http://www.raphaeljs.com
+     */
+    function hsv2rgb(h, s, v) {
+        var R, G, B, X, C;
+        h = (h % 360) / 60;
+            C = v * s;
+        X = C * (1 - Math.abs(h % 2 - 1));
+        R = G = B = v - C;
+
+        h = ~~h;
+        R += [C, X, 0, 0, X, C][h];
+        G += [X, C, C, X, 0, 0][h];
+        B += [0, 0, X, C, C, X][h];
+
+        var r = R * 255,
+            g = G * 255,
+            b = B * 255;
+        return { r: r, g: g, b: b, hex: "#" + (16777216 | b | (g << 8) | (r << 16)).toString(16).slice(1) };
+    }
+
+    /**
+     * Convert RGB representation to HSV.
+     * r, g, b can be either in <0,1> range or <0,255> range.
+     * Credits to http://www.raphaeljs.com
+     */
+    function rgb2hsv(r, g, b) {
+        if (r > 1 || g > 1 || b > 1) {
+            r /= 255;
+            g /= 255;
+            b /= 255;            
+        }
+        var H, S, V, C;
+        V = Math.max(r, g, b);
+        C = V - Math.min(r, g, b);
+        H = (C == 0 ? null :
+             V == r ? (g - b) / C :
+             V == g ? (b - r) / C + 2 :
+                      (r - g) / C + 4);
+        H = (H % 6) * 60;
+        S = C == 0 ? 0 : C / V;
+        return { h: H, s: S, v: V };
+    }
+
+})();
+
+

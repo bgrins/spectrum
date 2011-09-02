@@ -1,0 +1,31 @@
+<!doctype html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
+<script type="text/javascript" src="picker.js"></script>
+<link rel="stylesheet" type="text/css" href="picker.css">
+</head>
+<body>
+
+<div id='p'></div>
+<input type='text' name='color' id='pick1' />
+<div id='console'></div>
+
+<script>
+
+$("#pick1").picker({
+	flat: false,
+    color: "orange",
+    move: function() {
+      
+    },
+    close: function() {
+       
+    },
+    open: function() {
+       
+    } 
+}).trigger("picker.set", "red");
+
+</script>
+</body>
