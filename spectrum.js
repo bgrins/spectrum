@@ -85,13 +85,8 @@
 			}
         });
 		
-		el.click(function(e){
-			if (visible) {
-				$(this).trigger("spectrum.hide");
-			}
-			else {
-				$(this).trigger("spectrum.show");
-			}
+		el.click(function(e) {
+			$(this).trigger(visible ? "spectrum.hide" : "spectrum.show");
 			e.stopPropagation();
 		});
         
