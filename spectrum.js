@@ -211,15 +211,16 @@
 		}
 		function start(e) { 
 			if (e.button == 0 && !dragging) { 
-				dragging = true; 
-				maxHeight = $(element).height();
-				maxWidth = $(element).width();
-				offset = $(element).offset();
-				$(doc).bind({ 
-					"mouseup": stop,
-					"mousemove": move
-				});
-				onstart.apply(element, arguments); 
+				if (onstart.apply(element, arguments) !== false) {
+					dragging = true; 
+					maxHeight = $(element).height();
+					maxWidth = $(element).width();
+					offset = $(element).offset();
+					$(doc).bind({ 
+						"mouseup": stop,
+						"mousemove": move
+					});
+				}
 			} 
 		}
 		function stop() { 
