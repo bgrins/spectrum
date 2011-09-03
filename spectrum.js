@@ -118,12 +118,16 @@ Requires: jQuery, spectrum.css
             var v = currentValue;
             
             // Update dragger UI
+            var dragHelperHeight = dragHelper.height();
             var dragX = s * dragWidth;
             var dragY = dragHeight - (v * dragHeight);
-            var dragHelperHeight = dragHelper.height() / 2;
+            
+            dragX = Math.max(-dragHelperHeight, Math.min(dragWidth - dragHelperHeight, dragX - dragHelperHeight));
+            dragY = Math.max(-dragHelperHeight, Math.min(dragHeight - dragHelperHeight, dragY - dragHelperHeight));
+            
             dragHelper.css({
-                "top": dragY - dragHelperHeight,
-                "left": dragX - dragHelperHeight
+                "top": dragY,
+                "left": dragX
             });
 			
 			// Update slider UI
