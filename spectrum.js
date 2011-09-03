@@ -49,7 +49,7 @@
 		
         var boundElement = $(element);
 		var visibleElement;
-		if (boundElement.is("input")) {
+		if (boundElement.is("input") && !opts.flat) {
 			visibleElement = $(replaceInput);
 			boundElement.hide().after(visibleElement);
 		}
@@ -65,10 +65,13 @@
 			visible = true;
 			
 			$(doc).bind("click", docClick);
-
-			var elOffset = visibleElement.offset();
-			elOffset.left += visibleElement.width();
-            container.show().offset(elOffset);
+			
+			if (!opts.flat) {
+				var elOffset = visibleElement.offset();
+				elOffset.left += visibleElement.width();
+            	container.show().offset(elOffset);
+            }
+            
             dragWidth = dragger.width();
             dragHeight = dragger.height();
             slideWidth = slider.width();
@@ -78,7 +81,7 @@
         });
 		
         boundElement.bind("spectrum.hide", function() {
-			if (!visible) { return; }
+			if (!visible || opts.flat) { return; }
 			visible = false;
 			
 			$(doc).unbind("click", docClick);
@@ -188,10 +191,13 @@
 	        updateUI();
         }
         
-        $(body).append(container.hide());
 		
 		if (opts.flat) {
+			boundElement.after(container.addClass("spectrum-flat")).hide();
 			boundElement.trigger("spectrum.show");
+		}
+		else {
+        	$(body).append(container.hide());
 		}
 		
         boundElement.trigger("spectrum.set", opts.color);

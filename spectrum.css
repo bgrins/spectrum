@@ -33,6 +33,10 @@
 	top:0; 
 	left:0; 
 }
+.spectrum-container.spectrum-flat {
+	position:static;
+	display:inline-block;
+}
 .spectrum-slide {
     position:relative;
     float:left;
@@ -114,5 +118,3 @@
 	border: solid 2px #333;
 	border-radius: 3px;
 }
-
-#console { font: monospace; margin-top:10px; position:absolute; bottom:0; left:0; }
