@@ -56,9 +56,11 @@
 $("#pick1").spectrum({
 	flat: true,
     color: "#ddddff",
-    move: function(h) {
-    	console.log(arguments)
-    	$("#docs-content").css('background-color', h);
+    move: function(colors) {
+    	$("#docs-content").css({
+    		'background-color': colors.hex,
+    		'color': (colors.hsv.v < .5) ? 'white' : 'black'
+    	});	
     },
     close: function() {
        
@@ -70,8 +72,8 @@ $("#pick1").spectrum({
 
 $("#pick2").spectrum({
     color: "green",
-    move: function(h) {
-		$("#pick2-details").css('background-color', h).text(h);
+    move: function(colors) {
+		$("#pick2-details").css('background-color', colors.hex).text(colors.hex);
       
     },
     close: function() {

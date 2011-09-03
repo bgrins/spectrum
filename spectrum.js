@@ -128,10 +128,11 @@
 			var flatHex = hsv2rgb(h, 1, 1).hex;
 			dragger.css("background-color", flatHex);
 			
-			var realHex = hsv2rgb(h, s, v).hex;
-			visibleElement.css("background-color", realHex);
+			var realHSV = { h: h, s: s, v: v };
+			var realRGB = hsv2rgb(h, s, v);
+			visibleElement.css("background-color", realRGB.hex);
 			
-			opts.move(realHex)
+			opts.move({ hsv: realHSV, rgb: realRGB, hex: realRGB.hex });
 		}
 		
 		// Don't let click event go up to document
