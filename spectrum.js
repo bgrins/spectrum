@@ -39,9 +39,9 @@
             dragHeight = 0,
 			slideHeight = 0,
 			slideWidth = 0,
-			currentX = 0,
-			currentY = 0,
-			currentHue = 0;
+			currentHue = 0,
+			currentSaturation = 0,
+			currentValue = 0;
 			
         var boundElement = $(element);
 		var visibleElement;
@@ -98,31 +98,30 @@
 		}
 		
 		function move() {
-			var h = getCurrentHue();
-			var s = getCurrentSaturation();
-            var v = getCurrentValue();
+			var h = currentHue;
+			var s = currentSaturation;
+            var v = currentValue;
             
-            var c = hsv2rgb(h, s, v);
-            
+            // Update dragger UI
+            var dragX = s * dragWidth;
+            var dragY = dragHeight - (v * dragHeight);
             var dragHelperHeight = dragHelper.height() / 2;
             dragHelper.css({
-                "top": currentY - dragHelperHeight,
-                "left": currentX - dragHelperHeight
+                "top": dragY - dragHelperHeight,
+                "left": dragX - dragHelperHeight
             });
 			
-			
-			var hex = hsv2rgb(h, 1, 1).hex;
-			console.log("HEX", hex)
-			
-			dragger.css("background-color", hex);
-			
-            var slideHelperHeight = slideHelper.height();
+			// Update slider UI
+			var slideY = (currentHue / 360) * slideHeight;
+            var slideHelperHeight = slideHelper.height() / 2;
             slideHelper.css({
-                "top": currentHue - (slideHelperHeight / 2)
+                "top": slideY - slideHelperHeight
             });
 			
-
-			$("#console").css('background-color', c.hex);
+			// Update dragger background color
+			var hex = hsv2rgb(h, 1, 1).hex;
+			dragger.css("background-color", hex);
+			$("#console").css('background-color', hex);
 		}
 		
 		// Don't let click event go up to document
@@ -134,33 +133,16 @@
 		draggable(dragger, drag);
         
         function drag(e) {
-			currentX = e.dragX;
-			currentY = e.dragY;
+			currentSaturation = e.dragX / dragWidth;
+			currentValue = (dragHeight -  e.dragY) / dragHeight;
 			
-            $("#console").text(currentX + " " + currentY);
+            $("#console").text(e.dragX + " " + e.dragY);
 			move();
         }
-        
-        function updateDragUI() {
-        
-        }
-		
         function slide(e) {
-			currentHue = e.dragY;
+			currentHue = (e.dragY / slideHeight) * 360;
 			move();
         }
-		
-		function getCurrentSaturation() {
-			return currentX / dragWidth;
-		}
-		
-		function getCurrentValue() {
-			return (dragHeight - currentY) / dragHeight
-		}
-		
-		function getCurrentHue() {
-			return (currentHue / slideHeight) * 360;
-		}
 		
 		
 		function setColor(color) {
@@ -196,9 +178,13 @@
 	        
 	        var c = hsv2rgb(h, s, v);
 	        
-			currentHue = (h * slideHeight) / 360;
-			currentX = s * dragWidth;
-	        currentY = dragHeight - (v * dragHeight);
+	        currentHue = h;
+			currentSaturation = s;
+			currentValue = v;
+			
+			//currentHue = (h * slideHeight) / 360;
+			//currentX = s * dragWidth;
+	        //currentY = dragHeight - (v * dragHeight);
 	        
 	        move();
         }
