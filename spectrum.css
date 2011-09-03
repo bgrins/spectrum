@@ -2,10 +2,15 @@
 	position:relative; 
 }
 .spectrum-g1 {
-    background-image: -webkit-gradient(linear,  0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
+    background-image: -webkit-gradient(linear 0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
+    background: -moz-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
+    /*background: -moz-linear-gradient(left 50%, #fff 100%, rgba(204, 154, 129, 0) 0);
+    background: -moz-gradient(0 0, #000 100%, rgba(204, 154, 129, 0) 0);*/
 }
 .spectrum-g2 {
     background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#000000), to(rgba(204, 154, 129, 0)));
+    background: -moz-linear-gradient(center bottom, #000 0%, rgba(204, 154, 129, 0) 100%);
+    background: -moz-gradient(center bottom, #000 0%, rgba(204, 154, 129, 0) 100%);
 }
 .spectrum-drag-helper { 
 	position:absolute; 
@@ -24,6 +29,7 @@
 .spectrum-slide {
     float:left;
     background: -webkit-linear-gradient(bottom, #ff0000 0%, #ff00ff 13%, #8000ff 25%, #0040ff 38%, #00FFFF 50%, #00FF40 63%, #0BED00 75%, #FFFF00 88%, #FF0000 100%); 
+    background: -moz-linear-gradient(bottom, #ff0000 0%, #ff00ff 13%, #8000ff 25%, #0040ff 38%, #00FFFF 50%, #00FF40 63%, #0BED00 75%, #FFFF00 88%, #FF0000 100%);
     position:relative;
 }
 .spectrum-slide-helper { 
