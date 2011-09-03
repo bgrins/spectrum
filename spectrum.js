@@ -1,3 +1,12 @@
+/***
+Spectrum:
+The No Hassle Colorpicker
+jQuery Plugin
+
+Author: Brian Grinstead
+https://github.com/bgrins/spectrum
+***/
+
 (function() {
    
    var replaceInput = "<div class='spectrum-replacer'></div>";
