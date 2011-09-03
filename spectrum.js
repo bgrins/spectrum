@@ -144,7 +144,7 @@
 		
 		function setColor(color) {
 			var hsv;
-			console.log("SETTING COLOR", color)
+			
 			if (typeof color == "object") {
 				if (color.hasOwnProperty("r")) {
 					hsv = rgb2hsv(color.r, color.g, color.b);
@@ -200,7 +200,6 @@
 		var offset = { };
 		var maxHeight = 0;
 		var maxWidth = 0;
-            
 		function move(e) { 
 			if (dragging) {
 				e.dragX = Math.max(0, Math.min(e.pageX - offset.left, maxWidth));
@@ -210,7 +209,9 @@
 			} 
 		}
 		function start(e) { 
-			if (e.button == 0 && !dragging) { 
+			var rightclick = (e.which) ? (e.which == 3) : (e.button == 2);
+		
+			if (!rightclick && !dragging) { 
 				if (onstart.apply(element, arguments) !== false) {
 					dragging = true; 
 					maxHeight = $(element).height();
