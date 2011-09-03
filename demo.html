@@ -5,19 +5,35 @@
 <script type="text/javascript" src="spectrum.js"></script>
 <link rel="stylesheet" type="text/css" href="spectrum.css">
 <style type='text/css'>
-	#docs {  }
+	html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+	body { margin: 0; font-size: 14px; line-height: 1.231; }
+	body, button, input, select, textarea { font-family: Verdana sans-serif; color: #222; }
+	h1 { font-family: Tahoma; font-size: 2em; margin: 0; padding:0; font-weight: lighter; }
+	#header { background: #f3deae; padding: 3px; border-bottom: solid 1px #fee;}
+	#goals { margin-left: 10px; border-left: solid 2px #eee; padding-left: 10px; }
+	a { color: #00e; }
+	a:visited { color: #009; }
+	a:hover { color: #06e; }
+	a:focus { outline: thin dotted; }
+	#header h1 { float:left; }
+	#links { float:right; text-align: right; }
+	#docs { padding:10px;  }
 	#pick2-details { font: monospace; }
 	#switch-current { float: left; position:relative; }
-	#switch-current .spectrum-container { position: relative; }
+	#switch-current .spectrum-container { position: fixed; top:75px; left: 10px; }
 	#docs-content { margin-left: 280px; padding: 10px; border:solid 5px #333; border-radius: 5px; }
-	.switch-current-output { display:block; margin:3px auto; width: 200px; text-align: center; }
-	#switch-current-rgb, #switch-current-hsv { display:none; }
+	.switch-current-output { display:none; margin:3px auto; width: 200px; text-align: center; }
 </style>
 </head>
 <body>
 
 <div id='header'>
-    <h1>Spectrum - Drop in colorpicker</h1>
+    <h1>Spectrum - The No Hassle Colorpicker</h1>
+    <div id='links'>
+    	<a href='http://github.com/bgrins/spectrum'>Source code</a> |
+    	<a href='http://briangrinstead.com'>Download</a>
+    </div>
+    <br style='clear:both;' />
 </div>
 
 <div id='docs'>
@@ -28,28 +44,36 @@
 		<div id='switch-current-hex' class='switch-current-output'></div>
 	</div>
 	<div id='docs-content'>
-		<h2>No images</h2>
-		<p>Spectrum requires one JavaScript file and one CSS file.  No images required.</p>
+		<h2>Goals</h2>
+		<p>I wanted a colorpicker that didn't require images, and that had an API that made sense to me as a developer who has worked with color in a number of applications.  I had used existing plugins (which I was quite grateful for), but decided that I would make a smaller, simpler one.  Here are the goals I had:</p>
 		
-		<h2>Browser Support</h2>
-		<div>Browser support depends upon <a href='http://caniuse.com/#feat=css-gradients'>CSS gradient support</a>.  IE is handled using <a href='http://msdn.microsoft.com/en-us/library/ms532997(v=vs.85).aspx'>proprietary filters</a>.</div>
+		<div id='goals'>
+		<h3>Drop In</h3>
+		<p>Spectrum requires one JavaScript file and one CSS file.  No images or other resources required.  This makes it easy to add into projects.</p>
+		
+		<h3>Progressive Enhancement</h3>
+		<p>
+			You can call <code>spectrum()</code> on any element, but it is recommended to call it on an <code>input</code> element.  Spectrum will hide the input, then automatically copy the selected value back into the input as it changes, so you don't need to worry about that.  If you are using the results from a <code>form</code>, the server will see the selected color as if the user typed in the hex code manually.
+		</p>
+		
+		<h3>Browser Support</h3>
+		<p>
+		I wanted this to work in all major browsers (even IE).  I initially used the <code>canvas</code> tag with an image fallback, but found that CSS gradients were more simple, required less code, and were easier to scale.  Browser support depends upon <a href='http://caniuse.com/#feat=css-gradients'>CSS gradient support</a>.
+		</p>
 		<ul>
-			<li>IE 6+</li>
+			<li>IE 6+: Using <a href='http://msdn.microsoft.com/en-us/library/ms532997(v=vs.85).aspx'>proprietary filters</a></li>
 			<li>Chrome 4+</li>
 			<li>Firefox 3.6+</li>
 			<li>Safari 4+</li>
 			<li>Opera 11.1+</li>
 		</ul>
 		
-		<h2>Progressive Enhancement</h2>
-		<p>
-			You can call <code>spectrum()</code> on any element, but it is recommended to call it on an <code>input</code> element.  Spectrum will hide the input, then automatically copy the selected value back into the input as it changes, so you don't need to worry about that.  If you are using the results from a <code>form</code>, the server will see the selected color as if the user typed in the hex code manually.
-		</p>
+		</div>
 		
 		<h2>Usage modes</h2>
 		<h3>Flat versus Collapsed</h3>
 		<ul>
-			<li><strong>Flat</strong>: You can use it flat (see the picker to the left).  This means that it will always show up at full size, and be positioned as an inline-block element.</li>
+			<li><strong>Flat</strong> (see the picker to the left):  This means that it will always show up at full size, and be positioned as an inline-block element.</li>
 			<li><strong>Collapsed</strong>: A small div will take the place of the element, and the colorpicker will show up when the user clicks on it.  Here is an example of that:
 			<div style='margin-top:10px; text-align:center;'>
 				<input type='text' name='color' id='pick2' />
@@ -58,11 +82,11 @@
 			</li>
 		</ul>
 		
-		<h2>Events</h2>
+		<h2>Options</h2>
 		<ul>
 			<li>
-			<strong>move:</strong>
-			
+			<strong>move:</strong><span class='type'>event</span>
+			<p> </p>
 			</li>
 		</ul>
 		
