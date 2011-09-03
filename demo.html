@@ -4,17 +4,27 @@
 <script type="text/javascript" src="jquery-1.6.2.js"></script>
 <script type="text/javascript" src="spectrum.js"></script>
 <link rel="stylesheet" type="text/css" href="spectrum.css">
+<style type='text/css'>
+	#docs {  }
+	#console { font: monospace; margin-top:10px; position:absolute; bottom:0; left:0; }
+</style>
 </head>
 <body>
 
 <div id='p'></div>
 <input type='text' name='color' id='pick1' />
+<input type='text' name='color' id='pick2' />
+
+<div id='docs'>
+	
+</div>
+
 <div id='console'></div>
 
 <script>
 
 $("#pick1").spectrum({
-	flat: false,
+	flat: true,
     color: "green",
     move: function() {
       
@@ -27,5 +37,17 @@ $("#pick1").spectrum({
     } 
 });
 
+$("#pick2").spectrum({
+    color: "green",
+    move: function() {
+      
+    },
+    close: function() {
+       
+    },
+    open: function() {
+       
+    } 
+});
 </script>
 </body>
