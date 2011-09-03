@@ -211,6 +211,7 @@
 		}
 		function start(e) { 
 			if (e.button == 0 && !dragging) { 
+				dragging = true; 
 				maxHeight = $(element).height();
 				maxWidth = $(element).width();
 				offset = $(element).offset();
@@ -220,7 +221,6 @@
 				});
 				onstart.apply(element, arguments); 
 			} 
-			dragging = true; 
 		}
 		function stop() { 
 			if (dragging) { 
