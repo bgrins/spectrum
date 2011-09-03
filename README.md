@@ -1,14 +1,10 @@
 # Spectrum
-## Drop in colorpicker
+## The No Hassle Colorpicker
 
-I wasn't happy with current options for JavaScript colorpickers.  They either relied too heavily on images and external resources, or I didn't like the API they provided.  Here are some of the goals I had for the project:
+I wanted a colorpicker that didn't require images, and that had an API that made sense to me as a developer who has worked with color in a number of applications.  I had used existing plugins (which I was quite grateful for), but decided that I would make a smaller, simpler one.
 
-* No images or other resources
-* 1 small javascript file
-* Progressive enhancement - hook into an existing input
+I started using canvas, and switched to CSS gradients, since it turned out to be easier to manage, and worked better across browsers.
 
-Technology:
-* Uses CSS gradients instead of images
-
+See demo and docs: http://bgrins.github.com/spectrum/
 
 Thanks to https://github.com/DavidDurman/FlexiColorPicker for some inspiration and gradient constants
