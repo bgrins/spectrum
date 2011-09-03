@@ -2,7 +2,7 @@
 	position:relative; 
 }
 .spectrum-g1 {
-    background-image: -webkit-gradient(linear 0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
+	background-image: -webkit-gradient(linear,  0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
     background-image: -moz-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
     background-image: -moz-gradient(left, #fff, rgba(204, 154, 129, 0));
 }
