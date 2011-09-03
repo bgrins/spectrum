@@ -6,28 +6,59 @@
 <link rel="stylesheet" type="text/css" href="spectrum.css">
 <style type='text/css'>
 	#docs {  }
-	#console { font: monospace; margin-top:10px; position:absolute; bottom:0; left:0; }
+	#pick2-details { font: monospace; position:relative; top:5px; }
+	#switch-current { float: left; position:relative; }
+	#switch-current .spectrum-container { position: relative; }
+	#docs-content { margin-left: 280px; padding: 10px; }
 </style>
 </head>
 <body>
 
-<div id='p'></div>
-<input type='text' name='color' id='pick1' />
-<input type='text' name='color' id='pick2' />
-
-<div id='docs'>
-	
+<div id='header'>
+    <h1>Spectrum - Drop in colorpicker</h1>
 </div>
 
-<div id='console'></div>
+<div id='docs'>
+	<div id='switch-current'>
+		<input type='text' name='color' id='pick1' />
+	</div>
+	<div id='docs-content'>
+		<h2>No images</h2>
+		<p>Spectrum requires one JavaScript file and one CSS file.  No images required.</p>
+		
+		<h2>Browser support</h2>
+		<div>Browser support depends upon <a href='http://caniuse.com/#feat=css-gradients'>CSS gradient support</a>.  IE is handled using proprietary filters.</div>
+		<ul>
+			<li>IE 6+</li>
+			<li>Chrome 4+</li>
+			<li>Firefox 3.6+</li>
+			<li>Safari 4+</li>
+			<li>Opera 11.1+</li>
+		</ul>
+		
+		<h2>Usage modes</h2>
+		<p>You can use it flat (see the picker to the left).  This means that </p>
+		<p>Collapsed:
+		
+			<input type='text' name='color' id='pick2' />
+			<span id='pick2-details'></span>
+		</p>
+		
+		<h2>Skinning</h2>
+		<p>Since it is all built with HTML/CSS, you can skin it easily.  There are two parts to the <a href='https://github.com/bgrins/spectrum/blob/master/spectrum.css'>spectrum.css</a> file, the core rules (at the top of the file), and the themable rules (at the bottom).  Feel free to tweak these rules to make it look how you want.</p>
+	</div>
+	<br style='clear:both;' />
+</div>
+
 
 <script>
 
 $("#pick1").spectrum({
 	flat: true,
-    color: "green",
-    move: function() {
-      
+    color: "#ddddff",
+    move: function(h) {
+    	console.log(arguments)
+    	$("#docs-content").css('background-color', h);
     },
     close: function() {
        
@@ -39,7 +70,8 @@ $("#pick1").spectrum({
 
 $("#pick2").spectrum({
     color: "green",
-    move: function() {
+    move: function(h) {
+		$("#pick2-details").css('background-color', h).text(h);
       
     },
     close: function() {

@@ -125,9 +125,13 @@
             });
 			
 			// Update dragger background color
-			var hex = hsv2rgb(h, 1, 1).hex;
-			dragger.css("background-color", hex);
-			$("#console").css('background-color', hsv2rgb(h, s, v).hex);
+			var flatHex = hsv2rgb(h, 1, 1).hex;
+			dragger.css("background-color", flatHex);
+			
+			var realHex = hsv2rgb(h, s, v).hex;
+			visibleElement.css("background-color", realHex);
+			
+			opts.move(realHex)
 		}
 		
 		// Don't let click event go up to document
@@ -142,11 +146,11 @@
 			currentSaturation = e.dragX / dragWidth;
 			currentValue = (dragHeight -  e.dragY) / dragHeight;
 			
-            $("#console").text(e.dragX + " " + e.dragY);
 			updateUI();
         }
         function slide(e) {
 			currentHue = (e.dragY / slideHeight) * 360;
+			
 			updateUI();
         }
 		
