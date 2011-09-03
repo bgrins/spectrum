@@ -218,12 +218,23 @@
 		var offset = { };
 		var maxHeight = 0;
 		var maxWidth = 0;
+		
+		var HELPER_SIZE = 100;
+		var helper = $("<div></div>").css({
+			"position": "absolute",
+			"width": HELPER_SIZE,
+			"height": HELPER_SIZE,
+			"z-index": 1000
+		});
+		
 		function move(e) { 
 			if (dragging) {
 				// Mouseup happened outside of window
 				if ($.browser.msie && !(document.documentMode >= 9) && !e.button) {
 					return stop();
 				}
+				
+				helper.offset({top:e.pageY - (HELPER_SIZE/2), left: e.pageX - (HELPER_SIZE/2)});
 				
 				e.dragX = Math.max(0, Math.min(e.pageX - offset.left, maxWidth));
 				e.dragY = Math.max(0, Math.min(e.pageY - offset.top, maxHeight));
@@ -233,9 +244,9 @@
 		}
 		function start(e) { 
 			var rightclick = (e.which) ? (e.which == 3) : (e.button == 2);
-		
 			if (!rightclick && !dragging) { 
 				if (onstart.apply(element, arguments) !== false) {
+					helper.appendTo("body");
 					dragging = true; 
 					maxHeight = $(element).height();
 					maxWidth = $(element).width();
@@ -250,6 +261,7 @@
 		function stop() { 
 			if (dragging) { 
 				$(doc).unbind("mouseup", stop);
+				helper.remove();
 				onstop.apply(element, arguments); 
 			}
 			dragging = false; 
