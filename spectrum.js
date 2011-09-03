@@ -267,6 +267,8 @@ Requires: jQuery, spectrum.css
 						"mouseup": stop,
 						"mousemove": move
 					});
+					
+					move(e);
 				}
 			} 
 		}
