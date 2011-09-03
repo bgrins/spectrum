@@ -3,14 +3,13 @@
 }
 .spectrum-g1 {
     background-image: -webkit-gradient(linear 0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
-    background: -moz-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
-    /*background: -moz-linear-gradient(left 50%, #fff 100%, rgba(204, 154, 129, 0) 0);
-    background: -moz-gradient(0 0, #000 100%, rgba(204, 154, 129, 0) 0);*/
+    background-image: -moz-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
+    background-image: -moz-gradient(left, #fff, rgba(204, 154, 129, 0));
 }
 .spectrum-g2 {
     background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#000000), to(rgba(204, 154, 129, 0)));
-    background: -moz-linear-gradient(center bottom, #000 0%, rgba(204, 154, 129, 0) 100%);
-    background: -moz-gradient(center bottom, #000 0%, rgba(204, 154, 129, 0) 100%);
+    background-image: -moz-linear-gradient(center bottom, #000, rgba(204, 154, 129, 0));
+    background-image: -moz-gradient(center bottom, #000, rgba(204, 154, 129, 0));
 }
 .spectrum-drag-helper { 
 	position:absolute; 
