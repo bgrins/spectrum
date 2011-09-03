@@ -217,6 +217,10 @@ Requires: jQuery, spectrum.css
         boundElement.trigger("spectrum.set", opts.color);
     }
 	
+    /**
+     * Lightweight drag helper.  Handles containment within the element, so that
+     * when dragging, the x is within [0,element.width] and y is within [0,element.height]
+     */
     function draggable(element, onmove, onstart, onstop) {
 		onmove = onmove || function() { };
 		onstart = onstart || function() { };
