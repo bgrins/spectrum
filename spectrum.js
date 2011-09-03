@@ -9,25 +9,24 @@ Requires: jQuery, spectrum.css
 
 (function() {
    
-   var replaceInput = "<div class='spectrum-replacer'></div>";
-   var markup = [
-    "<div class='spectrum-container'>",
-        "<div class='spectrum-color'><div class='spectrum-g1'><div class='spectrum-g2'><div class='spectrum-drag-helper'></div></div></div></div>",
-        "<div class='spectrum-slide'><div class='spectrum-slide-helper'></div></div>",
-        "<br style='clear:both;' />",
-    "</div>"
+	var defaultOpts = {
+	    color: "red",
+	    move: function() { },
+	    close: function() { },
+	    open: function() { },
+	    flat: false
+	},
+	trimLeft = /^[\s,#]+/,
+	trimRight = /\s+$/,
+	replaceInput = "<div class='spectrum-replacer'></div>",
+	markup = [
+	    "<div class='spectrum-container'>",
+	        "<div class='spectrum-color'><div class='spectrum-g1'><div class='spectrum-g2'><div class='spectrum-drag-helper'></div></div></div></div>",
+	        "<div class='spectrum-slide'><div class='spectrum-slide-helper'></div></div>",
+	        "<br style='clear:both;' />",
+	    "</div>"
     ].join("");
     
-    var defaultOpts = {
-        color: "red",
-        move: function() { },
-        close: function() { },
-        open: function() { },
-		flat: false
-    };
-
-	var trimLeft = /^[\s,#]+/, 
-		trimRight = /\s+$/;
     
     function spectrum(element, o) {
 
