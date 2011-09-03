@@ -30,7 +30,7 @@ Requires: jQuery, spectrum.css
     
     function spectrum(element, o) {
 
-        var opts = $.extend({ }, defaultOpts, o),
+        var opts = extend({ }, defaultOpts, o),
             doc = element.ownerDocument,
             body = doc.body,
             container = $(markup),
@@ -326,6 +326,21 @@ Requires: jQuery, spectrum.css
         S = C == 0 ? 0 : C / V;
         return { h: H, s: S, v: V };
     }
+    
+    /**
+     * Extend a given object with all the properties in passed-in object(s)
+     * Thanks to underscore.js
+     */
+    function extend (obj) {
+    	var a = Array.prototype.slice.call(arguments, 1);
+		for (var i = 0; i < a.length; i++) {
+			var source = a[i];
+			for (var prop in source) {
+				if (source[prop] !== void 0) obj[prop] = source[prop];
+			}
+		}
+		return obj;
+	};
 	
 	var htmlcodes = {
 		aliceblue: 'f0f8ff',
