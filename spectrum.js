@@ -149,20 +149,15 @@ Requires: jQuery, spectrum.css
 			e.stopPropagation();
 		});
 		
-		draggable(slider, slide);
-		draggable(dragger, drag);
-        
-        function drag(e) {
-			currentSaturation = e.dragX / dragWidth;
-			currentValue = (dragHeight -  e.dragY) / dragHeight;
-			
+		draggable(slider, function(dragX, dragY) {
+			currentHue = (dragY / slideHeight) * 360;
 			updateUI();
-        }
-        function slide(e) {
-			currentHue = (e.dragY / slideHeight) * 360;
-			
+		});
+		draggable(dragger, function(dragX, dragY) {
+			currentSaturation = dragX / dragWidth;
+			currentValue = (dragHeight -  dragY) / dragHeight;
 			updateUI();
-        }
+		});
 		
 		
 		function setColor(color) {
@@ -248,10 +243,10 @@ Requires: jQuery, spectrum.css
 				
 				helper.offset({top:e.pageY - (HELPER_SIZE/2), left: e.pageX - (HELPER_SIZE/2)});
 				
-				e.dragX = Math.max(0, Math.min(e.pageX - offset.left, maxWidth));
-				e.dragY = Math.max(0, Math.min(e.pageY - offset.top, maxHeight));
+				var dragX = Math.max(0, Math.min(e.pageX - offset.left, maxWidth));
+				var dragY = Math.max(0, Math.min(e.pageY - offset.top, maxHeight));
 				
-				onmove.apply(element, [e]); 
+				onmove.apply(element, [dragX, dragY]); 
 			} 
 		}
 		function start(e) { 
