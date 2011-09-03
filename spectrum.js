@@ -33,8 +33,6 @@
             dragging = false,
 			sliding = false,
 			visible = false,
-            offsetX = 0,
-            offsetY = 0,
 			dragWidth = 0,
             dragHeight = 0,
 			slideHeight = 0,
@@ -65,13 +63,12 @@
 			var elOffset = visibleElement.offset();
 			elOffset.left += visibleElement.width();
             container.show().offset(elOffset);
-            var off = dragger.offset();  
-            offsetX = off.left;
-            offsetY = off.top;
             dragWidth = dragger.width();
             dragHeight = dragger.height();
             slideWidth = slider.width();
             slideHeight = slider.height();
+            
+            updateUI();
         });
 		
         boundElement.bind("spectrum.hide", function() {
@@ -97,7 +94,7 @@
 			boundElement.trigger("spectrum.hide");
 		}
 		
-		function move() {
+		function updateUI() {
 			var h = currentHue;
 			var s = currentSaturation;
             var v = currentValue;
@@ -121,7 +118,7 @@
 			// Update dragger background color
 			var hex = hsv2rgb(h, 1, 1).hex;
 			dragger.css("background-color", hex);
-			$("#console").css('background-color', hex);
+			$("#console").css('background-color', hsv2rgb(h, s, v).hex);
 		}
 		
 		// Don't let click event go up to document
@@ -137,11 +134,11 @@
 			currentValue = (dragHeight -  e.dragY) / dragHeight;
 			
             $("#console").text(e.dragX + " " + e.dragY);
-			move();
+			updateUI();
         }
         function slide(e) {
 			currentHue = (e.dragY / slideHeight) * 360;
-			move();
+			updateUI();
         }
 		
 		
@@ -182,11 +179,7 @@
 			currentSaturation = s;
 			currentValue = v;
 			
-			//currentHue = (h * slideHeight) / 360;
-			//currentX = s * dragWidth;
-	        //currentY = dragHeight - (v * dragHeight);
-	        
-	        move();
+	        updateUI();
         }
         
         $(body).append(container.hide());
