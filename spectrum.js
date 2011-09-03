@@ -40,7 +40,13 @@
 			currentHue = 0,
 			currentSaturation = 0,
 			currentValue = 0;
-			
+		
+		if ($.browser.msie) {
+			for (var i = 1; i < 9; i++) {
+				slider.append("<div class='spectrum-ie-"+i+"'></div>");
+			}
+		}	
+		
         var boundElement = $(element);
 		var visibleElement;
 		if (boundElement.is("input")) {
