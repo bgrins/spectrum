@@ -42,6 +42,7 @@
 			currentValue = 0;
 		
 		if ($.browser.msie) {
+			container.find("*").attr("unselectable", "on");
 			for (var i = 1; i < 9; i++) {
 				slider.append("<div class='spectrum-ie-"+i+"'></div>");
 			}
