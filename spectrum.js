@@ -220,6 +220,11 @@
 		var maxWidth = 0;
 		function move(e) { 
 			if (dragging) {
+				// Mouseup happened outside of window
+				if ($.browser.msie && !(document.documentMode >= 9) && !e.button) {
+					return stop();
+				}
+				
 				e.dragX = Math.max(0, Math.min(e.pageX - offset.left, maxWidth));
 				e.dragY = Math.max(0, Math.min(e.pageY - offset.top, maxHeight));
 				
