@@ -6,10 +6,12 @@
 <link rel="stylesheet" type="text/css" href="spectrum.css">
 <style type='text/css'>
 	#docs {  }
-	#pick2-details { font: monospace; position:relative; top:5px; }
+	#pick2-details { font: monospace; }
 	#switch-current { float: left; position:relative; }
 	#switch-current .spectrum-container { position: relative; }
-	#docs-content { margin-left: 280px; padding: 10px; }
+	#docs-content { margin-left: 280px; padding: 10px; border:solid 5px #333; border-radius: 5px; }
+	.switch-current-output { display:block; margin:3px auto; width: 200px; text-align: center; }
+	#switch-current-rgb, #switch-current-hsv { display:none; }
 </style>
 </head>
 <body>
@@ -21,13 +23,16 @@
 <div id='docs'>
 	<div id='switch-current'>
 		<input type='text' name='color' id='pick1' />
+		<div id='switch-current-hsv' class='switch-current-output'></div>
+		<div id='switch-current-rgb' class='switch-current-output'></div>
+		<div id='switch-current-hex' class='switch-current-output'></div>
 	</div>
 	<div id='docs-content'>
 		<h2>No images</h2>
 		<p>Spectrum requires one JavaScript file and one CSS file.  No images required.</p>
 		
-		<h2>Browser support</h2>
-		<div>Browser support depends upon <a href='http://caniuse.com/#feat=css-gradients'>CSS gradient support</a>.  IE is handled using proprietary filters.</div>
+		<h2>Browser Support</h2>
+		<div>Browser support depends upon <a href='http://caniuse.com/#feat=css-gradients'>CSS gradient support</a>.  IE is handled using <a href='http://msdn.microsoft.com/en-us/library/ms532997(v=vs.85).aspx'>proprietary filters</a>.</div>
 		<ul>
 			<li>IE 6+</li>
 			<li>Chrome 4+</li>
@@ -36,13 +41,31 @@
 			<li>Opera 11.1+</li>
 		</ul>
 		
-		<h2>Usage modes</h2>
-		<p>You can use it flat (see the picker to the left).  This means that </p>
-		<p>Collapsed:
-		
-			<input type='text' name='color' id='pick2' />
-			<span id='pick2-details'></span>
+		<h2>Progressive Enhancement</h2>
+		<p>
+			You can call <code>spectrum()</code> on any element, but it is recommended to call it on an <code>input</code> element.  Spectrum will hide the input, then automatically copy the selected value back into the input as it changes, so you don't need to worry about that.  If you are using the results from a <code>form</code>, the server will see the selected color as if the user typed in the hex code manually.
 		</p>
+		
+		<h2>Usage modes</h2>
+		<h3>Flat versus Collapsed</h3>
+		<ul>
+			<li><strong>Flat</strong>: You can use it flat (see the picker to the left).  This means that it will always show up at full size, and be positioned as an inline-block element.</li>
+			<li><strong>Collapsed</strong>: A small div will take the place of the element, and the colorpicker will show up when the user clicks on it.  Here is an example of that:
+			<div style='margin-top:10px; text-align:center;'>
+				<input type='text' name='color' id='pick2' />
+			</div>
+			
+			</li>
+		</ul>
+		
+		<h2>Events</h2>
+		<ul>
+			<li>
+			<strong>move:</strong>
+			
+			</li>
+		</ul>
+		
 		
 		<h2>Skinning</h2>
 		<p>Since it is all built with HTML/CSS, you can skin it easily.  There are two parts to the <a href='https://github.com/bgrins/spectrum/blob/master/spectrum.css'>spectrum.css</a> file, the core rules (at the top of the file), and the themable rules (at the bottom).  Feel free to tweak these rules to make it look how you want.</p>
@@ -61,6 +84,10 @@ $("#pick1").spectrum({
     		'background-color': colors.hex,
     		'color': (colors.hsv.v < .5) ? 'white' : 'black'
     	});	
+    	$("#switch-current-hsv").text("hsv(" + colors.hsv.h + ", " + colors.hsv.s + ", " + colors.hsv.v + ");");
+    	$("#switch-current-rgb").text("rgb(" + colors.rgb.r + ", " + colors.rgb.g + ", " + colors.rgb.b + ");");
+    	$("#switch-current-hex").text(colors.hex);
+    	
     },
     close: function() {
        
@@ -71,10 +98,9 @@ $("#pick1").spectrum({
 });
 
 $("#pick2").spectrum({
-    color: "green",
+    color: "#556699",
     move: function(colors) {
-		$("#pick2-details").css('background-color', colors.hex).text(colors.hex);
-      
+    	$("#docs-content").css("border-color", colors.hex);    
     },
     close: function() {
        

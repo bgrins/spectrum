@@ -1,6 +1,6 @@
 (function() {
    
-   var replaceInput = "<div></div>";
+   var replaceInput = "<div class='spectrum-replacer'></div>";
    var markup = [
     "<div class='spectrum-container'>",
         "<div class='spectrum-color'><div class='spectrum-g1'><div class='spectrum-g2'><div class='spectrum-drag-helper'></div></div></div></div>",
