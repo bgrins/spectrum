@@ -1,10 +1,10 @@
 /***
-Spectrum:
-The No Hassle Colorpicker
-jQuery Plugin
+Spectrum: The No Hassle Colorpicker
+https://github.com/bgrins/spectrum
 
 Author: Brian Grinstead
-https://github.com/bgrins/spectrum
+License: MIT
+Requires: jQuery, spectrum.css
 ***/
 
 (function() {

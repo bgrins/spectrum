@@ -1,3 +1,11 @@
+/***
+Spectrum: The No Hassle Colorpicker
+https://github.com/bgrins/spectrum
+
+Author: Brian Grinstead
+License: MIT
+***/
+
 .spectrum-color { 
 	position:relative;
 }
@@ -18,7 +26,6 @@
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00CC9A81, endColorstr=#FF000000)";
     filter : progid:DXImageTransform.Microsoft.gradient(startColorstr='#00CC9A81', endColorstr='#FF000000');
 }
-
 .spectrum-drag-helper { 
 	position:absolute; 
 	top:0; 
@@ -82,7 +89,6 @@
     height:13%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff00ff', endColorstr='#ff0000');
 }
-
 .spectrum-slide-helper { 
 	position: absolute; 
 	top:0; 
