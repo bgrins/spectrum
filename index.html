@@ -21,7 +21,7 @@
 	#pick2-details { font: monospace; }
 	#switch-current { float: left; position:relative; }
 	#switch-current .spectrum-container { position: fixed; top:75px; left: 10px; }
-	#docs-content { margin-left: 280px; padding: 10px; border:solid 5px #333; border-radius: 5px; }
+	#docs-content { margin-left: 280px; padding: 10px; border:solid 10px #333; border-radius: 5px; }
 	.switch-current-output { display:none; margin:3px auto; width: 200px; text-align: center; }
 </style>
 </head>
@@ -106,7 +106,7 @@ $("#pick1").spectrum({
     move: function(colors) {
     	$("#docs-content").css({
     		'background-color': colors.hex,
-    		'color': (colors.hsv.v < .5) ? 'white' : 'black'
+    		'color': (colors.hsv.v < .5) ? '#ddd' : '#222'
     	});	
     	$("#switch-current-hsv").text("hsv(" + colors.hsv.h + ", " + colors.hsv.s + ", " + colors.hsv.v + ");");
     	$("#switch-current-rgb").text("rgb(" + colors.rgb.r + ", " + colors.rgb.g + ", " + colors.rgb.b + ");");
@@ -122,7 +122,7 @@ $("#pick1").spectrum({
 });
 
 $("#pick2").spectrum({
-    color: "#556699",
+    color: "#dd3333",
     move: function(colors) {
     	$("#docs-content").css("border-color", colors.hex);    
     },
