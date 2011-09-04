@@ -1,7 +1,7 @@
 <!doctype html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<title>Spectrum - The No Hassle Colorpicker</title>
+<title>Spectrum - The No Hassle JavaScript Colorpicker</title>
 <link rel="stylesheet" type="text/css" href="spectrum.css">
 <script type="text/javascript" src="jquery-1.6.2.js"></script>
 <script type="text/javascript" src="spectrum.js"></script>
@@ -109,7 +109,7 @@ $("#pick1").spectrum({
     	$("#docs-content").css({
     		'background-color': colors.hex,
     		'color': (colors.hsv.v < .5) ? '#ddd' : '#222'
-    	});	
+    	});
     	$("#switch-current-hsv").text("hsv(" + colors.hsv.h + ", " + colors.hsv.s + ", " + colors.hsv.v + ");");
     	$("#switch-current-rgb").text("rgb(" + colors.rgb.r + ", " + colors.rgb.g + ", " + colors.rgb.b + ");");
     	$("#switch-current-hex").text(colors.hex);
