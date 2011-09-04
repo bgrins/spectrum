@@ -294,6 +294,9 @@ Requires: jQuery, spectrum.css
 		return obj;
 	}
     
+    /**
+     * Define a jQuery plugin if possible
+     */
     if (typeof jQuery != "undefined") {
     	jQuery.fn.spectrum = function(opts) {
     	    return this.each(function() {
