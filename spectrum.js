@@ -14,6 +14,7 @@
 	    flat: false,
 	    showInput: true
 	},
+	spectrums = [],
 	trimLeft = /^[\s,#]+/,
 	trimRight = /\s+$/,
 	replaceInput = "<div class='spectrum-replacer'></div>",
@@ -50,6 +51,11 @@
     	].join("");
 	})();
     
+	function hideAll() {
+	    for (var i = 0; i < spectrums.length; i++) {
+	    	spectrums[i].hide();
+	    }
+	}
     
     function spectrum(element, o) {
 		
@@ -94,20 +100,19 @@
 		
 		visibleElement.click(function(e) {
 			(visible) ? hide() : show();
-			
-			// Need to prevent the event from causing a click on the document,
-			// which would cause the picker to hide, even if you were clicking on it
 			e.stopPropagation();
 		});
 		container.click(stopPropagation);
 		
 		textInput.change(function() {
-		console.log("change");
 			set($(this).val());
 		});
 		
         function show() {
 			if (visible) { return; }
+			
+			hideAll();
+			
 			visible = true;
 			
 			$(doc).bind("click", hide);
@@ -128,6 +133,7 @@
             
             doMove();
         }
+		
 		
 		function hide() {
 			if (!visible || opts.flat) { return; }
@@ -224,12 +230,16 @@
 		
 		set(opts.color);
 		
-		return {
+		var spect = {
 			show: show,
 			hide: hide,
 			set: set,
 			get: get
 		};
+		
+		spect.id = spectrums.push(spect) - 1;
+		
+		return spect;
     }
     
     /**
@@ -343,16 +353,15 @@
      * Define a jQuery plugin if possible
      */
     if (typeof jQuery != "undefined") {
-    	var jQuerySpectrums = [];
     	jQuery.fn.spectrum = function(opts, extra) {
     		
     		if (typeof opts == "string") {
     			if (opts == "get") {
-    				return jQuerySpectrums[this.eq(0).data("spectrum.id")].get();
+    				return spectrums[this.eq(0).data("spectrum.id")].get();
     			}
     			
     			return this.each(function() {
-    				var spect = jQuerySpectrums[$(this).data("spectrum.id")];
+    				var spect = spectrums[$(this).data("spectrum.id")];
     				if (opts == "show") { spect.show(); }
     				if (opts == "hide") { spect.hide(); }
     				if (opts == "set")  { spect.set(extra); }
@@ -361,8 +370,8 @@
     		
     		// Initializing a new one
     	    return this.each(function() {
-    	    	var spect = spectrum(this, opts);    	    	
-    	    	$(this).data("spectrum.id", jQuerySpectrums.push(spect) - 1);
+    	    	var spect = spectrum(this, opts);
+    	    	$(this).data("spectrum.id", spect.id);
     	    }); 
     	};
     }
