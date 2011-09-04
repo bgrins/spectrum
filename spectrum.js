@@ -89,7 +89,7 @@ Requires: jQuery, spectrum.css
 			if (visible) { return; }
 			visible = true;
 			
-			$(doc).bind("click", docClick);
+			$(doc).bind("click", hide);
 			
 			if (!opts.flat) {
 				var elOffset = visibleElement.offset();
@@ -103,32 +103,24 @@ Requires: jQuery, spectrum.css
             slideHeight = slider.height();
             
             updateUI();
-        };
+        }
 		
 		function hide() {
 			if (!visible || opts.flat) { return; }
 			visible = false;
 			
-			$(doc).unbind("click", docClick);
-            container.hide();    
-		
-		};
+			$(doc).unbind("click", hide);
+            container.hide();
+		}
 		
 		function set(color) {
 			setColor(color);
-		};
-		
+		}
 		
 		visibleElement.click(function(e) {
 			(visible) ? hide() : show();
 			e.stopPropagation();
 		});
-        
-        /* DOM event handlers */
-		
-		function docClick() {
-			hide();
-		}
 		
 		function updateUI() {
 			var h = currentHue;
