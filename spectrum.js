@@ -51,15 +51,9 @@ Requires: jQuery, spectrum.css
     
     function spectrum(element, o) {
 		
-        var spect = { },
-        	opts = extend({ }, defaultOpts, o),
+        var opts = extend({ }, defaultOpts, o),
             doc = element.ownerDocument,
             body = doc.body,
-            container = $(markup),
-            dragger = container.find(".spectrum-color"),
-            dragHelper = container.find(".spectrum-drag-helper"),
-			slider = container.find(".spectrum-slide"),
-			slideHelper = container.find(".spectrum-slide-helper"),
 			visible = false,
 			dragWidth = 0,
             dragHeight = 0,
@@ -68,6 +62,12 @@ Requires: jQuery, spectrum.css
 			currentHue = 0,
 			currentSaturation = 0,
 			currentValue = 0;
+		
+        var container = $(markup, doc),
+            dragger = container.find(".spectrum-color"),
+            dragHelper = container.find(".spectrum-drag-helper"),
+			slider = container.find(".spectrum-slide"),
+			slideHelper = container.find(".spectrum-slide-helper");
 
 		if ($.browser.msie) {
 			container.find("*").attr("unselectable", "on");
