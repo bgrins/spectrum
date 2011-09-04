@@ -225,6 +225,10 @@
 			"background": "transparent"
 		});
 		
+		function prevent(e) {
+			e.stopPropagation();
+			e.preventDefault();
+		}
 		function move(e) { 
 			if (dragging) {
 				// Mouseup happened outside of window
@@ -251,7 +255,9 @@
 					offset = $(element).offset();
 					$(doc).bind({ 
 						"mouseup": stop,
-						"mousemove": move
+						"mousemove": move,
+						"selectstart": prevent,
+						"dragstart": prevent
 					});
 					
 					move(e);
@@ -260,7 +266,11 @@
 		}
 		function stop() { 
 			if (dragging) { 
-				$(doc).unbind("mouseup", stop);
+				$(doc).unbind({
+					"mouseup": stop,
+					"selectstart": prevent,
+					"dragstart": prevent
+				});
 				helper.remove();
 				onstop.apply(element, arguments); 
 			}
