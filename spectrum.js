@@ -113,7 +113,7 @@
             slideHeight = slider.height();
             slideHelperHelperHeight = slideHelper.height();
             
-            updateUI();
+            doMove();
         }
 		
 		function hide() {
@@ -132,10 +132,10 @@
 			currentSaturation = newHsv.s;
 			currentValue = newHsv.v;
 			
-	        updateUI();
+	        doMove();
 		}
 		
-		function updateUI() {
+		function doMove() {
 			var h = currentHue;
 			var s = currentSaturation;
             var v = currentValue;
@@ -171,20 +171,18 @@
 			var realColor = tinycolor({ h: h, s: s, v: v });
 			visibleElement.css("background-color", realColor.toHexCss());
 			
-			// Process callback with the actual selected color
 			opts.move({ hsv: realColor.toHsv(), rgb: realColor.toRgb(), hex: realColor.toHexCss() });
 		}
 		
-		
 		draggable(slider, function(dragX, dragY) {
 			currentHue = (dragY / slideHeight);
-			updateUI();
+			doMove();
 		});
 		
 		draggable(dragger, function(dragX, dragY) {
 			currentSaturation = dragX / dragWidth;
 			currentValue = (dragHeight -  dragY) / dragHeight;
-			updateUI();
+			doMove();
 		});
 		
 		
