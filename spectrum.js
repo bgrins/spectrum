@@ -218,7 +218,7 @@ Requires: jQuery, spectrum.css
 		var offset = { };
 		var maxHeight = 0;
 		var maxWidth = 0;
-		
+		var IE = $.browser.msie;
 		var HELPER_SIZE = 100;
 		var helper = $("<div></div>").css({
 			"position": "absolute",
@@ -231,7 +231,7 @@ Requires: jQuery, spectrum.css
 		function move(e) { 
 			if (dragging) {
 				// Mouseup happened outside of window
-				if ($.browser.msie && !(document.documentMode >= 9) && !e.button) {
+				if (IE && !(document.documentMode >= 9) && !e.button) {
 					return stop();
 				}
 				
