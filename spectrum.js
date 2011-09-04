@@ -19,21 +19,33 @@ Requires: jQuery, spectrum.css
 	trimLeft = /^[\s,#]+/,
 	trimRight = /\s+$/,
 	replaceInput = "<div class='spectrum-replacer'></div>",
-	markup = [
-	    "<div class='spectrum-container'>",
-	        "<div class='spectrum-color'><div class='spectrum-g1'><div class='spectrum-g2'><div class='spectrum-drag-helper'></div></div></div></div>",
-	        "<div class='spectrum-slide'><div class='spectrum-slide-helper'></div></div>",
-	        "<br style='clear:both;' />",
-	    "</div>"
-    ].join(""),
-    ieSliders = (function() {
-    	// IE does not support gradients with multiple stops, so we need to simulate    	
-    	//  that for the rainbow slider with 8 divs that each have a single gradient.
-		var sliders = [];
-		for (var i = 1; i < 9; i++) {
-		    sliders.push("<div class='spectrum-ie-"+i+"'></div>");
+	markup = (function() {
+		
+		// IE does not support gradients with multiple stops, so we need to simulate            
+		//  that for the rainbow slider with 8 divs that each have a single gradient
+		var gradientFix = "";
+		if ($.browser.msie) {
+			for (var i = 1; i < 9; i++) {
+			    gradientFix += "<div class='spectrum-ie-" + i + "'></div>";
+			}
 		}
-		return sliders.join('');
+		
+		return [
+	    	"<div class='spectrum-container'>",
+	    	    "<div class='spectrum-color'>",
+	    	    	"<div class='spectrum-g1'>",
+	    	    		"<div class='spectrum-g2'>",
+	    	    			"<div class='spectrum-drag-helper'></div>",
+	    	    		"</div>",
+	    	    	"</div>",
+	    	    "</div>",
+	    	    "<div class='spectrum-slide'>",
+	    	    	"<div class='spectrum-slide-helper'></div>",
+	    	    	gradientFix,
+	    	    "</div>",
+	    	    "<br style='clear:both;' />",
+	    	"</div>"
+    	].join("");
 	})();
     
     
@@ -61,7 +73,6 @@ Requires: jQuery, spectrum.css
 
 		if ($.browser.msie) {
 			container.find("*").attr("unselectable", "on");
-			slider.append(ieSliders);
 		}	
 		
         var boundElement = $(element);
