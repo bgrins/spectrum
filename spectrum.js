@@ -140,31 +140,38 @@
 			var s = currentSaturation;
             var v = currentValue;
             
-            // Update dragger UI
+            // Where to show the little circle in that displays your current selected color
             var dragX = s * dragWidth;
             var dragY = dragHeight - (v * dragHeight);
-            
-            dragX = Math.max(-dragHelperHeight, Math.min(dragWidth - dragHelperHeight, dragX - dragHelperHeight));
-            dragY = Math.max(-dragHelperHeight, Math.min(dragHeight - dragHelperHeight, dragY - dragHelperHeight));
-            
+            dragX = Math.max(
+            	-dragHelperHeight, 
+            	Math.min(dragWidth - dragHelperHeight, dragX - dragHelperHeight)
+            );
+            dragY = Math.max(
+            	-dragHelperHeight, 
+            	Math.min(dragHeight - dragHelperHeight, dragY - dragHelperHeight)
+            );
             dragHelper.css({
                 "top": dragY,
                 "left": dragX
             });
 			
-			// Update slider UI
+            // Where to show the bar that displays your current selected hue
 			var slideY = (currentHue) * slideHeight;
             slideHelper.css({
                 "top": slideY - slideHelperHeight
             });
             
-			// Update dragger background color
+			// Update dragger background color ("flat" because gradients take care of saturation
+			// and value).
 			var flatColor = tinycolor({ h: h, s: 1, v: 1});
 			dragger.css("background-color", flatColor.toHexCss());
 			
+			// Update the replaced elements background color (with actual selected color)
 			var realColor = tinycolor({ h: h, s: s, v: v });
 			visibleElement.css("background-color", realColor.toHexCss());
 			
+			// Process callback with the actual selected color
 			opts.move({ hsv: realColor.toHsv(), rgb: realColor.toRgb(), hex: realColor.toHexCss() });
 		}
 		
