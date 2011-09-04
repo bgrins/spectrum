@@ -85,6 +85,15 @@ Requires: jQuery, spectrum.css
 		
 		visibleElement.addClass("spectrum-element");
 		
+		visibleElement.click(function(e) {
+			(visible) ? hide() : show();
+			
+			// Need to prevent the event from causing a click on the document,
+			// which would cause the picker to hide, even if you were clicking on it
+			e.stopPropagation();
+		});
+		container.click(stopPropagation);
+		
         function show() {
 			if (visible) { return; }
 			visible = true;
@@ -116,11 +125,6 @@ Requires: jQuery, spectrum.css
 		function set(color) {
 			setColor(color);
 		}
-		
-		visibleElement.click(function(e) {
-			(visible) ? hide() : show();
-			e.stopPropagation();
-		});
 		
 		function updateUI() {
 			var h = currentHue;
@@ -158,10 +162,6 @@ Requires: jQuery, spectrum.css
 			opts.move({ hsv: realHSV, rgb: realRGB, hex: realRGB.hex });
 		}
 		
-		// Don't let click event go up to document
-		container.bind("click", function(e) {
-			e.stopPropagation();
-		});
 		
 		draggable(slider, function(dragX, dragY) {
 			currentHue = (dragY / slideHeight) * 360;
@@ -231,6 +231,14 @@ Requires: jQuery, spectrum.css
 			set: set
 		};
     }
+    
+    /**
+     * stopPropagation - makes the code only doing this a little easier to read in line
+     */
+	function stopPropagation(e) {
+		e.stopPropagation();
+	}
+		
 	
     /**
      * Lightweight drag helper.  Handles containment within the element, so that
