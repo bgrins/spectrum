@@ -123,7 +123,14 @@ Requires: jQuery, spectrum.css
 		}
 		
 		function set(color) {
-			setColor(color);
+			var newColor = tinycolor(color);
+			var newHsv = newColor.toHsv();
+			
+	        currentHue = newHsv.h;
+			currentSaturation = newHsv.s;
+			currentValue = newHsv.v;
+			
+	        updateUI();
 		}
 		
 		function updateUI() {
@@ -173,18 +180,6 @@ Requires: jQuery, spectrum.css
 			updateUI();
 		});
 		
-		
-		function setColor(color) {
-			var newColor = tinycolor(color);
-			var newHsv = newColor.toHsv();
-			
-	        currentHue = newHsv.h;
-			currentSaturation = newHsv.s;
-			currentValue = newHsv.v;
-			
-	        updateUI();
-        }
-        
 		
 		if (opts.flat) {
 			boundElement.after(container.addClass("spectrum-flat")).hide();
