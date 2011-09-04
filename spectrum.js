@@ -145,7 +145,7 @@ Requires: jQuery, spectrum.css
             });
 			
 			// Update slider UI
-			var slideY = (currentHue / 360) * slideHeight;
+			var slideY = (currentHue) * slideHeight;
             var slideHelperHeight = slideHelper.height() / 2;
             slideHelper.css({
                 "top": slideY - slideHelperHeight
@@ -163,9 +163,10 @@ Requires: jQuery, spectrum.css
 		
 		
 		draggable(slider, function(dragX, dragY) {
-			currentHue = (dragY / slideHeight) * 360;
+			currentHue = (dragY / slideHeight);
 			updateUI();
 		});
+		
 		draggable(dragger, function(dragX, dragY) {
 			currentSaturation = dragX / dragWidth;
 			currentValue = (dragHeight -  dragY) / dragHeight;
@@ -176,8 +177,8 @@ Requires: jQuery, spectrum.css
 		function setColor(color) {
 			var newColor = tinycolor(color);
 			var newHsv = newColor.toHsv();
-			console.log(newHsv.h, color)
-	        currentHue = newHsv.h * 360;;
+			
+	        currentHue = newHsv.h;
 			currentSaturation = newHsv.s;
 			currentValue = newHsv.v;
 			
@@ -208,8 +209,7 @@ Requires: jQuery, spectrum.css
 	function stopPropagation(e) {
 		e.stopPropagation();
 	}
-		
-	
+
     /**
      * Lightweight drag helper.  Handles containment within the element, so that
      * when dragging, the x is within [0,element.width] and y is within [0,element.height]
