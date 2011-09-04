@@ -292,7 +292,7 @@ Requires: jQuery, spectrum.css
 			}
 		}
 		return obj;
-	};
+	}
     
     if (typeof jQuery != "undefined") {
     	jQuery.fn.spectrum = function(opts) {
