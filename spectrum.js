@@ -1,11 +1,8 @@
-/***
-Spectrum: The No Hassle Colorpicker
-https://github.com/bgrins/spectrum
-
-Author: Brian Grinstead
-License: MIT
-Requires: jQuery, spectrum.css
-***/
+// Spectrum: The No Hassle Colorpicker
+// https://github.com/bgrins/spectrum
+// Author: Brian Grinstead
+// License: MIT
+// Requires: jQuery, spectrum.css
 
 (function() {
    

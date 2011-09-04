@@ -5,6 +5,8 @@ I wanted a colorpicker that didn't require images, and that had an API that made
 
 I started using canvas, and switched to CSS gradients, since it turned out to be easier to manage, and worked better across browsers.
 
+Currently, the minified JavaScript is less than 10KB.
+
 See demo and docs: http://bgrins.github.com/spectrum/
 
 Thanks to https://github.com/DavidDurman/FlexiColorPicker for some inspiration and gradient constants
