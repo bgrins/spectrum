@@ -60,8 +60,6 @@ Requires: jQuery, spectrum.css
             dragHelper = container.find(".spectrum-drag-helper"),
 			slider = container.find(".spectrum-slide"),
 			slideHelper = container.find(".spectrum-slide-helper"),
-            dragging = false,
-			sliding = false,
 			visible = false,
 			dragWidth = 0,
             dragHeight = 0,
