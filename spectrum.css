@@ -8,6 +8,7 @@ License: MIT
 
 .spectrum-color { 
 	position:relative;
+	float:left;
 }
 .spectrum-g1 {
 	background-image: -webkit-gradient(linear,  0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
@@ -35,9 +36,7 @@ License: MIT
 	-o-user-select: none;
 	user-select: none;
 }
-.spectrum-color { 
-	float:left;
-}
+
 .spectrum-container { 
 	position:absolute; 
 	top:0; 
