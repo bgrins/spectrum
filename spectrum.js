@@ -11,7 +11,8 @@
 	    move: function() { },
 	    close: function() { },
 	    open: function() { },
-	    flat: false
+	    flat: false,
+	    showInput: true
 	},
 	trimLeft = /^[\s,#]+/,
 	trimRight = /\s+$/,
@@ -41,6 +42,10 @@
 	    	    	gradientFix,
 	    	    "</div>",
 	    	    "<br style='clear:both;' />",
+	    	    "<div class='spectrum-input-container'>",
+	    	    	"<input type='text' class='spectrum-input' />",
+	    	    	"<span class='spectrum-button'>Go</span>",
+	    	    "</div>",
 	    	"</div>"
     	].join("");
 	})();
@@ -66,7 +71,8 @@
             dragger = container.find(".spectrum-color"),
             dragHelper = container.find(".spectrum-drag-helper"),
 			slider = container.find(".spectrum-slide"),
-			slideHelper = container.find(".spectrum-slide-helper");
+			slideHelper = container.find(".spectrum-slide-helper"),
+			textInput = container.find(".spectrum-input");
 
 		if ($.browser.msie) {
 			container.find("*").attr("unselectable", "on");
@@ -94,6 +100,11 @@
 			e.stopPropagation();
 		});
 		container.click(stopPropagation);
+		
+		textInput.change(function() {
+		console.log("change");
+			set($(this).val());
+		});
 		
         function show() {
 			if (visible) { return; }
@@ -182,6 +193,8 @@
 				$(input).val(realColor.toHexCss());
 			}
 			
+			textInput.val(realColor.toHslCss())
+			
 			opts.move({ hsv: realColor.toHsv(), rgb: realColor.toRgb(), hex: realColor.toHexCss() });
 		}
 		
@@ -203,6 +216,10 @@
 		}
 		else {
         	$(body).append(container.hide());
+		}
+		
+		if (!opts.showInput) {
+			container.addClass("spectrum-input-disabled");
 		}
 		
 		set(opts.color);

@@ -84,6 +84,20 @@
 			
 			</li>
 		</ul>
+		<h3>Show Input</h3>
+		
+		<ul>
+			<li><strong>true</strong> (default)</li>
+			<li><strong>false</strong>
+			
+			The input that allows free form typing of color from the user can be hidden if desired.
+			If you set <code>opts.showInput</code> to false, it will not show up.
+			<div style='margin-top:10px; text-align:center;'>
+				<input type='text' name='color3' id='pick3' />
+			</div>
+			</li>
+			
+		</ul>
 		
 		<h2>Options (haven't quite finished documenting this part yet)</h2>
 		<ul>
@@ -134,6 +148,20 @@ $("#pick1").spectrum({
 
 $("#pick2").spectrum({
     color: "#dd3333",
+    move: function(colors) {
+    	$("#docs-content").css("border-color", colors.hex);    
+    },
+    close: function() {
+       
+    },
+    open: function() {
+       
+    } 
+});
+
+$("#pick3").spectrum({
+    color: "#dd33dd",
+    showInput: false,
     move: function(colors) {
     	$("#docs-content").css("border-color", colors.hex);    
     },

@@ -6,6 +6,14 @@ Author: Brian Grinstead
 License: MIT
 ***/
 
+.spectrum-container { 
+	position:absolute; 
+	top:0; 
+	left:0; 
+}
+.spectrum-container.spectrum-input-disabled .spectrum-input-container {
+	display:none;
+}
 .spectrum-color { 
 	position:relative;
 	float:left;
@@ -35,12 +43,6 @@ License: MIT
 	-moz-user-select: none;
 	-o-user-select: none;
 	user-select: none;
-}
-
-.spectrum-container { 
-	position:absolute; 
-	top:0; 
-	left:0; 
 }
 .spectrum-container.spectrum-flat {
 	position:static;
@@ -100,14 +102,32 @@ License: MIT
 }
 
 /* Themable options */
-.spectrum-g2, .spectrum-g1, .spectrum-slide { 
-	width: 200px; 
-	height: 200px; 
-}
 .spectrum-container { 
 	background-color: #333; 
 	padding:10px; 
 	border-radius: 5px; 
+	font-family: Verdana Tahoma sans-serif;
+}
+.spectrum-g2, .spectrum-g1, .spectrum-slide { 
+	width: 200px; 
+	height: 200px; 
+}
+.spectrum-input {
+	height: 20px;
+	font-size: 18px;
+	border: 2px inset;
+	padding: 1px;
+	margin: 0;
+	margin-top: 3px;
+	width: 194px;
+}
+.spectrum-button {
+	margin-top: 3px;
+	display:inline-block;
+	height: 20px;
+	vertical-align: middle;
+	text-align: center;
+	background: #ddd;
 }
 .spectrum-drag-helper {
    border-radius: 5px; 
@@ -115,7 +135,7 @@ License: MIT
    width: 5px; 
    border: solid black 3px; pointer: cursor;
 }
-.spectrum-slide  { 
+.spectrum-slide, .spectrum-button  { 
 	margin-left: 10px; 
 	width: 30px; 
 }
