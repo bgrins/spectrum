@@ -25,7 +25,16 @@ Requires: jQuery, spectrum.css
 	        "<div class='spectrum-slide'><div class='spectrum-slide-helper'></div></div>",
 	        "<br style='clear:both;' />",
 	    "</div>"
-    ].join("");
+    ].join(""),
+    ieSliders = (function() {
+    	// IE does not support gradients with multiple stops, so we need to simulate    	
+    	//  that for the rainbow slider with 8 divs that each have a single gradient.
+		var sliders = [];
+		for (var i = 1; i < 9; i++) {
+		    sliders.push("<div class='spectrum-ie-"+i+"'></div>");
+		}
+		return sliders.join('');
+	})();
     
     
     function spectrum(element, o) {
@@ -50,12 +59,10 @@ Requires: jQuery, spectrum.css
 			currentSaturation = 0,
 			currentValue = 0;
 			
-		
+
 		if ($.browser.msie) {
 			container.find("*").attr("unselectable", "on");
-			for (var i = 1; i < 9; i++) {
-				slider.append("<div class='spectrum-ie-"+i+"'></div>");
-			}
+			slider.append(ieSliders);
 		}	
 		
         var boundElement = $(element);
