@@ -294,16 +294,19 @@ Requires: jQuery, spectrum.css
 		return obj;
 	};
     
-    $.fn.spectrum = function(opts) {
-        return this.each(function() {
-        	var spect = spectrum(this, opts);
-        	$(this).bind({
-        		"spectrum.show": spect.show,
-        		"spectrum.hide": spect.hide,
-        		"spectrum.set":  function(e, color) { spect.set(color); }
-        	});
-        }); 
-    };
+    if (typeof jQuery != "undefined") {
+    	jQuery.fn.spectrum = function(opts) {
+    	    return this.each(function() {
+    	    	var spect = spectrum(this, opts);
+    	    	jQuery(this).bind({
+    	    		"spectrum.show": spect.show,
+    	    		"spectrum.hide": spect.hide,
+    	    		"spectrum.set":  function(e, color) { spect.set(color); }
+    	    	});
+    	    }); 
+    	};
+    }
+    
     window.spectrum = spectrum;
 
 })();
