@@ -72,11 +72,13 @@
 			container.find("*").attr("unselectable", "on");
 		}	
 		
+		var input = false;
         var boundElement = $(element);
 		var visibleElement;
 		if (boundElement.is("input") && !opts.flat) {
 			visibleElement = $(replaceInput);
 			boundElement.hide().after(visibleElement);
+			input = $(element);
 		}
 		else {
 			visibleElement = $(element);
@@ -171,6 +173,11 @@
 			var realColor = tinycolor({ h: h, s: s, v: v });
 			visibleElement.css("background-color", realColor.toHexCss());
 			
+			// Update the input as it changes happen
+			if (input) {
+				$(input).val(realColor.toHexCss());
+			}
+			
 			opts.move({ hsv: realColor.toHsv(), rgb: realColor.toRgb(), hex: realColor.toHexCss() });
 		}
 		
@@ -195,6 +202,7 @@
 		}
 		
 		set(opts.color);
+		
 		
 		return {
 			show: show,
