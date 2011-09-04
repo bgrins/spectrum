@@ -275,7 +275,8 @@
 					dragging = true; 
 					maxHeight = $(element).height();
 					maxWidth = $(element).width();
-					offset = $(element).offset();					
+					offset = $(element).offset();
+					
 					$(doc).bind(duringDragEvents);
 					
 					move(e);
