@@ -235,7 +235,8 @@ Requires: jQuery, spectrum.css
 			"position": "absolute",
 			"width": HELPER_SIZE,
 			"height": HELPER_SIZE,
-			"z-index": 1000
+			"z-index": 1000,
+			"background": "transparent"
 		});
 		
 		function move(e) { 
