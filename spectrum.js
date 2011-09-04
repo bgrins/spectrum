@@ -216,30 +216,46 @@
 		var maxHeight = 0;
 		var maxWidth = 0;
 		var IE = $.browser.msie;
-		var HELPER_SIZE = 100;
-		var helper = $("<div></div>").css({
-			"position": "absolute",
-			"width": HELPER_SIZE,
-			"height": HELPER_SIZE,
-			"z-index": 1000,
-			"background": "transparent"
-		});
+		var hasTouch = (function() {
+				var ret, elem = document.createElement('div');
+				ret = ('ontouchstart' in elem);
+				elem = null;
+				return ret;
+		}());
 		
+		var duringDragEvents = { };
+		duringDragEvents["selectstart"] = prevent;
+		duringDragEvents["dragstart"] = prevent;
+		duringDragEvents[(hasTouch ? "touchmove" : "mousemove")] = move;
+		duringDragEvents[(hasTouch ? "touchend" : "mouseup")] = stop;
+
 		function prevent(e) {
-			e.stopPropagation();
-			e.preventDefault();
+			if (e.stopPropagation) {
+				e.stopPropagation();
+			}
+			if (e.preventDefault) {
+				e.preventDefault();
+			}
+			e.returnValue = false;
 		}
-		function move(e) { 
+		
+		function move(e) {
 			if (dragging) {
 				// Mouseup happened outside of window
 				if (IE && !(document.documentMode >= 9) && !e.button) {
 					return stop();
 				}
 				
-				helper.offset({top:e.pageY - (HELPER_SIZE/2), left: e.pageX - (HELPER_SIZE/2)});
+				var pageX = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX;
+				var pageY = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY;
 				
-				var dragX = Math.max(0, Math.min(e.pageX - offset.left, maxWidth));
-				var dragY = Math.max(0, Math.min(e.pageY - offset.top, maxHeight));
+				var dragX = Math.max(0, Math.min(pageX - offset.left, maxWidth));
+				var dragY = Math.max(0, Math.min(pageY - offset.top, maxHeight));
+				
+				if (hasTouch) {
+					// stop scrolling in iOS
+					prevent(e);
+				}
 				
 				onmove.apply(element, [dragX, dragY]); 
 			} 
@@ -248,17 +264,11 @@
 			var rightclick = (e.which) ? (e.which == 3) : (e.button == 2);
 			if (!rightclick && !dragging) { 
 				if (onstart.apply(element, arguments) !== false) {
-					helper.appendTo("body");
 					dragging = true; 
 					maxHeight = $(element).height();
 					maxWidth = $(element).width();
-					offset = $(element).offset();
-					$(doc).bind({ 
-						"mouseup": stop,
-						"mousemove": move,
-						"selectstart": prevent,
-						"dragstart": prevent
-					});
+					offset = $(element).offset();					
+					$(doc).bind(duringDragEvents);
 					
 					move(e);
 				}
@@ -266,18 +276,13 @@
 		}
 		function stop() { 
 			if (dragging) { 
-				$(doc).unbind({
-					"mouseup": stop,
-					"selectstart": prevent,
-					"dragstart": prevent
-				});
-				helper.remove();
+				$(doc).unbind(duringDragEvents);
 				onstop.apply(element, arguments); 
 			}
 			dragging = false; 
 		}
 	
-		$(element).bind("mousedown", start);
+		$(element).bind(hasTouch ? "touchstart" : "mousedown", start);
 	}	
 	
     
