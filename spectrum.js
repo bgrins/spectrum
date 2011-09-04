@@ -38,9 +38,9 @@ Requires: jQuery, spectrum.css
     
     
     function spectrum(element, o) {
-
-        var opts = extend({ }, defaultOpts, o),
-        	spect = { },
+		
+        var spect = { },
+        	opts = extend({ }, defaultOpts, o),
             doc = element.ownerDocument,
             body = doc.body,
             container = $(markup),
@@ -58,7 +58,6 @@ Requires: jQuery, spectrum.css
 			currentHue = 0,
 			currentSaturation = 0,
 			currentValue = 0;
-			
 
 		if ($.browser.msie) {
 			container.find("*").attr("unselectable", "on");
@@ -77,9 +76,7 @@ Requires: jQuery, spectrum.css
 		
 		visibleElement.addClass("spectrum-element");
 		
-		
-        /* Public API */
-        spect.show = function() {
+        function show() {
 			if (visible) { return; }
 			visible = true;
 			
@@ -99,7 +96,7 @@ Requires: jQuery, spectrum.css
             updateUI();
         };
 		
-		spect.hide = function() {
+		function hide() {
 			if (!visible || opts.flat) { return; }
 			visible = false;
 			
@@ -108,20 +105,20 @@ Requires: jQuery, spectrum.css
 		
 		};
 		
-		spect.set = function(color) {
+		function set(color) {
 			setColor(color);
 		};
 		
 		
 		visibleElement.click(function(e) {
-			(visible) ? spect.hide() : spect.show();
+			(visible) ? hide() : show();
 			e.stopPropagation();
 		});
         
         /* DOM event handlers */
 		
 		function docClick() {
-			spect.hide();
+			hide();
 		}
 		
 		function updateUI() {
@@ -219,14 +216,19 @@ Requires: jQuery, spectrum.css
 		
 		if (opts.flat) {
 			boundElement.after(container.addClass("spectrum-flat")).hide();
-			spect.show();
+			show();
 		}
 		else {
         	$(body).append(container.hide());
 		}
 		
-		spect.set(opts.color);
-		return spect;
+		set(opts.color);
+		
+		return {
+			show: show,
+			hide: hide,
+			set: set
+		};
     }
 	
     /**
