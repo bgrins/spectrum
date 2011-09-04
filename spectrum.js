@@ -137,6 +137,10 @@
 	        doMove();
 		}
 		
+		function get() {
+			return tinycolor({ h: currentHue, s: currentSaturation, v: currentValue });
+		}
+		
 		function doMove() {
 			var h = currentHue;
 			var s = currentSaturation;
@@ -170,7 +174,7 @@
 			dragger.css("background-color", flatColor.toHexCss());
 			
 			// Update the replaced elements background color (with actual selected color)
-			var realColor = tinycolor({ h: h, s: s, v: v });
+			var realColor = get();
 			visibleElement.css("background-color", realColor.toHexCss());
 			
 			// Update the input as it changes happen
@@ -203,11 +207,11 @@
 		
 		set(opts.color);
 		
-		
 		return {
 			show: show,
 			hide: hide,
-			set: set
+			set: set,
+			get: get
 		};
     }
     
@@ -322,14 +326,26 @@
      * Define a jQuery plugin if possible
      */
     if (typeof jQuery != "undefined") {
-    	jQuery.fn.spectrum = function(opts) {
+    	var jQuerySpectrums = [];
+    	jQuery.fn.spectrum = function(opts, extra) {
+    		
+    		if (typeof opts == "string") {
+    			if (opts == "get") {
+    				return jQuerySpectrums[this.eq(0).data("spectrum.id")].get();
+    			}
+    			
+    			return this.each(function() {
+    				var spect = jQuerySpectrums[$(this).data("spectrum.id")];
+    				if (opts == "show") { spect.show(); }
+    				if (opts == "hide") { spect.hide(); }
+    				if (opts == "set")  { spect.set(extra); }
+    			});
+    		}
+    		
+    		// Initializing a new one
     	    return this.each(function() {
-    	    	var spect = spectrum(this, opts);
-    	    	jQuery(this).bind({
-    	    		"spectrum.show": spect.show,
-    	    		"spectrum.hide": spect.hide,
-    	    		"spectrum.set":  function(e, color) { spect.set(color); }
-    	    	});
+    	    	var spect = spectrum(this, opts);    	    	
+    	    	$(this).data("spectrum.id", jQuerySpectrums.push(spect) - 1);
     	    }); 
     	};
     }
