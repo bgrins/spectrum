@@ -31,6 +31,7 @@ Requires: jQuery, spectrum.css
     function spectrum(element, o) {
 
         var opts = extend({ }, defaultOpts, o),
+        	spect = { },
             doc = element.ownerDocument,
             body = doc.body,
             container = $(markup),
@@ -48,6 +49,7 @@ Requires: jQuery, spectrum.css
 			currentHue = 0,
 			currentSaturation = 0,
 			currentValue = 0;
+			
 		
 		if ($.browser.msie) {
 			container.find("*").attr("unselectable", "on");
@@ -68,8 +70,9 @@ Requires: jQuery, spectrum.css
 		
 		visibleElement.addClass("spectrum-element");
 		
+		
         /* Public API */
-        boundElement.bind("spectrum.show", function() {
+        spect.show = function() {
 			if (visible) { return; }
 			visible = true;
 			
@@ -87,29 +90,31 @@ Requires: jQuery, spectrum.css
             slideHeight = slider.height();
             
             updateUI();
-        });
+        };
 		
-        boundElement.bind("spectrum.hide", function() {
+		spect.hide = function() {
 			if (!visible || opts.flat) { return; }
 			visible = false;
 			
 			$(doc).unbind("click", docClick);
             container.hide();    
-        });
 		
-        boundElement.bind("spectrum.set", function(e, c) {
-            setColor(c);
-        });
+		};
+		
+		spect.set = function(color) {
+			setColor(color);
+		};
+		
 		
 		visibleElement.click(function(e) {
-			boundElement.trigger(visible ? "spectrum.hide" : "spectrum.show");
+			(visible) ? spect.hide() : spect.show();
 			e.stopPropagation();
 		});
         
         /* DOM event handlers */
 		
 		function docClick() {
-			boundElement.trigger("spectrum.hide");
+			spect.hide();
 		}
 		
 		function updateUI() {
@@ -207,13 +212,14 @@ Requires: jQuery, spectrum.css
 		
 		if (opts.flat) {
 			boundElement.after(container.addClass("spectrum-flat")).hide();
-			boundElement.trigger("spectrum.show");
+			spect.show();
 		}
 		else {
         	$(body).append(container.hide());
 		}
 		
-        boundElement.trigger("spectrum.set", opts.color);
+		spect.set(opts.color);
+		return spect;
     }
 	
     /**
@@ -494,7 +500,12 @@ Requires: jQuery, spectrum.css
     
     $.fn.spectrum = function(opts) {
         return this.each(function() {
-            spectrum(this, opts);
+        	var spect = spectrum(this, opts);
+        	$(this).bind({
+        		"spectrum.show": spect.show,
+        		"spectrum.hide": spect.hide,
+        		"spectrum.set": spect.set
+        	});
         }); 
     };
     window.spectrum = spectrum;
