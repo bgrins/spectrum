@@ -54,8 +54,10 @@
 			visible = false,
 			dragWidth = 0,
             dragHeight = 0,
+            dragHelperHight = 0,
 			slideHeight = 0,
 			slideWidth = 0,
+			slideHelperHeight = 0,
 			currentHue = 0,
 			currentSaturation = 0,
 			currentValue = 0;
@@ -103,10 +105,13 @@
             	container.show().offset(elOffset);
             }
             
+            // Cache sizes on start
             dragWidth = dragger.width();
             dragHeight = dragger.height();
+            dragHelperHeight = dragHelper.height();
             slideWidth = slider.width();
             slideHeight = slider.height();
+            slideHelperHelperHeight = slideHelper.height();
             
             updateUI();
         }
@@ -136,7 +141,6 @@
             var v = currentValue;
             
             // Update dragger UI
-            var dragHelperHeight = dragHelper.height();
             var dragX = s * dragWidth;
             var dragY = dragHeight - (v * dragHeight);
             
@@ -150,11 +154,10 @@
 			
 			// Update slider UI
 			var slideY = (currentHue) * slideHeight;
-            var slideHelperHeight = slideHelper.height() / 2;
             slideHelper.css({
                 "top": slideY - slideHelperHeight
             });
-			
+            
 			// Update dragger background color
 			var flatColor = tinycolor({ h: h, s: 1, v: 1});
 			dragger.css("background-color", flatColor.toHexCss());
