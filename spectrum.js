@@ -54,7 +54,7 @@
 			visible = false,
 			dragWidth = 0,
             dragHeight = 0,
-            dragHelperHight = 0,
+            dragHelperHeight = 0,
 			slideHeight = 0,
 			slideWidth = 0,
 			slideHelperHeight = 0,
