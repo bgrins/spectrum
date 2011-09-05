@@ -110,9 +110,10 @@
 		
 		visibleElement.addClass("spectrum-element");
 		
-		visibleElement.click(function(e) {
+		visibleElement.bind("click touchstart", function(e) {
 			(visible) ? hide() : show();
 			e.stopPropagation();
+			e.preventDefault();
 		});
 		container.click(stopPropagation);
 		
@@ -129,7 +130,7 @@
 			
 			visible = true;
 			
-			$(doc).bind("click", hide);
+			$(doc).bind("click touchstart", hide);
 			
 			if (!opts.flat) {
 				var elOffset = visibleElement.offset();
@@ -325,14 +326,15 @@
 					return stop();
 				}
 				
-				var pageX = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX;
-				var pageY = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY;
+				var touches =  e.originalEvent.touches;
+				var pageX = touches ? touches[0].pageX : e.pageX;
+				var pageY = touches ? touches[0].pageY : e.pageY;
 				
 				var dragX = Math.max(0, Math.min(pageX - offset.left, maxWidth));
 				var dragY = Math.max(0, Math.min(pageY - offset.top, maxHeight));
 				
 				if (hasTouch) {
-					// stop scrolling in iOS
+					// Stop scrolling in iOS
 					prevent(e);
 				}
 				
@@ -341,6 +343,8 @@
 		}
 		function start(e) { 
 			var rightclick = (e.which) ? (e.which == 3) : (e.button == 2);
+			var touches =  e.originalEvent.touches;
+			
 			if (!rightclick && !dragging) { 
 				if (onstart.apply(element, arguments) !== false) {
 					dragging = true; 
@@ -350,9 +354,14 @@
 					
 					$(doc).bind(duringDragEvents);
 					
-					move(e);
+					if (!hasTouch) {
+						move(e);
+					}
+					else {
+						prevent(e);
+					}
 				}
-			} 
+			}
 		}
 		function stop() { 
 			if (dragging) { 
