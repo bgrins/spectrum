@@ -87,14 +87,16 @@ $("#picker").spectrum({
 		<h3>Flat versus Collapsed</h3>
 		<ul>
 			<li>
-			<strong>Flat</strong> (see the picker to the left):  This means that it will always show up at full size, and be positioned as an inline-block element.
-			</li>
-			<li>
-			<strong>Collapsed</strong>: A small div will take the place of the element, and the colorpicker will show up when the user clicks on it.  Here is an example of that:
+			<strong>Collapsed</strong>
+			<p>A small div will take the place of the element, and the colorpicker will show up when the user clicks on it.  Here is an example of that:</p>
 			<div class='example'>
 				<input type='text' name='color2' id='pick2' />
 			</div>
-			
+			</li>
+			<li>
+			<strong>Flat</strong> 
+			<p>See the fixed picker to the left for an example of this.  This means that it will always show up at full size, and be positioned as an inline-block element.
+			</p>
 			</li>
 		</ul>
 		
@@ -102,7 +104,7 @@ $("#picker").spectrum({
 		
 		<ul>
 			<li>
-			<strong>true</strong>
+			<strong>Show</strong>
 			
 			<p>You can add an input to allow free form typing.  The color parsing is very permissive in the allowed strings.  See <a href='https://github.com/bgrins/TinyColor'>TinyColor</a> for more details.
 			<div class='example'>
@@ -110,13 +112,14 @@ $("#picker").spectrum({
 			</div>
 			</li>
 			<li>
-			<strong>false</strong>  (default)
+			<strong>Hide</strong>
+			<p>The input allowing typing will not be displayed.</p>
 			
 			</li>
 			
 		</ul>
 		
-		<h2>Events (haven't quite finished documenting this part yet)</h2>
+		<h2>Events</h2>
 		
 <pre class='prettyprint'>
 $("#picker").spectrum({
@@ -129,7 +132,7 @@ $("#picker").spectrum({
 
 		<ul>
 			<li>
-			<strong>move:</strong>
+			<strong>move</strong>
 			<p>Called as the user moves around within the colorpicker</p>
 <pre class='prettyprint'>
 move: function(color) {				
@@ -138,7 +141,7 @@ move: function(color) {
 </pre>
 			</li>
 			<li>
-			<strong>hide:</strong>
+			<strong>hide</strong>
 			<p>Called after the colorpicker is hidden.  This happens when clicking outside of the picker while it is open.  Note, when any colorpicker on the page is shown it will hide any that are already open.  This event is ignored on a flat colorpicker.</p>
 <pre class='prettyprint'>
 hide: function(color) {				
@@ -147,7 +150,7 @@ hide: function(color) {
 </pre>
 			</li>
 			<li>
-			<strong>show:</strong>
+			<strong>show</strong>
 			<p>Called after the colorpicker is opened.  This is ignored on a flat colorpicker.  Note, when any colorpicker on the page is shown it will hide any that are already open.  </p>
 <pre class='prettyprint'>
 show: function(color) {				
@@ -156,7 +159,7 @@ show: function(color) {
 </pre>
 			</li>
 			<li>
-			<strong>beforeShow:</strong><span class='type'>event</span>
+			<strong>beforeShow</strong><span class='type'>event</span>
 			<p>You can prevent the colorpicker from showing up if you return false in the beforeShow event.  This event is ignored on a flat colorpicker.</p>
 <pre class='prettyprint'>
 beforeShow: function(color) {
