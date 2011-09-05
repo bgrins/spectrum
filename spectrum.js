@@ -9,7 +9,7 @@
 	var defaultOpts = {
 	    color: false,
 	    flat: false,
-	    showInput: true,
+	    showInput: false,
 	    beforeShow: function() { },
 	    move: function() { },
 	    close: function() { },

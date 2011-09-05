@@ -80,7 +80,7 @@ $("#basic").spectrum();
 <pre class='prettyprint'>
 $("#picker").spectrum({
 	flat: (true|<b>false</b>),
-	showInput: (<b>true</b>|false),
+	showInput: (true|<b>false</b>),
 	color: string
 });
 </pre>
@@ -97,19 +97,21 @@ $("#picker").spectrum({
 			
 			</li>
 		</ul>
+		
 		<h3>Show Input</h3>
 		
 		<ul>
 			<li>
-			<strong>true</strong> (default)</li>
-			<li>
-			<strong>false</strong>
+			<strong>true</strong>
 			
-			The input that allows free form typing of color from the user can be hidden if desired.
-			If you set <code class='prettyprint'>opts.showInput</code> to false, it will not show up.
+			<p>You can add an input to allow free form typing.  The color parsing is very permissive in the allowed strings.  See <a href='https://github.com/bgrins/TinyColor'>TinyColor</a> for more details.
 			<div class='example'>
 				<input type='text' name='color3' id='pick3' />
 			</div>
+			</li>
+			<li>
+			<strong>false</strong>  (default)
+			
 			</li>
 			
 		</ul>
@@ -211,7 +213,7 @@ $("#pick2").spectrum({
 
 $("#pick3").spectrum({
     color: "#dd33dd",
-    showInput: false,
+    showInput: true,
     move: function(color) {
     	$("#docs-content").css("border-color", color.toHexCss());    
     },
