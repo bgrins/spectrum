@@ -8,11 +8,12 @@
    
 	var defaultOpts = {
 	    color: "red",
+	    flat: false,
+	    showInput: true,
+	    beforeShow: function() { },
 	    move: function() { },
 	    close: function() { },
-	    open: function() { },
-	    flat: false,
-	    showInput: true
+	    open: function() { }
 	},
 	spectrums = [],
 	trimLeft = /^[\s,#]+/,
@@ -56,10 +57,21 @@
 	    	spectrums[i].hide();
 	    }
 	}
-    
+    function instanceOptions(o, callbackContext) {
+    	var opts = extend({ }, defaultOpts, o);
+    	opts.callbacks = {
+    		'move': bind(opts.move, callbackContext),
+    		'show': bind(opts.beforeShow, callbackContext),
+    		'hide': bind(opts.beforeShow, callbackContext),
+    		'beforeShow': bind(opts.beforeShow, callbackContext)
+    	};
+		
+    	return opts;
+    }
     function spectrum(element, o) {
 		
-        var opts = extend({ }, defaultOpts, o),
+        var opts = instanceOptions(o, element),
+        	callbacks = opts.callbacks,
             doc = element.ownerDocument,
             body = doc.body,
 			visible = false,
@@ -111,6 +123,8 @@
         function show() {
 			if (visible) { return; }
 			
+            if (callbacks.beforeShow(get()) === false) return;
+            
 			hideAll();
 			
 			visible = true;
@@ -132,6 +146,8 @@
             slideHelperHelperHeight = slideHelper.height();
             
             doMove();
+            
+            callbacks.show(get())
         }
 		
 		
@@ -141,6 +157,8 @@
 			
 			$(doc).unbind("click", hide);
             container.hide();
+            
+            callbacks.hide(get());
 		}
 		
 		function set(color) {
@@ -199,9 +217,8 @@
 				$(input).val(realColor.toHexCss());
 			}
 			
-			textInput.val(realColor.toHslCss())
-			
-			opts.move({ hsv: realColor.toHsv(), rgb: realColor.toRgb(), hex: realColor.toHexCss() });
+			textInput.val(realColor.toHexCss());
+			callbacks.move(realColor);
 		}
 		
 		draggable(slider, function(dragX, dragY) {
@@ -248,7 +265,19 @@
 	function stopPropagation(e) {
 		e.stopPropagation();
 	}
-
+    
+    /**
+     * Create a function bound to a given object
+     * Thanks to underscore.js
+     */
+	function bind (func, obj) {
+    	var slice = Array.prototype.slice;
+    	var args = slice.call(arguments, 2);
+    	return function() {
+      		return func.apply(obj, args.concat(slice.call(arguments)));
+      	}
+    }
+    
     /**
      * Lightweight drag helper.  Handles containment within the element, so that
      * when dragging, the x is within [0,element.width] and y is within [0,element.height]

@@ -128,47 +128,49 @@
 $("#pick1").spectrum({
 	flat: true,
     color: "#ddddff",
-    move: function(colors) {
+    move: function(color) {
+    	var hsv = color.toHsv();
+    	var rgb = color.toRgbCss();
+    	var hex = color.toHexCss();
     	$("#docs-content").css({
-    		'background-color': colors.hex,
-    		'color': (colors.hsv.v < .5) ? '#ddd' : '#222'
+    		'background-color': hex,
+    		'color': (hsv.v < .5) ? '#ddd' : '#222'
     	});
-    	$("#switch-current-hsv").text("hsv(" + colors.hsv.h + ", " + colors.hsv.s + ", " + colors.hsv.v + ");");
-    	$("#switch-current-rgb").text("rgb(" + colors.rgb.r + ", " + colors.rgb.g + ", " + colors.rgb.b + ");");
-    	$("#switch-current-hex").text(colors.hex);
+    	$("#switch-current-rgb").text(rgb);
+    	$("#switch-current-hex").text(hex);
     	
     },
-    close: function() {
+    show: function() {
        
     },
-    open: function() {
+    hide: function() {
        
-    } 
+    }
 });
 
 $("#pick2").spectrum({
     color: "#dd3333",
-    move: function(colors) {
-    	$("#docs-content").css("border-color", colors.hex);    
+    move: function(color) {
+    	$("#docs-content").css("border-color", color.toHexCss());    
     },
-    close: function() {
+    show: function() {
        
     },
-    open: function() {
+    hide: function() {
        
-    } 
+    }
 });
 
 $("#pick3").spectrum({
     color: "#dd33dd",
     showInput: false,
-    move: function(colors) {
-    	$("#docs-content").css("border-color", colors.hex);    
+    move: function(color) {
+    	$("#docs-content").css("border-color", color.toHexCss());    
     },
-    close: function() {
+    show: function() {
        
     },
-    open: function() {
+    hide: function() {
        
     } 
 });
