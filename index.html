@@ -21,7 +21,7 @@
 
 <div id='docs'>
 	<div id='switch-current'>
-		<input type='text' name='color1' id='pick1' value='green' />
+		<input type='text' name='color1' id='pick1' value='#ddddff' />
 		<div id='switch-current-hsv' class='switch-current-output'></div>
 		<div id='switch-current-rgb' class='switch-current-output'></div>
 		<div id='switch-current-hex' class='switch-current-output'></div>
@@ -57,21 +57,41 @@
 		<h2>Basic Usage</h2>
 		
 <pre class='prettyprint'>
-&lt;input type='text' value='red' id='picker' name='picker' /&gt;
+&lt;input type='text' value='orange' id='basic' name='basic' /&gt;
 </pre>
 	
 <pre class='prettyprint'>
 &lt;script&gt;
-$("#picker").spectrum();
+$("#basic").spectrum();
 &lt;/script&gt;
 </pre>
-	
-		<h2>Usage modes</h2>
+
+		<p>
+		That's it.  
+		The picker will be initialized with the value based on the input, and will update the input as the color is changed.  
+		Here is what it will look like: 
+		</p>
+		<div class='example'>
+		<input type='text' value='orange' id='basic' name='basic' />
+		</div>
+		
+		<h2>Options</h2>
+
+<pre class='prettyprint'>
+$("#picker").spectrum({
+	flat: (true|<b>false</b>),
+	showInput: (<b>true</b>|false),
+	color: string
+});
+</pre>
 		<h3>Flat versus Collapsed</h3>
 		<ul>
-			<li><strong>Flat</strong> (see the picker to the left):  This means that it will always show up at full size, and be positioned as an inline-block element.</li>
-			<li><strong>Collapsed</strong>: A small div will take the place of the element, and the colorpicker will show up when the user clicks on it.  Here is an example of that:
-			<div style='margin-top:10px; text-align:center;'>
+			<li>
+			<strong>Flat</strong> (see the picker to the left):  This means that it will always show up at full size, and be positioned as an inline-block element.
+			</li>
+			<li>
+			<strong>Collapsed</strong>: A small div will take the place of the element, and the colorpicker will show up when the user clicks on it.  Here is an example of that:
+			<div class='example'>
 				<input type='text' name='color2' id='pick2' />
 			</div>
 			
@@ -80,23 +100,35 @@ $("#picker").spectrum();
 		<h3>Show Input</h3>
 		
 		<ul>
-			<li><strong>true</strong> (default)</li>
-			<li><strong>false</strong>
+			<li>
+			<strong>true</strong> (default)</li>
+			<li>
+			<strong>false</strong>
 			
 			The input that allows free form typing of color from the user can be hidden if desired.
 			If you set <code class='prettyprint'>opts.showInput</code> to false, it will not show up.
-			<div style='margin-top:10px; text-align:center;'>
+			<div class='example'>
 				<input type='text' name='color3' id='pick3' />
 			</div>
 			</li>
 			
 		</ul>
 		
-		<h2>Options (haven't quite finished documenting this part yet)</h2>
+		<h2>Events (haven't quite finished documenting this part yet)</h2>
+		
+<pre class='prettyprint'>
+$("#picker").spectrum({
+	move: function(tinycolor) { },
+	show: function(tinycolor) { },
+	hide: function(tinycolor) { },
+	beforeShow: function(tinycolor) { },
+});
+</pre>
+
 		<ul>
 			<li>
-			<strong>move:</strong><span class='type'>event</span>
-			<p></p>
+			<strong>move:</strong>
+			<p>Called as the user moves around within the colorpicker</p>
 <pre class='prettyprint'>
 move: function(color) {				
 	color.toHexCss(); // #ff0000
@@ -104,8 +136,8 @@ move: function(color) {
 </pre>
 			</li>
 			<li>
-			<strong>hide:</strong><span class='type'>event</span>
-			<p></p>
+			<strong>hide:</strong>
+			<p>Called after the colorpicker is hidden.  This happens when clicking outside of the picker while it is open.  Note, when any colorpicker on the page is shown it will hide any that are already open.  This event is ignored on a flat colorpicker.</p>
 <pre class='prettyprint'>
 hide: function(color) {				
 	color.toHexCss(); // #ff0000
@@ -113,8 +145,8 @@ hide: function(color) {
 </pre>
 			</li>
 			<li>
-			<strong>show:</strong><span class='type'>event</span>
-			<p> </p>
+			<strong>show:</strong>
+			<p>Called after the colorpicker is opened.  This is ignored on a flat colorpicker.  Note, when any colorpicker on the page is shown it will hide any that are already open.  </p>
 <pre class='prettyprint'>
 show: function(color) {				
 	color.toHexCss(); // #ff0000
@@ -123,7 +155,7 @@ show: function(color) {
 			</li>
 			<li>
 			<strong>beforeShow:</strong><span class='type'>event</span>
-			<p>Can prevent the colorpicker from showing up if you return false in the beforeShow event.</p>
+			<p>You can prevent the colorpicker from showing up if you return false in the beforeShow event.  This event is ignored on a flat colorpicker.</p>
 <pre class='prettyprint'>
 beforeShow: function(color) {
 	return false;
@@ -190,6 +222,9 @@ $("#pick3").spectrum({
        
     } 
 });
+
+
+$("#basic").spectrum();
 
 prettyPrint();
 </script>

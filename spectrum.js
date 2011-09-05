@@ -7,7 +7,7 @@
 (function() {
    
 	var defaultOpts = {
-	    color: "red",
+	    color: false,
 	    flat: false,
 	    showInput: true,
 	    beforeShow: function() { },
@@ -245,7 +245,10 @@
 			container.addClass("spectrum-input-disabled");
 		}
 		
-		set(opts.color);
+		var initialColor = opts.color || (boundElement.is("input") && boundElement.val());
+		if (!!initialColor) {
+			set(initialColor);
+		}
 		
 		var spect = {
 			show: show,
