@@ -1,0 +1,25 @@
+
+
+/* Styles for the demo page only.  See spectrum.css for the actual colorpicker styles */
+html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+body { margin: 0; font-size: 14px; line-height: 1.231; }
+body, button, input, select, textarea { font-family: Verdana sans-serif; color: #222; }
+h1 { font-family: Tahoma; font-size: 2em; margin: 0; padding:0; font-weight: lighter; }
+#header { background: #f3deae; padding: 3px; border-bottom: solid 1px #fee;}
+#goals { margin-left: 10px; border-left: solid 2px #eee; padding-left: 10px; }
+a { color: #00e; }
+a:visited { color: #009; }
+a:hover { color: #06e; }
+a:focus { outline: thin dotted; }
+#header h1 { float:left; }
+#links { float:right; text-align: right; }
+#docs { padding:10px;  }
+#pick2-details { font: monospace; }
+#switch-current { float: left; position:relative; }
+#switch-current .spectrum-container { position: fixed; top:75px; left: 10px; }
+#docs-content { margin-left: 280px; padding: 10px; border:solid 10px #333; border-radius: 5px; }
+.switch-current-output { display:none; margin:3px auto; width: 200px; text-align: center; }
+.type { padding-left: 4px; font-size: .8em; font-weight: bold;}
+
+/* prettify */
+.pln{color:#000}@media screen{.str{color:#080}.kwd{color:#008}.com{color:#800}.typ{color:#606}.lit{color:#066}.pun,.opn,.clo{color:#660}.tag{color:#008}.atn{color:#606}.atv{color:#080}.dec,.var{color:#606}.fun{color:red}}@media print,projection{.str{color:#060}.kwd{color:#006;font-weight:bold}.com{color:#600;font-style:italic}.typ{color:#404;font-weight:bold}.lit{color:#044}.pun,.opn,.clo{color:#440}.tag{color:#006;font-weight:bold}.atn{color:#404}.atv{color:#060}}pre.prettyprint{padding:2px;border:1px solid #888}ol.linenums{margin-top:0;margin-bottom:0}li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8{list-style-type:none}li.L1,li.L3,li.L5,li.L7,li.L9{background:#eee}

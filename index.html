@@ -3,29 +3,10 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <title>Spectrum - The No Hassle JavaScript Colorpicker</title>
 <link rel="stylesheet" type="text/css" href="spectrum.css">
-<script type="text/javascript" src="jquery-1.6.2.js"></script>
+<link rel="stylesheet" type="text/css" href="docs/demo.css">
+<script type="text/javascript" src="docs/jquery-1.6.2.js"></script>
 <script type="text/javascript" src="spectrum.js"></script>
-<style type='text/css'>
-	/* Styles for the demo page only.  See spectrum.css for the actual colorpicker styles */
-	html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-	body { margin: 0; font-size: 14px; line-height: 1.231; }
-	body, button, input, select, textarea { font-family: Verdana sans-serif; color: #222; }
-	h1 { font-family: Tahoma; font-size: 2em; margin: 0; padding:0; font-weight: lighter; }
-	#header { background: #f3deae; padding: 3px; border-bottom: solid 1px #fee;}
-	#goals { margin-left: 10px; border-left: solid 2px #eee; padding-left: 10px; }
-	a { color: #00e; }
-	a:visited { color: #009; }
-	a:hover { color: #06e; }
-	a:focus { outline: thin dotted; }
-	#header h1 { float:left; }
-	#links { float:right; text-align: right; }
-	#docs { padding:10px;  }
-	#pick2-details { font: monospace; }
-	#switch-current { float: left; position:relative; }
-	#switch-current .spectrum-container { position: fixed; top:75px; left: 10px; }
-	#docs-content { margin-left: 280px; padding: 10px; border:solid 10px #333; border-radius: 5px; }
-	.switch-current-output { display:none; margin:3px auto; width: 200px; text-align: center; }
-</style>
+<script type="text/javascript" src="docs/prettify.js"></script>
 </head>
 <body>
 
@@ -40,7 +21,7 @@
 
 <div id='docs'>
 	<div id='switch-current'>
-		<input type='text' name='color1' id='pick1' />
+		<input type='text' name='color1' id='pick1' value='green' />
 		<div id='switch-current-hsv' class='switch-current-output'></div>
 		<div id='switch-current-rgb' class='switch-current-output'></div>
 		<div id='switch-current-hex' class='switch-current-output'></div>
@@ -73,6 +54,18 @@
 		
 		</div>
 		
+		<h2>Basic Usage</h2>
+		
+<pre class='prettyprint'>
+&lt;input type='text' value='red' id='picker' name='picker' /&gt;
+</pre>
+	
+<pre class='prettyprint'>
+&lt;script&gt;
+$("#picker").spectrum();
+&lt;/script&gt;
+</pre>
+	
 		<h2>Usage modes</h2>
 		<h3>Flat versus Collapsed</h3>
 		<ul>
@@ -91,7 +84,7 @@
 			<li><strong>false</strong>
 			
 			The input that allows free form typing of color from the user can be hidden if desired.
-			If you set <code>opts.showInput</code> to false, it will not show up.
+			If you set <code class='prettyprint'>opts.showInput</code> to false, it will not show up.
 			<div style='margin-top:10px; text-align:center;'>
 				<input type='text' name='color3' id='pick3' />
 			</div>
@@ -103,15 +96,39 @@
 		<ul>
 			<li>
 			<strong>move:</strong><span class='type'>event</span>
-			<p> </p>
+			<p></p>
+<pre class='prettyprint'>
+move: function(color) {				
+	color.toHexCss(); // #ff0000
+}
+</pre>
 			</li>
 			<li>
-			<strong>close:</strong><span class='type'>event</span>
-			<p> </p>
+			<strong>hide:</strong><span class='type'>event</span>
+			<p></p>
+<pre class='prettyprint'>
+hide: function(color) {				
+	color.toHexCss(); // #ff0000
+}
+</pre>
 			</li>
 			<li>
-			<strong>open:</strong><span class='type'>event</span>
+			<strong>show:</strong><span class='type'>event</span>
 			<p> </p>
+<pre class='prettyprint'>
+show: function(color) {				
+	color.toHexCss(); // #ff0000
+}
+</pre>
+			</li>
+			<li>
+			<strong>beforeShow:</strong><span class='type'>event</span>
+			<p>Can prevent the colorpicker from showing up if you return false in the beforeShow event.</p>
+<pre class='prettyprint'>
+beforeShow: function(color) {
+	return false;
+}
+</pre>
 			</li>
 		</ul>
 		
@@ -127,7 +144,6 @@
 
 $("#pick1").spectrum({
 	flat: true,
-    color: "#ddddff",
     move: function(color) {
     	var hsv = color.toHsv();
     	var rgb = color.toRgbCss();
@@ -174,5 +190,7 @@ $("#pick3").spectrum({
        
     } 
 });
+
+prettyPrint();
 </script>
 </body>
