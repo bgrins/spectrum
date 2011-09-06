@@ -5,8 +5,19 @@ I wanted a colorpicker that didn't require images, and that had an API that made
 
 I started using canvas, then switched to CSS gradients, since it turned out to be easier to manage, and worked better across browsers.
 
-Currently, the minified JavaScript is less than 10KB.
+Here is the JavaScript size:
+
+    Original Size:  16.97KB (5.94KB gzipped)
+    Compiled Size:	9.99KB (4.22KB gzipped)
 
 See demo and docs: http://bgrins.github.com/spectrum/
 
 Thanks to https://github.com/DavidDurman/FlexiColorPicker for some inspiration and gradient constants
+
+To tool I use for measuring JavaScript size: http://closure-compiler.appspot.com/home
+
+    // ==ClosureCompiler==
+    // @compilation_level SIMPLE_OPTIMIZATIONS
+    // @output_file_name default.js
+    // @code_url https://raw.github.com/bgrins/spectrum/master/spectrum.js
+    // ==/ClosureCompiler==
