@@ -183,8 +183,8 @@ $("#pick1").spectrum({
 	flat: true,
     move: function(color) {
     	var hsv = color.toHsv();
-    	var rgb = color.toRgbCss();
-    	var hex = color.toHexCss();
+    	var rgb = color.toRgbString();
+    	var hex = color.toHexString();
     	$("#docs-content").css({
     		'background-color': hex,
     		'color': (hsv.v < .5) ? '#ddd' : '#222'
@@ -204,7 +204,7 @@ $("#pick1").spectrum({
 $("#pick2").spectrum({
     color: "#dd3333",
     move: function(color) {
-    	$("#docs-content").css("border-color", color.toHexCss());    
+    	$("#docs-content").css("border-color", color.toHexString());    
     },
     show: function() {
        
@@ -218,7 +218,7 @@ $("#pick3").spectrum({
     color: "#dd33dd",
     showInput: true,
     move: function(color) {
-    	$("#docs-content").css("border-color", color.toHexCss());    
+    	$("#docs-content").css("border-color", color.toHexString());    
     },
     show: function() {
        
