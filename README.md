@@ -5,10 +5,10 @@ I wanted a colorpicker that didn't require images, and that had an API that made
 
 I started using canvas, then switched to CSS gradients, since it turned out to be easier to manage, and worked better across browsers.
 
-Here is the JavaScript size:
+Here is the JavaScript size
 
-    Original Size:  16.97KB (5.94KB gzipped)
-    Compiled Size:	9.99KB (4.22KB gzipped)
+    Original Size:  19.9KB (6.06KB gzipped)
+    Compiled Size:	10.21KB (4.27KB gzipped)
 
 See demo and docs: http://bgrins.github.com/spectrum/
 
