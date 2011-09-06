@@ -6,139 +6,140 @@
 
 (function(window, $, undefined) {
    
-	var defaultOpts = {
-	    color: false,
-	    flat: false,
-	    showInput: false,
-	    changeOnMove: true,
-	    beforeShow: function() { },
-	    move: function() { },
-	    change: function() { },
-	    close: function() { },
-	    open: function() { }
-	},
-	spectrums = [],
-	hasjQuery = typeof $ != "undefined",
-	trimLeft = /^[\s,#]+/,
-	trimRight = /\s+$/,
-	replaceInput = "<div class='spectrum-replacer'></div>",
-	markup = (function() {
-		
-		// IE does not support gradients with multiple stops, so we need to simulate            
-		//  that for the rainbow slider with 8 divs that each have a single gradient
-		var gradientFix = "";
-		if ($.browser.msie) {
-			for (var i = 1; i < 9; i++) {
-			    gradientFix += "<div class='spectrum-ie-" + i + "'></div>";
-			}
-		}
-		
-		return [
-	    	"<div class='spectrum-container'>",
-	    	    "<div class='spectrum-color'>",
-	    	    	"<div class='spectrum-g1'>",
-	    	    		"<div class='spectrum-g2'>",
-	    	    			"<div class='spectrum-drag-helper'></div>",
-	    	    		"</div>",
-	    	    	"</div>",
-	    	    "</div>",
-	    	    "<div class='spectrum-slide'>",
-	    	    	"<div class='spectrum-slide-helper'></div>",
-	    	    	gradientFix,
-	    	    "</div>",
-	    	    "<br style='clear:both;' />",
-	    	    "<div class='spectrum-input-container'>",
-	    	    	"<input type='text' class='spectrum-input' />",
-	    	    	"<span class='spectrum-button'>Go</span>",
-	    	    "</div>",
-	    	"</div>"
-    	].join("");
-	})();
+    var defaultOpts = {
+        color: false,
+        flat: false,
+        showInput: false,
+        changeOnMove: true,
+        beforeShow: function() { },
+        move: function() { },
+        change: function() { },
+        close: function() { },
+        open: function() { }
+    },
+    spectrums = [],
+    hasjQuery = typeof $ != "undefined",
+    trimLeft = /^[\s,#]+/,
+    trimRight = /\s+$/,
+    replaceInput = "<div class='spectrum-replacer'></div>",
+    markup = (function() {
+        
+        // IE does not support gradients with multiple stops, so we need to simulate            
+        //  that for the rainbow slider with 8 divs that each have a single gradient
+        var gradientFix = "";
+        if ($.browser.msie) {
+            for (var i = 1; i < 9; i++) {
+                gradientFix += "<div class='spectrum-ie-" + i + "'></div>";
+            }
+        }
+        
+        return [
+            "<div class='spectrum-container'>",
+                "<div class='spectrum-color'>",
+                    "<div class='spectrum-g1'>",
+                        "<div class='spectrum-g2'>",
+                            "<div class='spectrum-drag-helper'></div>",
+                        "</div>",
+                    "</div>",
+                "</div>",
+                "<div class='spectrum-slide'>",
+                    "<div class='spectrum-slide-helper'></div>",
+                    gradientFix,
+                "</div>",
+                "<br style='clear:both;' />",
+                "<div class='spectrum-input-container'>",
+                    "<input type='text' class='spectrum-input' />",
+                    "<span class='spectrum-button'>Go</span>",
+                "</div>",
+            "</div>"
+        ].join("");
+    })();
     
-	function hideAll() {
-	    for (var i = 0; i < spectrums.length; i++) {
-	    	spectrums[i].hide();
-	    }
-	}
+    function hideAll() {
+        for (var i = 0; i < spectrums.length; i++) {
+            spectrums[i].hide();
+        }
+    }
     function instanceOptions(o, callbackContext) {
-    	var opts = extend({ }, defaultOpts, o);
-    	opts.callbacks = {
-    		'move': bind(opts.move, callbackContext),
-    		'show': bind(opts.beforeShow, callbackContext),
-    		'hide': bind(opts.beforeShow, callbackContext),
-    		'beforeShow': bind(opts.beforeShow, callbackContext)
-    	};
-		
-    	return opts;
+        var opts = extend({ }, defaultOpts, o);
+        opts.callbacks = {
+            'move': bind(opts.move, callbackContext),
+            'change': bind(opts.change, callbackContext),
+            'show': bind(opts.show, callbackContext),
+            'hide': bind(opts.hide, callbackContext),
+            'beforeShow': bind(opts.beforeShow, callbackContext)
+        };
+        
+        return opts;
     }
     function spectrum(element, o) {
-		
+        
         var opts = instanceOptions(o, element),
-        	callbacks = opts.callbacks,
+            callbacks = opts.callbacks,
             doc = element.ownerDocument,
             body = doc.body,
-			visible = false,
-			dragWidth = 0,
+            visible = false,
+            dragWidth = 0,
             dragHeight = 0,
             dragHelperHeight = 0,
-			slideHeight = 0,
-			slideWidth = 0,
-			slideHelperHeight = 0,
-			currentHue = 0,
-			currentSaturation = 0,
-			currentValue = 0;
-		
+            slideHeight = 0,
+            slideWidth = 0,
+            slideHelperHeight = 0,
+            currentHue = 0,
+            currentSaturation = 0,
+            currentValue = 0;
+        
         var container = $(markup, doc),
             dragger = container.find(".spectrum-color"),
             dragHelper = container.find(".spectrum-drag-helper"),
-			slider = container.find(".spectrum-slide"),
-			slideHelper = container.find(".spectrum-slide-helper"),
-			textInput = container.find(".spectrum-input");
+            slider = container.find(".spectrum-slide"),
+            slideHelper = container.find(".spectrum-slide-helper"),
+            textInput = container.find(".spectrum-input");
 
-		if ($.browser.msie) {
-			container.find("*").attr("unselectable", "on");
-		}	
-		
-		var input = false;
+        if ($.browser.msie) {
+            container.find("*").attr("unselectable", "on");
+        }   
+        
+        var input = false;
         var boundElement = $(element);
-		var visibleElement;
-		if (boundElement.is("input") && !opts.flat) {
-			visibleElement = $(replaceInput);
-			boundElement.hide().after(visibleElement);
-			input = $(element);
-		}
-		else {
-			visibleElement = $(element);
-		}
-		
-		visibleElement.addClass("spectrum-element");
-		
-		visibleElement.bind("click touchstart", function(e) {
-			(visible) ? hide() : show();
-			e.stopPropagation();
-			e.preventDefault();
-		});
-		container.click(stopPropagation);
-		
-		textInput.change(function() {
-			set($(this).val());
-		});
-		
+        var visibleElement;
+        if (boundElement.is("input") && !opts.flat) {
+            visibleElement = $(replaceInput);
+            boundElement.hide().after(visibleElement);
+            input = $(element);
+        }
+        else {
+            visibleElement = $(element);
+        }
+        
+        visibleElement.addClass("spectrum-element");
+        
+        visibleElement.bind("click touchstart", function(e) {
+            (visible) ? hide() : show();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+        container.click(stopPropagation);
+        
+        textInput.change(function() {
+            set($(this).val());
+        });
+        
         function show() {
-			if (visible) { return; }
-			
+            if (visible) { return; }
+            
             if (callbacks.beforeShow(get()) === false) return;
             
-			hideAll();
-			
-			visible = true;
-			
-			$(doc).bind("click touchstart", hide);
-			
-			if (!opts.flat) {
-				var elOffset = visibleElement.offset();
-				elOffset.left += visibleElement.width();
-            	container.show().offset(elOffset);
+            hideAll();
+            
+            visible = true;
+            
+            $(doc).bind("click touchstart", hide);
+            
+            if (!opts.flat) {
+                var elOffset = visibleElement.offset();
+                elOffset.left += visibleElement.width();
+                container.show().offset(elOffset);
             }
             
             // Cache sizes on start
@@ -153,136 +154,136 @@
             
             callbacks.show(get())
         }
-		
-		
-		function hide() {
-			if (!visible || opts.flat) { return; }
-			visible = false;
-			
-			$(doc).unbind("click", hide);
+        
+        
+        function hide() {
+            if (!visible || opts.flat) { return; }
+            visible = false;
+            
+            $(doc).unbind("click", hide);
             container.hide();
             
             callbacks.hide(get());
-		}
-		
-		function set(color) {
-			var newColor = tinycolor(color);
-			var newHsv = newColor.toHsv();
-			
-	        currentHue = newHsv.h;
-			currentSaturation = newHsv.s;
-			currentValue = newHsv.v;
-			
-	        doMove();
-		}
-		
-		function get() {
-			return tinycolor({ h: currentHue, s: currentSaturation, v: currentValue });
-		}
-		
-		function doMove() {
-			var h = currentHue;
-			var s = currentSaturation;
+        }
+        
+        function set(color) {
+            var newColor = tinycolor(color);
+            var newHsv = newColor.toHsv();
+            
+            currentHue = newHsv.h;
+            currentSaturation = newHsv.s;
+            currentValue = newHsv.v;
+            
+            doMove();
+        }
+        
+        function get() {
+            return tinycolor({ h: currentHue, s: currentSaturation, v: currentValue });
+        }
+        
+        function doMove() {
+            var h = currentHue;
+            var s = currentSaturation;
             var v = currentValue;
             
             // Where to show the little circle in that displays your current selected color
             var dragX = s * dragWidth;
             var dragY = dragHeight - (v * dragHeight);
             dragX = Math.max(
-            	-dragHelperHeight, 
-            	Math.min(dragWidth - dragHelperHeight, dragX - dragHelperHeight)
+                -dragHelperHeight, 
+                Math.min(dragWidth - dragHelperHeight, dragX - dragHelperHeight)
             );
             dragY = Math.max(
-            	-dragHelperHeight, 
-            	Math.min(dragHeight - dragHelperHeight, dragY - dragHelperHeight)
+                -dragHelperHeight, 
+                Math.min(dragHeight - dragHelperHeight, dragY - dragHelperHeight)
             );
             dragHelper.css({
                 "top": dragY,
                 "left": dragX
             });
-			
+            
             // Where to show the bar that displays your current selected hue
-			var slideY = (currentHue) * slideHeight;
+            var slideY = (currentHue) * slideHeight;
             slideHelper.css({
                 "top": slideY - slideHelperHeight
             });
             
-			// Update dragger background color ("flat" because gradients take care of saturation
-			// and value).
-			var flatColor = tinycolor({ h: h, s: 1, v: 1});
-			dragger.css("background-color", flatColor.toHexString());
-			
-			// Update the replaced elements background color (with actual selected color)
-			var realColor = get();
-			visibleElement.css("background-color", realColor.toHexString());
-			
-			// Update the input as it changes happen
-			if (input) {
-				$(input).val(realColor.toHexString());
-			}
-			
-			textInput.val(realColor.toHexString());
-			callbacks.move(realColor);
-		}
-		
-		draggable(slider, function(dragX, dragY) {
-			currentHue = (dragY / slideHeight);
-			doMove();
-		});
-		
-		draggable(dragger, function(dragX, dragY) {
-			currentSaturation = dragX / dragWidth;
-			currentValue = (dragHeight -  dragY) / dragHeight;
-			doMove();
-		});
-		
-		
-		if (opts.flat) {
-			boundElement.after(container.addClass("spectrum-flat")).hide();
-			show();
-		}
-		else {
-        	$(body).append(container.hide());
-		}
-		
-		if (!opts.showInput) {
-			container.addClass("spectrum-input-disabled");
-		}
-		
-		var initialColor = opts.color || (boundElement.is("input") && boundElement.val());
-		if (!!initialColor) {
-			set(initialColor);
-		}
-		
-		var spect = {
-			show: show,
-			hide: hide,
-			set: set,
-			get: get
-		};
-		
-		spect.id = spectrums.push(spect) - 1;
-		
-		return spect;
+            // Update dragger background color ("flat" because gradients take care of saturation
+            // and value).
+            var flatColor = tinycolor({ h: h, s: 1, v: 1});
+            dragger.css("background-color", flatColor.toHexString());
+            
+            // Update the replaced elements background color (with actual selected color)
+            var realColor = get();
+            visibleElement.css("background-color", realColor.toHexString());
+            
+            // Update the input as it changes happen
+            if (input) {
+                $(input).val(realColor.toHexString());
+            }
+            
+            textInput.val(realColor.toHexString());
+            callbacks.move(realColor);
+        }
+        
+        draggable(slider, function(dragX, dragY) {
+            currentHue = (dragY / slideHeight);
+            doMove();
+        });
+        
+        draggable(dragger, function(dragX, dragY) {
+            currentSaturation = dragX / dragWidth;
+            currentValue = (dragHeight -     dragY) / dragHeight;
+            doMove();
+        });
+        
+        
+        if (opts.flat) {
+            boundElement.after(container.addClass("spectrum-flat")).hide();
+            show();
+        }
+        else {
+            $(body).append(container.hide());
+        }
+        
+        if (!opts.showInput) {
+            container.addClass("spectrum-input-disabled");
+        }
+        
+        var initialColor = opts.color || (boundElement.is("input") && boundElement.val());
+        if (!!initialColor) {
+            set(initialColor);
+        }
+        
+        var spect = {
+            show: show,
+            hide: hide,
+            set: set,
+            get: get
+        };
+        
+        spect.id = spectrums.push(spect) - 1;
+        
+        return spect;
     }
     
     /**
      * stopPropagation - makes the code only doing this a little easier to read in line
      */
-	function stopPropagation(e) {
-		e.stopPropagation();
-	}
+    function stopPropagation(e) {
+        e.stopPropagation();
+    }
     
     /**
      * Create a function bound to a given object
      * Thanks to underscore.js
      */
-	function bind (func, obj) {
-    	var slice = Array.prototype.slice;
-    	var args = slice.call(arguments, 2);
-    	return function() {
-      		return func.apply(obj, args.concat(slice.call(arguments)));
-      	}
+    function bind (func, obj) {
+        var slice = Array.prototype.slice;
+        var args = slice.call(arguments, 2);
+        return function() {
+            return func.apply(obj, args.concat(slice.call(arguments)));
+        }
     }
     
     /**
@@ -290,134 +291,134 @@
      * when dragging, the x is within [0,element.width] and y is within [0,element.height]
      */
     function draggable(element, onmove, onstart, onstop) {
-		onmove = onmove || function() { };
-		onstart = onstart || function() { };
-		onstop = onstop || function() { };
-		var doc = element.ownerDocument || document;
-		var dragging = false;
-		var offset = { };
-		var maxHeight = 0;
-		var maxWidth = 0;
-		var IE = $.browser.msie;
-		var hasTouch = (function() {
-				var ret, elem = document.createElement('div');
-				ret = ('ontouchstart' in elem);
-				elem = null;
-				return ret;
-		}());
-		
-		var duringDragEvents = { };
-		duringDragEvents["selectstart"] = prevent;
-		duringDragEvents["dragstart"] = prevent;
-		duringDragEvents[(hasTouch ? "touchmove" : "mousemove")] = move;
-		duringDragEvents[(hasTouch ? "touchend" : "mouseup")] = stop;
+        onmove = onmove || function() { };
+        onstart = onstart || function() { };
+        onstop = onstop || function() { };
+        var doc = element.ownerDocument || document;
+        var dragging = false;
+        var offset = { };
+        var maxHeight = 0;
+        var maxWidth = 0;
+        var IE = $.browser.msie;
+        var hasTouch = (function() {
+                var ret, elem = document.createElement('div');
+                ret = ('ontouchstart' in elem);
+                elem = null;
+                return ret;
+        }());
+        
+        var duringDragEvents = { };
+        duringDragEvents["selectstart"] = prevent;
+        duringDragEvents["dragstart"] = prevent;
+        duringDragEvents[(hasTouch ? "touchmove" : "mousemove")] = move;
+        duringDragEvents[(hasTouch ? "touchend" : "mouseup")] = stop;
 
-		function prevent(e) {
-			if (e.stopPropagation) {
-				e.stopPropagation();
-			}
-			if (e.preventDefault) {
-				e.preventDefault();
-			}
-			e.returnValue = false;
-		}
-		
-		function move(e) {
-			if (dragging) {
-				// Mouseup happened outside of window
-				if (IE && !(document.documentMode >= 9) && !e.button) {
-					return stop();
-				}
-				
-				var touches =  e.originalEvent.touches;
-				var pageX = touches ? touches[0].pageX : e.pageX;
-				var pageY = touches ? touches[0].pageY : e.pageY;
-				
-				var dragX = Math.max(0, Math.min(pageX - offset.left, maxWidth));
-				var dragY = Math.max(0, Math.min(pageY - offset.top, maxHeight));
-				
-				if (hasTouch) {
-					// Stop scrolling in iOS
-					prevent(e);
-				}
-				
-				onmove.apply(element, [dragX, dragY]); 
-			} 
-		}
-		function start(e) { 
-			var rightclick = (e.which) ? (e.which == 3) : (e.button == 2);
-			var touches =  e.originalEvent.touches;
-			
-			if (!rightclick && !dragging) { 
-				if (onstart.apply(element, arguments) !== false) {
-					dragging = true; 
-					maxHeight = $(element).height();
-					maxWidth = $(element).width();
-					offset = $(element).offset();
-					
-					$(doc).bind(duringDragEvents);
-					
-					if (!hasTouch) {
-						move(e);
-					}
-					else {
-						prevent(e);
-					}
-				}
-			}
-		}
-		function stop() { 
-			if (dragging) { 
-				$(doc).unbind(duringDragEvents);
-				onstop.apply(element, arguments); 
-			}
-			dragging = false; 
-		}
-	
-		$(element).bind(hasTouch ? "touchstart" : "mousedown", start);
-	}	
-	
+        function prevent(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.returnValue = false;
+        }
+        
+        function move(e) {
+            if (dragging) {
+                // Mouseup happened outside of window
+                if (IE && !(document.documentMode >= 9) && !e.button) {
+                    return stop();
+                }
+                
+                var touches =  e.originalEvent.touches;
+                var pageX = touches ? touches[0].pageX : e.pageX;
+                var pageY = touches ? touches[0].pageY : e.pageY;
+                
+                var dragX = Math.max(0, Math.min(pageX - offset.left, maxWidth));
+                var dragY = Math.max(0, Math.min(pageY - offset.top, maxHeight));
+                
+                if (hasTouch) {
+                    // Stop scrolling in iOS
+                    prevent(e);
+                }
+                
+                onmove.apply(element, [dragX, dragY]); 
+            } 
+        }
+        function start(e) { 
+            var rightclick = (e.which) ? (e.which == 3) : (e.button == 2);
+            var touches =  e.originalEvent.touches;
+            
+            if (!rightclick && !dragging) { 
+                if (onstart.apply(element, arguments) !== false) {
+                    dragging = true; 
+                    maxHeight = $(element).height();
+                    maxWidth = $(element).width();
+                    offset = $(element).offset();
+                    
+                    $(doc).bind(duringDragEvents);
+                    
+                    if (!hasTouch) {
+                        move(e);
+                    }
+                    else {
+                        prevent(e);
+                    }
+                }
+            }
+        }
+        function stop() { 
+            if (dragging) { 
+                $(doc).unbind(duringDragEvents);
+                onstop.apply(element, arguments); 
+            }
+            dragging = false; 
+        }
+    
+        $(element).bind(hasTouch ? "touchstart" : "mousedown", start);
+    }   
+    
     
     /**
      * Extend a given object with all the properties in passed-in object(s)
      * Thanks to underscore.js
      */
     function extend (obj) {
-    	var a = Array.prototype.slice.call(arguments, 1);
-		for (var i = 0; i < a.length; i++) {
-			var source = a[i];
-			for (var prop in source) {
-				if (source[prop] !== void 0) obj[prop] = source[prop];
-			}
-		}
-		return obj;
-	}
+        var a = Array.prototype.slice.call(arguments, 1);
+        for (var i = 0; i < a.length; i++) {
+            var source = a[i];
+            for (var prop in source) {
+                if (source[prop] !== void 0) obj[prop] = source[prop];
+            }
+        }
+        return obj;
+    }
     
     /**
      * Define a jQuery plugin if possible
      */
     if (hasjQuery) {
-    	$.fn.spectrum = function(opts, extra) {
-    		
-    		if (typeof opts == "string") {
-    			if (opts == "get") {
-    				return spectrums[this.eq(0).data("spectrum.id")].get();
-    			}
-    			
-    			return this.each(function() {
-    				var spect = spectrums[$(this).data("spectrum.id")];
-    				if (opts == "show") { spect.show(); }
-    				if (opts == "hide") { spect.hide(); }
-    				if (opts == "set")  { spect.set(extra); }
-    			});
-    		}
-    		
-    		// Initializing a new one
-    	    return this.each(function() {
-    	    	var spect = spectrum(this, opts);
-    	    	$(this).data("spectrum.id", spect.id);
-    	    }); 
-    	};
+        $.fn.spectrum = function(opts, extra) {
+            
+            if (typeof opts == "string") {
+                if (opts == "get") {
+                    return spectrums[this.eq(0).data("spectrum.id")].get();
+                }
+                
+                return this.each(function() {
+                    var spect = spectrums[$(this).data("spectrum.id")];
+                    if (opts == "show") { spect.show(); }
+                    if (opts == "hide") { spect.hide(); }
+                    if (opts == "set")  { spect.set(extra); }
+                });
+            }
+            
+            // Initializing a new one
+            return this.each(function() {
+                var spect = spectrum(this, opts);
+                $(this).data("spectrum.id", spect.id);
+            }); 
+        };
     }
     
     window.spectrum = spectrum;
