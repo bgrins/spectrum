@@ -4,7 +4,7 @@
 // License: MIT
 // Requires: jQuery, spectrum.css
 
-(function() {
+(function(window, $, undefined) {
    
 	var defaultOpts = {
 	    color: false,
@@ -16,6 +16,7 @@
 	    open: function() { }
 	},
 	spectrums = [],
+	hasjQuery = typeof $ != "undefined",
 	trimLeft = /^[\s,#]+/,
 	trimRight = /\s+$/,
 	replaceInput = "<div class='spectrum-replacer'></div>",
@@ -393,8 +394,8 @@
     /**
      * Define a jQuery plugin if possible
      */
-    if (typeof jQuery != "undefined") {
-    	jQuery.fn.spectrum = function(opts, extra) {
+    if (hasjQuery) {
+    	$.fn.spectrum = function(opts, extra) {
     		
     		if (typeof opts == "string") {
     			if (opts == "get") {
@@ -419,7 +420,7 @@
     
     window.spectrum = spectrum;
 
-})();
+})(this, jQuery);
 
 // TinyColor.js - https://github.com/bgrins/TinyColor - 2011 Brian Grinstead - v0.3.1
 var tinycolor=function(){function r(a){var b={r:255,g:255,b:255},c=!1;if(typeof a=="string"){a=a.replace(s,"").replace(t,"").toLowerCase();m[a]&&(a=m[a]);for(var d=!1,e=0;e<n.length;e++){var f=n[e].re.exec(a);if(f){d=n[e].process(f);break}}a=d}if(typeof a=="object"){a.hasOwnProperty("r")&&a.hasOwnProperty("g")&&a.hasOwnProperty("b")&&(b={r:g(a.r,255)*255,g:g(a.g,255)*255,b:g(a.b,255)*255},c=!0);if(a.hasOwnProperty("h")&&a.hasOwnProperty("s")&&a.hasOwnProperty("v")){e=a.h;d=a.s;b=a.v;var h,i,k;e=g(e,
