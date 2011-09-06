@@ -10,8 +10,10 @@
 	    color: false,
 	    flat: false,
 	    showInput: false,
+	    changeOnMove: true,
 	    beforeShow: function() { },
 	    move: function() { },
+	    change: function() { },
 	    close: function() { },
 	    open: function() { }
 	},
