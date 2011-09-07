@@ -14,8 +14,8 @@
         beforeShow: function() { },
         move: function() { },
         change: function() { },
-        close: function() { },
-        open: function() { }
+        show: function() { },
+        hide: function() { }
     },
     spectrums = [],
     hasjQuery = typeof $ != "undefined",
@@ -72,6 +72,7 @@
         
         return opts;
     }
+	
     function spectrum(element, o) {
         
         var opts = instanceOptions(o, element),
