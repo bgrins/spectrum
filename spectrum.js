@@ -393,12 +393,7 @@
         var maxHeight = 0;
         var maxWidth = 0;
         var IE = $.browser.msie;
-        var hasTouch = (function() {
-                var ret, elem = document.createElement('div');
-                ret = ('ontouchstart' in elem);
-                elem = null;
-                return ret;
-        }());
+        var hasTouch = ('ontouchstart' in window);
         
         var duringDragEvents = { };
         duringDragEvents["selectstart"] = prevent;
