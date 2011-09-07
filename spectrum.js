@@ -16,7 +16,8 @@
         change: function() { },
         show: function() { },
         hide: function() { },
-        pallet: []
+        showPallet: true,
+        pallet: ['white', 'black', 'green', 'red']
     },
     spectrums = [],
     hasjQuery = typeof $ != "undefined",
@@ -57,11 +58,18 @@
                     "<input class='spectrum-input' type='text' />",
                     "<span class='spectrum-button'>Go</span>",
                 "</div>",
-                "<ul class='spectrum-pallet-container'>",
-                "</ul>",
+                "<div class='spectrum-pallet-container'>",
+                "</div>",
             "</div>"
         ].join("");
-    })();
+    })(),
+    palletTemplate = function(p) {
+    	var html = [];
+    	for (var i = 0; i < p.length; i++) {
+    		html.push('<span style="background-color:' + p[i] + '"></span>');
+    	}
+    	return html.join('');
+    };
     
     function hideAll() {
         for (var i = 0; i < spectrums.length; i++) {
@@ -94,7 +102,8 @@
             slideHelperHeight = 0,
             currentHue = 0,
             currentSaturation = 0,
-            currentValue = 0;
+            currentValue = 0,
+            pallet = opts.pallet.slice(0);
         
         var doc = element.ownerDocument,
             body = doc.body, 
@@ -105,6 +114,7 @@
             slider = container.find(".spectrum-slide"),
             slideHelper = container.find(".spectrum-slide-helper"),
             textInput = container.find(".spectrum-input"),
+            palletContainer = container.find(".spectrum-pallet-container"),
             isInput = boundElement.is("input"),
             shouldReplace = isInput && !opts.flat,
             visibleElement = (shouldReplace) ? $(replaceInput) : $(element);
@@ -117,6 +127,7 @@
     	    
     	    container.toggleClass("spectrum-flat", opts.flat);
     	    container.toggleClass("spectrum-input-disabled", !opts.showInput);
+    	    container.toggleClass("spectrum-pallet-disabled", !opts.showPallet);
     	    visibleElement.toggleClass("spectrum-hide-input", !opts.showInput);
     	    
     	    if (shouldReplace) {
@@ -165,6 +176,14 @@
         	
         	if (opts.flat) {
         	    show();
+        	}
+        	
+        	setPallet();
+		}
+		
+		function setPallet() {
+        	if (opts.showPallet) {
+				palletContainer.html(palletTemplate(pallet));
         	}
 		}
 		

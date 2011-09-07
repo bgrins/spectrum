@@ -59,7 +59,24 @@ License: MIT
     overflow:hidden;
     color:#fff;
 }
-.spectrum-pallet-container { display: none; }
+
+.spectrum-pallet-container { 
+	max-height: 46px; 
+	overflow-y:auto; 
+	margin:3px; 
+	padding: 0;
+}
+.spectrum-pallet-container span {
+	display: block;
+	float:left;
+	width: 40px;
+	height: 18px; 
+	margin: 1px;
+}
+.spectrum-pallet-disabled .spectrum-pallet-container { 
+	display: none; 
+}
+
 .spectrum-saturation {
     background-image: -webkit-gradient(linear,  0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
     background-image: -webkit-linear-gradient(left, #FFF, rgba(204, 154, 129, 0));
@@ -155,10 +172,11 @@ License: MIT
     padding:10px; 
     border-radius: 5px; 
     font-family: Verdana Tahoma sans-serif;
+    width: 240px;
 }
 .spectrum-saturation, .spectrum-value, .spectrum-slide { 
-    width: 200px; 
-    height: 200px; 
+    width: 200px;
+    height: 200px;
 }
 .spectrum-button {
     margin-top: 3px;
