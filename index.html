@@ -172,6 +172,10 @@ beforeShow: function(color) {
 		
 		<h2>Skinning</h2>
 		<p>Since it is all built with HTML/CSS, you can skin it easily.  There are two parts to the <a href='https://github.com/bgrins/spectrum/blob/master/spectrum.css'>spectrum.css</a> file, the core rules (at the top of the file), and the themable rules (at the bottom).  Feel free to tweak these rules to make it look how you want.</p>
+		
+		<p>
+			You can use any element you would like to trigger the colorpicker: <a href='#' id='pick4'>Click me to open a colorpicker</a>
+		</p>
 	</div>
 	<br style='clear:both;' />
 </div>
@@ -228,6 +232,18 @@ $("#pick3").spectrum({
     } 
 });
 
+$("#pick4").spectrum({
+    color: "#dd3333",
+    move: function(color) {
+    	$("#docs-content").css("border-color", color.toHexString());    
+    },
+    show: function() {
+       
+    },
+    hide: function() {
+       
+    }
+});
 
 $("#basic").spectrum();
 
