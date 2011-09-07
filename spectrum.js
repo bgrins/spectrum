@@ -82,8 +82,6 @@
         
         var opts = instanceOptions(o, element),
             callbacks = opts.callbacks,
-            doc = element.ownerDocument,
-            body = doc.body,
             visible = false,
             dragWidth = 0,
             dragHeight = 0,
@@ -95,7 +93,9 @@
             currentSaturation = 0,
             currentValue = 0;
         
-        var boundElement = $(element),
+        var doc = element.ownerDocument,
+            body = doc.body, 
+            boundElement = $(element),
         	container = $(markup, doc),
             dragger = container.find(".spectrum-color"),
             dragHelper = container.find(".spectrum-drag-helper"),
@@ -106,34 +106,72 @@
             shouldReplace = isInput && !opts.flat,
             visibleElement = (shouldReplace) ? $(replaceInput) : $(element);
 
-        if ($.browser.msie) {
-            container.find("*:not(input)").attr("unselectable", "on");
-        }   
-        
-        container.toggleClass("spectrum-flat", opts.flat);
-        container.toggleClass("spectrum-input-disabled", !opts.showInput);
-        visibleElement.toggleClass("spectrum-hide-input", !opts.showInput);
-        
-        if (shouldReplace) {
-            boundElement.hide().after(visibleElement);
-           	//boundElement.appendTo(visibleElement.find(".spectrum-text"));
+		function initialize() {
+			
+    	    if ($.browser.msie) {
+    	        container.find("*:not(input)").attr("unselectable", "on");
+    	    }   
+    	    
+    	    container.toggleClass("spectrum-flat", opts.flat);
+    	    container.toggleClass("spectrum-input-disabled", !opts.showInput);
+    	    visibleElement.toggleClass("spectrum-hide-input", !opts.showInput);
+    	    
+    	    if (shouldReplace) {
+    	        boundElement.hide().after(visibleElement);
+    	    }
+    	    
+        	if (opts.flat) {
+            	boundElement.after(container).hide();
+            }
+        	else {
+        	    $(body).append(container.hide());
+        	}
+    	    
+    	    visibleElement.bind("click touchstart", function(e) {
+    	        toggle();
+    	        
+    	        e.stopPropagation();
+    	        
+    	        if (!$(e.target).is("input")) {
+    	        	e.preventDefault();
+    	        }
+    	    });
+    	    
+    	    // Prevent clicks from bubbling up to document.  This would cause it to be hidden.
+    	    container.click(stopPropagation);
+    	    
+    	    // Handle user typed input
+    	    textInput.change(setFromTextInput);
+    	    textInput.keydown(function(e) { if (e.keyCode == 13) { setFromTextInput(); } } );
+
+    	    draggable(slider, function(dragX, dragY) {
+    	        currentHue = (dragY / slideHeight);
+    	        doMove();
+    	    });
+    	    
+    	    draggable(dragger, function(dragX, dragY) {
+    	        currentSaturation = dragX / dragWidth;
+    	        currentValue = (dragHeight -     dragY) / dragHeight;
+    	        doMove();
+    	    });
+    	    
+        	var initialColor = opts.color || (isInput && boundElement.val());
+        	if (!!initialColor) {
+        	    set(initialColor);
+        	}
+        	
+        	if (opts.flat) {
+        	    show();
+        	}
+		}
+		
+        function setFromTextInput() {
+        	set(textInput.val());
         }
         
-        visibleElement.bind("click touchstart", function(e) {
-            (visible) ? hide() : show();
-            
-            e.stopPropagation();
-            
-            if (!$(e.target).is("input")) {
-            	e.preventDefault();
-            }
-        });
-        
-        container.click(stopPropagation);
-        
-        textInput.change(function() {
-            set($(this).val());
-        });
+        function toggle() {
+    		(visible) ? hide() : show();
+        }
         
         function show() {
             if (visible) { return; }
@@ -239,29 +277,7 @@
             callbacks.move(realColor);
         }
         
-        draggable(slider, function(dragX, dragY) {
-            currentHue = (dragY / slideHeight);
-            doMove();
-        });
-        
-        draggable(dragger, function(dragX, dragY) {
-            currentSaturation = dragX / dragWidth;
-            currentValue = (dragHeight -     dragY) / dragHeight;
-            doMove();
-        });
-        
-        var initialColor = opts.color || (isInput && boundElement.val());
-        if (!!initialColor) {
-            set(initialColor);
-        }
-        
-        if (opts.flat) {
-            boundElement.after(container).hide();
-            show();
-        }
-        else {
-            $(body).append(container.hide());
-        }
+        initialize();
         
         var spect = {
             show: show,
@@ -272,7 +288,7 @@
         
         spect.id = spectrums.push(spect) - 1;
         
-        return spect;
+        return  spect;
     }
 	
     /**
