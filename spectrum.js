@@ -21,7 +21,12 @@
     hasjQuery = typeof $ != "undefined",
     trimLeft = /^[\s,#]+/,
     trimRight = /\s+$/,
-    replaceInput = "<div class='spectrum-replacer'></div>",
+    replaceInput = [
+    	"<div class='spectrum-replacer spectrum-cf'>",
+    		"<div class='spectrum-text'></div>",
+    		"<div class='spectrum-dd'>&#9660;</div>",
+    	"</div>"
+    ].join(''),
     markup = (function() {
         
         // IE does not support gradients with multiple stops, so we need to simulate            
@@ -48,7 +53,7 @@
                 "</div>",
                 "<br style='clear:both;' />",
                 "<div class='spectrum-input-container'>",
-                    "<input type='text' class='spectrum-input' />",
+                    "<input class='spectrum-input' type='text' />",
                     "<span class='spectrum-button'>Go</span>",
                 "</div>",
             "</div>"
@@ -90,36 +95,40 @@
             currentSaturation = 0,
             currentValue = 0;
         
-        var container = $(markup, doc),
+        var boundElement = $(element),
+        	container = $(markup, doc),
             dragger = container.find(".spectrum-color"),
             dragHelper = container.find(".spectrum-drag-helper"),
             slider = container.find(".spectrum-slide"),
             slideHelper = container.find(".spectrum-slide-helper"),
-            textInput = container.find(".spectrum-input");
+            textInput = container.find(".spectrum-input"),
+            isInput = boundElement.is("input"),
+            shouldReplace = isInput && !opts.flat,
+            visibleElement = (shouldReplace) ? $(replaceInput) : $(element);
 
         if ($.browser.msie) {
-            container.find("*").attr("unselectable", "on");
+            container.find("*:not(input)").attr("unselectable", "on");
         }   
         
-        var input = false;
-        var boundElement = $(element);
-        var visibleElement;
-        if (boundElement.is("input") && !opts.flat) {
-            visibleElement = $(replaceInput);
-            boundElement.hide().after(visibleElement);
-            input = $(element);
-        }
-        else {
-            visibleElement = $(element);
-        }
+        container.toggleClass("spectrum-flat", opts.flat);
+        container.toggleClass("spectrum-input-disabled", !opts.showInput);
+        visibleElement.toggleClass("spectrum-hide-input", !opts.showInput);
         
-        visibleElement.addClass("spectrum-element");
+        if (shouldReplace) {
+            boundElement.hide().after(visibleElement);
+           	//boundElement.appendTo(visibleElement.find(".spectrum-text"));
+        }
         
         visibleElement.bind("click touchstart", function(e) {
             (visible) ? hide() : show();
+            
             e.stopPropagation();
-            e.preventDefault();
+            
+            if (!$(e.target).is("input")) {
+            	e.preventDefault();
+            }
         });
+        
         container.click(stopPropagation);
         
         textInput.change(function() {
@@ -138,6 +147,7 @@
             $(doc).bind("click touchstart", hide);
             
             if (!opts.flat) {
+            	visibleElement.addClass("spectrum-active");
             	container.show().offset(getOffset(container, visibleElement));
             }
             
@@ -154,12 +164,13 @@
             callbacks.show(get())
         }
         
-        
         function hide() {
             if (!visible || opts.flat) { return; }
             visible = false;
             
             $(doc).unbind("click", hide);
+            
+           	visibleElement.removeClass("spectrum-active");
             container.hide();
             
             callbacks.hide(get());
@@ -212,16 +223,19 @@
             var flatColor = tinycolor({ h: h, s: 1, v: 1});
             dragger.css("background-color", flatColor.toHexString());
             
-            // Update the replaced elements background color (with actual selected color)
             var realColor = get();
-            visibleElement.css("background-color", realColor.toHexString());
             
-            // Update the input as it changes happen
-            if (input) {
-                $(input).val(realColor.toHexString());
+            // Update the replaced elements background color (with actual selected color)
+            if (shouldReplace) {
+            	visibleElement.css("background-color", realColor.toHexString());
             }
             
-            textInput.val(realColor.toHexString());
+            // Update the input as it changes happen
+            if (isInput) {
+                boundElement.val(realColor.toHexString());
+                textInput.val(realColor.toHexString());
+            }
+
             callbacks.move(realColor);
         }
         
@@ -236,22 +250,17 @@
             doMove();
         });
         
+        var initialColor = opts.color || (isInput && boundElement.val());
+        if (!!initialColor) {
+            set(initialColor);
+        }
         
         if (opts.flat) {
-            boundElement.after(container.addClass("spectrum-flat")).hide();
+            boundElement.after(container).hide();
             show();
         }
         else {
             $(body).append(container.hide());
-        }
-        
-        if (!opts.showInput) {
-            container.addClass("spectrum-input-disabled");
-        }
-        
-        var initialColor = opts.color || (boundElement.is("input") && boundElement.val());
-        if (!!initialColor) {
-            set(initialColor);
         }
         
         var spect = {
