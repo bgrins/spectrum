@@ -541,6 +541,15 @@
                 $(this).data("spectrum.id", spect.id);
             }); 
         };
+        
+        $.fn.spectrum.processOnLoad = true;
+        $.fn.spectrum.processOnLoadOpts = { };
+        
+        $(function() {
+        	if ($.fn.spectrum.processOnLoad) {
+        		$("input[type=spectrum]").spectrum($.fn.spectrum.processOnLoadOpts);
+        	}
+        });
     }
     
     window.spectrum = spectrum;

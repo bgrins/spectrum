@@ -27,6 +27,9 @@
 		<div id='switch-current-hex' class='switch-current-output'></div>
 	</div>
 	<div id='docs-content'>
+<pre class='prettyprint' id='code-heading'>
+&lt;input type='spectrum' value='orange' /&gt;
+</pre>
 		<h2>Goals</h2>
 		<p>I wanted a JavaScript colorpicker that didn't require images, and that had an API that made sense to me as a developer who has worked with color in a number of applications.  I had used existing plugins (which I was quite grateful for), but decided that I would make a smaller, simpler one.  Here are the goals I had:</p>
 		
@@ -54,10 +57,24 @@
 		
 		</div>
 		
-		<h2>Basic Usage</h2>
+		<h2>Could This Get Any Easier?</h2>
 		
 <pre class='prettyprint'>
-&lt;input type='text' value='orange' id='basic' name='basic' /&gt;
+&lt;input type='spectrum' value='orange' /&gt;
+</pre>
+	<p><strong>That's it!</strong> 
+	The field will degrade to a text input if the user does not have JavaScript enabled,
+	so that they will still be able to manually enter a color.  
+	Spectrum will handle setting the value as it changes, so you don't need to add a single extra line of JavaScript.
+	</p>
+	<div class='example'>
+	<input type='spectrum' value='orange' />
+	</div>
+
+		<h2>Want A Little More Control?</h2>
+
+<pre class='prettyprint'>
+&lt;input type='text' value='#5530fa' id='basic' name='basic' /&gt;
 </pre>
 	
 <pre class='prettyprint'>
@@ -67,15 +84,14 @@ $("#basic").spectrum();
 </pre>
 
 		<p>
-		That's it.  
 		The picker will be initialized with the value based on the input, and will update the input as the color is changed.  
 		Here is what it will look like: 
 		</p>
 		<div class='example'>
-		<input type='text' value='orange' id='basic' name='basic' />
+		<input type='text' value='#5530fa' id='basic' name='basic' />
 		</div>
-		
-		<h2>Options</h2>
+
+		<h2>Want A Lot More Control?</h2>
 
 <pre class='prettyprint'>
 $("#picker").spectrum({
