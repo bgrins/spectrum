@@ -105,7 +105,7 @@
             currentHue = 0,
             currentSaturation = 0,
             currentValue = 0,
-            pallet = [],
+            pallet = opts.pallet.slice(0),
             palletLookup = { };
         
         var doc = element.ownerDocument,
@@ -175,7 +175,10 @@
         	var initialColor = opts.color || (isInput && boundElement.val());
         	if (!!initialColor) {
         	    set(initialColor);
+        	    pallet.push(initialColor);
         	}
+        	
+        	setPallet(pallet);
         	
         	if (opts.flat) {
         	    show();
@@ -184,18 +187,19 @@
         	palletContainer.delegate("span", "click", function() {
         		set($(this).css("background-color"));
         	});
-        	
-        	setPallet(opts.pallet);
 		}
 		
 		function setPallet(p) {
         	if (opts.showPallet) {
-        		pallet = p.slice(0, opts.maxPalletSize);
+        		var unique = [];
 				palletLookup = { };
-				for ( var i = pallet.length - 1; i >= 0; i-- ) {
-					palletLookup[tinycolor(pallet[i]).toHexString()] = i;
+				for (var i = 0; i < p.length; i++) {
+					var hex = tinycolor(p[i]).toHexString();	
+					if (!palletLookup.hasOwnProperty(hex)) {
+						palletLookup[hex] = unique.push(p[i]) - 1;
+					}
 				}
-				
+				pallet = unique.slice(0, opts.maxPalletSize);
 				drawPallet();
         	}
 		}
@@ -249,6 +253,10 @@
            	visibleElement.removeClass("spectrum-active");
             container.hide();
             
+            
+        	    pallet.push(get().toHexString());
+        	    setPallet(pallet);
+        	    
             callbacks.hide(get());
         }
         
