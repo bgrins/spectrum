@@ -16,7 +16,7 @@
         change: function() { },
         show: function() { },
         hide: function() { },
-        showPallet: true,
+        showPallet: false,
         maxPalletSize: 12,
         pallet: ['white', 'black']
     },
