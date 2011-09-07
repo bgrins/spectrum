@@ -61,18 +61,21 @@ License: MIT
 }
 
 .spectrum-pallet-container { 
-	max-height: 46px; 
-	overflow-y:auto; 
-	margin:3px; 
+	margin:3px 0; 
 	padding: 0;
 }
 .spectrum-pallet-container span {
 	display: block;
 	float:left;
-	width: 40px;
-	height: 18px; 
-	margin: 1px;
+	width: 30px;
+	height: 15px; 
+	margin: 3px;
+	cursor: pointer;
+	border:solid 2px transparent;
 }
+.spectrum-pallet-container span:hover, .spectrum-pallet-container span.spectrum-pallet-active {
+    border-color: orange;
+}  
 .spectrum-pallet-disabled .spectrum-pallet-container { 
 	display: none; 
 }

@@ -17,7 +17,7 @@
         show: function() { },
         hide: function() { },
         showPallet: true,
-        pallet: ['white', 'black', 'green', 'red']
+        pallet: ['white', 'black', 'green', 'red', 'orange', 'yellow','white', 'black', 'green', 'red', 'orange', 'yellow']
     },
     spectrums = [],
     hasjQuery = typeof $ != "undefined",
@@ -63,10 +63,11 @@
             "</div>"
         ].join("");
     })(),
-    palletTemplate = function(p) {
+    palletTemplate = function(p, active) {
     	var html = [];
     	for (var i = 0; i < p.length; i++) {
-    		html.push('<span style="background-color:' + p[i] + '"></span>');
+    		var c = i == active ? " class='spectrum-pallet-active' " : "";
+    		html.push('<span style="background-color:' + p[i] + ';"' + c + '></span>');
     	}
     	return html.join('');
     };
@@ -103,7 +104,8 @@
             currentHue = 0,
             currentSaturation = 0,
             currentValue = 0,
-            pallet = opts.pallet.slice(0);
+            pallet = [],
+            palletLookup = { };
         
         var doc = element.ownerDocument,
             body = doc.body, 
@@ -178,13 +180,26 @@
         	    show();
         	}
         	
-        	setPallet();
+        	palletContainer.delegate("span", "click", function() {
+        		set($(this).css("background-color"));
+        	});
+        	
+        	setPallet(opts.pallet);
 		}
 		
-		function setPallet() {
+		function setPallet(p) {
         	if (opts.showPallet) {
-				palletContainer.html(palletTemplate(pallet));
+        		pallet = p.slice(0);
+				palletLookup = { };
+				for ( var i = pallet.length - 1; i >= 0; i-- ) {
+					palletLookup[tinycolor(pallet[i]).toHexString()] = i;
+				}
+				
+				drawPallet();
         	}
+		}
+		function drawPallet(active) {
+			palletContainer.html(palletTemplate(pallet, active));
 		}
 		
         function setFromTextInput() {
@@ -283,19 +298,25 @@
             var flatColor = tinycolor({ h: h, s: 1, v: 1});
             dragger.css("background-color", flatColor.toHexString());
             
-            var realColor = get();
+            var realColor = get(),
+            	realHex = realColor.toHexString();
             
             // Update the replaced elements background color (with actual selected color)
             if (shouldReplace) {
-            	visibleElement.css("background-color", realColor.toHexString());
+            	visibleElement.css("background-color", realHex);
             }
             
             // Update the input as it changes happen
             if (isInput) {
-                boundElement.val(realColor.toHexString());
-                textInput.val(realColor.toHexString());
+                boundElement.val(realHex);
+                textInput.val(realHex);
             }
 
+			if (opts.showPallet) {
+				console.log(realHex, palletLookup[realHex], palletLookup)
+				drawPallet(palletLookup[realHex]);
+			}
+			
             callbacks.move(realColor);
         }
         
