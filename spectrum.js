@@ -138,9 +138,7 @@
             $(doc).bind("click touchstart", hide);
             
             if (!opts.flat) {
-                var elOffset = visibleElement.offset();
-                elOffset.left += visibleElement.width();
-                container.show().offset(elOffset);
+            	container.show().offset(getOffset(container, visibleElement));
             }
             
             // Cache sizes on start
@@ -267,7 +265,33 @@
         
         return spect;
     }
-    
+	
+    /**
+     * checkOffset - get the offset below/above and left/right element depending on screen position
+     * Thanks https://github.com/jquery/jquery-ui/blob/master/ui/jquery.ui.datepicker.js
+     */
+    function getOffset(picker, input) {
+		var dpWidth = picker.outerWidth();
+		var dpHeight = picker.outerHeight();
+		var inputWidth = input.outerWidth();
+		var inputHeight =  input.outerHeight();
+		var doc = picker[0].ownerDocument;
+		var viewWidth = doc.documentElement.clientWidth + $(doc).scrollLeft();
+		var viewHeight = doc.documentElement.clientHeight + $(doc).scrollTop();
+		var offset = input.offset();
+		offset.top += inputHeight;
+		
+		offset.left -= 
+			Math.min(offset.left, (offset.left + dpWidth > viewWidth && viewWidth > dpWidth) ?
+			Math.abs(offset.left + dpWidth - viewWidth) : 0);
+		
+		offset.top -= 
+			Math.min(offset.top, (offset.top + dpHeight > viewHeight && viewHeight > dpHeight) ?
+			Math.abs(dpHeight + inputHeight) : 0);
+
+		return offset;
+	}
+	
     /**
      * stopPropagation - makes the code only doing this a little easier to read in line
      */
