@@ -176,51 +176,49 @@ $("#picker").spectrum({
 });
 </pre>
 
-		<ul>
-			<li>
-			<strong>move</strong>
-			<p>Called as the user moves around within the colorpicker</p>
+		<h3>move</h3>
+			
+		<p>Called as the user moves around within the colorpicker</p>
 <pre class='prettyprint'>
 move: function(color) {				
 	color.toHexCss(); // #ff0000
 }
 </pre>
-			</li>
-			<li>
-			<strong>hide</strong>
-			<p>Called after the colorpicker is hidden.  This happens when clicking outside of the picker while it is open.  Note, when any colorpicker on the page is shown it will hide any that are already open.  This event is ignored on a flat colorpicker.</p>
+		<h3>hide</h3>
+			
+		<p>Called after the colorpicker is hidden.  This happens when clicking outside of the picker while it is open.  Note, when any colorpicker on the page is shown it will hide any that are already open.  This event is ignored on a flat colorpicker.</p>
+
 <pre class='prettyprint'>
 hide: function(color) {				
 	color.toHexCss(); // #ff0000
 }
 </pre>
-			</li>
-			<li>
-			<strong>show</strong>
-			<p>Called after the colorpicker is opened.  This is ignored on a flat colorpicker.  Note, when any colorpicker on the page is shown it will hide any that are already open.  </p>
+		<h3>show</h3>
+			
+		<p>Called after the colorpicker is opened.  This is ignored on a flat colorpicker.  Note, when any colorpicker on the page is shown it will hide any that are already open.</p>
+		
 <pre class='prettyprint'>
 show: function(color) {				
 	color.toHexCss(); // #ff0000
 }
 </pre>
-			</li>
-			<li>
-			<strong>beforeShow</strong><span class='type'>event</span>
-			<p>You can prevent the colorpicker from showing up if you return false in the beforeShow event.  This event is ignored on a flat colorpicker.</p>
+		<h3>beforeShow</h3>
+			
+		<p>You can prevent the colorpicker from showing up if you return false in the beforeShow event.  This event is ignored on a flat colorpicker.</p>
+		
 <pre class='prettyprint'>
 beforeShow: function(color) {
 	return false; // Will never show up
 }
 </pre>
-			</li>
-		</ul>
-		
 		
 		<h2>Skinning</h2>
+		
 		<p>Since it is all built with HTML/CSS, you can skin it easily.  There are two parts to the <a href='https://github.com/bgrins/spectrum/blob/master/spectrum.css'>spectrum.css</a> file, the core rules (at the top of the file), and the themable rules (at the bottom).  Feel free to tweak these rules to make it look how you want.</p>
 		
+		<h3>Non-input elements</h3>
 		<p>
-			You can use any element you would like to trigger the colorpicker: <a href='#' id='pick4'>Click me to open a colorpicker</a>
+			You can use any element you would like to trigger the colorpicker: <a href='#' id='openWithLink'>Click me to open a colorpicker</a>, though it is strongly recommended to stick with <code>&lt;input&gt;</code> tags.
 		</p>
 	</div>
 	<br style='clear:both;' />
@@ -285,7 +283,7 @@ $("#showInput").spectrum({
     } 
 });
 
-$("#pick4").spectrum({
+$("#openWithLink").spectrum({
     color: "#dd3333",
     move: function(color) {
     	$("#docs-content").css("border-color", color.toHexString());    
