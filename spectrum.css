@@ -60,7 +60,7 @@ License: MIT
     color:#fff;
 }
 .spectrum-pallet-container { display: none; }
-.spectrum-g1 {
+.spectrum-saturation {
     background-image: -webkit-gradient(linear,  0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
     background-image: -webkit-linear-gradient(left, #FFF, rgba(204, 154, 129, 0));
     background-image: -moz-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
@@ -69,7 +69,7 @@ License: MIT
     filter : progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr='#FFFFFFFF', endColorstr='#00CC9A81');
     
 }
-.spectrum-g2 {
+.spectrum-value {
     background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#000000), to(rgba(204, 154, 129, 0)));
     background-image: -webkit-linear-gradient(bottom, #000000, rgba(204, 154, 129, 0));
     background-image: -moz-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
@@ -156,7 +156,7 @@ License: MIT
     border-radius: 5px; 
     font-family: Verdana Tahoma sans-serif;
 }
-.spectrum-g2, .spectrum-g1, .spectrum-slide { 
+.spectrum-saturation, .spectrum-value, .spectrum-slide { 
     width: 200px; 
     height: 200px; 
 }

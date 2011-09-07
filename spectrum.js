@@ -42,8 +42,8 @@
         return [
             "<div class='spectrum-container'>",
                 "<div class='spectrum-color'>",
-                    "<div class='spectrum-g1'>",
-                        "<div class='spectrum-g2'>",
+                    "<div class='spectrum-saturation'>",
+                        "<div class='spectrum-value'>",
                             "<div class='spectrum-drag-helper'></div>",
                         "</div>",
                     "</div>",
