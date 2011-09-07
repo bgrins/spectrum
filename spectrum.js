@@ -15,7 +15,8 @@
         move: function() { },
         change: function() { },
         show: function() { },
-        hide: function() { }
+        hide: function() { },
+        pallet: []
     },
     spectrums = [],
     hasjQuery = typeof $ != "undefined",
@@ -56,6 +57,8 @@
                     "<input class='spectrum-input' type='text' />",
                     "<span class='spectrum-button'>Go</span>",
                 "</div>",
+                "<ul class='spectrum-pallet-container'>",
+                "</ul>",
             "</div>"
         ].join("");
     })();

@@ -59,6 +59,7 @@ License: MIT
     overflow:hidden;
     color:#fff;
 }
+.spectrum-pallet-container { display: none; }
 .spectrum-g1 {
     background-image: -webkit-gradient(linear,  0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
     background-image: -webkit-linear-gradient(left, #FFF, rgba(204, 154, 129, 0));
