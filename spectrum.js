@@ -17,7 +17,8 @@
         show: function() { },
         hide: function() { },
         showPallet: true,
-        pallet: ['white', 'black', 'green', 'red', 'orange', 'yellow','white', 'black', 'green', 'red', 'orange', 'yellow']
+        maxPalletSize: 12,
+        pallet: ['white', 'black']
     },
     spectrums = [],
     hasjQuery = typeof $ != "undefined",
@@ -189,7 +190,7 @@
 		
 		function setPallet(p) {
         	if (opts.showPallet) {
-        		pallet = p.slice(0);
+        		pallet = p.slice(0, opts.maxPalletSize);
 				palletLookup = { };
 				for ( var i = pallet.length - 1; i >= 0; i-- ) {
 					palletLookup[tinycolor(pallet[i]).toHexString()] = i;
