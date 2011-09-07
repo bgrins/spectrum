@@ -61,8 +61,8 @@ License: MIT
 }
 .spectrum-g1 {
 	background-image: -webkit-gradient(linear,  0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
+	background-image: -webkit-linear-gradient(left, #FFF, rgba(204, 154, 129, 0));
     background-image: -moz-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
-    background-image: -moz-gradient(left, #fff, rgba(204, 154, 129, 0));
     background-image: -o-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr=#FFFFFFFF, endColorstr=#00CC9A81)";
     filter : progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr='#FFFFFFFF', endColorstr='#00CC9A81');
@@ -70,8 +70,8 @@ License: MIT
 }
 .spectrum-g2 {
     background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#000000), to(rgba(204, 154, 129, 0)));
-    background-image: -moz-linear-gradient(center bottom, #000, rgba(204, 154, 129, 0));
-    background-image: -moz-gradient(center bottom, #000, rgba(204, 154, 129, 0));
+	background-image: -webkit-linear-gradient(bottom, #000000, rgba(204, 154, 129, 0));
+    background-image: -moz-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
     background-image: -o-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00CC9A81, endColorstr=#FF000000)";
     filter : progid:DXImageTransform.Microsoft.gradient(startColorstr='#00CC9A81', endColorstr='#FF000000');
@@ -88,8 +88,8 @@ License: MIT
 .spectrum-slide {
     position:relative;
     float:left;
-    background: -webkit-linear-gradient(top, #FF0000 0%, #FFFF00 12%, #0BED00 25%, #00FF40 37%, #00FFFF 50%, #0040ff 62%, #8000ff 75%, #ff00ff 87%, #ff0000 100%);
     background: -webkit-gradient(linear, left top, left bottom, from(#FF0000), color-stop(.12, #FFFF00), color-stop(.25, #0BED00), color-stop(.37, #00FF40), color-stop(.50, #00FFFF), color-stop(.62, #0040ff), color-stop(.75, #8000ff), color-stop(.87, #ff00ff), to(#ff0000));
+    background: -webkit-linear-gradient(top, #FF0000 0%, #FFFF00 12%, #0BED00 25%, #00FF40 37%, #00FFFF 50%, #0040ff 62%, #8000ff 75%, #ff00ff 87%, #ff0000 100%);
     background: -moz-linear-gradient(top, #FF0000 0%, #FFFF00 12%, #0BED00 25%, #00FF40 37%, #00FFFF 50%, #0040ff 62%, #8000ff 75%, #ff00ff 87%, #ff0000 100%); 
     background: -o-linear-gradient(top, #FF0000 0%, #FFFF00 12%, #0BED00 25%, #00FF40 37%, #00FFFF 50%, #0040ff 62%, #8000ff 75%, #ff00ff 87%, #ff0000 100%); 
 }
