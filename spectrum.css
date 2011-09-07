@@ -166,6 +166,7 @@ License: MIT
 	vertical-align: middle;
 	text-align: center;
 	background: #ddd;
+	cursor:pointer;
 }
 .spectrum-drag-helper {
    border-radius: 5px; 
