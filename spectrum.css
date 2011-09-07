@@ -7,61 +7,61 @@ License: MIT
 ***/
 
 .spectrum-container { 
-	position:absolute; 
-	top:0; 
-	left:0; 
+    position:absolute; 
+    top:0; 
+    left:0; 
 }
 .spectrum-container.spectrum-input-disabled .spectrum-input-container {
-	display:none;
+    display:none;
 }
 .spectrum-color { 
-	position:relative;
-	float:left;
+    position:relative;
+    float:left;
 }
 .spectrum-replacer, .spectrum-text, .spectrum-drag-helper, .spectrum-slide-helper { 
-	-webkit-user-select:none; -moz-user-select: none; -o-user-select:none; user-select: none; 
+    -webkit-user-select:none; -moz-user-select: none; -o-user-select:none; user-select: none; 
 }
 .spectrum-replacer {
-	border: solid 2px #333;
-	display:inline-block;
-	margin:0;
-	border-radius: 5px;
-	overflow:hidden;
-	cursor:pointer;
-	padding: 4px;
-	background: #333;
+    border: solid 2px #333;
+    display:inline-block;
+    margin:0;
+    border-radius: 5px;
+    overflow:hidden;
+    cursor:pointer;
+    padding: 4px;
+    background: #333;
 }
 .spectrum-dd, .spectrum-text { 
-	height: 16px; 
-	line-height: 16px;
-	padding:3px;
-	overflow:hidden; 
-	float:left;
+    height: 16px; 
+    line-height: 16px;
+    padding:3px;
+    overflow:hidden; 
+    float:left;
 }
 .spectrum-text {
-	min-width:20px;
+    min-width:20px;
 }
 .spectrum-replacer input {
-	border:none;
-	margin:0; 
-	padding:0; 
-	background:transparent;
-	width:100px;
-	font-size: 16px;
+    border:none;
+    margin:0; 
+    padding:0; 
+    background:transparent;
+    width:100px;
+    font-size: 16px;
 }
 .spectrum-replacer.spectrum-hide-input input { 
-	display: none; 
+    display: none; 
 }
 .spectrum-dd {
-	float:left;
-	width: 12px;
-	font-size:10px;
-	overflow:hidden;
-	color:#fff;
+    float:left;
+    width: 12px;
+    font-size:10px;
+    overflow:hidden;
+    color:#fff;
 }
 .spectrum-g1 {
-	background-image: -webkit-gradient(linear,  0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
-	background-image: -webkit-linear-gradient(left, #FFF, rgba(204, 154, 129, 0));
+    background-image: -webkit-gradient(linear,  0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
+    background-image: -webkit-linear-gradient(left, #FFF, rgba(204, 154, 129, 0));
     background-image: -moz-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
     background-image: -o-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr=#FFFFFFFF, endColorstr=#00CC9A81)";
@@ -70,20 +70,20 @@ License: MIT
 }
 .spectrum-g2 {
     background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#000000), to(rgba(204, 154, 129, 0)));
-	background-image: -webkit-linear-gradient(bottom, #000000, rgba(204, 154, 129, 0));
+    background-image: -webkit-linear-gradient(bottom, #000000, rgba(204, 154, 129, 0));
     background-image: -moz-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
     background-image: -o-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00CC9A81, endColorstr=#FF000000)";
     filter : progid:DXImageTransform.Microsoft.gradient(startColorstr='#00CC9A81', endColorstr='#FF000000');
 }
 .spectrum-drag-helper { 
-	position:absolute; 
-	top:0; 
-	left: 0;
+    position:absolute; 
+    top:0; 
+    left: 0;
 }
 .spectrum-container.spectrum-flat {
-	position:static;
-	display:inline-block;
+    position:static;
+    display:inline-block;
 }
 .spectrum-slide {
     position:relative;
@@ -94,7 +94,7 @@ License: MIT
     background: -o-linear-gradient(top, #FF0000 0%, #FFFF00 12%, #0BED00 25%, #00FF40 37%, #00FFFF 50%, #0040ff 62%, #8000ff 75%, #ff00ff 87%, #ff0000 100%); 
 }
 .spectrum-replacer {
-	display:inline-block;
+    display:inline-block;
 }
 .spectrum-ie-1 { 
     height:12%; 
@@ -129,9 +129,9 @@ License: MIT
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff00ff', endColorstr='#ff0000');
 }
 .spectrum-slide-helper { 
-	position: absolute; 
-	top:0; 
-	cursor:pointer;
+    position: absolute; 
+    top:0; 
+    cursor:pointer;
 }
 .spectrum-input {
        height: 20px;
@@ -150,23 +150,23 @@ License: MIT
 
 /* Themable options */
 .spectrum-container { 
-	background-color: #333; 
-	padding:10px; 
-	border-radius: 5px; 
-	font-family: Verdana Tahoma sans-serif;
+    background-color: #333; 
+    padding:10px; 
+    border-radius: 5px; 
+    font-family: Verdana Tahoma sans-serif;
 }
 .spectrum-g2, .spectrum-g1, .spectrum-slide { 
-	width: 200px; 
-	height: 200px; 
+    width: 200px; 
+    height: 200px; 
 }
 .spectrum-button {
-	margin-top: 3px;
-	display:inline-block;
-	height: 20px;
-	vertical-align: middle;
-	text-align: center;
-	background: #ddd;
-	cursor:pointer;
+    margin-top: 3px;
+    display:inline-block;
+    height: 20px;
+    vertical-align: middle;
+    text-align: center;
+    background: #ddd;
+    cursor:pointer;
 }
 .spectrum-drag-helper {
    border-radius: 5px; 
@@ -175,19 +175,19 @@ License: MIT
    border: solid black 3px; pointer: cursor;
 }
 .spectrum-slide, .spectrum-button  { 
-	margin-left: 10px; 
-	width: 30px; 
+    margin-left: 10px; 
+    width: 30px; 
 }
 .spectrum-slide-helper { 
-	width: 40px; 
-	height: 5px; 
-	background: white; 
-	opacity: .8; 
-	left:-5px; 
+    width: 40px; 
+    height: 5px; 
+    background: white; 
+    opacity: .8; 
+    left:-5px; 
 }
 .spectrum-replacer1 {
-	width: 30px;
-	height: 30px;
-	border: solid 2px #333;
-	border-radius: 3px;
+    width: 30px;
+    height: 30px;
+    border: solid 2px #333;
+    border-radius: 3px;
 }
