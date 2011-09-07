@@ -79,50 +79,90 @@ $("#basic").spectrum();
 
 <pre class='prettyprint'>
 $("#picker").spectrum({
-	flat: (true|<b>false</b>),
+	color: string,
 	showInput: (true|<b>false</b>),
-	color: string
+	showPallet: (true|<b>false</b>),
+	pallet: [color, color, ...],
+	flat: (true|<b>false</b>),
+	changeOnMove: (<b>true</b>|false)
 });
 </pre>
-		<h3>Flat versus Collapsed</h3>
-		<ul>
-			<li>
-			<strong>Collapsed</strong>
-			<p>A small div will take the place of the element, and the colorpicker will show up when the user clicks on it.  Here is an example of that:</p>
-			<div class='example'>
-				<input type='text' name='color2' id='pick2' />
-			</div>
-			</li>
-			<li>
-			<strong>Flat</strong> 
-			<p>See the fixed picker to the left for an example of this.  This means that it will always show up at full size, and be positioned as an inline-block element.
-			</p>
-			</li>
-		</ul>
+
+		<h3>Color</h3>
+		<p>Spectrum will use the color passed in to initialize.  If there is no color passed in,
+		it will try to parse a color based on the <code>value</code> of the input 
+		(you did use an input, didn't you?)
+		</p>
+		
+		
 		
 		<h3>Show Input</h3>
 		
-		<ul>
-			<li>
-			<strong>Show</strong>
-			
-			<p>You can add an input to allow free form typing.  The color parsing is very permissive in the allowed strings.  See <a href='https://github.com/bgrins/TinyColor'>TinyColor</a> for more details.
-			<div class='example'>
-				<input type='text' name='color3' id='pick3' />
-			</div>
-			</li>
-			<li>
-			<strong>Hide</strong>
-			<p>The input allowing typing will not be displayed.</p>
-			
-			</li>
-			
-		</ul>
+		<p>You can add an input to allow free form typing.  The color parsing is very permissive in the allowed strings.  See <a href='https://github.com/bgrins/TinyColor'>TinyColor</a> for more details.
+		
+<pre class='prettyprint'>
+$("#showInput").spectrum({
+	showInput: true
+});
+</pre>
+		<div class='example'>
+		    <input type='text' name='showInput' id='showInput' />
+		</div>
 		
 		<h3>Show Pallet</h3>
 		<p>Spectrum can show a pallet below the colorpicker to make it convenient for users to choose from frequently or recently used colors.  When the colorpicker is closed, the current color will be added to the pallet if it isn't there already.  Check it out here: </p>
+		
+<pre class='prettyprint'>
+$("#showPallet").spectrum({
+    showPallet: true,
+    pallet: ['black', 'white', 'blanchedalmond', 'rgb(255, 128, 0);', 'hsv 100 70 50']
+});
+</pre>
 		<div class='example'>
-				<input type='text' name='color3' id='pick5' />
+				<input type='text' name='showPallet' id='showPallet' value='lightblue' />
+		</div>
+		
+		
+		<h3>Flat versus Collapsed</h3>
+		<p><strong>Collapsed</strong>
+			A small div will take the place of the element, and the colorpicker will show up when the user clicks on it.  Here is an example of that:
+		</p>
+		
+<pre class='prettyprint'>
+$("#collapsed").spectrum();
+</pre>
+		
+		<div class='example'>
+		    <input type='text' name='collapsed' id='collapsed' />
+		</div>
+		<p><strong>Flat</strong> 
+		    This means that it will always show up at full size, 
+		    and be positioned as an inline-block element.
+		    Look to the left for a full sized flat picker.
+		</p>
+
+<pre class='prettyprint'>
+$("#flat").spectrum({
+	flat: true
+});
+</pre>
+		
+		<div class='example'>
+		    <input type='text' name='flat' id='flat' />
+		</div>
+		
+		<h3>Change On Move</h3>
+		
+		<p>
+			Spectrum can change the original input either as the user drags around, or at the end
+			once they have selected a color.
+			Check out the examples below (with the original inputs visible) to see the difference.
+		</p>
+		
+		<div class='example'>
+				<input type='text' value='blanchedalmond' name='changeOnMove' id='changeOnMove' />
+				<br />
+				<input type='text' value='blanchedalmond' name='changeOnMoveNo' id='changeOnMoveNo' />
 		</div>
 		
 		<h2>Events</h2>
@@ -214,7 +254,7 @@ $("#pick1").spectrum({
     pallet: ['white', 'black', '#c5c88d', '#ac5c5c', '#344660']
 });
 
-$("#pick2").spectrum({
+$("#collapsed").spectrum({
     color: "#dd3333",
     move: function(color) {
     	$("#docs-content").css("border-color", color.toHexString());    
@@ -227,7 +267,11 @@ $("#pick2").spectrum({
     }
 });
 
-$("#pick3").spectrum({
+$("#flat").spectrum({
+	flat: true
+});
+
+$("#showInput").spectrum({
     color: "#dd33dd",
     showInput: true,
     move: function(color) {
@@ -254,13 +298,16 @@ $("#pick4").spectrum({
     }
 });
 
-$("#pick5").spectrum({
-    color: "#dd3333",
+$("#showPallet").spectrum({
     showPallet: true,
+    pallet: ['black', 'white', 'blanchedalmond', 'rgb(255, 128, 0);', 'hsv 100 70 50'],
     move: function(color) {
     	$("#docs-content").css("border-color", color.toHexString());    
     }
 });
+
+$("#changeOnMove").spectrum().show();
+$("#changeOnMoveNo").spectrum({changeOnMove: false}).show();
 
 $("#basic").spectrum();
 

@@ -68,7 +68,7 @@
     	var html = [];
     	for (var i = 0; i < p.length; i++) {
     		var c = i == active ? " class='spectrum-pallet-active' " : "";
-    		html.push('<span style="background-color:' + p[i] + ';"' + c + '></span>');
+    		html.push('<span style="background-color:' + tinycolor(p[i]).toHexString() + ';"' + c + '></span>');
     	}
     	return html.join('');
     };
@@ -119,8 +119,11 @@
             textInput = container.find(".spectrum-input"),
             palletContainer = container.find(".spectrum-pallet-container"),
             isInput = boundElement.is("input"),
+            changeOnMove = isInput && (opts.changeOnMove || opts.flat),
             shouldReplace = isInput && !opts.flat,
-            visibleElement = (shouldReplace) ? $(replaceInput) : $(element);
+            visibleElement = (shouldReplace) ? $(replaceInput) : $(element),
+            initialColor = opts.color || (isInput && boundElement.val()),
+            hasOpened = false;
 
 		function initialize() {
 			
@@ -172,7 +175,6 @@
     	        doMove();
     	    });
     	    
-        	var initialColor = opts.color || (isInput && boundElement.val());
         	if (!!initialColor) {
         	    set(initialColor);
         	    pallet.push(initialColor);
@@ -218,6 +220,12 @@
         function show() {
             if (visible) { return; }
             
+            if (!hasOpened) {
+            	hasOpened = true;
+            }
+            
+        	
+        	
             if (callbacks.beforeShow(get()) === false) return;
             
             hideAll();
@@ -253,11 +261,17 @@
            	visibleElement.removeClass("spectrum-active");
             container.hide();
             
+            var realColor = get();
             
-        	    pallet.push(get().toHexString());
-        	    setPallet(pallet);
-        	    
-            callbacks.hide(get());
+            // Update the pallet with the current color
+        	pallet.push(realColor.toHexString());
+        	setPallet(pallet);
+        	
+        	if (!changeOnMove) {
+            	updateOriginalInput();
+        	}
+        	
+            callbacks.hide(realColor);
         }
         
         function set(color) {
@@ -317,8 +331,11 @@
             
             // Update the input as it changes happen
             if (isInput) {
-                boundElement.val(realHex);
                 textInput.val(realHex);
+            }
+            
+            if (hasOpened && changeOnMove) {
+            	updateOriginalInput();
             }
 
 			if (opts.showPallet) {
@@ -326,6 +343,15 @@
 			}
 			
             callbacks.move(realColor);
+        }
+        
+        function updateOriginalInput() {
+        	if (isInput) {
+        		boundElement.val(get().toHexString());
+        	}
+        	
+        	// trigger a change event?
+        
         }
         
         initialize();
