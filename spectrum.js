@@ -313,7 +313,6 @@
             }
 
 			if (opts.showPallet) {
-				console.log(realHex, palletLookup[realHex], palletLookup)
 				drawPallet(palletLookup[realHex]);
 			}
 			
