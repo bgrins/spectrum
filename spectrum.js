@@ -57,9 +57,11 @@
                 "</div>",
                 "<br style='clear:both;' />",
                 "<div class='spectrum-pallet-container spectrum-cf'></div>",
-                "<div class='spectrum-input-container'>",
+                "<div class='spectrum-input-container spectrum-cf'>",
                     "<input class='spectrum-input' type='text' spellcheck='false'  />",
-                    "<div style='float:right'><button>Cancel</button><button>Choose</button></div>",
+                    "<div>",
+                        "<button class='spectrum-cancel'>Cancel</button>",
+                        "<button class='spectrum-choose'>Choose</button></div>",
                 "</div>",
             "</div>"
         ].join("");
@@ -118,11 +120,14 @@
             slideHelper = container.find(".spectrum-slide-helper"),
             textInput = container.find(".spectrum-input"),
             palletContainer = container.find(".spectrum-pallet-container"),
+            cancelButton = container.find(".spectrum-cancel"),
+            chooseButton = container.find(".spectrum-choose"),
             isInput = boundElement.is("input"),
             changeOnMove = isInput && (opts.changeOnMove || opts.flat),
             shouldReplace = isInput && !opts.flat,
             visibleElement = (shouldReplace) ? $(replaceInput) : $(element),
             initialColor = opts.color || (isInput && boundElement.val()),
+            colorOnShow = false,
             hasOpened = false;
 
 		function initialize() {
@@ -163,6 +168,13 @@
     	    textInput.change(setFromTextInput);
     	    textInput.keydown(function(e) { if (e.keyCode == 13) { setFromTextInput(); } } );
 
+            cancelButton.click(function() {
+                cancel();
+                hide();
+            });
+            chooseButton.click(function() {
+                hide();
+            });
     	    draggable(slider, function(dragX, dragY) {
     	        currentHue = (dragY / slideHeight);
     	        doMove();
@@ -219,13 +231,12 @@
         function show() {
             if (visible) { return; }
             
+
+            if (callbacks.beforeShow(get()) === false) return;
+            
             if (!hasOpened) {
             	hasOpened = true;
             }
-            
-        	
-        	
-            if (callbacks.beforeShow(get()) === false) return;
             
             hideAll();
             
@@ -248,7 +259,12 @@
             
             doMove();
             
+            colorOnShow = get();
             callbacks.show(get())
+        }
+        
+        function cancel() {
+            set(colorOnShow);
         }
         
         function hide() {

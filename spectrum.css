@@ -40,13 +40,13 @@ License: MIT
 }
 
 .spectrum-container.spectrum-input-disabled .spectrum-input-container,
-.spectrum-container.spectrum-flat .spectrum-input-container button {
+.spectrum-container.spectrum-flat .spectrum-input-container div {
     display:none;
 }
 .spectrum-input-container {
     margin-top: 4px;
 }
-
+.spectrum-input-container div { float:right; }
 .spectrum-input {
        height: 20px;
        font-size: 16px;
