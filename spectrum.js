@@ -18,6 +18,7 @@
         hide: function() { },
         showPallet: false,
         maxPalletSize: 12,
+        theme: 'spectrum-clean',
         pallet: ['white', 'black']
     },
     spectrums = [],
@@ -55,11 +56,10 @@
                     gradientFix,
                 "</div>",
                 "<br style='clear:both;' />",
+                "<div class='spectrum-pallet-container spectrum-cf'></div>",
                 "<div class='spectrum-input-container'>",
                     "<input class='spectrum-input' type='text' spellcheck='false'  />",
-                    "<span class='spectrum-button'>Go</span>",
-                "</div>",
-                "<div class='spectrum-pallet-container'>",
+                    "<div style='float:right'><button>Cancel</button><button>Choose</button></div>",
                 "</div>",
             "</div>"
         ].join("");
@@ -111,7 +111,7 @@
         var doc = element.ownerDocument,
             body = doc.body, 
             boundElement = $(element),
-        	container = $(markup, doc),
+        	container = $(markup, doc).addClass(opts.theme),
             dragger = container.find(".spectrum-color"),
             dragHelper = container.find(".spectrum-drag-helper"),
             slider = container.find(".spectrum-slide"),
@@ -134,7 +134,6 @@
     	    container.toggleClass("spectrum-flat", opts.flat);
     	    container.toggleClass("spectrum-input-disabled", !opts.showInput);
     	    container.toggleClass("spectrum-pallet-disabled", !opts.showPallet);
-    	    visibleElement.toggleClass("spectrum-hide-input", !opts.showInput);
     	    
     	    if (shouldReplace) {
     	        boundElement.hide().after(visibleElement);

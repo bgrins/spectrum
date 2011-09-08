@@ -11,9 +11,6 @@ License: MIT
     top:0; 
     left:0; 
 }
-.spectrum-container.spectrum-input-disabled .spectrum-input-container {
-    display:none;
-}
 .spectrum-color { 
     position:relative;
     float:left;
@@ -41,17 +38,24 @@ License: MIT
 .spectrum-text {
     min-width:20px;
 }
-.spectrum-replacer input {
-    border:none;
-    margin:0; 
-    padding:0; 
-    background:transparent;
-    width:100px;
-    font-size: 16px;
-    font-family: "Lucida Sans" sans-serif;
+
+.spectrum-container.spectrum-input-disabled .spectrum-input-container {
+    display:none;
 }
-.spectrum-replacer.spectrum-hide-input input { 
-    display: none; 
+.spectrum-input-container {
+    margin-top: 4px;
+}
+
+.spectrum-input {
+       height: 20px;
+       font-size: 16px;
+       border: 1px inset;
+       padding: 1px;
+       margin: 0;
+       width: 100px;
+       background:transparent;
+       border-color: #444;
+       color: white;
 }
 .spectrum-dd {
     float:left;
@@ -155,20 +159,10 @@ License: MIT
     top:0; 
     cursor:pointer;
 }
-.spectrum-input {
-       height: 20px;
-       font-size: 18px;
-       border: 2px inset;
-       padding: 1px;
-       margin: 0;
-       margin-top: 3px;
-       width: 194px;
-}
 
 .spectrum-cf:before, .spectrum-cf:after { content: ""; display: table; }
 .spectrum-cf:after { clear: both; }
 .spectrum-cf { *zoom: 1; }
-
 
 /* Themable options */
 .spectrum-container { 
@@ -182,15 +176,56 @@ License: MIT
     width: 200px;
     height: 200px;
 }
-.spectrum-button {
-    margin-top: 3px;
-    display:inline-block;
-    height: 20px;
-    vertical-align: middle;
-    text-align: center;
-    background: #ddd;
-    cursor:pointer;
+
+
+/* http://hellohappy.org/css3-buttons/ */
+.spectrum-clean button {
+  background-color: #eeeeee;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#cccccc));
+  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: linear-gradient(top, #eeeeee, #cccccc);
+  border: 1px solid #ccc;
+  border-bottom: 1px solid #bbb;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  color: #333;
+  font: bold 11px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+  line-height: 1;
+  padding: 4px 1px;
+  text-align: center;
+  text-shadow: 0 1px 0 #eee;
+  vertical-align: middle;
 }
+.spectrum-clean button:hover {
+    background-color: #dddddd;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#dddddd), to(#bbbbbb));
+    /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, #dddddd, #bbbbbb);
+    background-image: -moz-linear-gradient(top, #dddddd, #bbbbbb);
+    background-image: -ms-linear-gradient(top, #dddddd, #bbbbbb);
+    background-image: -o-linear-gradient(top, #dddddd, #bbbbbb);
+    background-image: linear-gradient(top, #dddddd, #bbbbbb);
+    border: 1px solid #bbb;
+    border-bottom: 1px solid #999;
+    cursor: pointer;
+    text-shadow: 0 1px 0 #ddd; 
+}
+.spectrum-clean button:active {
+    border: 1px solid #aaa;
+    border-bottom: 1px solid #888;
+    -webkit-box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
+    -moz-box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
+    -ms-box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
+    -o-box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
+    box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
+}
+
 .spectrum-drag-helper {
    border-radius: 5px; 
    height:5px; 
