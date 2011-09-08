@@ -53,7 +53,7 @@ License: MIT
        border: 1px inset;
        padding: 1px 5px;
        margin: 0;
-       width: 125px;
+       width: 120px;
        margin-top: 1px;
        background:transparent;
        border-color: #444;
@@ -173,7 +173,7 @@ License: MIT
     background-color: #333; 
     padding:10px; 
     border-radius: 5px; 
-    font-family: Verdana Tahoma sans-serif;
+    font-family: Droid Sans, Tahoma, sans-serif;
     width: 240px;
 }
 .spectrum-saturation, .spectrum-value, .spectrum-slide { 
@@ -199,7 +199,7 @@ License: MIT
   -o-border-radius: 3px;
   border-radius: 3px;
   color: #333;
-  font: bold 11px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+  font: normal 11px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
   line-height: 1;
   padding: 4px 1px;
   text-align: center;
