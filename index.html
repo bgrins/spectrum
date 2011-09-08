@@ -58,9 +58,9 @@
 		    	<li>Opera <small>11.1+</small></li>
 		    	<li>iOS</li>
 		    </ul>
-		    I do not have mobile devices for testing test!
+		    <small>I do not have mobile devices for testing!
 		    Please <a href='http://github.com/bgrins/spectrum'>visit the project page</a> 
-		    and let me know if your device does or doesn't work.
+		    and let me know if your device does or doesn't work.</small>
 		  </div>
 		</div>
 		
@@ -84,12 +84,18 @@
 		<h2>Want A Little More Control?</h2>
 
 <pre class='prettyprint'>
-&lt;input type='text' value='#5530fa' id='basic' name='basic' /&gt;
+&lt;input type='text' class='basic' value='red' /&gt;
+&lt;input type='text' class='basic' value='orange' /&gt;
+&lt;input type='text' class='basic' value='yellow' /&gt;
+&lt;input type='text' class='basic' value='green' /&gt;
+&lt;input type='text' class='basic' value='blue' /&gt;
+&lt;input type='text' class='basic' value='indigo' /&gt;
+&lt;input type='text' class='basic' value='violet' /&gt;
 </pre>
 	
 <pre class='prettyprint'>
 &lt;script&gt;
-$("#basic").spectrum();
+$(".basic").spectrum();
 &lt;/script&gt;
 </pre>
 
@@ -98,7 +104,13 @@ $("#basic").spectrum();
 		Here is what it will look like: 
 		</p>
 		<div class='example'>
-		<input type='text' value='#5530fa' id='basic' name='basic' />
+            <input type='text' class='basic' value='red' />
+            <input type='text' class='basic' value='orange' />
+            <input type='text' class='basic' value='yellow' />
+            <input type='text' class='basic' value='green' />
+            <input type='text' class='basic' value='blue' />
+            <input type='text' class='basic' value='indigo' />
+            <input type='text' class='basic' value='violet' />
 		</div>
 
 		<h2>Want A Lot More Control?</h2>
@@ -116,10 +128,38 @@ $("#picker").spectrum({
 
 		<h3>Color</h3>
 		<p>Spectrum will use the color passed in to initialize.  If there is no color passed in,
-		it will try to parse a color based on the <code>value</code> of the input 
-		(you did use an input, didn't you?)
-		</p>
+		it will try to parse a color based on the <code>value</code> of the input.  The color parsing is based on the <a href=''>TinyColor</a> plugin, and accepts many forms of input:</p>
 		
+<pre class='prettyprint'>
+red
+#fff
+fff
+#ffffff
+ffffff
+rgb(255, 0, 0)
+rgb 255 0 0
+hsl(0, 100, 50)
+hsl(0, 100%, 50%)
+hsl 0 100 50
+hsl 0 100% 50%
+hsv(0, 100%, 100%)
+hsv(0, 100, 100)
+hsv 0 100% 100%
+hsv 0 100 100
+</pre>
+        <p>It also provides the following forms of output:</p>
+<pre class='prettyprint'>
+var t = $("#element").spectrum("get");
+t.toHex()       // "ff0000"
+t.toHexString() // "#ff0000"
+t.toRgb()       // {"r":255,"g":0,"b":0}
+t.toRgbString() // "rgb(255, 0, 0)"
+t.toHsv()       // {"h":0,"s":1,"v":1}
+t.toHsvString() // "hsv(0, 100%, 100%)"
+t.toHsl()       // {"h":0,"s":1,"l":0.5}
+t.toHslString() // "hsl(0, 100%, 50%)"
+t.toName()      // "red"
+</pre>
 		
 		
 		<h3>Show Input</h3>
@@ -205,6 +245,14 @@ $("#picker").spectrum({
 });
 </pre>
 
+		<h3>change</h3>
+			
+		<p>Called as the original input changes.  This may happen only once it is closed, if <code>changeOnMove</code> is set to false</p>
+<pre class='prettyprint'>
+change: function(color) {				
+	color.toHexCss(); // #ff0000
+}
+</pre>
 		<h3>move</h3>
 			
 		<p>Called as the user moves around within the colorpicker</p>
@@ -269,7 +317,7 @@ function updateBorders(color) {
 
 $("#pick1").spectrum({
 	flat: true,
-    move: function(color) {
+    change: function(color) {
     	var hsv = color.toHsv();
     	var rgb = color.toRgbString();
     	var hex = color.toHexString();
@@ -278,7 +326,6 @@ $("#pick1").spectrum({
     	}).toggleClass("dark", hsv.v < .5);
     	$("#switch-current-rgb").text(rgb);
     	$("#switch-current-hex").text(hex);
-    	
     },
     show: function() {
        
@@ -293,7 +340,7 @@ $("#pick1").spectrum({
 
 $("#collapsed").spectrum({
     color: "#dd3333",
-    move: updateBorders,
+    change: updateBorders,
     show: function() {
        
     },
@@ -304,13 +351,13 @@ $("#collapsed").spectrum({
 
 $("#flat").spectrum({
 	flat: true,
-	move: updateBorders
+	change: updateBorders
 });
 
 $("#showInput").spectrum({
     color: "#dd33dd",
     showInput: true,
-    move: updateBorders,
+    change: updateBorders,
     show: function() {
        
     },
@@ -321,7 +368,7 @@ $("#showInput").spectrum({
 
 $("#openWithLink").spectrum({
     color: "#dd3333",
-    move: updateBorders,
+    change: updateBorders,
     show: function() {
        
     },
@@ -333,13 +380,13 @@ $("#openWithLink").spectrum({
 $("#showPallet").spectrum({
     showPallet: true,
     pallet: ['black', 'white', 'blanchedalmond', 'rgb(255, 128, 0);', 'hsv 100 70 50'],
-    move: updateBorders
+    change: updateBorders
 });
 
-$("#changeOnMove").spectrum({ move: updateBorders }).show();
-$("#changeOnMoveNo").spectrum({changeOnMove: false}).show();
+$("#changeOnMove").spectrum({ change: updateBorders }).show();
+$("#changeOnMoveNo").spectrum({ changeOnMove: false, change: updateBorders }).show();
 
-$("#basic").spectrum({move: updateBorders});
+$(".basic").spectrum({ change: updateBorders });
 
 prettyPrint();
 

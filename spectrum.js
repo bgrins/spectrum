@@ -346,12 +346,12 @@
         }
         
         function updateOriginalInput() {
+            var color = get();
         	if (isInput) {
-        		boundElement.val(get().toHexString());
+        		boundElement.val(color.toHexString());
         	}
         	
-        	// trigger a change event?
-        
+        	callbacks.change(color);
         }
         
         initialize();
