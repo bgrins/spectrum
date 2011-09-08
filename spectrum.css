@@ -50,12 +50,14 @@ License: MIT
        height: 20px;
        font-size: 16px;
        border: 1px inset;
-       padding: 1px;
+       padding: 1px 5px;
        margin: 0;
-       width: 100px;
+       width: 125px;
+       margin-top: 1px;
        background:transparent;
        border-color: #444;
        color: white;
+       border-radius: 3px;
 }
 .spectrum-dd {
     float:left;
