@@ -56,7 +56,7 @@
                 "</div>",
                 "<br style='clear:both;' />",
                 "<div class='spectrum-input-container'>",
-                    "<input class='spectrum-input' type='text' />",
+                    "<input class='spectrum-input' type='text' spellcheck='false'  />",
                     "<span class='spectrum-button'>Go</span>",
                 "</div>",
                 "<div class='spectrum-pallet-container'>",
