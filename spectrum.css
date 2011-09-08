@@ -126,9 +126,6 @@ License: MIT
     background: -moz-linear-gradient(top, #FF0000 0%, #FFFF00 12%, #0BED00 25%, #00FF40 37%, #00FFFF 50%, #0040ff 62%, #8000ff 75%, #ff00ff 87%, #ff0000 100%); 
     background: -o-linear-gradient(top, #FF0000 0%, #FFFF00 12%, #0BED00 25%, #00FF40 37%, #00FFFF 50%, #0040ff 62%, #8000ff 75%, #ff00ff 87%, #ff0000 100%); 
 }
-.spectrum-replacer {
-    display:inline-block;
-}
 .spectrum-ie-1 { 
     height:12%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF0000', endColorstr='#FFFF00');
