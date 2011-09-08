@@ -7,8 +7,8 @@ I started using canvas, then switched to CSS gradients, since it turned out to b
 
 Here is the JavaScript size
 
-    Original Size:  19.9KB (6.06KB gzipped)
-    Compiled Size:	10.21KB (4.27KB gzipped)
+    Original Size:    24.48KB (7.31KB gzipped)
+    Compiled Size:	  12.03KB (4.97KB gzipped)
 
 See demo and docs: http://bgrins.github.com/spectrum/
 
