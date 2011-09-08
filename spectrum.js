@@ -178,13 +178,13 @@
     	    draggable(slider, function(dragX, dragY) {
     	        currentHue = (dragY / slideHeight);
     	        doMove();
-    	    });
+    	    }, dragStart, dragStop);
     	    
     	    draggable(dragger, function(dragX, dragY) {
     	        currentSaturation = dragX / dragWidth;
     	        currentValue = (dragHeight -     dragY) / dragHeight;
     	        doMove();
-    	    });
+    	    }, dragStart, dragStop);
     	    
         	if (!!initialColor) {
         	    set(initialColor);
@@ -219,7 +219,12 @@
 		function drawPallet(active) {
 			palletContainer.html(palletTemplate(pallet, active));
 		}
-		
+		function dragStart() {
+		  container.addClass("spectrum-dragging");
+		}
+		function dragStop() {
+		  container.removeClass("spectrum-dragging");
+		}
         function setFromTextInput() {
         	set(textInput.val());
         }
