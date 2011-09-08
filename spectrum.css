@@ -48,6 +48,7 @@ License: MIT
     background:transparent;
     width:100px;
     font-size: 16px;
+    font-family: "Lucida Sans" sans-serif;
 }
 .spectrum-replacer.spectrum-hide-input input { 
     display: none; 
