@@ -3,7 +3,7 @@
 html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 body { margin: 0; font-size: 14px; line-height: 1.5; }
 body, button, input, select, textarea { font-family: Droid Sans, Tahoma, sans-serif; color: #222; }
-h1 { font-family: Lucida Sans Verdana; font-size: 2em; margin: 0; padding:0; font-weight: lighter; }
+h1 { font-family: Lucida Sans, Droid Sans, Verdana; font-size: 2em; margin: 0; padding:0; font-weight: lighter; }
 #header { background: #f3deae; padding: 3px; border-bottom: solid 1px #fee;}
 #goals { margin:0 auto; padding:0; width: 98%; }
 .goal { float: left; width: 29%; margin:1%; padding:1%; color: #335; min-height: 300px; background: #eee; border-radius: 10px; font-family: Verdana; }
@@ -16,7 +16,7 @@ a:focus { outline: thin dotted; }
 #links { float:right; text-align: right; }
 #pick2-details { font: monospace; }
 #switch-current { float: left; position:relative; }
-#switch-current .spectrum-container { position: fixed; top:50px; left: 10px; }
+/*#switch-current .spectrum-container { position: fixed; top:60px; left: 10px; }*/
 #docs-content { margin-left: 280px; padding: 10px; border:solid 10px #333; border-radius: 5px;  }
 .switch-current-output { display:none; margin:3px auto; width: 200px; text-align: center; }
 .type { padding-left: 4px; font-size: .8em; font-weight: bold;}
