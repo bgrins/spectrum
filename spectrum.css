@@ -39,7 +39,8 @@ License: MIT
     min-width:20px;
 }
 
-.spectrum-container.spectrum-input-disabled .spectrum-input-container {
+.spectrum-container.spectrum-input-disabled .spectrum-input-container,
+.spectrum-container.spectrum-flat .spectrum-input-container button {
     display:none;
 }
 .spectrum-input-container {
@@ -59,6 +60,7 @@ License: MIT
        color: white;
        border-radius: 3px;
 }
+.spectrum-container.spectrum-flat .spectrum-input { width: 100%; padding:0; text-align: center; }
 .spectrum-dd {
     float:left;
     width: 12px;
