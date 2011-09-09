@@ -29,7 +29,7 @@ License: MIT
     border: solid 2px #444;
     color: #eee;
 }
-.spectrum-replacer:hover {
+.spectrum-replacer:hover, .spectrum-replacer.spectrum-active {
     border-color: #ccf;
     color: #ccf;
 }
