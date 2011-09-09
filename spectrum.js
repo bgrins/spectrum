@@ -129,6 +129,7 @@
             changeOnMove = isInput && (opts.changeOnMove || opts.flat),
             shouldReplace = isInput && !opts.flat,
             visibleElement = (shouldReplace) ? $(replaceInput) : $(element),
+            previewElement = (shouldReplace) ? visibleElement.find(".spectrum-preview") : $([]),
             initialColor = opts.color || (isInput && boundElement.val()),
             colorOnShow = false,
             hasOpened = false;
@@ -348,9 +349,7 @@
             	realHex = realColor.toHexString();
             
             // Update the replaced elements background color (with actual selected color)
-            if (shouldReplace) {
-            	visibleElement.css("background-color", realHex);
-            }
+            previewElement.css("background-color", realHex);
             
             // Update the input as it changes happen
             if (isInput) {

@@ -19,7 +19,6 @@ License: MIT
     -webkit-user-select:none; -moz-user-select: none; -o-user-select:none; user-select: none; 
 }
 .spectrum-replacer {
-    border: solid 2px #333;
     display:inline-block;
     margin:0;
     border-radius: 5px;
@@ -27,16 +26,27 @@ License: MIT
     cursor:pointer;
     padding: 4px;
     background: #333;
+    border: solid 2px #444;
+    color: #eee;
 }
-.spectrum-dd, .spectrum-preview { 
+.spectrum-replacer:hover {
+    border-color: #ccf;
+    color: #ccf;
+}
+
+.spectrum-dd { 
+    padding: 2px 0;
     height: 16px; 
     line-height: 16px;
-    padding:3px;
-    overflow:hidden; 
     float:left;
+    font-size:10px;
 }
 .spectrum-preview {
-    min-width:20px;
+    width:25px;
+    height: 20px;
+    border: solid 1px #ddd;
+    margin-right: 5px;
+    float:left;
 }
 
 .spectrum-show-small, .spectrum-small .spectrum-hide-small { display:none; }
@@ -52,13 +62,6 @@ License: MIT
 .spectrum-input-container div { float:right; }
 .spectrum-input:focus { border: 1px solid orange; }
 .spectrum-container.spectrum-flat .spectrum-input { width: 100%; padding:0; text-align: center; }
-.spectrum-dd {
-    float:left;
-    width: 12px;
-    font-size:10px;
-    overflow:hidden;
-    color:#fff;
-}
 
 .spectrum-pallet-container { 
 	margin:3px 0; 
