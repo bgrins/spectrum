@@ -60,8 +60,11 @@
                 "<div class='spectrum-input-container spectrum-cf'>",
                     "<input class='spectrum-input' type='text' spellcheck='false'  />",
                     "<div>",
-                        "<button class='spectrum-cancel'>Cancel</button>",
-                        "<button class='spectrum-choose'>Choose</button></div>",
+                        "<button class='spectrum-cancel spectrum-hide-small'>Cancel</button>",
+                        "<button class='spectrum-choose spectrum-hide-small'>Choose</button>",
+                        "<button class='spectrum-cancel spectrum-show-small'>X</button>",
+                        "<button class='spectrum-choose spectrum-show-small'>✔</button>",
+                    "</div>",
                 "</div>",
             "</div>"
         ].join("");
