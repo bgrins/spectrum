@@ -128,8 +128,9 @@
             isInput = boundElement.is("input"),
             changeOnMove = isInput && (opts.changeOnMove || opts.flat),
             shouldReplace = isInput && !opts.flat,
-            visibleElement = (shouldReplace) ? $(replaceInput) : $(element),
-            previewElement = (shouldReplace) ? visibleElement.find(".spectrum-preview") : $([]),
+            replacer = (shouldReplace) ? $(replaceInput) : $([]),
+            offsetElement = (shouldReplace) ? replacer : boundElement,
+            previewElement = replacer.find(".spectrum-preview"),
             initialColor = opts.color || (isInput && boundElement.val()),
             colorOnShow = false,
             hasOpened = false;
@@ -145,7 +146,7 @@
     	    container.toggleClass("spectrum-pallet-disabled", !opts.showPallet);
     	    
     	    if (shouldReplace) {
-    	        boundElement.hide().after(visibleElement);
+    	        boundElement.hide().after(replacer);
     	    }
     	    
         	if (opts.flat) {
@@ -155,7 +156,7 @@
         	    $(body).append(container.hide());
         	}
     	    
-    	    visibleElement.bind("click touchstart", function(e) {
+    	    offsetElement.bind("click touchstart", function(e) {
     	        toggle();
     	        
     	        e.stopPropagation();
@@ -254,8 +255,8 @@
             $(doc).bind("click touchstart", hide);
             
             if (!opts.flat) {
-            	visibleElement.addClass("spectrum-active");
-            	container.show().offset(getOffset(container, visibleElement));
+            	replacer.addClass("spectrum-active");
+            	container.show().offset(getOffset(container, offsetElement));
             }
             
             // Cache sizes on start
@@ -282,7 +283,7 @@
             
             $(doc).unbind("click", hide);
             
-           	visibleElement.removeClass("spectrum-active");
+           	replacer.removeClass("spectrum-active");
             container.hide();
             
             var realColor = get();
