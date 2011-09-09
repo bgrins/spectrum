@@ -396,6 +396,7 @@
      * Thanks https://github.com/jquery/jquery-ui/blob/master/ui/jquery.ui.datepicker.js
      */
     function getOffset(picker, input) {
+        var extraY = 6;
 		var dpWidth = picker.outerWidth();
 		var dpHeight = picker.outerHeight();
 		var inputWidth = input.outerWidth();
@@ -411,9 +412,10 @@
 			Math.abs(offset.left + dpWidth - viewWidth) : 0);
 		
 		offset.top -= 
-			Math.min(offset.top, (offset.top + dpHeight > viewHeight && viewHeight > dpHeight) ?
-			Math.abs(dpHeight + inputHeight) : 0);
+			Math.min(offset.top, ((offset.top + dpHeight > viewHeight && viewHeight > dpHeight) ?
+			Math.abs(dpHeight + inputHeight - extraY) : extraY)  );
 
+        
 		return offset;
 	}
 	
