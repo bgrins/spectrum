@@ -168,12 +168,41 @@ License: MIT
 .spectrum-cf:after { clear: both; }
 .spectrum-cf { *zoom: 1; }
 
-/* Themable options */
 
-.spectrum-container.spectrum-small {
 
+/* Normal Size */
+.spectrum-container { 
+    width: 240px;
+    padding:10px; 
+}
+.spectrum-saturation, .spectrum-value, .spectrum-slide { 
+    width: 200px;
+    height: 200px;
+}
+.spectrum-slide, .spectrum-button  { 
+    margin-left: 10px; 
+    width: 30px;
 }
 
+/* Small Size */
+.spectrum-container.spectrum-small {
+    width: 160px;
+    padding:8px; 
+}
+.spectrum-small .spectrum-saturation, .spectrum-small .spectrum-value, .spectrum-small .spectrum-slide { 
+    width: 120px;
+    height: 120px;
+}
+.spectrum-small .spectrum-slide, .spectrum-small .spectrum-button  { 
+    margin-left: 10px; 
+    width: 30px;
+}
+.spectrum-small .spectrum-pallet-container span {
+	width: 16px;
+}
+
+
+/* Themable options */
 .spectrum-container.spectrum-light {
     background-color: #ddd; 
     border-radius: 5px; 
@@ -183,14 +212,6 @@ License: MIT
     background-color: #333; 
     border-radius: 5px; 
     font-family: Droid Sans, Tahoma, sans-serif;
-}
-.spectrum-container { 
-    width: 240px;
-    padding:10px; 
-}
-.spectrum-saturation, .spectrum-value, .spectrum-slide { 
-    width: 200px;
-    height: 200px;
 }
 
 
@@ -246,10 +267,6 @@ License: MIT
    height:5px; 
    width: 5px; 
    border: solid black 3px; pointer: cursor;
-}
-.spectrum-slide, .spectrum-button  { 
-    margin-left: 10px; 
-    width: 30px; 
 }
 .spectrum-slide-helper { 
     width: 40px; 
