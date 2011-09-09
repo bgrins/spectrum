@@ -25,13 +25,6 @@ License: MIT
     overflow:hidden;
     cursor:pointer;
     padding: 4px;
-    background: #333;
-    border: solid 2px #444;
-    color: #eee;
-}
-.spectrum-replacer:hover, .spectrum-replacer.spectrum-active {
-    border-color: #ccf;
-    color: #ccf;
 }
 
 .spectrum-dd { 
@@ -231,6 +224,25 @@ License: MIT
    color: #222;
 }
 
+.spectrum-replacer.spectrum-dark {    
+    border: solid 2px #ccf;
+    background: #333;
+    color: #eee;
+}
+.spectrum-replacer.spectrum-dark:hover, .spectrum-replacer.spectrum-dark.spectrum-active {
+    border-color: #333;
+    color: #ccf;
+}
+
+.spectrum-replacer.spectrum-light  {
+    background: #eee;
+    border: solid 2px #444;
+    color: #333;
+}
+.spectrum-replacer.spectrum-light:hover, .spectrum-replacer.spectrum-light.spectrum-active {
+    border-color: #333;
+    color: #111;
+}
 
 /* http://hellohappy.org/css3-buttons/ */
 .spectrum-container button {

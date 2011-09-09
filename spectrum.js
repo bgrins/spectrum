@@ -18,7 +18,7 @@
         hide: function() { },
         showPallet: false,
         maxPalletSize: 12,
-        theme: 'spectrum-dark',
+        theme: 'spectrum-light',
         pallet: ['white', 'black']
     },
     spectrums = [],
@@ -128,7 +128,7 @@
             isInput = boundElement.is("input"),
             changeOnMove = isInput && (opts.changeOnMove || opts.flat),
             shouldReplace = isInput && !opts.flat,
-            replacer = (shouldReplace) ? $(replaceInput) : $([]),
+            replacer = (shouldReplace) ? $(replaceInput).addClass(opts.theme) : $([]),
             offsetElement = (shouldReplace) ? replacer : boundElement,
             previewElement = replacer.find(".spectrum-preview"),
             initialColor = opts.color || (isInput && boundElement.val()),
