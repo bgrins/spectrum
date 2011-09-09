@@ -18,7 +18,7 @@
         hide: function() { },
         showPallet: false,
         maxPalletSize: 12,
-        theme: 'spectrum-light',
+        theme: 'spectrum-dark',
         pallet: ['white', 'black']
     },
     spectrums = [],
