@@ -27,7 +27,7 @@
     trimRight = /\s+$/,
     replaceInput = [
     	"<div class='spectrum-replacer spectrum-cf'>",
-    		"<div class='spectrum-text'></div>",
+    		"<div class='spectrum-preview'></div>",
     		"<div class='spectrum-dd'>&#9660;</div>",
     	"</div>"
     ].join(''),
