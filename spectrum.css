@@ -225,12 +225,13 @@ License: MIT
 }
 
 .spectrum-replacer.spectrum-dark {    
-    border: solid 2px #ccf;
+    border: outset 2px #666;
     background: #333;
     color: #eee;
 }
 .spectrum-replacer.spectrum-dark:hover, .spectrum-replacer.spectrum-dark.spectrum-active {
     border-color: #333;
+    border-style: solid;
     color: #ccf;
 }
 
