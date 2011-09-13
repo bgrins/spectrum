@@ -313,6 +313,37 @@
         }
         
         function doMove() {
+        
+            updateHelperLocations();
+            
+            // Update dragger background color ("flat" because gradients take care of saturation
+            // and value).
+            var flatColor = tinycolor({ h: currentHue, s: 1, v: 1});
+            dragger.css("background-color", flatColor.toHexString());
+            
+            var realColor = get(),
+            	realHex = realColor.toHexString();
+            
+            // Update the replaced elements background color (with actual selected color)
+            previewElement.css("background-color", realHex);
+            
+            // Update the input as it changes happen
+            if (isInput) {
+                textInput.val(realHex);
+            }
+            
+            if (hasOpened && changeOnMove) {
+            	updateOriginalInput();
+            }
+
+			if (opts.showPallet) {
+				drawPallet(palletLookup[realHex]);
+			}
+			
+            callbacks.move(realColor);
+        }
+        
+        function updateHelperLocations() {
             var h = currentHue;
             var s = currentSaturation;
             var v = currentValue;
@@ -338,32 +369,7 @@
             slideHelper.css({
                 "top": slideY - slideHelperHeight
             });
-            
-            // Update dragger background color ("flat" because gradients take care of saturation
-            // and value).
-            var flatColor = tinycolor({ h: h, s: 1, v: 1});
-            dragger.css("background-color", flatColor.toHexString());
-            
-            var realColor = get(),
-            	realHex = realColor.toHexString();
-            
-            // Update the replaced elements background color (with actual selected color)
-            previewElement.css("background-color", realHex);
-            
-            // Update the input as it changes happen
-            if (isInput) {
-                textInput.val(realHex);
-            }
-            
-            if (hasOpened && changeOnMove) {
-            	updateOriginalInput();
-            }
-
-			if (opts.showPallet) {
-				drawPallet(palletLookup[realHex]);
-			}
-			
-            callbacks.move(realColor);
+        
         }
         
         function updateOriginalInput() {
@@ -386,6 +392,8 @@
             if (!opts.flat) {
             	container.offset(getOffset(container, offsetElement));
             }
+            
+            updateHelperLocations();
         }
         
         initialize();
