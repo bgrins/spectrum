@@ -105,6 +105,7 @@
         
         var opts = instanceOptions(o, element),
             callbacks = opts.callbacks,
+            resize = throttle(reflow, 100),
             visible = false,
             dragWidth = 0,
             dragHeight = 0,
@@ -258,20 +259,11 @@
             visible = true;
             
             $(doc).bind("click touchstart", hide);
+            $(window).bind("resize", resize);
+            replacer.addClass("spectrum-active");
+            container.show();
             
-            if (!opts.flat) {
-            	replacer.addClass("spectrum-active");
-            	container.show().offset(getOffset(container, offsetElement));
-            }
-            
-            // Cache sizes on start
-            dragWidth = dragger.width();
-            dragHeight = dragger.height();
-            dragHelperHeight = dragHelper.height();
-            slideWidth = slider.width();
-            slideHeight = slider.height();
-            slideHelperHelperHeight = slideHelper.height();
-            
+            reflow();
             doMove();
             
             colorOnShow = get();
@@ -286,7 +278,8 @@
             if (!visible || opts.flat) { return; }
             visible = false;
             
-            $(doc).unbind("click", hide);
+            $(doc).unbind("click touchstart", hide);
+            $(window).unbind("resize", resize);
             
            	replacer.removeClass("spectrum-active");
             container.hide();
@@ -380,6 +373,19 @@
         	}
         	
         	callbacks.change(color);
+        }
+        
+        function reflow() {
+            dragWidth = dragger.width();
+            dragHeight = dragger.height();
+            dragHelperHeight = dragHelper.height();
+            slideWidth = slider.width();
+            slideHeight = slider.height();
+            slideHelperHelperHeight = slideHelper.height();
+            
+            if (!opts.flat) {
+            	container.offset(getOffset(container, offsetElement));
+            }
         }
         
         initialize();
@@ -528,8 +534,20 @@
         }
     
         $(element).bind(hasTouch ? "touchstart" : "mousedown", start);
-    }   
+    }
     
+    function throttle(func, wait, debounce) {
+        var timeout;
+        return function() {
+          var context = this, args = arguments;
+          var throttler = function() {
+            timeout = null;
+            func.apply(context, args);
+          };
+          if (debounce) clearTimeout(timeout);
+          if (debounce || !timeout) timeout = setTimeout(throttler, wait);
+        };
+    }
     
     /**
      * Extend a given object with all the properties in passed-in object(s)
