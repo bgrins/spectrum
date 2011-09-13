@@ -15,10 +15,18 @@ License: MIT
 .spectrum-color { 
     position:relative;
 }
-.spectrum-saturation, .spectrum-value { position: absolute; top:0; left:0; right:0; bottom:0; }
+.spectrum-saturation, .spectrum-value { 
+    position: absolute; 
+    top:0; 
+    left:0; 
+    right:0; 
+    bottom:0; 
+}
 .spectrum-replacer, .spectrum-preview, .spectrum-drag-helper, .spectrum-slide-helper , .spectrum-container.spectrum-dragging .spectrum-input, .spectrum-container button  { 
     -webkit-user-select:none; -moz-user-select: none; -o-user-select:none; user-select: none; 
 }
+
+/* Replacer (the little preview div that shows up instead of the <input>) */
 .spectrum-replacer {
     display:inline-block;
     margin:0;
@@ -27,7 +35,6 @@ License: MIT
     cursor:pointer;
     padding: 4px;
 }
-
 .spectrum-dd { 
     padding: 2px 0;
     height: 16px; 
