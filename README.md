@@ -12,7 +12,9 @@ Here is the JavaScript size
 
 See demo and docs: http://bgrins.github.com/spectrum/
 
-Thanks to https://github.com/DavidDurman/FlexiColorPicker for some inspiration and gradient constants
+Thanks to:
+* http://ansciath.tumblr.com/post/7347495869/css-aspect-ratio: Aspect ratio using CSS only 
+* https://github.com/DavidDurman/FlexiColorPicker for some inspiration and gradient constants
 
 To tool I use for measuring JavaScript size: http://closure-compiler.appspot.com/home
 
