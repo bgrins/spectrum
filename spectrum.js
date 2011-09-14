@@ -188,13 +188,15 @@
             });
     	    draggable(slider, function(dragX, dragY) {
     	        currentHue = (dragY / slideHeight);
-    	        doMove();
+    	        updateUI();
+                callbacks.move(get());
     	    }, dragStart, dragStop);
     	    
     	    draggable(dragger, function(dragX, dragY) {
     	        currentSaturation = dragX / dragWidth;
     	        currentValue = (dragHeight -     dragY) / dragHeight;
-    	        doMove();
+    	        updateUI();
+                callbacks.move(get());
     	    }, dragStart, dragStop);
     	    
         	if (!!initialColor) {
@@ -264,7 +266,7 @@
             container.show();
             
             reflow();
-            doMove();
+            updateUI();
             
             colorOnShow = get();
             callbacks.show(get())
@@ -305,14 +307,14 @@
             currentSaturation = newHsv.s;
             currentValue = newHsv.v;
             
-            doMove();
+            updateUI();
         }
         
         function get() {
             return tinycolor({ h: currentHue, s: currentSaturation, v: currentValue });
         }
         
-        function doMove() {
+        function updateUI() {
         
             updateHelperLocations();
             
@@ -339,8 +341,6 @@
 			if (opts.showPallet) {
 				drawPallet(palletLookup[realHex]);
 			}
-			
-            callbacks.move(realColor);
         }
         
         function updateHelperLocations() {
