@@ -6,28 +6,28 @@ Author: Brian Grinstead
 License: MIT
 ***/
 
-.spectrum-container { 
+.sp-container { 
     position:absolute; 
     top:0; 
     left:0; 
     display:inline-block;
 }
-.spectrum-color { 
+.sp-color { 
     position:relative;
 }
-.spectrum-saturation, .spectrum-value { 
+.sp-saturation, .sp-value { 
     position: absolute; 
     top:0; 
     left:0; 
     right:0; 
     bottom:0; 
 }
-.spectrum-replacer, .spectrum-preview, .spectrum-drag-helper, .spectrum-slide-helper , .spectrum-container.spectrum-dragging .spectrum-input, .spectrum-container button  { 
+.sp-replacer, .sp-preview, .sp-drag-helper, .sp-slide-helper , .sp-container.sp-dragging .sp-input, .sp-container button  { 
     -webkit-user-select:none; -moz-user-select: none; -o-user-select:none; user-select: none; 
 }
 
 /* Replacer (the little preview div that shows up instead of the <input>) */
-.spectrum-replacer {
+.sp-replacer {
     display:inline-block;
     margin:0;
     border-radius: 5px;
@@ -35,14 +35,14 @@ License: MIT
     cursor:pointer;
     padding: 4px;
 }
-.spectrum-dd { 
+.sp-dd { 
     padding: 2px 0;
     height: 16px; 
     line-height: 16px;
     float:left;
     font-size:10px;
 }
-.spectrum-preview {
+.sp-preview {
     width:25px;
     height: 20px;
     border: solid 1px #ddd;
@@ -50,25 +50,25 @@ License: MIT
     float:left;
 }
 
-.spectrum-show-small, .spectrum-small .spectrum-hide-small { display:none; }
-.spectrum-small .spectrum-show-small { display:inherit; }
+.sp-show-small, .sp-small .sp-hide-small { display:none; }
+.sp-small .sp-show-small { display:inherit; }
 
-.spectrum-container.spectrum-input-disabled .spectrum-input-container,
-.spectrum-container.spectrum-flat .spectrum-input-container div {
+.sp-container.sp-input-disabled .sp-input-container,
+.sp-container.sp-flat .sp-input-container div {
     display:none;
 }
-.spectrum-input-container {
+.sp-input-container {
     margin-top: 4px;
 }
-.spectrum-input-container div { float:right; }
-.spectrum-input:focus { border: 1px solid orange; }
-.spectrum-container.spectrum-flat .spectrum-input { width: 100%; padding:0; text-align: center; }
+.sp-input-container div { float:right; }
+.sp-input:focus { border: 1px solid orange; }
+.sp-container.sp-flat .sp-input { width: 100%; padding:0; text-align: center; }
 
-.spectrum-pallet-container { 
+.sp-pallet-container { 
 	margin:3px 0; 
 	padding: 0;
 }
-.spectrum-pallet-container span {
+.sp-pallet-container span {
 	display: block;
 	float:left;
 	width: 30px;
@@ -77,14 +77,14 @@ License: MIT
 	cursor: pointer;
 	border:solid 2px transparent;
 }
-.spectrum-pallet-container span:hover, .spectrum-pallet-container span.spectrum-pallet-active {
+.sp-pallet-container span:hover, .sp-pallet-container span.sp-pallet-active {
     border-color: orange;
 }  
-.spectrum-pallet-disabled .spectrum-pallet-container { 
+.sp-pallet-disabled .sp-pallet-container { 
 	display: none; 
 }
 
-.spectrum-saturation {
+.sp-saturation {
     background-image: -webkit-gradient(linear,  0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
     background-image: -webkit-linear-gradient(left, #FFF, rgba(204, 154, 129, 0));
     background-image: -moz-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
@@ -93,7 +93,7 @@ License: MIT
     filter : progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr='#FFFFFFFF', endColorstr='#00CC9A81');
     
 }
-.spectrum-value {
+.sp-value {
     background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#000000), to(rgba(204, 154, 129, 0)));
     background-image: -webkit-linear-gradient(bottom, #000000, rgba(204, 154, 129, 0));
     background-image: -moz-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
@@ -101,18 +101,18 @@ License: MIT
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00CC9A81, endColorstr=#FF000000)";
     filter : progid:DXImageTransform.Microsoft.gradient(startColorstr='#00CC9A81', endColorstr='#FF000000');
 }
-.spectrum-drag-helper { 
+.sp-drag-helper { 
     position:absolute; 
     top:0; 
     left: 0;
 }
 
-.spectrum-container.spectrum-flat {
+.sp-container.sp-flat {
     position: relative;
     display:inline-block;
 }
 
-.spectrum-slide {
+.sp-slide {
     position:relative;
     float:left;
     background: -webkit-gradient(linear, left top, left bottom, from(#FF0000), color-stop(.12, #FFFF00), color-stop(.25, #0BED00), color-stop(.37, #00FF40), color-stop(.50, #00FFFF), color-stop(.62, #0040ff), color-stop(.75, #8000ff), color-stop(.87, #ff00ff), to(#ff0000));
@@ -120,90 +120,90 @@ License: MIT
     background: -moz-linear-gradient(top, #FF0000 0%, #FFFF00 12%, #0BED00 25%, #00FF40 37%, #00FFFF 50%, #0040ff 62%, #8000ff 75%, #ff00ff 87%, #ff0000 100%); 
     background: -o-linear-gradient(top, #FF0000 0%, #FFFF00 12%, #0BED00 25%, #00FF40 37%, #00FFFF 50%, #0040ff 62%, #8000ff 75%, #ff00ff 87%, #ff0000 100%); 
 }
-.spectrum-ie-1 { 
+.sp-ie-1 { 
     height:12%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF0000', endColorstr='#FFFF00');
 }
-.spectrum-ie-2 { 
+.sp-ie-2 { 
     height:13%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFF00', endColorstr='#0BED00');
 }
-.spectrum-ie-3 { 
+.sp-ie-3 { 
     height:12%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0BED00', endColorstr='#00FF40');
 }
-.spectrum-ie-4 { 
+.sp-ie-4 { 
     height:13%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00FF40', endColorstr='#00FFFF');
 }
-.spectrum-ie-5 { 
+.sp-ie-5 { 
     height:12%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00FFFF', endColorstr='#0040ff');
 }
-.spectrum-ie-6 { 
+.sp-ie-6 { 
     height:13%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0040ff', endColorstr='#8000ff');
 }
-.spectrum-ie-7 { 
+.sp-ie-7 { 
     height:12%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8000ff', endColorstr='#ff00ff');
 }
-.spectrum-ie-8 { 
+.sp-ie-8 { 
     height:13%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff00ff', endColorstr='#ff0000');
 }
-.spectrum-slide-helper { 
+.sp-slide-helper { 
     position: absolute; 
     top:0; 
     cursor:pointer;
 }
 
-.spectrum-cf:before, .spectrum-cf:after { content: ""; display: table; }
-.spectrum-cf:after { clear: both; }
-.spectrum-cf { *zoom: 1; }
+.sp-cf:before, .sp-cf:after { content: ""; display: table; }
+.sp-cf:after { clear: both; }
+.sp-cf { *zoom: 1; }
 
 /* 
    Proportions using percentage widths.
    Basic aspect ratio technique modified from:
    http://ansciath.tumblr.com/post/7347495869/css-aspect-ratio
 */
-.spectrum-top {
+.sp-top {
   position:relative; 
   width: 100%;
   display:inline-block;
 }
 
-.spectrum-top-inner {
+.sp-top-inner {
    position:absolute; top:0; left:0; bottom:0; right:0;
 }
 
-.spectrum-color { 
+.sp-color { 
     position: absolute;
     top:0;left:0;bottom:0;right:20%;
 }
-.spectrum-slide {
+.sp-slide {
     position: absolute;
     top:0;right:0;bottom:0;left:83%;
 }
-.spectrum-fill { 
+.sp-fill { 
     *height: 80%;
-    margin-top: 80%;  /* Same as spectrum-color width */
+    margin-top: 80%;  /* Same as sp-color width */
 }
 
 /* Mobile devices, make hue slider bigger so it is easier to slide */
 @media (max-device-width: 480px) {
-    .spectrum-color { right: 40%; }
-    .spectrum-slide { left: 63%; }
-    .spectrum-fill { margin-top: 60%; } 
+    .sp-color { right: 40%; }
+    .sp-slide { left: 63%; }
+    .sp-fill { margin-top: 60%; } 
 }
 
-.spectrum-drag-helper {
+.sp-drag-helper {
    border-radius: 5px; 
    height:5px; 
    width: 5px; 
    border: solid black 3px; pointer: cursor;
 }
-.spectrum-slide-helper { 
+.sp-slide-helper { 
     height: 5px; 
     width: 110%;
     margin-left: -5%;
@@ -212,7 +212,7 @@ License: MIT
 }
 
 /* Basic display options (colors, fonts, global widths) */
-.spectrum-input {
+.sp-input {
    height: 20px;
    font-size: 16px;
    border: 1px inset;
@@ -223,61 +223,61 @@ License: MIT
    background:transparent;
    border-radius: 3px;
 }
-.spectrum-container {
+.sp-container {
     padding: 10px;
     border-radius: 10px;
     width: 240px;
 }
-.spectrum-container.spectrum-small {
+.sp-container.sp-small {
     width: 160px;
     padding: 5px;
     border-radius: 5px;
 }
-.spectrum-small .spectrum-pallet-container span {
+.sp-small .sp-pallet-container span {
 	width: 16px;
 }
 
 /* Themable options (colors, fonts) */
-.spectrum-container.spectrum-light {
+.sp-container.sp-light {
     background-color: #ddd; 
     border-radius: 5px; 
     font-family: Droid Sans, Tahoma, sans-serif;
 }
-.spectrum-container.spectrum-dark {
+.sp-container.sp-dark {
     background-color: #333; 
     border-radius: 5px; 
     font-family: Droid Sans, Tahoma, sans-serif;
 }
-.spectrum-dark .spectrum-input {
+.sp-dark .sp-input {
    border-color: #444;
    color: white;
 }
-.spectrum-light .spectrum-input {
+.sp-light .sp-input {
    border-color: #aaa;
    color: #222;
 }
-.spectrum-replacer.spectrum-dark {    
+.sp-replacer.sp-dark {    
     border: outset 2px #666;
     background: #333;
     color: #eee;
 }
-.spectrum-replacer.spectrum-dark:hover, .spectrum-replacer.spectrum-dark.spectrum-active {
+.sp-replacer.sp-dark:hover, .sp-replacer.sp-dark.sp-active {
     border-color: #333;
     border-style: solid;
     color: #ccf;
 }
-.spectrum-replacer.spectrum-light  {
+.sp-replacer.sp-light  {
     background: #eee;
     border: solid 2px #444;
     color: #333;
 }
-.spectrum-replacer.spectrum-light:hover, .spectrum-replacer.spectrum-light.spectrum-active {
+.sp-replacer.sp-light:hover, .sp-replacer.sp-light.sp-active {
     border-color: #333;
     color: #111;
 }
 
 /* Buttons: http://hellohappy.org/css3-buttons/ */
-.spectrum-container button {
+.sp-container button {
   background-color: #eeeeee;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#cccccc));
   background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
@@ -300,7 +300,7 @@ License: MIT
   text-shadow: 0 1px 0 #eee;
   vertical-align: middle;
 }
-.spectrum-container button:hover {
+.sp-container button:hover {
     background-color: #dddddd;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#dddddd), to(#bbbbbb));
     background-image: -webkit-linear-gradient(top, #dddddd, #bbbbbb);
@@ -313,7 +313,7 @@ License: MIT
     cursor: pointer;
     text-shadow: 0 1px 0 #ddd; 
 }
-.spectrum-container button:active {
+.sp-container button:active {
     border: 1px solid #aaa;
     border-bottom: 1px solid #888;
     -webkit-box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
@@ -323,5 +323,5 @@ License: MIT
     box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
 }
 
-.spectrum-container.spectrum-small button { padding-left: 5px; padding-right: 5px; font-weight: bold; }
+.sp-container.sp-small button { padding-left: 5px; padding-right: 5px; font-weight: bold; }
 

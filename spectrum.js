@@ -18,7 +18,7 @@
         hide: function() { },
         showPallet: false,
         maxPalletSize: 12,
-        theme: 'spectrum-dark',
+        theme: 'sp-dark',
         pallet: ['white', 'black']
     },
     spectrums = [],
@@ -26,9 +26,9 @@
     trimLeft = /^[\s,#]+/,
     trimRight = /\s+$/,
     replaceInput = [
-    	"<div class='spectrum-replacer spectrum-cf'>",
-    		"<div class='spectrum-preview'></div>",
-    		"<div class='spectrum-dd'>&#9660;</div>",
+    	"<div class='sp-replacer sp-cf'>",
+    		"<div class='sp-preview'></div>",
+    		"<div class='sp-dd'>&#9660;</div>",
     	"</div>"
     ].join(''),
     markup = (function() {
@@ -38,37 +38,37 @@
         var gradientFix = "";
         if ($.browser.msie) {
             for (var i = 1; i < 9; i++) {
-                gradientFix += "<div class='spectrum-ie-" + i + "'></div>";
+                gradientFix += "<div class='sp-ie-" + i + "'></div>";
             }
         }
         
         return [
-            "<div class='spectrum-container'>",
-                "<div class='spectrum-top'>",
-                    "<div class='spectrum-fill'></div>",
-                    "<div class='spectrum-top-inner'>",
-                        "<div class='spectrum-color'>",
-                            "<div class='spectrum-saturation'>",
-                                "<div class='spectrum-value'>",
-                                    "<div class='spectrum-drag-helper'></div>",
+            "<div class='sp-container'>",
+                "<div class='sp-top'>",
+                    "<div class='sp-fill'></div>",
+                    "<div class='sp-top-inner'>",
+                        "<div class='sp-color'>",
+                            "<div class='sp-saturation'>",
+                                "<div class='sp-value'>",
+                                    "<div class='sp-drag-helper'></div>",
                                 "</div>",
                             "</div>",
                         "</div>",
-                        "<div class='spectrum-slide'>",
-                            "<div class='spectrum-slide-helper'></div>",
+                        "<div class='sp-slide'>",
+                            "<div class='sp-slide-helper'></div>",
                             gradientFix,
                         "</div>",
                     "</div>",
                 "</div>",
                 "<br style='clear:both;' />",
-                "<div class='spectrum-pallet-container spectrum-cf'></div>",
-                "<div class='spectrum-input-container spectrum-cf'>",
-                    "<input class='spectrum-input' type='text' spellcheck='false'  />",
+                "<div class='sp-pallet-container sp-cf'></div>",
+                "<div class='sp-input-container sp-cf'>",
+                    "<input class='sp-input' type='text' spellcheck='false'  />",
                     "<div>",
-                        "<button class='spectrum-cancel spectrum-hide-small'>Cancel</button>",
-                        "<button class='spectrum-choose spectrum-hide-small'>Choose</button>",
-                        "<button class='spectrum-cancel spectrum-show-small'>X</button>",
-                        "<button class='spectrum-choose spectrum-show-small'>✔</button>",
+                        "<button class='sp-cancel sp-hide-small'>Cancel</button>",
+                        "<button class='sp-choose sp-hide-small'>Choose</button>",
+                        "<button class='sp-cancel sp-show-small'>X</button>",
+                        "<button class='sp-choose sp-show-small'>✔</button>",
                     "</div>",
                 "</div>",
             "</div>"
@@ -77,7 +77,7 @@
     palletTemplate = function(p, active) {
     	var html = [];
     	for (var i = 0; i < p.length; i++) {
-    		var c = i == active ? " class='spectrum-pallet-active' " : "";
+    		var c = i == active ? " class='sp-pallet-active' " : "";
     		html.push('<span style="background-color:' + tinycolor(p[i]).toHexString() + ';"' + c + '></span>');
     	}
     	return html.join('');
@@ -123,20 +123,20 @@
             body = doc.body, 
             boundElement = $(element),
         	container = $(markup, doc).addClass(opts.theme),
-            dragger = container.find(".spectrum-color"),
-            dragHelper = container.find(".spectrum-drag-helper"),
-            slider = container.find(".spectrum-slide"),
-            slideHelper = container.find(".spectrum-slide-helper"),
-            textInput = container.find(".spectrum-input"),
-            palletContainer = container.find(".spectrum-pallet-container"),
-            cancelButton = container.find(".spectrum-cancel"),
-            chooseButton = container.find(".spectrum-choose"),
+            dragger = container.find(".sp-color"),
+            dragHelper = container.find(".sp-drag-helper"),
+            slider = container.find(".sp-slide"),
+            slideHelper = container.find(".sp-slide-helper"),
+            textInput = container.find(".sp-input"),
+            palletContainer = container.find(".sp-pallet-container"),
+            cancelButton = container.find(".sp-cancel"),
+            chooseButton = container.find(".sp-choose"),
             isInput = boundElement.is("input"),
             changeOnMove = isInput && (opts.changeOnMove || opts.flat),
             shouldReplace = isInput && !opts.flat,
             replacer = (shouldReplace) ? $(replaceInput).addClass(opts.theme) : $([]),
             offsetElement = (shouldReplace) ? replacer : boundElement,
-            previewElement = replacer.find(".spectrum-preview"),
+            previewElement = replacer.find(".sp-preview"),
             initialColor = opts.color || (isInput && boundElement.val()),
             colorOnShow = false,
             hasOpened = false;
@@ -147,9 +147,9 @@
     	        container.find("*:not(input)").attr("unselectable", "on");
     	    }   
     	    
-    	    container.toggleClass("spectrum-flat", opts.flat);
-    	    container.toggleClass("spectrum-input-disabled", !opts.showInput);
-    	    container.toggleClass("spectrum-pallet-disabled", !opts.showPallet);
+    	    container.toggleClass("sp-flat", opts.flat);
+    	    container.toggleClass("sp-input-disabled", !opts.showInput);
+    	    container.toggleClass("sp-pallet-disabled", !opts.showPallet);
     	    
     	    if (shouldReplace) {
     	        boundElement.hide().after(replacer);
@@ -233,10 +233,10 @@
 			palletContainer.html(palletTemplate(pallet, active));
 		}
 		function dragStart() {
-		  container.addClass("spectrum-dragging");
+		  container.addClass("sp-dragging");
 		}
 		function dragStop() {
-		  container.removeClass("spectrum-dragging");
+		  container.removeClass("sp-dragging");
 		}
         function setFromTextInput() {
         	set(textInput.val());
@@ -262,7 +262,7 @@
             
             $(doc).bind("click touchstart", hide);
             $(window).bind("resize", resize);
-            replacer.addClass("spectrum-active");
+            replacer.addClass("sp-active");
             container.show();
             
             reflow();
@@ -283,7 +283,7 @@
             $(doc).unbind("click touchstart", hide);
             $(window).unbind("resize", resize);
             
-           	replacer.removeClass("spectrum-active");
+           	replacer.removeClass("sp-active");
             container.hide();
             
             var realColor = get();
