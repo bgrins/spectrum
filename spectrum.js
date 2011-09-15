@@ -575,16 +575,17 @@
     /**
      * Define a jQuery plugin if possible
      */
+    var dataID = "spectrum.id";
     if (hasjQuery) {
         $.fn.spectrum = function(opts, extra) {
             
             if (typeof opts == "string") {
                 if (opts == "get") {
-                    return spectrums[this.eq(0).data("spectrum.id")].get();
+                    return spectrums[this.eq(0).data(dataID)].get();
                 }
                 
                 return this.each(function() {
-                    var spect = spectrums[$(this).data("spectrum.id")];
+                    var spect = spectrums[$(this).data(dataID)];
                     if (opts == "show") { spect.show(); }
                     if (opts == "hide") { spect.hide(); }
                     if (opts == "set")  { spect.set(extra); }
@@ -594,7 +595,7 @@
             // Initializing a new one
             return this.each(function() {
                 var spect = spectrum(this, opts);
-                $(this).data("spectrum.id", spect.id);
+                $(this).data(dataID, spect.id);
             }); 
         };
         
