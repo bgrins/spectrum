@@ -320,7 +320,7 @@
             
             // Update dragger background color ("flat" because gradients take care of saturation
             // and value).
-            var flatColor = tinycolor({ h: currentHue, s: 1, v: 1});
+            var flatColor = tinycolor({ h: currentHue, s: "1.0", v: "1.0"});
             dragger.css("background-color", flatColor.toHexString());
             
             var realColor = get(),
