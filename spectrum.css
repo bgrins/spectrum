@@ -113,8 +113,6 @@ License: MIT
 }
 
 .sp-hue {
-    position:relative;
-    float:left;
     background: -webkit-gradient(linear, left top, left bottom, from(#FF0000), color-stop(.12, #FFFF00), color-stop(.25, #0BED00), color-stop(.37, #00FF40), color-stop(.50, #00FFFF), color-stop(.62, #0040ff), color-stop(.75, #8000ff), color-stop(.87, #ff00ff), to(#ff0000));
     background: -webkit-linear-gradient(top, #FF0000 0%, #FFFF00 12%, #0BED00 25%, #00FF40 37%, #00FFFF 50%, #0040ff 62%, #8000ff 75%, #ff00ff 87%, #ff0000 100%);
     background: -moz-linear-gradient(top, #FF0000 0%, #FFFF00 12%, #0BED00 25%, #00FF40 37%, #00FFFF 50%, #0040ff 62%, #8000ff 75%, #ff00ff 87%, #ff0000 100%); 
@@ -184,6 +182,7 @@ License: MIT
 .sp-hue {
     position: absolute;
     top:0;right:0;bottom:0;left:83%;
+    height: 100%; /* IE7 needs this for hue slider to take up full space */
 }
 .sp-fill { 
     *height: 80%;
