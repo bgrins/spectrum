@@ -43,7 +43,7 @@
         
         return [
             "<div class='sp-container'>",
-                "<div class='sp-top'>",
+                "<div class='sp-top sp-cf'>",
                     "<div class='sp-fill'></div>",
                     "<div class='sp-top-inner'>",
                         "<div class='sp-color'>",
@@ -59,7 +59,6 @@
                         "</div>",
                     "</div>",
                 "</div>",
-                "<br style='clear:both;' />",
                 "<div class='sp-pallet sp-cf'></div>",
                 "<div class='sp-input-container sp-cf'>",
                     "<input class='sp-input' type='text' spellcheck='false'  />",
