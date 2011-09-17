@@ -89,7 +89,7 @@
         }
     }
     function instanceOptions(o, callbackContext) {
-        var opts = extend({ }, defaultOpts, o);
+        var opts = $.extend({ }, defaultOpts, o);
         opts.callbacks = {
             'move': bind(opts.move, callbackContext),
             'change': bind(opts.change, callbackContext),
@@ -557,20 +557,6 @@
         };
     }
     
-    /**
-     * Extend a given object with all the properties in passed-in object(s)
-     * Thanks to underscore.js
-     */
-    function extend (obj) {
-        var a = Array.prototype.slice.call(arguments, 1);
-        for (var i = 0; i < a.length; i++) {
-            var source = a[i];
-            for (var prop in source) {
-                if (source[prop] !== void 0) obj[prop] = source[prop];
-            }
-        }
-        return obj;
-    }
     
     /**
      * Define a jQuery plugin if possible
