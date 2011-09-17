@@ -132,7 +132,7 @@
             cancelButton = container.find(".sp-cancel"),
             chooseButton = container.find(".sp-choose"),
             isInput = boundElement.is("input"),
-            changeOnMove = isInput && (opts.changeOnMove || flat),
+            changeOnMove = (opts.changeOnMove || flat),
             shouldReplace = isInput && !flat,
             replacer = (shouldReplace) ? $(replaceInput).addClass(theme) : $([]),
             offsetElement = (shouldReplace) ? replacer : boundElement,
