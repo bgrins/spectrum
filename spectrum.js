@@ -21,8 +21,6 @@
         pallet: ['fff', '000']
     },
     spectrums = [],
-    trimLeft = /^[\s,#]+/,
-    trimRight = /\s+$/,
     IE = $.browser.msie,
     replaceInput = [
     	"<div class='sp-replacer sp-cf'>",
