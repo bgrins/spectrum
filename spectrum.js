@@ -105,7 +105,7 @@
         
         var opts = instanceOptions(o, element),
             callbacks = opts.callbacks,
-            resize = throttle(reflow, 100),
+            resize = throttle(reflow, 10),
             visible = false,
             dragWidth = 0,
             dragHeight = 0,
