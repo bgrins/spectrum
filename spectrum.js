@@ -24,6 +24,7 @@
     spectrums = [],
     trimLeft = /^[\s,#]+/,
     trimRight = /\s+$/,
+    IE = $.browser.msie,
     replaceInput = [
     	"<div class='sp-replacer sp-cf'>",
     		"<div class='sp-preview'></div>",
@@ -35,7 +36,7 @@
         // IE does not support gradients with multiple stops, so we need to simulate            
         //  that for the rainbow slider with 8 divs that each have a single gradient
         var gradientFix = "";
-        if ($.browser.msie) {
+        if (IE) {
             for (var i = 1; i < 9; i++) {
                 gradientFix += "<div class='sp-" + i + "'></div>";
             }
@@ -145,7 +146,7 @@
 
 		function initialize() {
 			
-    	    if ($.browser.msie) {
+    	    if (IE) {
     	        container.find("*:not(input)").attr("unselectable", "on");
     	    }   
     	    
