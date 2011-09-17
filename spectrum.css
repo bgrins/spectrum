@@ -15,7 +15,7 @@ License: MIT
 .sp-color { 
     position:relative;
 }
-.sp-saturation, .sp-value { 
+.sp-sat, .sp-val { 
     position: absolute; 
     top:0; 
     left:0; 
@@ -84,7 +84,7 @@ License: MIT
 	display: none; 
 }
 
-.sp-saturation {
+.sp-sat {
     background-image: -webkit-gradient(linear,  0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
     background-image: -webkit-linear-gradient(left, #FFF, rgba(204, 154, 129, 0));
     background-image: -moz-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
@@ -93,7 +93,7 @@ License: MIT
     filter : progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr='#FFFFFFFF', endColorstr='#00CC9A81');
     
 }
-.sp-value {
+.sp-val {
     background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#000000), to(rgba(204, 154, 129, 0)));
     background-image: -webkit-linear-gradient(bottom, #000000, rgba(204, 154, 129, 0));
     background-image: -moz-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
