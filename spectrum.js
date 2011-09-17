@@ -593,12 +593,12 @@
         }); 
     };
     
-    fnspectrum.processOnLoad = true;
-    fnspectrum.processOnLoadOpts = { };
+    fnspectrum.load = true;
+    fnspectrum.loadOpts = { };
     
     $(function() {
-    	if (fnspectrum.processOnLoad) {
-    		$("input[type=spectrum]").spectrum(fnspectrum.processOnLoadOpts);
+    	if (fnspectrum.load) {
+    		$("input[type=spectrum]").spectrum(fnspectrum.loadOpts);
     	}
     });
     
