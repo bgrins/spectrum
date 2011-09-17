@@ -19,10 +19,9 @@
         showPallet: false,
         maxPalletSize: 12,
         theme: 'sp-dark',
-        pallet: ['white', 'black']
+        pallet: ['fff', '000']
     },
     spectrums = [],
-    hasjQuery = typeof $ != "undefined",
     trimLeft = /^[\s,#]+/,
     trimRight = /\s+$/,
     replaceInput = [
@@ -38,7 +37,7 @@
         var gradientFix = "";
         if ($.browser.msie) {
             for (var i = 1; i < 9; i++) {
-                gradientFix += "<div class='sp-ie-" + i + "'></div>";
+                gradientFix += "<div class='sp-" + i + "'></div>";
             }
         }
         
@@ -564,44 +563,39 @@
     
     
     /**
-     * Define a jQuery plugin if possible
+     * Define a jQuery plugin
      */
     var dataID = "spectrum.id";
-    if (hasjQuery) {
-        $.fn.spectrum = function(opts, extra) {
-            
-            if (typeof opts == "string") {
-                if (opts == "get") {
-                    return spectrums[this.eq(0).data(dataID)].get();
-                }
-                
-                return this.each(function() {
-                    var spect = spectrums[$(this).data(dataID)];
-                    if (opts == "show") { spect.show(); }
-                    if (opts == "hide") { spect.hide(); }
-                    if (opts == "set")  { spect.set(extra); }
-                });
+    var fnspectrum = $.fn.spectrum = function(opts, extra) {
+        if (typeof opts == "string") {
+            if (opts == "get") {
+                return spectrums[this.eq(0).data(dataID)].get();
             }
             
-            // Initializing a new one
             return this.each(function() {
-                var spect = spectrum(this, opts);
-                $(this).data(dataID, spect.id);
-            }); 
-        };
+                var spect = spectrums[$(this).data(dataID)];
+                if (opts == "show") { spect.show(); }
+                if (opts == "hide") { spect.hide(); }
+                if (opts == "set")  { spect.set(extra); }
+            });
+        }
         
-        $.fn.spectrum.processOnLoad = true;
-        $.fn.spectrum.processOnLoadOpts = { };
-        
-        $(function() {
-        	if ($.fn.spectrum.processOnLoad) {
-        		$("input[type=spectrum]").spectrum($.fn.spectrum.processOnLoadOpts);
-        	}
-        });
-    }
+        // Initializing a new one
+        return this.each(function() {
+            var spect = spectrum(this, opts);
+            $(this).data(dataID, spect.id);
+        }); 
+    };
     
-    window.spectrum = spectrum;
-
+    fnspectrum.processOnLoad = true;
+    fnspectrum.processOnLoadOpts = { };
+    
+    $(function() {
+    	if (fnspectrum.processOnLoad) {
+    		$("input[type=spectrum]").spectrum(fnspectrum.processOnLoadOpts);
+    	}
+    });
+    
 })(this, jQuery);
 
 // TinyColor.js - https://github.com/bgrins/TinyColor - 2011 Brian Grinstead - v0.4.3

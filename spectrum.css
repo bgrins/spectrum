@@ -120,35 +120,35 @@ License: MIT
     background: -moz-linear-gradient(top, #FF0000 0%, #FFFF00 12%, #0BED00 25%, #00FF40 37%, #00FFFF 50%, #0040ff 62%, #8000ff 75%, #ff00ff 87%, #ff0000 100%); 
     background: -o-linear-gradient(top, #FF0000 0%, #FFFF00 12%, #0BED00 25%, #00FF40 37%, #00FFFF 50%, #0040ff 62%, #8000ff 75%, #ff00ff 87%, #ff0000 100%); 
 }
-.sp-ie-1 { 
+.sp-1 { 
     height:12%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF0000', endColorstr='#FFFF00');
 }
-.sp-ie-2 { 
+.sp-2 { 
     height:13%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFF00', endColorstr='#0BED00');
 }
-.sp-ie-3 { 
+.sp-3 { 
     height:12%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0BED00', endColorstr='#00FF40');
 }
-.sp-ie-4 { 
+.sp-4 { 
     height:13%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00FF40', endColorstr='#00FFFF');
 }
-.sp-ie-5 { 
+.sp-5 { 
     height:12%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00FFFF', endColorstr='#0040ff');
 }
-.sp-ie-6 { 
+.sp-6 { 
     height:13%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0040ff', endColorstr='#8000ff');
 }
-.sp-ie-7 { 
+.sp-7 { 
     height:12%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8000ff', endColorstr='#ff00ff');
 }
-.sp-ie-8 { 
+.sp-8 { 
     height:13%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff00ff', endColorstr='#ff0000');
 }
