@@ -102,9 +102,6 @@ License: MIT
     filter : progid:DXImageTransform.Microsoft.gradient(startColorstr='#00CC9A81', endColorstr='#FF000000');
 }
 .sp-drag-helper { 
-    position:absolute; 
-    top:0; 
-    left: 0;
 }
 
 .sp-container.sp-flat {
@@ -150,11 +147,6 @@ License: MIT
     height:13%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff00ff', endColorstr='#ff0000');
 }
-.sp-slider { 
-    position: absolute; 
-    top:0; 
-    cursor:pointer;
-}
 
 .sp-cf:before, .sp-cf:after { content: ""; display: table; }
 .sp-cf:after { clear: both; }
@@ -170,11 +162,9 @@ License: MIT
   width: 100%;
   display:inline-block;
 }
-
 .sp-top-inner {
    position:absolute; top:0; left:0; bottom:0; right:0;
 }
-
 .sp-color { 
     position: absolute;
     top:0;left:0;bottom:0;right:20%;
@@ -200,9 +190,16 @@ License: MIT
    border-radius: 5px; 
    height:5px; 
    width: 5px; 
-   border: solid black 3px; pointer: cursor;
+   border: solid black 3px;
+   cursor: pointer;
+   position:absolute; 
+   top:0; 
+   left: 0;
 }
 .sp-slider { 
+    position: absolute; 
+    top:0; 
+    cursor:pointer;
     height: 5px; 
     width: 110%;
     margin-left: -5%;
