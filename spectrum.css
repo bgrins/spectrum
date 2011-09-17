@@ -208,6 +208,16 @@ License: MIT
 }
 
 /* Basic display options (colors, fonts, global widths) */
+.sp-container {
+    padding: 10px;
+    border-radius: 10px;
+    width: 240px;
+}
+.sp-container.sp-small {
+    width: 160px;
+    padding: 5px;
+    border-radius: 5px;
+}
 .sp-input {
    height: 20px;
    font-size: 16px;
@@ -219,26 +229,11 @@ License: MIT
    background:transparent;
    border-radius: 3px;
 }
-.sp-container {
-    padding: 10px;
-    border-radius: 10px;
-    width: 240px;
-}
-.sp-container.sp-small {
-    width: 160px;
-    padding: 5px;
-    border-radius: 5px;
-}
 .sp-small .sp-pallet span {
 	width: 16px;
 }
 
-/* Themable options (colors, fonts) */
-.sp-container.sp-light {
-    background-color: #ddd; 
-    border-radius: 5px; 
-    font-family: Droid Sans, Tahoma, sans-serif;
-}
+/* Dark theme */
 .sp-container.sp-dark {
     background-color: #333; 
     border-radius: 5px; 
@@ -247,10 +242,6 @@ License: MIT
 .sp-dark .sp-input {
    border-color: #444;
    color: white;
-}
-.sp-light .sp-input {
-   border-color: #aaa;
-   color: #222;
 }
 .sp-replacer.sp-dark {    
     border: outset 2px #666;
@@ -261,6 +252,17 @@ License: MIT
     border-color: #333;
     border-style: solid;
     color: #ccf;
+}
+
+/* Light theme */
+.sp-container.sp-light {
+    background-color: #ddd; 
+    border-radius: 5px; 
+    font-family: Droid Sans, Tahoma, sans-serif;
+}
+.sp-light .sp-input {
+   border-color: #aaa;
+   color: #222;
 }
 .sp-replacer.sp-light  {
     background: #eee;
