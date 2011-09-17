@@ -5,17 +5,16 @@
 // Requires: jQuery, spectrum.css
 
 (function(window, $, undefined) {
-   
     var defaultOpts = {
         color: false,
         flat: false,
         showInput: false,
         changeOnMove: true,
-        beforeShow: function() { },
-        move: function() { },
-        change: function() { },
-        show: function() { },
-        hide: function() { },
+        beforeShow: noop,
+        move: noop,
+        change: noop,
+        show: noop,
+        hide: noop,
         showPallet: false,
         maxPalletSize: 12,
         theme: 'sp-dark',
@@ -442,6 +441,13 @@
 		return offset;
 	}
 	
+	/** 
+	 * noop - do nothing
+	 */
+    function noop() { 
+    
+    }
+    
     /**
      * stopPropagation - makes the code only doing this a little easier to read in line
      */
