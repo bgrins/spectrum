@@ -104,6 +104,9 @@
     function spectrum(element, o) {
         
         var opts = instanceOptions(o, element),
+            flat = opts.flat,
+            showPallet = opts.showPallet,
+            theme = opts.theme,
             callbacks = opts.callbacks,
             resize = throttle(reflow, 10),
             visible = false,
@@ -117,12 +120,13 @@
             currentSaturation = 0,
             currentValue = 0,
             pallet = opts.pallet.slice(0),
+            draggingClass = "sp-dragging",
             palletLookup = { };
         
         var doc = element.ownerDocument,
             body = doc.body, 
             boundElement = $(element),
-        	container = $(markup, doc).addClass(opts.theme),
+        	container = $(markup, doc).addClass(theme),
             dragger = container.find(".sp-color"),
             dragHelper = container.find(".sp-drag-helper"),
             slider = container.find(".sp-hue"),
@@ -132,9 +136,9 @@
             cancelButton = container.find(".sp-cancel"),
             chooseButton = container.find(".sp-choose"),
             isInput = boundElement.is("input"),
-            changeOnMove = isInput && (opts.changeOnMove || opts.flat),
-            shouldReplace = isInput && !opts.flat,
-            replacer = (shouldReplace) ? $(replaceInput).addClass(opts.theme) : $([]),
+            changeOnMove = isInput && (opts.changeOnMove || flat),
+            shouldReplace = isInput && !flat,
+            replacer = (shouldReplace) ? $(replaceInput).addClass(theme) : $([]),
             offsetElement = (shouldReplace) ? replacer : boundElement,
             previewElement = replacer.find(".sp-preview"),
             initialColor = opts.color || (isInput && boundElement.val()),
@@ -147,15 +151,15 @@
     	        container.find("*:not(input)").attr("unselectable", "on");
     	    }   
     	    
-    	    container.toggleClass("sp-flat", opts.flat);
+    	    container.toggleClass("sp-flat", flat);
     	    container.toggleClass("sp-input-disabled", !opts.showInput);
-    	    container.toggleClass("sp-pallet-disabled", !opts.showPallet);
+    	    container.toggleClass("sp-pallet-disabled", !showPallet);
     	    
     	    if (shouldReplace) {
     	        boundElement.hide().after(replacer);
     	    }
     	    
-        	if (opts.flat) {
+        	if (flat) {
             	boundElement.after(container).hide();
             }
         	else {
@@ -206,7 +210,7 @@
         	
         	setPallet(pallet);
         	
-        	if (opts.flat) {
+        	if (flat) {
         	    show();
         	}
         	
@@ -216,7 +220,7 @@
 		}
 		
 		function setPallet(p) {
-        	if (opts.showPallet) {
+        	if (showPallet) {
         		var unique = [];
 				palletLookup = { };
 				for (var i = 0; i < p.length; i++) {
@@ -233,10 +237,10 @@
 			palletContainer.html(palletTemplate(pallet, active));
 		}
 		function dragStart() {
-		  container.addClass("sp-dragging");
+		  container.addClass(draggingClass);
 		}
 		function dragStop() {
-		  container.removeClass("sp-dragging");
+		  container.removeClass(draggingClass);
 		}
         function setFromTextInput() {
         	set(textInput.val());
@@ -277,7 +281,7 @@
         }
         
         function hide() {
-            if (!visible || opts.flat) { return; }
+            if (!visible || flat) { return; }
             visible = false;
             
             $(doc).unbind("click touchstart", hide);
@@ -338,7 +342,7 @@
             	updateOriginalInput();
             }
 
-			if (opts.showPallet) {
+			if (showPallet) {
 				drawPallet(palletLookup[realHex]);
 			}
         }
@@ -389,7 +393,7 @@
             slideHeight = slider.height();
             slideHelperHelperHeight = slideHelper.height();
             
-            if (!opts.flat) {
+            if (!flat) {
             	container.offset(getOffset(container, offsetElement));
             }
             
@@ -421,8 +425,9 @@
 		var inputWidth = input.outerWidth();
 		var inputHeight =  input.outerHeight();
 		var doc = picker[0].ownerDocument;
-		var viewWidth = doc.documentElement.clientWidth + $(doc).scrollLeft();
-		var viewHeight = doc.documentElement.clientHeight + $(doc).scrollTop();
+		var docElem = doc.documentElement;
+		var viewWidth = docElem.clientWidth + $(doc).scrollLeft();
+		var viewHeight = docElem.clientHeight + $(doc).scrollTop();
 		var offset = input.offset();
 		offset.top += inputHeight;
 		
