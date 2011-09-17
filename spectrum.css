@@ -64,11 +64,11 @@ License: MIT
 .sp-input:focus { border: 1px solid orange; }
 .sp-container.sp-flat .sp-input { width: 100%; padding:0; text-align: center; }
 
-.sp-pallet-container { 
+.sp-pallet { 
 	margin:3px 0; 
 	padding: 0;
 }
-.sp-pallet-container span {
+.sp-pallet span {
 	display: block;
 	float:left;
 	width: 30px;
@@ -77,10 +77,10 @@ License: MIT
 	cursor: pointer;
 	border:solid 2px transparent;
 }
-.sp-pallet-container span:hover, .sp-pallet-container span.sp-pallet-active {
+.sp-pallet span:hover, .sp-pallet span.sp-pallet-active {
     border-color: orange;
 }  
-.sp-pallet-disabled .sp-pallet-container { 
+.sp-pallet-disabled .sp-pallet { 
 	display: none; 
 }
 
@@ -233,7 +233,7 @@ License: MIT
     padding: 5px;
     border-radius: 5px;
 }
-.sp-small .sp-pallet-container span {
+.sp-small .sp-pallet span {
 	width: 16px;
 }
 
