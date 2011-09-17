@@ -22,7 +22,7 @@ License: MIT
     right:0; 
     bottom:0; 
 }
-.sp-replacer, .sp-preview, .sp-drag-helper, .sp-slide-helper , .sp-container.sp-dragging .sp-input, .sp-container button  { 
+.sp-replacer, .sp-preview, .sp-drag-helper, .sp-slider , .sp-container.sp-dragging .sp-input, .sp-container button  { 
     -webkit-user-select:none; -moz-user-select: none; -o-user-select:none; user-select: none; 
 }
 
@@ -112,7 +112,7 @@ License: MIT
     display:inline-block;
 }
 
-.sp-slide {
+.sp-hue {
     position:relative;
     float:left;
     background: -webkit-gradient(linear, left top, left bottom, from(#FF0000), color-stop(.12, #FFFF00), color-stop(.25, #0BED00), color-stop(.37, #00FF40), color-stop(.50, #00FFFF), color-stop(.62, #0040ff), color-stop(.75, #8000ff), color-stop(.87, #ff00ff), to(#ff0000));
@@ -152,7 +152,7 @@ License: MIT
     height:13%; 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff00ff', endColorstr='#ff0000');
 }
-.sp-slide-helper { 
+.sp-slider { 
     position: absolute; 
     top:0; 
     cursor:pointer;
@@ -181,7 +181,7 @@ License: MIT
     position: absolute;
     top:0;left:0;bottom:0;right:20%;
 }
-.sp-slide {
+.sp-hue {
     position: absolute;
     top:0;right:0;bottom:0;left:83%;
 }
@@ -193,7 +193,7 @@ License: MIT
 /* Mobile devices, make hue slider bigger so it is easier to slide */
 @media (max-device-width: 480px) {
     .sp-color { right: 40%; }
-    .sp-slide { left: 63%; }
+    .sp-hue { left: 63%; }
     .sp-fill { margin-top: 60%; } 
 }
 
@@ -203,7 +203,7 @@ License: MIT
    width: 5px; 
    border: solid black 3px; pointer: cursor;
 }
-.sp-slide-helper { 
+.sp-slider { 
     height: 5px; 
     width: 110%;
     margin-left: -5%;
