@@ -321,8 +321,9 @@ $("#pick1").spectrum({
     	var hsv = color.toHsv();
     	var rgb = color.toRgbString();
     	var hex = color.toHexString();
+    	//console.log("callback",color.toHslString(), color.toHsl().h, color.toHsl().s, color.toHsl().l)
     	$("#docs-content").css({
-    		'background-color': hex
+    		'background-color': color.toHslString()
     	}).toggleClass("dark", hsv.v < .5);
     	$("#switch-current-rgb").text(rgb);
     	$("#switch-current-hex").text(hex);
