@@ -57,12 +57,14 @@ License: MIT
 
 /* Replacer (the little preview div that shows up instead of the <input>) */
 .sp-replacer {
-    display:inline-block;
     margin:0;
     border-radius: 5px;
     overflow:hidden;
     cursor:pointer;
     padding: 4px;
+    display:inline-block;
+    zoom: 1;
+    *display: inline;
 }
 .sp-dd { 
     padding: 2px 0;
