@@ -34,7 +34,7 @@
         //  that for the rainbow slider with 8 divs that each have a single gradient
         var gradientFix = "";
         if (IE) {
-            for (var i = 1; i < 9; i++) {
+            for (var i = 1; i <= 6; i++) {
                 gradientFix += "<div class='sp-" + i + "'></div>";
             }
         }
