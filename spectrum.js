@@ -593,6 +593,7 @@
     
     fnspectrum.load = true;
     fnspectrum.loadOpts = { };
+    fnspectrum.draggable = draggable;
     
     $(function() {
     	if (fnspectrum.load) {
