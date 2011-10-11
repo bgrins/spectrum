@@ -5,21 +5,23 @@ I wanted a colorpicker that didn't require images, and that had an API that made
 
 I started using canvas, then switched to CSS gradients, since it turned out to be easier to manage, and worked better across browsers.
 
-Here is the JavaScript size
-
-    Original Size:    24.48KB (7.31KB gzipped)
-    Compiled Size:	  12.03KB (4.97KB gzipped)
-
 See demo and docs: http://bgrins.github.com/spectrum/
 
-Thanks to:
-* http://ansciath.tumblr.com/post/7347495869/css-aspect-ratio: Aspect ratio using CSS only 
-* https://github.com/DavidDurman/FlexiColorPicker for some inspiration and gradient constants
+Thanks to the following places:
 
-To tool I use for measuring JavaScript size: http://closure-compiler.appspot.com/home
+* http://ansciath.tumblr.com/post/7347495869/css-aspect-ratio: Aspect ratio using CSS only 
+* https://github.com/DavidDurman/FlexiColorPicker for saturation/value gradient constants
+* http://upload.wikimedia.org/wikipedia/commons/a/ad/HueScale.svg: For hue gradient contants
+
+The tool I use for measuring JavaScript size: http://closure-compiler.appspot.com/home
 
     // ==ClosureCompiler==
     // @compilation_level SIMPLE_OPTIMIZATIONS
     // @output_file_name default.js
     // @code_url https://raw.github.com/bgrins/spectrum/master/spectrum.js
     // ==/ClosureCompiler==
+    
+Here is the JavaScript size
+
+    Original Size:    24.48KB (7.31KB gzipped)
+    Compiled Size:      12.03KB (4.97KB gzipped)
