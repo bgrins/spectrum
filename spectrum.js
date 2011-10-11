@@ -179,11 +179,15 @@
     	    textInput.change(setFromTextInput);
     	    textInput.keydown(function(e) { if (e.keyCode == 13) { setFromTextInput(); } } );
 
-            cancelButton.click(function() {
+            cancelButton.bind("click touchstart", function(e) {
+                e.stopPropagation();
+                e.preventDefault();
                 cancel();
                 hide();
             });
-            chooseButton.click(function() {
+            chooseButton.bind("click touchstart", function(e) {
+                e.stopPropagation();
+                e.preventDefault();
                 hide();
             });
     	    draggable(slider, function(dragX, dragY) {
@@ -210,8 +214,9 @@
         	    show();
         	}
         	
-        	palletContainer.delegate("span", "click", function() {
-        		set($(this).css("background-color"));
+        	palletContainer.delegate("span", "click touchstart", function(e) {
+                set($(this).css("background-color"));
+                e.stopPropagation();
         	});
 		}
 		
