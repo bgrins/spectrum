@@ -53,7 +53,7 @@ License: MIT
     -webkit-user-select:none; user-select: none; 
 }
 
-
+.sp-range-container input { width: 80%; }
 .sp-replacer {
     display: inline-block;
     vertical-align: baseline;
@@ -62,6 +62,8 @@ License: MIT
     margin-bottom: -1px;
     width: 1em;
     height: 1em;
+    background-image: url(checker.png);
+    background-repeat: no-repeat;
     border: 1px solid rgba(128, 128, 128, 0.6);
 }
 

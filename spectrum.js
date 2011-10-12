@@ -9,6 +9,7 @@
         color: false,
         flat: false,
         showInput: false,
+        showAlpha: true,
         changeOnMove: true,
         beforeShow: noop,
         move: noop,
@@ -47,6 +48,9 @@
                     "</div>",
                 "</div>",
                 "<div class='sp-pallet sp-cf'></div>",
+                "<div class='sp-range-container sp-cf'>",
+                    "<input type='range' class='sp-range' min='0' max='100' />",
+                "</div>",
                 "<div class='sp-input-container sp-cf'>",
                     "<input class='sp-input' type='text' spellcheck='false'  />",
                     "<div>",
@@ -106,6 +110,7 @@
             currentValue = 0,
             pallet = opts.pallet.slice(0),
             draggingClass = "sp-dragging",
+            currentAlpha = 1,
             palletLookup = { };
         
         var doc = element.ownerDocument,
@@ -120,6 +125,7 @@
             palletContainer = container.find(".sp-pallet"),
             cancelButton = container.find(".sp-cancel"),
             chooseButton = container.find(".sp-choose"),
+            rangeSlider = container.find(".sp-range-container input"),
             isInput = boundElement.is("input"),
             changeOnMove = (opts.changeOnMove || flat),
             shouldReplace = isInput && !flat,
@@ -192,6 +198,12 @@
         	    set(initialColor);
         	    pallet.push(initialColor);
         	}
+        	
+        	rangeSlider.change(function() {
+        	   currentAlpha = $(this).val() / 100;
+        	   updateOriginalInput();
+                updateUI();
+        	});
         	
         	setPallet(pallet);
         	
@@ -296,12 +308,13 @@
             currentHue = newHsv.h;
             currentSaturation = newHsv.s;
             currentValue = newHsv.v;
+            currentAlpha = newColor.alpha;
             
             updateUI();
         }
         
         function get() {
-            return tinycolor({ h: currentHue, s: currentSaturation, v: currentValue });
+            return tinycolor({ h: currentHue, s: currentSaturation, v: currentValue, a: currentAlpha });
         }
         
         function updateUI() {
@@ -315,9 +328,9 @@
             
             var realColor = get(),
             	realHex = realColor.toHexString();
-            
+            	
             // Update the replaced elements background color (with actual selected color)
-            previewElement.css("background-color", realHex);
+            previewElement.css("background-color", realColor.toRgbString());
             
             // Update the input as it changes happen
             if (isInput) {
@@ -331,6 +344,8 @@
 			if (showPallet) {
 				drawPallet(palletLookup[realHex]);
 			}
+			
+			rangeSlider.val(currentAlpha * 100);
         }
         
         function updateHelperLocations() {
