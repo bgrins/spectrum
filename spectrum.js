@@ -17,27 +17,17 @@
         hide: noop,
         showPallet: false,
         maxPalletSize: 12,
-        theme: 'sp-dark',
+        theme: 'sp-dev',
         pallet: ['fff', '000']
     },
     spectrums = [],
-    IE = $.browser.msie,
     replaceInput = [
-    	"<div class='sp-replacer sp-cf'>",
+    	"<div class='sp-replacer'>",
     		"<div class='sp-preview'></div>",
-    		"<div class='sp-dd'>&#9660;</div>",
     	"</div>"
     ].join(''),
     markup = (function() {
         
-        // IE does not support gradients with multiple stops, so we need to simulate            
-        //  that for the rainbow slider with 8 divs that each have a single gradient
-        var gradientFix = "";
-        if (IE) {
-            for (var i = 1; i <= 6; i++) {
-                gradientFix += "<div class='sp-" + i + "'></div>";
-            }
-        }
         
         return [
             "<div class='sp-container'>",
@@ -53,7 +43,6 @@
                         "</div>",
                         "<div class='sp-hue'>",
                             "<div class='sp-slider'></div>",
-                            gradientFix,
                         "</div>",
                     "</div>",
                 "</div>",
@@ -142,10 +131,6 @@
             hasOpened = false;
 
 		function initialize() {
-			
-    	    if (IE) {
-    	        container.find("*:not(input)").attr("unselectable", "on");
-    	    }   
     	    
     	    container.toggleClass("sp-flat", flat);
     	    container.toggleClass("sp-input-disabled", !opts.showInput);
@@ -420,7 +405,7 @@
      * Thanks https://github.com/jquery/jquery-ui/blob/master/ui/jquery.ui.datepicker.js
      */
     function getOffset(picker, input) {
-        var extraY = 6;
+        var extraY = 0;
 		var dpWidth = picker.outerWidth();
 		var dpHeight = picker.outerHeight();
 		var inputWidth = input.outerWidth();
