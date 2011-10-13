@@ -65,124 +65,7 @@ WebInspector.Spectrum = function(swatch, rgb)
 		this.rgb = rgb;
 		this.updateUI();
 	}
-};
-
-
-WebInspector.Spectrum.prototype = {
-    set rgb(color)
-    {
-		this.hsv = WebInspector.Spectrum.rgbToHsv(color[0], color[1], color[2], color[3]);
-    },
-
-    get rgb()
-    {
-		var rgb = WebInspector.Spectrum.hsvToRgb(this.hsv[0], this.hsv[1], this.hsv[2], this.hsv[3]);
-		return [Math.round(rgb[0]), Math.round(rgb[1]), Math.round(rgb[2]), rgb[3]];
-    },
-	
-	get rgbNoSatVal()
-	{
-		var rgb = WebInspector.Spectrum.hsvToRgb(this.hsv[0], 1, 1);
-		return [Math.round(rgb[0]), Math.round(rgb[1]), Math.round(rgb[2]), rgb[3]];
-	},
-	
-	onchange: function() {
-		this._onchange(this.rgb);
-	},
-	
-	_onchange: function() {
-	
-	},
-
-	updateHelperLocations: function() {
-
-		var h = this.hsv[0];
-		var s = this.hsv[1];
-		var v = this.hsv[2];
-		
-		// Where to show the little circle in that displays your current selected color
-		var dragX = s * this.dragWidth;
-		var dragY = this.dragHeight - (v * this.dragHeight);
-		
-		dragX = Math.max(
-			-this.dragHelperHeight, 
-			Math.min(this.dragWidth - this.dragHelperHeight, dragX - this.dragHelperHeight)
-		);
-		dragY = Math.max(
-			-this.dragHelperHeight, 
-			Math.min(this.dragHeight - this.dragHelperHeight, dragY - this.dragHelperHeight)
-		);
-		
-		this.dragHelper.style.top = dragY + "px";
-		this.dragHelper.style.left = dragX + "px";
-		
-		// Where to show the bar that displays your current selected hue
-		var slideY = (h * this.slideHeight) - this.slideHelperHeight;
-		this.slideHelper.style.top = slideY + "px";
-		
-		
-		this.rangeSlider.value = this.hsv[3] * 100;
-	},
-	
-	updateUI: function() {
-	
-            this.updateHelperLocations();
-            
-			var rgb = this.rgb;
-			var rgbNoSatVal = this.rgbNoSatVal;
-			
-			var flatColor = "rgb(" + rgbNoSatVal[0] + ", " + rgbNoSatVal[1] + ", " + rgbNoSatVal[2] + ")";
-			var fullColor = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + rgb[3] + ")";
-			
-			console.log(flatColor);
-			this.dragger.style.backgroundColor = flatColor;
-			this.swatchInner.style.backgroundColor = fullColor;
-			
-			
-			this.rangeSlider.value = this.hsv[3] * 100;
-			
-	},
-	
-	show: function(e) {
-		this.element.classList.add('sp-show');
-		this.element.style.left = this.swatch.offsetLeft + "px";
-		this.element.style.top = (this.swatch.offsetTop  + this.swatch.clientHeight) + "px";
-		
-		this.slideHeight = this.slider.offsetHeight;
-		this.dragWidth = this.dragger.offsetWidth;
-		this.dragHeight = this.dragger.offsetHeight;
-		this.dragHelperHeight = this.dragHelper.clientHeight;
-		this.slideHelperHeight = this.slideHelper.clientHeight;
-		
-		if (e) { e.stopPropagation(); }
-		var that = this;
-		this.document.addEventListener("click", function() { that.hide(); }, false);
-		
-		this.updateUI();
-	},
-	
-	toggle: function() {
-		if (this.element.classList.contains('sp-show')) {
-			this.hide();
-		}
-		else {
-			this.show();
-		}
-	},
-	
-	hide: function() {
-		this.element.classList.remove('sp-show');
-	},
-	
-	addChangeListener: function(listener) {
-		this._onchange = listener;
-	}
-	
-};
-
-WebInspector.Spectrum.stopPropagation = function(e) {
-	e.stopPropagation();
-};
+}
 
 WebInspector.Spectrum.hsvToRgb = function(h, s, v, a) {
 
@@ -231,6 +114,10 @@ WebInspector.Spectrum.rgbToHsv = function(r, g, b, a) {
         h /= 6;
     }
     return [h, s, v, a];
+};
+
+WebInspector.Spectrum.stopPropagation = function(e) {
+	e.stopPropagation();
 };
 
 WebInspector.Spectrum.addEvent = function (el, name, cb) {
@@ -345,3 +232,116 @@ WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
 	
 	WebInspector.Spectrum.addEvent(element, hasTouch ? "touchstart" : "mousedown", start);
 };
+
+WebInspector.Spectrum.prototype = {
+    set rgb(color)
+    {
+		this.hsv = WebInspector.Spectrum.rgbToHsv(color[0], color[1], color[2], color[3]);
+    },
+
+    get rgb()
+    {
+		var rgb = WebInspector.Spectrum.hsvToRgb(this.hsv[0], this.hsv[1], this.hsv[2], this.hsv[3]);
+		return [Math.round(rgb[0]), Math.round(rgb[1]), Math.round(rgb[2]), rgb[3]];
+    },
+	
+	get rgbNoSatVal()
+	{
+		var rgb = WebInspector.Spectrum.hsvToRgb(this.hsv[0], 1, 1);
+		return [Math.round(rgb[0]), Math.round(rgb[1]), Math.round(rgb[2]), rgb[3]];
+	},
+	
+	onchange: function() {
+		this._onchange(this.rgb);
+	},
+	
+	_onchange: function() {
+	
+	},
+
+	updateHelperLocations: function() {
+
+		var h = this.hsv[0];
+		var s = this.hsv[1];
+		var v = this.hsv[2];
+		
+		// Where to show the little circle in that displays your current selected color
+		var dragX = s * this.dragWidth;
+		var dragY = this.dragHeight - (v * this.dragHeight);
+		
+		dragX = Math.max(
+			-this.dragHelperHeight, 
+			Math.min(this.dragWidth - this.dragHelperHeight, dragX - this.dragHelperHeight)
+		);
+		dragY = Math.max(
+			-this.dragHelperHeight, 
+			Math.min(this.dragHeight - this.dragHelperHeight, dragY - this.dragHelperHeight)
+		);
+		
+		this.dragHelper.style.top = dragY + "px";
+		this.dragHelper.style.left = dragX + "px";
+		
+		// Where to show the bar that displays your current selected hue
+		var slideY = (h * this.slideHeight) - this.slideHelperHeight;
+		this.slideHelper.style.top = slideY + "px";
+		
+		
+		this.rangeSlider.value = this.hsv[3] * 100;
+	},
+	
+	updateUI: function() {
+	
+            this.updateHelperLocations();
+            
+			var rgb = this.rgb;
+			var rgbNoSatVal = this.rgbNoSatVal;
+			
+			var flatColor = "rgb(" + rgbNoSatVal[0] + ", " + rgbNoSatVal[1] + ", " + rgbNoSatVal[2] + ")";
+			var fullColor = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + rgb[3] + ")";
+			
+			console.log(flatColor);
+			this.dragger.style.backgroundColor = flatColor;
+			this.swatchInner.style.backgroundColor = fullColor;
+			
+			
+			this.rangeSlider.value = this.hsv[3] * 100;
+			
+	},
+	
+	show: function(e) {
+		this.element.classList.add('sp-show');
+		this.element.style.left = this.swatch.offsetLeft + "px";
+		this.element.style.top = (this.swatch.offsetTop  + this.swatch.clientHeight) + "px";
+		
+		this.slideHeight = this.slider.offsetHeight;
+		this.dragWidth = this.dragger.offsetWidth;
+		this.dragHeight = this.dragger.offsetHeight;
+		this.dragHelperHeight = this.dragHelper.clientHeight;
+		this.slideHelperHeight = this.slideHelper.clientHeight;
+		
+		if (e) { e.stopPropagation(); }
+		var that = this;
+		this.document.addEventListener("click", function() { that.hide(); }, false);
+		
+		this.updateUI();
+	},
+	
+	toggle: function() {
+		if (this.element.classList.contains('sp-show')) {
+			this.hide();
+		}
+		else {
+			this.show();
+		}
+	},
+	
+	hide: function() {
+		this.element.classList.remove('sp-show');
+	},
+	
+	addChangeListener: function(listener) {
+		this._onchange = listener;
+	}
+	
+};
+
