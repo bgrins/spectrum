@@ -10,17 +10,21 @@ License: MIT
     position:absolute; 
     top:0; 
     left:0; 
-    display:inline-block;
+	display:none;
 }
 .sp-container.sp-flat {
     position: relative;
 }
-
+.sp-container.sp-show {
+    display:inline-block;
+}
 /* 
    Keep square proportions using percentage widths.
    Basic aspect ratio technique modified from:
    http://ansciath.tumblr.com/post/7347495869/css-aspect-ratio
 */
+
+
 .sp-top {
   position:relative; 
   width: 100%;
@@ -54,8 +58,10 @@ License: MIT
 }
 
 .sp-range-container input { width: 80%; }
-.sp-replacer {
+.swatch-inner { position:absolute; top:0; left:0; right:0; bottom:0; display:block; }
+.sp-replacer, .swatch {
     display: inline-block;
+	position:relative;
     vertical-align: baseline;
     margin-left: 1px;
     margin-right: 2px;
@@ -63,7 +69,7 @@ License: MIT
     width: 1em;
     height: 1em;
     background-image: url(checker.png);
-    background-repeat: no-repeat;
+	background-color: red;
     border: 1px solid rgba(128, 128, 128, 0.6);
 }
 
