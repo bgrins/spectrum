@@ -181,13 +181,13 @@
                 e.preventDefault();
                 hide();
             });
-    	    draggable(slider, function(dragX, dragY) {
+    	    draggable(slider[0], function(dragX, dragY) {
     	        currentHue = (dragY / slideHeight);
     	        updateUI();
                 callbacks.move(get());
     	    }, dragStart, dragStop);
     	    
-    	    draggable(dragger, function(dragX, dragY) {
+    	    draggable(dragger[0], function(dragX, dragY) {
     	        currentSaturation = dragX / dragWidth;
     	        currentValue = (dragHeight -     dragY) / dragHeight;
     	        updateUI();
@@ -474,16 +474,50 @@
      * Lightweight drag helper.  Handles containment within the element, so that
      * when dragging, the x is within [0,element.width] and y is within [0,element.height]
      */
+     
+    function addEvent(el, name, cb) {
+        if (typeof name === "object") {
+            for (var i in name) {
+                el.addEventListener(i, name[i], false); 
+            }   
+        }
+        else {
+             el.addEventListener(name, cb, false);   
+        }
+    }
+    
+    function removeEvent(el, name, cb) {
+        if (typeof name === "object") {
+            for (var i in name) {
+                el.removeEventListener(i, name[i], false); 
+            }   
+        }
+        else {
+             el.removeEventListener(name, cb, false);   
+        }
+    }
+    function getOffset(el) {
+	   var curleft = curtop = 0;
+    	if (el.offsetParent) {
+        do {
+			curleft += el.offsetLeft;
+			curtop += el.offsetTop;
+        } while (el = el.offsetParent);
+        }
+    	return { left: curleft, top: curtop };
+    }
+    
     function draggable(element, onmove, onstart, onstop) {
         onmove = onmove || function() { };
         onstart = onstart || function() { };
         onstop = onstop || function() { };
+        
         var doc = element.ownerDocument || document;
         var dragging = false;
         var offset = { };
         var maxHeight = 0;
         var maxWidth = 0;
-        var IE = $.browser.msie;
+        var IE = !!/(msie)/i.exec(navigator.userAgent);
         var hasTouch = ('ontouchstart' in window);
         
         var duringDragEvents = { };
@@ -491,7 +525,7 @@
         duringDragEvents["dragstart"] = prevent;
         duringDragEvents[(hasTouch ? "touchmove" : "mousemove")] = move;
         duringDragEvents[(hasTouch ? "touchend" : "mouseup")] = stop;
-
+    
         function prevent(e) {
             if (e.stopPropagation) {
                 e.stopPropagation();
@@ -504,18 +538,13 @@
         
         function move(e) {
             if (dragging) {
-                // Mouseup happened outside of window
-                if (IE && !(document.documentMode >= 9) && !e.button) {
-                    return stop();
-                }
+                var touches =  e.touches;
                 
-                var touches =  e.originalEvent.touches;
                 var pageX = touches ? touches[0].pageX : e.pageX;
                 var pageY = touches ? touches[0].pageY : e.pageY;
                 
                 var dragX = Math.max(0, Math.min(pageX - offset.left, maxWidth));
                 var dragY = Math.max(0, Math.min(pageY - offset.top, maxHeight));
-                
                 if (hasTouch) {
                     // Stop scrolling in iOS
                     prevent(e);
@@ -526,16 +555,17 @@
         }
         function start(e) { 
             var rightclick = (e.which) ? (e.which == 3) : (e.button == 2);
-            var touches =  e.originalEvent.touches;
+            var touches =  e.touches;
             
             if (!rightclick && !dragging) { 
                 if (onstart.apply(element, arguments) !== false) {
                     dragging = true; 
-                    maxHeight = $(element).height();
-                    maxWidth = $(element).width();
-                    offset = $(element).offset();
+                    maxHeight = element.clientHeight;
+                    maxWidth = element.clientWidth;
                     
-                    $(doc).bind(duringDragEvents);
+                    offset = getOffset(element);
+                    
+                    addEvent(doc, duringDragEvents);
                     
                     if (!hasTouch) {
                         move(e);
@@ -548,13 +578,13 @@
         }
         function stop() { 
             if (dragging) { 
-                $(doc).unbind(duringDragEvents);
+                removeEvent(doc, duringDragEvents);
                 onstop.apply(element, arguments); 
             }
             dragging = false; 
         }
     
-        $(element).bind(hasTouch ? "touchstart" : "mousedown", start);
+        addEvent(element, hasTouch ? "touchstart" : "mousedown", start);
     }
     
     function throttle(func, wait, debounce) {
