@@ -308,8 +308,20 @@ WebInspector.Spectrum.prototype = {
 			
 	},
 	
+	toggle: function(e) {
+		if (this.element.classList.contains('sp-show')) {
+			this.hide(e);
+		}
+		else {
+			this.show(e);
+		}
+	},
 	show: function(e) {
+	
+		if (e) { e.stopPropagation(); }
+		
 		this.element.classList.add('sp-show');
+		this.swatch.classList.add('swatch-active');
 		this.element.style.left = this.swatch.offsetLeft + "px";
 		this.element.style.top = (this.swatch.offsetTop  + this.swatch.clientHeight) + "px";
 		
@@ -319,24 +331,19 @@ WebInspector.Spectrum.prototype = {
 		this.dragHelperHeight = this.dragHelper.clientHeight;
 		this.slideHelperHeight = this.slideHelper.clientHeight;
 		
-		if (e) { e.stopPropagation(); }
 		var that = this;
 		this.document.addEventListener("click", function() { that.hide(); }, false);
 		
 		this.updateUI();
 	},
 	
-	toggle: function() {
-		if (this.element.classList.contains('sp-show')) {
-			this.hide();
-		}
-		else {
-			this.show();
-		}
-	},
 	
-	hide: function() {
+	hide: function(e) {
+		
+		if (e) { e.stopPropagation(); }
+		
 		this.element.classList.remove('sp-show');
+		this.swatch.classList.remove('swatch-active');
 	},
 	
 	addChangeListener: function(listener) {

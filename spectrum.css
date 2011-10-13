@@ -70,7 +70,7 @@ License: MIT
     background-image: url(checker.png);
     border: 1px solid rgba(128, 128, 128, 0.6);
 }
-.swatch:hover {
+.swatch:hover, .swatch.swatch-active {
     border: 1px solid rgba(64, 64, 64, 0.8);
 }
 

@@ -21,13 +21,11 @@ body {margin:0; padding:0;}
 	var spectrum = new WebInspector.Spectrum(swatch, [255, 126, 255, 1]);	
 	
 	swatch.onclick = function(e) {
-		spectrum.show(e);
+		spectrum.toggle(e);
 	};
 	
-	//document.body.appendChild(spectrum.element);
 	spectrum.addChangeListener(function(color) {
 		console.log("rgba(" + color[0] + ", " + color[1] + ", " + color[2] + ", " + color[3] + ")");
-		//document.body.style.backgroundColor = "rgba(" + color[0] + ", " + color[1] + ", " + color[2] + ", " + color[3] + ")";
 	});
 	</script>
 </body>
