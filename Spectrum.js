@@ -3,16 +3,15 @@ var WebInspector = { };
 WebInspector.Spectrum = function(swatch, rgb)
 {
 	var document = this.document = swatch.ownerDocument;
-    this.element = document.createElement('div');
-	this._inputElement = document.createElement('input');
+	this.element = document.createElement('div');
 	this.swatch = swatch;
 	this.swatchInner = document.createElement('span');
 	this.swatchInner.className = 'swatch-inner';
 	this.swatch.appendChild(this.swatchInner);
 	
-    this.element.className = "sp-container sp-dev";
+	this.element.className = "sp-container sp-dev";
 	this.element.innerHTML = [
-		"<div class='sp-top sp-cf'>",
+		"<div class='sp-top'>",
 			"<div class='sp-fill'></div>",
 			"<div class='sp-top-inner'>",
 				"<div class='sp-color'>",
@@ -30,11 +29,10 @@ WebInspector.Spectrum = function(swatch, rgb)
 		"<div class='sp-range-container'>",
 			"<input type='range' class='sp-range' min='0' max='100' />",
 		"</div>"
-	].join('');
+	].join('');	
 	this.element.addEventListener("click", WebInspector.Spectrum.stopPropagation, false);
 	swatch.parentNode.insertBefore( this.element, swatch.nextSibling );
-	
-	
+		
 	var that = this;
 	
 	this.slider = this.element.querySelectorAll(".sp-hue")[0];
