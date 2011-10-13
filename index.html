@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="spectrum.css" />
+<script type='text/javascript' src='spectrum.js'></script>
+</head>
+<body>
+
+
+<style>
+body {margin:0; padding:0;}
+#container { width: 600px; margin:0 auto; }
+</style>
+	<div id='container'>
+	<div class='swatch' id='el'></div>
+	<br />
+	<input type='spectrum' value='rgba(255, 0, 0, .5)' />
+	</div>
+	
+	<script type='text/javascript'>
+	
+	var swatch = document.getElementById('el');
+	var spectrum = new WebInspector.Spectrum(swatch, [255, 126, 255, 1]);	
+	
+	swatch.onclick = function(e) {
+		spectrum.show(e);
+	};
+	
+	//document.body.appendChild(spectrum.element);
+	spectrum.addChangeListener(function(color) {
+		console.log("rgba(" + color[0] + ", " + color[1] + ", " + color[2] + ", " + color[3] + ")");
+		//document.body.style.backgroundColor = "rgba(" + color[0] + ", " + color[1] + ", " + color[2] + ", " + color[3] + ")";
+	});
+	</script>
+</body>
+</html>
