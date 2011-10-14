@@ -10,25 +10,30 @@
 <style>
 body {margin:0; padding:0;}
 #container { width: 600px; margin:20px auto; }
+#output { height: 30px; }
 </style>
 	<div id='container'>
+	<div id='output'></div>
 	<div class='swatch' id='el'></div>
 	</div>
 	
 	<script type='text/javascript'>
 	
 	var swatch = document.getElementById('el');
+	var output = document.getElementById('output');
 	var spectrum = new WebInspector.Spectrum(swatch, [255, 126, 255, 1]);	
 	
-	swatch.onclick = function(e) {
-		spectrum.toggle(e);
-	};
+	swatch.addEventListener('click', onSwatchClick, false);
+	spectrum.addChangeListener(onSpectrumChange);
 	
-	function onSpectrumChange(color) {
-		console.log("rgba(" + color[0] + ", " + color[1] + ", " + color[2] + ", " + color[3] + ")");
+	function onSwatchClick(e) {
+		spectrum.toggle(e);
 	}
 	
-	spectrum.addChangeListener(onSpectrumChange);
+	function onSpectrumChange(color) {
+		output.innerText = "rgba(" + color[0] + ", " + color[1] + ", " + color[2] + ", " + color[3] + ")";
+	}
+	
 	</script>
 </body>
 </html>
