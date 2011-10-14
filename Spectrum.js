@@ -29,14 +29,16 @@ WebInspector.Spectrum = function(swatch, rgb)
         this.updateUI();
     }
     
-    function hueDrag(dragX, dragY) {
+    function hueDrag(dragX, dragY) 
+    {
         this.hsv[0] = (dragY / this.slideHeight);
         
         this.updateUI();
         this.onchange();  
     }
     
-    function colorDrag(dragX, dragY) {
+    function colorDrag(dragX, dragY) 
+    {
         this.hsv[1] = dragX / this.dragWidth;
         this.hsv[2] = (this.dragHeight - dragY) / this.dragHeight;
         
@@ -44,7 +46,8 @@ WebInspector.Spectrum = function(swatch, rgb)
         this.onchange();
     }
     
-    function alphaDrag() {
+    function alphaDrag() 
+    {
         this.hsv[3] = this.rangeSlider.value / 100;
         
         this.updateUI();
@@ -179,6 +182,7 @@ WebInspector.Spectrum.getOffset = function(el) {
 };
 
 WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
+
     onmove = onmove || function() { };
     onstart = onstart || function() { };
     onstop = onstop || function() { };
@@ -195,7 +199,8 @@ WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
     duringDragEvents["mousemove"] = move;
     duringDragEvents["mouseup"] = stop;
 
-    function prevent(e) {
+    function prevent(e) 
+    {
         if (e.stopPropagation)
             e.stopPropagation();
         
@@ -205,7 +210,8 @@ WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
         e.returnValue = false;
     }
     
-    function move(e) {
+    function move(e) 
+    {
         if (dragging) {
             
             var dragX = Math.max(0, Math.min(e.pageX - offset.left, maxWidth));
@@ -215,7 +221,8 @@ WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
         } 
     }
     
-    function start(e) { 
+    function start(e) 
+    { 
         var rightclick = (e.which) ? (e.which == 3) : (e.button == 2);
         
         if (!rightclick && !dragging) { 
@@ -233,7 +240,8 @@ WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
         }
     }
     
-    function stop() { 
+    function stop() 
+    { 
         if (dragging) { 
             WebInspector.Spectrum.removeEvent(doc, duringDragEvents);
             onstop.apply(element, arguments); 
