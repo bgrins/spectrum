@@ -207,13 +207,9 @@ WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
     
     function move(e) {
         if (dragging) {
-            var touches =  e.touches;
             
-            var pageX = touches ? touches[0].pageX : e.pageX;
-            var pageY = touches ? touches[0].pageY : e.pageY;
-            
-            var dragX = Math.max(0, Math.min(pageX - offset.left, maxWidth));
-            var dragY = Math.max(0, Math.min(pageY - offset.top, maxHeight));
+            var dragX = Math.max(0, Math.min(e.pageX - offset.left, maxWidth));
+            var dragY = Math.max(0, Math.min(e.pageY - offset.top, maxHeight));
             
             onmove.apply(element, [dragX, dragY]); 
         } 
@@ -221,7 +217,6 @@ WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
     
     function start(e) { 
         var rightclick = (e.which) ? (e.which == 3) : (e.button == 2);
-        var touches =  e.touches;
         
         if (!rightclick && !dragging) { 
             if (onstart.apply(element, arguments) !== false) {
