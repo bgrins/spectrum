@@ -71,7 +71,6 @@ WebInspector.Spectrum.hsvToRgb = function(h, s, v, a) {
 
     var r, g, b;
     
-
     var i = Math.floor(h * 6);
     var f = h * 6 - i;
     var p = v * (1 - s);
@@ -199,6 +198,7 @@ WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
             onmove.apply(element, [dragX, dragY]); 
         } 
     }
+    
     function start(e) { 
         var rightclick = (e.which) ? (e.which == 3) : (e.button == 2);
         var touches =  e.touches;
@@ -222,6 +222,7 @@ WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
             }
         }
     }
+    
     function stop() { 
         if (dragging) { 
             WebInspector.Spectrum.removeEvent(doc, duringDragEvents);
@@ -315,6 +316,7 @@ WebInspector.Spectrum.prototype = {
             this.show(e);
         }
     },
+    
     show: function(e) {
     
         if (e) { e.stopPropagation(); }
@@ -335,7 +337,6 @@ WebInspector.Spectrum.prototype = {
         
         this.updateUI();
     },
-    
     
     hide: function(e) {
         
