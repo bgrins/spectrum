@@ -169,21 +169,20 @@ WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
     var offset = { };
     var maxHeight = 0;
     var maxWidth = 0;
-    var hasTouch = ('ontouchstart' in window);
     
     var duringDragEvents = { };
     duringDragEvents["selectstart"] = prevent;
     duringDragEvents["dragstart"] = prevent;
-    duringDragEvents[(hasTouch ? "touchmove" : "mousemove")] = move;
-    duringDragEvents[(hasTouch ? "touchend" : "mouseup")] = stop;
+    duringDragEvents["mousemove"] = move;
+    duringDragEvents["mouseup"] = stop;
 
     function prevent(e) {
-        if (e.stopPropagation) {
+        if (e.stopPropagation)
             e.stopPropagation();
-        }
-        if (e.preventDefault) {
+        
+        if (e.preventDefault)
             e.preventDefault();
-        }
+            
         e.returnValue = false;
     }
     
@@ -196,10 +195,6 @@ WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
             
             var dragX = Math.max(0, Math.min(pageX - offset.left, maxWidth));
             var dragY = Math.max(0, Math.min(pageY - offset.top, maxHeight));
-            if (hasTouch) {
-                // Stop scrolling in iOS
-                prevent(e);
-            }
             
             onmove.apply(element, [dragX, dragY]); 
         } 
@@ -219,12 +214,7 @@ WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
                 
                 WebInspector.Spectrum.addEvent(doc, duringDragEvents);
                 
-                if (!hasTouch) {
-                    move(e);
-                }
-                else {
-                    prevent(e);
-                }
+                prevent(e);
             }
         }
     }
@@ -237,7 +227,7 @@ WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
         dragging = false; 
     }
     
-    WebInspector.Spectrum.addEvent(element, hasTouch ? "touchstart" : "mousedown", start);
+    WebInspector.Spectrum.addEvent(element, "mousedown", start);
 };
 
 WebInspector.Spectrum.prototype = {
