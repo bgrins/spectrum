@@ -2,70 +2,76 @@ var WebInspector = { };
 
 WebInspector.Spectrum = function(swatch, rgb)
 {
-    var document = this.document = swatch.ownerDocument;
-    this.element = document.createElement('div');
+    this.document = swatch.ownerDocument;
     this.swatch = swatch;
-    this.swatchInner = document.createElement('span');
+    this.element = this.document.createElement('div');
+    this.element.className = "sp-container";
+    this.element.innerHTML = WebInspector.Spectrum.markup;
+    this.element.addEventListener("click", WebInspector.Spectrum.stopPropagation, false);
+    
+    this.swatchInner = this.document.createElement('span');
     this.swatchInner.className = 'swatch-inner';
     this.swatch.appendChild(this.swatchInner);
-    
-    this.element.className = "sp-container sp-dev";
-    this.element.innerHTML = [
-        "<div class='sp-top'>",
-            "<div class='sp-fill'></div>",
-            "<div class='sp-top-inner'>",
-                "<div class='sp-color'>",
-                    "<div class='sp-sat'>",
-                        "<div class='sp-val'>",
-                            "<div class='sp-dragger'></div>",
-                        "</div>",
-                    "</div>",
-                "</div>",
-                "<div class='sp-hue'>",
-                    "<div class='sp-slider'></div>",
-                "</div>",
-            "</div>",
-        "</div>",
-        "<div class='sp-range-container'>",
-            "<input type='range' class='sp-range' min='0' max='100' />",
-        "</div>"
-    ].join('');    
-    this.element.addEventListener("click", WebInspector.Spectrum.stopPropagation, false);
-    swatch.parentNode.insertBefore( this.element, swatch.nextSibling );
-        
-    var that = this;
+    this.swatch.parentNode.insertBefore( this.element, swatch.nextSibling );
     
     this.slider = this.element.querySelectorAll(".sp-hue")[0];
     this.slideHelper = this.element.querySelectorAll(".sp-slider")[0];
-    WebInspector.Spectrum.draggable(this.slider, function(dragX, dragY) {
-        that.hsv[0] = (dragY / that.slideHeight);
-        
-        that.updateUI();
-        that.onchange();
-    });
-    
     this.dragger = this.element.querySelectorAll(".sp-color")[0];
     this.dragHelper = this.element.querySelectorAll(".sp-dragger")[0];
-    WebInspector.Spectrum.draggable(this.dragger, function(dragX, dragY) {
-        that.hsv[1] = dragX / that.dragWidth;
-        that.hsv[2] = (that.dragHeight - dragY) / that.dragHeight;
-        
-        that.updateUI();
-        that.onchange();
-    });
-    
     this.rangeSlider = this.element.querySelectorAll(".sp-range")[0];
-    this.rangeSlider.addEventListener("change", function() {
-        that.hsv[3] = this.value / 100;
-        that.updateUI();
-        that.onchange();
-    }, false);
+    
+    WebInspector.Spectrum.draggable(this.slider, hueDrag);
+    WebInspector.Spectrum.draggable(this.dragger, colorDrag);
+    this.rangeSlider.addEventListener("change", alphaDrag, false);
     
     if (rgb) {
         this.rgb = rgb;
         this.updateUI();
     }
+    
+    var that = this;
+    function hueDrag(dragX, dragY) {
+        that.hsv[0] = (dragY / that.slideHeight);
+        
+        that.updateUI();
+        that.onchange();  
+    }
+    
+    function colorDrag(dragX, dragY) {
+        that.hsv[1] = dragX / that.dragWidth;
+        that.hsv[2] = (that.dragHeight - dragY) / that.dragHeight;
+        
+        that.updateUI();
+        that.onchange();
+    }
+    
+    function alphaDrag() {
+        that.hsv[3] = this.value / 100;
+        that.updateUI();
+        that.onchange();
+    }
 }
+
+WebInspector.Spectrum.markup = [
+    "<div class='sp-top'>",
+        "<div class='sp-fill'></div>",
+        "<div class='sp-top-inner'>",
+            "<div class='sp-color'>",
+                "<div class='sp-sat'>",
+                    "<div class='sp-val'>",
+                        "<div class='sp-dragger'></div>",
+                    "</div>",
+                "</div>",
+            "</div>",
+            "<div class='sp-hue'>",
+                "<div class='sp-slider'></div>",
+            "</div>",
+        "</div>",
+    "</div>",
+    "<div class='sp-range-container'>",
+        "<input type='range' class='sp-range' min='0' max='100' />",
+    "</div>"
+].join('');
 
 WebInspector.Spectrum.hsvToRgb = function(h, s, v, a) {
 
