@@ -24,9 +24,11 @@ body {margin:0; padding:0;}
 		spectrum.toggle(e);
 	};
 	
-	spectrum.addChangeListener(function(color) {
+	function onSpectrumChange(color) {
 		console.log("rgba(" + color[0] + ", " + color[1] + ", " + color[2] + ", " + color[3] + ")");
-	});
+	}
+	
+	spectrum.addChangeListener(onSpectrumChange);
 	</script>
 </body>
 </html>

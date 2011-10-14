@@ -20,35 +20,35 @@ WebInspector.Spectrum = function(swatch, rgb)
     this.dragHelper = this.element.querySelectorAll(".sp-dragger")[0];
     this.rangeSlider = this.element.querySelectorAll(".sp-range")[0];
     
-    WebInspector.Spectrum.draggable(this.slider, hueDrag);
-    WebInspector.Spectrum.draggable(this.dragger, colorDrag);
-    this.rangeSlider.addEventListener("change", alphaDrag, false);
+    WebInspector.Spectrum.draggable(this.slider, hueDrag.bind(this));
+    WebInspector.Spectrum.draggable(this.dragger, colorDrag.bind(this));
+    this.rangeSlider.addEventListener("change", alphaDrag.bind(this), false);
     
     if (rgb) {
         this.rgb = rgb;
         this.updateUI();
     }
     
-    var that = this;
     function hueDrag(dragX, dragY) {
-        that.hsv[0] = (dragY / that.slideHeight);
+        this.hsv[0] = (dragY / this.slideHeight);
         
-        that.updateUI();
-        that.onchange();  
+        this.updateUI();
+        this.onchange();  
     }
     
     function colorDrag(dragX, dragY) {
-        that.hsv[1] = dragX / that.dragWidth;
-        that.hsv[2] = (that.dragHeight - dragY) / that.dragHeight;
+        this.hsv[1] = dragX / this.dragWidth;
+        this.hsv[2] = (this.dragHeight - dragY) / this.dragHeight;
         
-        that.updateUI();
-        that.onchange();
+        this.updateUI();
+        this.onchange();
     }
     
     function alphaDrag() {
-        that.hsv[3] = this.value / 100;
-        that.updateUI();
-        that.onchange();
+        this.hsv[3] = this.rangeSlider.value / 100;
+        
+        this.updateUI();
+        this.onchange();
     }
 }
 
@@ -285,8 +285,7 @@ WebInspector.Spectrum.prototype = {
             Math.min(this.dragHeight - this.dragHelperHeight, dragY - this.dragHelperHeight)
         );
         
-        this.dragHelper.style.top = dragY + "px";
-        this.dragHelper.style.left = dragX + "px";
+        this.dragHelper.positionAt(dragX, dragY);
         
         // Where to show the bar that displays your current selected hue
         var slideY = (h * this.slideHeight) - this.slideHelperHeight;
@@ -298,39 +297,35 @@ WebInspector.Spectrum.prototype = {
     
     updateUI: function() {
     
-            this.updateHelperLocations();
-            
-            var rgb = this.rgb;
-            var rgbNoSatVal = this.rgbNoSatVal;
-            
-            var flatColor = "rgb(" + rgbNoSatVal[0] + ", " + rgbNoSatVal[1] + ", " + rgbNoSatVal[2] + ")";
-            var fullColor = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + rgb[3] + ")";
-            
-            this.dragger.style.backgroundColor = flatColor;
-            this.swatchInner.style.backgroundColor = fullColor;
-            
-            
-            this.rangeSlider.value = this.hsv[3] * 100;
-            
+        this.updateHelperLocations();
+        
+        var rgb = this.rgb;
+        var rgbNoSatVal = this.rgbNoSatVal;
+        
+        var flatColor = "rgb(" + rgbNoSatVal[0] + ", " + rgbNoSatVal[1] + ", " + rgbNoSatVal[2] + ")";
+        var fullColor = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + rgb[3] + ")";
+        
+        this.dragger.style.backgroundColor = flatColor;
+        this.swatchInner.style.backgroundColor = fullColor;
+        
+        this.rangeSlider.value = this.hsv[3] * 100;
     },
     
     toggle: function(e) {
-        if (this.element.classList.contains('sp-show')) {
+        if (this.element.hasStyleClass('sp-show')) 
             this.hide(e);
-        }
-        else {
+        else
             this.show(e);
-        }
     },
     
     show: function(e) {
     
-        if (e) { e.stopPropagation(); }
+        if (e) 
+            e.stopPropagation();
         
-        this.element.classList.add('sp-show');
-        this.swatch.classList.add('swatch-active');
-        this.element.style.left = this.swatch.offsetLeft + "px";
-        this.element.style.top = (this.swatch.offsetTop  + this.swatch.clientHeight) + "px";
+        this.element.addStyleClass('sp-show');
+        this.swatch.addStyleClass('swatch-active');
+        this.element.positionAt(this.swatch.offsetLeft, this.swatch.offsetTop + this.swatch.clientHeight);
         
         this.slideHeight = this.slider.offsetHeight;
         this.dragWidth = this.dragger.offsetWidth;
@@ -338,18 +333,18 @@ WebInspector.Spectrum.prototype = {
         this.dragHelperHeight = this.dragHelper.clientHeight;
         this.slideHelperHeight = this.slideHelper.clientHeight;
         
-        var that = this;
-        this.document.addEventListener("click", function() { that.hide(); }, false);
+        this.document.addEventListener("click", this.hide.bind(this), false);
         
         this.updateUI();
     },
     
     hide: function(e) {
         
-        if (e) { e.stopPropagation(); }
+        if (e) 
+            e.stopPropagation();
         
-        this.element.classList.remove('sp-show');
-        this.swatch.classList.remove('swatch-active');
+        this.element.removeStyleClass('sp-show');
+        this.swatch.removeStyleClass('swatch-active');
     },
     
     addChangeListener: function(listener) {
@@ -357,4 +352,43 @@ WebInspector.Spectrum.prototype = {
     }
     
 };
+
+
+
+
+
+/* Remove prototypes once moved into WebInspector project (these are pulled from utilities.js) */
+
+Function.prototype.bind = function(thisObject)
+{
+    var func = this;
+    var args = Array.prototype.slice.call(arguments, 1);
+    function bound()
+    {
+        return func.apply(thisObject, args.concat(Array.prototype.slice.call(arguments, 0)));
+    }
+    bound.toString = function() {
+        return "bound: " + func;
+    };
+    return bound;
+}
+Element.prototype.removeStyleClass = function(className)
+{
+    this.classList.remove(className);
+}
+Element.prototype.addStyleClass = function(className)
+{
+    this.classList.add(className);
+}
+
+Element.prototype.hasStyleClass = function(className)
+{
+    return this.classList.contains(className);
+}
+
+Element.prototype.positionAt = function(x, y)
+{
+    this.style.left = x + "px";
+    this.style.top = y + "px";
+}
 
