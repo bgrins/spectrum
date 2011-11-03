@@ -142,7 +142,7 @@ License: MIT
 }
  
 /* IE filters do not support multiple color stops.  
-   Generate 8 divs, line them up, and do two color gradients for each.
+   Generate 6 divs, line them up, and do two color gradients for each.
    Yes, really.
  */
  
