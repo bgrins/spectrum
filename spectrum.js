@@ -187,22 +187,22 @@
                 cancel();
                 hide();
             });
+            
             chooseButton.bind("click touchstart", function(e) {
                 e.stopPropagation();
                 e.preventDefault();
                 hide();
             });
+            
             draggable(slider, function(dragX, dragY) {
                 currentHue = (dragY / slideHeight);
-                updateUI();
-                callbacks.move(get());
+                move();
             }, dragStart, dragStop);
             
             draggable(dragger, function(dragX, dragY) {
                 currentSaturation = dragX / dragWidth;
-                currentValue = (dragHeight -     dragY) / dragHeight;
-                updateUI();
-                callbacks.move(get());
+                currentValue = (dragHeight - dragY) / dragHeight;
+                move();
             }, dragStart, dragStop);
             
             if (!!initialColor) {
@@ -271,7 +271,7 @@
             updateUI();
             
             colorOnShow = get();
-            callbacks.show(get())
+            callbacks.show(get());
         }
         
         function cancel() {
@@ -311,10 +311,25 @@
             currentValue = newHsv.v;
             
             updateUI();
+            
+            // set can be called from a default value,  don't want to trigger a change in that case
+            if (isInitialized) {
+                updateOriginalInput();
+            }
         }
         
         function get() {
             return tinycolor({ h: currentHue, s: currentSaturation, v: currentValue });
+        }
+        
+        function move() {
+            updateUI();
+            
+            if (changeOnMove) {
+                updateOriginalInput();
+            }
+            
+            callbacks.move(get());
         }
         
         function updateUI() {
@@ -334,11 +349,6 @@
             // Update the text entry input as it changes happen
             if (isInput) {
                 textInput.val(realHex);
-            }
-            
-            // Update the original input only if we want this behavior and this is not the initial set
-            if (isInitialized && changeOnMove) {
-                updateOriginalInput();
             }
             
             if (showPallet) {
