@@ -140,7 +140,7 @@
             previewElement = replacer.find(".sp-preview"),
             initialColor = opts.color || (isInput && boundElement.val()),
             colorOnShow = false,
-            hasOpened = false;
+            isInitialized = false;
 
         function initialize() {
             
@@ -220,6 +220,8 @@
                 set($(this).css("background-color"));
                 e.stopPropagation();
             });
+            
+            isInitialized = true;
         }
         
         function setPallet(p) {
@@ -255,13 +257,7 @@
         
         function show() {
             if (visible) { return; }
-            
-
             if (callbacks.beforeShow(get()) === false) return;
-            
-            if (!hasOpened) {
-                hasOpened = true;
-            }
             
             hideAll();
             
@@ -326,8 +322,7 @@
         
             updateHelperLocations();
             
-            // Update dragger background color ("flat" because gradients take care of saturation
-            // and value).
+            // Update dragger background color (gradients take care of saturation and value).
             var flatColor = tinycolor({ h: currentHue, s: "1.0", v: "1.0"});
             dragger.css("background-color", flatColor.toHexString());
             
@@ -337,15 +332,16 @@
             // Update the replaced elements background color (with actual selected color)
             previewElement.css("background-color", realHex);
             
-            // Update the input as it changes happen
+            // Update the text entry input as it changes happen
             if (isInput) {
                 textInput.val(realHex);
             }
             
-            if (hasOpened && changeOnMove) {
+            // Update the original input only if we want this behavior and this is not the initial set
+            if (isInitialized && changeOnMove) {
                 updateOriginalInput();
             }
-
+            
             if (showPallet) {
                 drawPallet(palletLookup[realHex]);
             }
@@ -377,7 +373,6 @@
             slideHelper.css({
                 "top": slideY - slideHelperHeight
             });
-        
         }
         
         function updateOriginalInput() {
@@ -443,7 +438,6 @@
             Math.min(offset.top, ((offset.top + dpHeight > viewHeight && viewHeight > dpHeight) ?
             Math.abs(dpHeight + inputHeight - extraY) : extraY)  );
 
-        
         return offset;
     }
     
