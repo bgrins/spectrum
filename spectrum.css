@@ -103,23 +103,23 @@ License: MIT
 }
 
 .sp-pallet { 
-	margin:3px 0; 
-	padding: 0;
+    margin:3px 0; 
+    padding: 0;
 }
 .sp-pallet span {
-	display: block;
-	float:left;
-	width: 30px;
-	height: 15px; 
-	margin: 3px;
-	cursor: pointer;
-	border:solid 2px transparent;
+    display: block;
+    float:left;
+    width: 30px;
+    height: 15px; 
+    margin: 3px;
+    cursor: pointer;
+    border:solid 2px transparent;
 }
 .sp-pallet span:hover, .sp-pallet span.sp-pallet-active {
     border-color: orange;
 }  
 .sp-pallet-disabled .sp-pallet { 
-	display: none; 
+    display: none; 
 }
 
 /* Gradients for hue, saturation and value instead of images.  Not pretty... but it works */
@@ -234,7 +234,7 @@ License: MIT
    border-radius: 3px;
 }
 .sp-small .sp-pallet span {
-	width: 16px;
+    width: 16px;
 }
 
 /* Dark theme */
