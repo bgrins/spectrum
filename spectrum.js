@@ -299,6 +299,7 @@
             pallet.push(realColor.toHexString());
             setPallet(pallet);
             
+            // Change hasn't been called yet, so call it now that the picker is hiding
             if (!changeOnMove) {
                 updateOriginalInput();
             }
