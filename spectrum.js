@@ -260,7 +260,6 @@
             if (callbacks.beforeShow(get()) === false) return;
             
             hideAll();
-            
             visible = true;
             
             $(doc).bind("click touchstart", hide);
@@ -295,7 +294,7 @@
             pallet.push(realColor.toHexString());
             setPallet(pallet);
             
-            // Change hasn't been called yet, so call it now that the picker is hiding
+            // Change hasn't been called yet, so call it now that the picker has closed
             if (!changeOnMove) {
                 updateOriginalInput();
             }
