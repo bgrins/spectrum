@@ -9,6 +9,7 @@
         color: false,
         flat: false,
         showInput: false,
+        showButtons: false,
         changeOnMove: true,
         beforeShow: noop,
         move: noop,
@@ -149,6 +150,7 @@
     	    
     	    container.toggleClass("sp-flat", flat);
     	    container.toggleClass("sp-input-disabled", !opts.showInput);
+    	    container.toggleClass("sp-buttons-disabled", !opts.showButtons);
     	    container.toggleClass("sp-pallet-disabled", !showPallet);
     	    
     	    if (shouldReplace) {

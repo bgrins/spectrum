@@ -119,6 +119,7 @@ $(".basic").spectrum();
 $("#picker").spectrum({
 	color: string,
 	showInput: (true|<b>false</b>),
+	showButtons: (true|<b>false</b>),
 	showPallet: (true|<b>false</b>),
 	pallet: [color, color, ...],
 	flat: (true|<b>false</b>),
@@ -178,6 +179,33 @@ $("#showInput").spectrum({
 </pre>
 		<div class='example'>
 		    <input type='text' name='showInput' id='showInput' />
+		</div>
+		
+		<h3>Show Buttons</h3>
+		
+		<p>You can add buttons to indicate a way to exit the picker.
+		
+<pre class='prettyprint'>
+$("#showButtons").spectrum({
+	showButtons: true
+});
+</pre>
+		<div class='example'>
+		    <input type='text' name='showButtons' id='showButtons' />
+		</div>
+		
+		<h3>Show Input AND Buttons</h3>
+		
+		<p>You can show both the input and the buttons, which will shrink the input.
+		
+<pre class='prettyprint'>
+$("#showInputAndButtons").spectrum({
+	showInput: true,
+	showButtons: true
+});
+</pre>
+		<div class='example'>
+		    <input type='text' name='showInputAndButtons' id='showInputAndButtons' />
 		</div>
 		
 		<h3>Show Pallet</h3>
@@ -362,6 +390,31 @@ $("#flat").spectrum({
 
 $("#showInput").spectrum({
     color: "#dd33dd",
+    showInput: true,
+    change: updateBorders,
+    show: function() {
+       
+    },
+    hide: function() {
+       
+    } 
+});
+
+$("#showButtons").spectrum({
+    color: "#dd33dd",
+    showButtons: true,
+    change: updateBorders,
+    show: function() {
+       
+    },
+    hide: function() {
+       
+    } 
+});
+
+$("#showInputAndButtons").spectrum({
+    color: "#dd33dd",
+    showButtons: true,
     showInput: true,
     change: updateBorders,
     show: function() {

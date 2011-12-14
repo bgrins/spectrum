@@ -84,7 +84,8 @@ License: MIT
 .sp-show-small, .sp-small .sp-hide-small { display:none; }
 .sp-small .sp-show-small { display:inherit; }
 
-.sp-container.sp-input-disabled .sp-input-container,
+.sp-container.sp-input-disabled .sp-input-container input,
+.sp-container.sp-buttons-disabled .sp-input-container div,
 .sp-container.sp-flat .sp-input-container div {
     display:none;
 }
@@ -93,7 +94,13 @@ License: MIT
 }
 .sp-input-container div { float:right; }
 .sp-input:focus { border: 1px solid orange; }
-.sp-container.sp-flat .sp-input { width: 100%; padding:0; text-align: center; }
+
+.sp-container.sp-flat .sp-input,
+.sp-container.sp-buttons-disabled .sp-input { 
+    width: 100%; 
+    padding:0; 
+    text-align: center; 
+}
 
 .sp-pallet { 
 	margin:3px 0; 
