@@ -24,10 +24,10 @@
     spectrums = [],
     IE = $.browser.msie,
     replaceInput = [
-    	"<div class='sp-replacer sp-cf'>",
-    		"<div class='sp-preview'></div>",
-    		"<div class='sp-dd'>&#9660;</div>",
-    	"</div>"
+        "<div class='sp-replacer sp-cf'>",
+            "<div class='sp-preview'></div>",
+            "<div class='sp-dd'>&#9660;</div>",
+        "</div>"
     ].join(''),
     markup = (function() {
         
@@ -72,12 +72,12 @@
         ].join("");
     })(),
     palletTemplate = function(p, active) {
-    	var html = [];
-    	for (var i = 0; i < p.length; i++) {
-    		var c = i == active ? " class='sp-pallet-active' " : "";
-    		html.push('<span style="background-color:' + tinycolor(p[i]).toHexString() + ';"' + c + '></span>');
-    	}
-    	return html.join('');
+        var html = [];
+        for (var i = 0; i < p.length; i++) {
+            var c = i == active ? " class='sp-pallet-active' " : "";
+            html.push('<span style="background-color:' + tinycolor(p[i]).toHexString() + ';"' + c + '></span>');
+        }
+        return html.join('');
     };
     
     function hideAll() {
@@ -97,7 +97,7 @@
         
         return opts;
     }
-	
+    
     function spectrum(element, o) {
         
         var opts = instanceOptions(o, element),
@@ -123,7 +123,7 @@
         var doc = element.ownerDocument,
             body = doc.body, 
             boundElement = $(element),
-        	container = $(markup, doc).addClass(theme),
+            container = $(markup, doc).addClass(theme),
             dragger = container.find(".sp-color"),
             dragHelper = container.find(".sp-dragger"),
             slider = container.find(".sp-hue"),
@@ -142,44 +142,44 @@
             colorOnShow = false,
             hasOpened = false;
 
-		function initialize() {
-			
-    	    if (IE) {
-    	        container.find("*:not(input)").attr("unselectable", "on");
-    	    }   
-    	    
-    	    container.toggleClass("sp-flat", flat);
-    	    container.toggleClass("sp-input-disabled", !opts.showInput);
-    	    container.toggleClass("sp-buttons-disabled", !opts.showButtons);
-    	    container.toggleClass("sp-pallet-disabled", !showPallet);
-    	    
-    	    if (shouldReplace) {
-    	        boundElement.hide().after(replacer);
-    	    }
-    	    
-        	if (flat) {
-            	boundElement.after(container).hide();
+        function initialize() {
+            
+            if (IE) {
+                container.find("*:not(input)").attr("unselectable", "on");
+            }   
+            
+            container.toggleClass("sp-flat", flat);
+            container.toggleClass("sp-input-disabled", !opts.showInput);
+            container.toggleClass("sp-buttons-disabled", !opts.showButtons);
+            container.toggleClass("sp-pallet-disabled", !showPallet);
+            
+            if (shouldReplace) {
+                boundElement.hide().after(replacer);
             }
-        	else {
-        	    $(body).append(container.hide());
-        	}
-    	    
-    	    offsetElement.bind("click touchstart", function(e) {
-    	        toggle();
-    	        
-    	        e.stopPropagation();
-    	        
-    	        if (!$(e.target).is("input")) {
-    	        	e.preventDefault();
-    	        }
-    	    });
-    	    
-    	    // Prevent clicks from bubbling up to document.  This would cause it to be hidden.
-    	    container.click(stopPropagation);
-    	    
-    	    // Handle user typed input
-    	    textInput.change(setFromTextInput);
-    	    textInput.keydown(function(e) { if (e.keyCode == 13) { setFromTextInput(); } } );
+            
+            if (flat) {
+                boundElement.after(container).hide();
+            }
+            else {
+                $(body).append(container.hide());
+            }
+            
+            offsetElement.bind("click touchstart", function(e) {
+                toggle();
+                
+                e.stopPropagation();
+                
+                if (!$(e.target).is("input")) {
+                    e.preventDefault();
+                }
+            });
+            
+            // Prevent clicks from bubbling up to document.  This would cause it to be hidden.
+            container.click(stopPropagation);
+            
+            // Handle user typed input
+            textInput.change(setFromTextInput);
+            textInput.keydown(function(e) { if (e.keyCode == 13) { setFromTextInput(); } } );
 
             cancelButton.bind("click touchstart", function(e) {
                 e.stopPropagation();
@@ -192,65 +192,65 @@
                 e.preventDefault();
                 hide();
             });
-    	    draggable(slider, function(dragX, dragY) {
-    	        currentHue = (dragY / slideHeight);
-    	        updateUI();
+            draggable(slider, function(dragX, dragY) {
+                currentHue = (dragY / slideHeight);
+                updateUI();
                 callbacks.move(get());
-    	    }, dragStart, dragStop);
-    	    
-    	    draggable(dragger, function(dragX, dragY) {
-    	        currentSaturation = dragX / dragWidth;
-    	        currentValue = (dragHeight -     dragY) / dragHeight;
-    	        updateUI();
+            }, dragStart, dragStop);
+            
+            draggable(dragger, function(dragX, dragY) {
+                currentSaturation = dragX / dragWidth;
+                currentValue = (dragHeight -     dragY) / dragHeight;
+                updateUI();
                 callbacks.move(get());
-    	    }, dragStart, dragStop);
-    	    
-        	if (!!initialColor) {
-        	    set(initialColor);
-        	    pallet.push(initialColor);
-        	}
-        	
-        	setPallet(pallet);
-        	
-        	if (flat) {
-        	    show();
-        	}
-        	
-        	palletContainer.delegate("span", "click touchstart", function(e) {
+            }, dragStart, dragStop);
+            
+            if (!!initialColor) {
+                set(initialColor);
+                pallet.push(initialColor);
+            }
+            
+            setPallet(pallet);
+            
+            if (flat) {
+                show();
+            }
+            
+            palletContainer.delegate("span", "click touchstart", function(e) {
                 set($(this).css("background-color"));
                 e.stopPropagation();
-        	});
-		}
-		
-		function setPallet(p) {
-        	if (showPallet) {
-        		var unique = [];
-				palletLookup = { };
-				for (var i = 0; i < p.length; i++) {
-					var hex = tinycolor(p[i]).toHexString();	
-					if (!palletLookup.hasOwnProperty(hex)) {
-						palletLookup[hex] = unique.push(p[i]) - 1;
-					}
-				}
-				pallet = unique.slice(0, opts.maxPalletSize);
-				drawPallet();
-        	}
-		}
-		function drawPallet(active) {
-			palletContainer.html(palletTemplate(pallet, active));
-		}
-		function dragStart() {
-		  container.addClass(draggingClass);
-		}
-		function dragStop() {
-		  container.removeClass(draggingClass);
-		}
+            });
+        }
+        
+        function setPallet(p) {
+            if (showPallet) {
+                var unique = [];
+                palletLookup = { };
+                for (var i = 0; i < p.length; i++) {
+                    var hex = tinycolor(p[i]).toHexString();    
+                    if (!palletLookup.hasOwnProperty(hex)) {
+                        palletLookup[hex] = unique.push(p[i]) - 1;
+                    }
+                }
+                pallet = unique.slice(0, opts.maxPalletSize);
+                drawPallet();
+            }
+        }
+        function drawPallet(active) {
+            palletContainer.html(palletTemplate(pallet, active));
+        }
+        function dragStart() {
+          container.addClass(draggingClass);
+        }
+        function dragStop() {
+          container.removeClass(draggingClass);
+        }
         function setFromTextInput() {
-        	set(textInput.val());
+            set(textInput.val());
         }
         
         function toggle() {
-    		(visible) ? hide() : show();
+            (visible) ? hide() : show();
         }
         
         function show() {
@@ -260,7 +260,7 @@
             if (callbacks.beforeShow(get()) === false) return;
             
             if (!hasOpened) {
-            	hasOpened = true;
+                hasOpened = true;
             }
             
             hideAll();
@@ -290,19 +290,19 @@
             $(doc).unbind("click touchstart", hide);
             $(window).unbind("resize", resize);
             
-           	replacer.removeClass("sp-active");
+            replacer.removeClass("sp-active");
             container.hide();
             
             var realColor = get();
             
             // Update the pallet with the current color
-        	pallet.push(realColor.toHexString());
-        	setPallet(pallet);
-        	
-        	if (!changeOnMove) {
-            	updateOriginalInput();
-        	}
-        	
+            pallet.push(realColor.toHexString());
+            setPallet(pallet);
+            
+            if (!changeOnMove) {
+                updateOriginalInput();
+            }
+            
             callbacks.hide(realColor);
         }
         
@@ -331,7 +331,7 @@
             dragger.css("background-color", flatColor.toHexString());
             
             var realColor = get(),
-            	realHex = realColor.toHexString();
+                realHex = realColor.toHexString();
             
             // Update the replaced elements background color (with actual selected color)
             previewElement.css("background-color", realHex);
@@ -342,12 +342,12 @@
             }
             
             if (hasOpened && changeOnMove) {
-            	updateOriginalInput();
+                updateOriginalInput();
             }
 
-			if (showPallet) {
-				drawPallet(palletLookup[realHex]);
-			}
+            if (showPallet) {
+                drawPallet(palletLookup[realHex]);
+            }
         }
         
         function updateHelperLocations() {
@@ -381,11 +381,11 @@
         
         function updateOriginalInput() {
             var color = get();
-        	if (isInput) {
-        		boundElement.val(color.toHexString());
-        	}
-        	
-        	callbacks.change(color);
+            if (isInput) {
+                boundElement.val(color.toHexString());
+            }
+            
+            callbacks.change(color);
         }
         
         function reflow() {
@@ -397,7 +397,7 @@
             slideHelperHelperHeight = slideHelper.height();
             
             if (!flat) {
-            	container.offset(getOffset(container, offsetElement));
+                container.offset(getOffset(container, offsetElement));
             }
             
             updateHelperLocations();
@@ -416,39 +416,39 @@
         
         return  spect;
     }
-	
+    
     /**
      * checkOffset - get the offset below/above and left/right element depending on screen position
      * Thanks https://github.com/jquery/jquery-ui/blob/master/ui/jquery.ui.datepicker.js
      */
     function getOffset(picker, input) {
         var extraY = 6;
-		var dpWidth = picker.outerWidth();
-		var dpHeight = picker.outerHeight();
-		var inputWidth = input.outerWidth();
-		var inputHeight =  input.outerHeight();
-		var doc = picker[0].ownerDocument;
-		var docElem = doc.documentElement;
-		var viewWidth = docElem.clientWidth + $(doc).scrollLeft();
-		var viewHeight = docElem.clientHeight + $(doc).scrollTop();
-		var offset = input.offset();
-		offset.top += inputHeight;
-		
-		offset.left -= 
-			Math.min(offset.left, (offset.left + dpWidth > viewWidth && viewWidth > dpWidth) ?
-			Math.abs(offset.left + dpWidth - viewWidth) : 0);
-		
-		offset.top -= 
-			Math.min(offset.top, ((offset.top + dpHeight > viewHeight && viewHeight > dpHeight) ?
-			Math.abs(dpHeight + inputHeight - extraY) : extraY)  );
+        var dpWidth = picker.outerWidth();
+        var dpHeight = picker.outerHeight();
+        var inputWidth = input.outerWidth();
+        var inputHeight =  input.outerHeight();
+        var doc = picker[0].ownerDocument;
+        var docElem = doc.documentElement;
+        var viewWidth = docElem.clientWidth + $(doc).scrollLeft();
+        var viewHeight = docElem.clientHeight + $(doc).scrollTop();
+        var offset = input.offset();
+        offset.top += inputHeight;
+        
+        offset.left -= 
+            Math.min(offset.left, (offset.left + dpWidth > viewWidth && viewWidth > dpWidth) ?
+            Math.abs(offset.left + dpWidth - viewWidth) : 0);
+        
+        offset.top -= 
+            Math.min(offset.top, ((offset.top + dpHeight > viewHeight && viewHeight > dpHeight) ?
+            Math.abs(dpHeight + inputHeight - extraY) : extraY)  );
 
         
-		return offset;
-	}
-	
-	/** 
-	 * noop - do nothing
-	 */
+        return offset;
+    }
+    
+    /** 
+     * noop - do nothing
+     */
     function noop() { 
     
     }
@@ -603,9 +603,9 @@
     fnspectrum.draggable = draggable;
     
     $(function() {
-    	if (fnspectrum.load) {
-    		$("input[type=spectrum]").spectrum(fnspectrum.loadOpts);
-    	}
+        if (fnspectrum.load) {
+            $("input[type=spectrum]").spectrum(fnspectrum.loadOpts);
+        }
     });
     
 })(this, jQuery);
