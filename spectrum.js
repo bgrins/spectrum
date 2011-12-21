@@ -242,7 +242,10 @@
             palletContainer.html(palletTemplate(pallet, active));
         }
         function dragStart() {
-          container.addClass(draggingClass);
+            if (dragHeight === 0 || dragWidth === 0 || slideHeight === 0) {
+                reflow();   
+            }
+            container.addClass(draggingClass);
         }
         function dragStop() {
           container.removeClass(draggingClass);
