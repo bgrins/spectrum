@@ -285,7 +285,7 @@ $("#picker").spectrum({
         <p>Called as the original input changes.  This may happen only once it is closed, if <code>changeOnMove</code> is set to false</p>
 <pre class='prettyprint'>
 change: function(color) {               
-    color.toHexCss(); // #ff0000
+    color.toHexString(); // #ff0000
 }
 </pre>
         <h3>move</h3>
@@ -293,7 +293,7 @@ change: function(color) {
         <p>Called as the user moves around within the colorpicker</p>
 <pre class='prettyprint'>
 move: function(color) {             
-    color.toHexCss(); // #ff0000
+    color.toHexString(); // #ff0000
 }
 </pre>
         <h3>hide</h3>
@@ -302,7 +302,7 @@ move: function(color) {
 
 <pre class='prettyprint'>
 hide: function(color) {             
-    color.toHexCss(); // #ff0000
+    color.toHexString(); // #ff0000
 }
 </pre>
         <h3>show</h3>
@@ -311,7 +311,7 @@ hide: function(color) {
         
 <pre class='prettyprint'>
 show: function(color) {             
-    color.toHexCss(); // #ff0000
+    color.toHexString(); // #ff0000
 }
 </pre>
         <h3>beforeShow</h3>
