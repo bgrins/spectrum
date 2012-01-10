@@ -584,7 +584,7 @@
      * Define a jQuery plugin
      */
     var dataID = "spectrum.id";
-    var fnspectrum = $.fn.spectrum = function(opts, extra) {
+	$.fn.spectrum = function(opts, extra) {
         if (typeof opts == "string") {
             if (opts == "get") {
                 return spectrums[this.eq(0).data(dataID)].get();
@@ -605,13 +605,13 @@
         }); 
     };
     
-    fnspectrum.load = true;
-    fnspectrum.loadOpts = { };
-    fnspectrum.draggable = draggable;
+    $.fn.spectrum.load = true;
+    $.fn.spectrum.loadOpts = { };
+    $.fn.spectrum.draggable = draggable;
     
     $(function() {
-        if (fnspectrum.load) {
-            $("input[type=spectrum]").spectrum(fnspectrum.loadOpts);
+        if ($.fn.spectrum.load) {
+            $("input[type=spectrum]").spectrum($.fn.spectrum.loadOpts);
         }
     });
     
