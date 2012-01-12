@@ -122,8 +122,8 @@ $("#picker").spectrum({
     color: string,
     showInput: (true|<b>false</b>),
     showButtons: (true|<b>false</b>),
-    showPallet: (true|<b>false</b>),
-    pallet: [color, color, ...],
+    showPalette: (true|<b>false</b>),
+    palette: [color, color, ...],
     flat: (true|<b>false</b>),
     changeOnMove: (<b>true</b>|false)
 });
@@ -210,20 +210,20 @@ $("#showInputAndButtons").spectrum({
             <input type='text' name='showInputAndButtons' id='showInputAndButtons' />
         </div>
         
-        <h3>Show Pallet</h3>
-        <p>Spectrum can show a pallet below the colorpicker to make it convenient for users to choose from frequently or recently used colors.  When the colorpicker is closed, the current color will be added to the pallet if it isn't there already.  Check it out here: </p>
+        <h3>Show Palette</h3>
+        <p>Spectrum can show a palette below the colorpicker to make it convenient for users to choose from frequently or recently used colors.  When the colorpicker is closed, the current color will be added to the palette if it isn't there already.  Check it out here: </p>
         
 <pre class='prettyprint'>
-$("#showPallet").spectrum({
-    showPallet: true,
-    pallet: [
+$("#showPalette").spectrum({
+    showPalette: true,
+    palette: [
         'black', 'white', 'blanchedalmond', 
         'rgb(255, 128, 0);', 'hsv 100 70 50'
     ]
 });
 </pre>
         <div class='example'>
-                <input type='text' name='showPallet' id='showPallet' value='lightblue' />
+                <input type='text' name='showPalette' id='showPalette' value='lightblue' />
         </div>
         
         
@@ -370,8 +370,8 @@ $("#pick1").spectrum({
        
     },
     showInput: true,
-    showPallet: true,
-    pallet: ['white', '#306', '#c5c88d', '#ac5c5c', '#344660']
+    showPalette: true,
+    palette: ['white', '#306', '#c5c88d', '#ac5c5c', '#344660']
 });
 
 $("#collapsed").spectrum({
@@ -438,9 +438,9 @@ $("#openWithLink").spectrum({
     }
 });
 
-$("#showPallet").spectrum({
-    showPallet: true,
-    pallet: ['black', 'white', 'blanchedalmond', 'rgb(255, 128, 0);', 'hsv 100 70 50'],
+$("#showPalette").spectrum({
+    showPalette: true,
+    palette: ['black', 'white', 'blanchedalmond', 'rgb(255, 128, 0);', 'hsv 100 70 50'],
     change: updateBorders
 });
 

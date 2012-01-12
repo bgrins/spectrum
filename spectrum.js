@@ -16,10 +16,10 @@
         change: noop,
         show: noop,
         hide: noop,
-        showPallet: false,
-        maxPalletSize: 12,
+        showPalette: false,
+        maxPaletteSize: 12,
         theme: 'sp-dark',
-        pallet: ['fff', '000']
+        palette: ['fff', '000']
     },
     spectrums = [],
     IE = $.browser.msie,
@@ -58,7 +58,7 @@
                         "</div>",
                     "</div>",
                 "</div>",
-                "<div class='sp-pallet sp-cf'></div>",
+                "<div class='sp-palette sp-cf'></div>",
                 "<div class='sp-input-container sp-cf'>",
                     "<input class='sp-input' type='text' spellcheck='false'  />",
                     "<div>",
@@ -71,10 +71,10 @@
             "</div>"
         ].join("");
     })(),
-    palletTemplate = function(p, active) {
+    paletteTemplate = function(p, active) {
         var html = [];
         for (var i = 0; i < p.length; i++) {
-            var c = i == active ? " class='sp-pallet-active' " : "";
+            var c = i == active ? " class='sp-palette-active' " : "";
             html.push('<span style="background-color:' + tinycolor(p[i]).toHexString() + ';"' + c + '></span>');
         }
         return html.join('');
@@ -102,7 +102,7 @@
         
         var opts = instanceOptions(o, element),
             flat = opts.flat,
-            showPallet = opts.showPallet,
+            showPalette = opts.showPalette,
             theme = opts.theme,
             callbacks = opts.callbacks,
             resize = throttle(reflow, 10),
@@ -116,9 +116,9 @@
             currentHue = 0,
             currentSaturation = 0,
             currentValue = 0,
-            pallet = opts.pallet.slice(0),
+            palette = opts.palette.slice(0),
             draggingClass = "sp-dragging",
-            palletLookup = { };
+            paletteLookup = { };
         
         var doc = element.ownerDocument,
             body = doc.body, 
@@ -129,7 +129,7 @@
             slider = container.find(".sp-hue"),
             slideHelper = container.find(".sp-slider"),
             textInput = container.find(".sp-input"),
-            palletContainer = container.find(".sp-pallet"),
+            paletteContainer = container.find(".sp-palette"),
             cancelButton = container.find(".sp-cancel"),
             chooseButton = container.find(".sp-choose"),
             isInput = boundElement.is("input"),
@@ -151,7 +151,7 @@
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
-            container.toggleClass("sp-pallet-disabled", !showPallet);
+            container.toggleClass("sp-palette-disabled", !showPalette);
             
             if (shouldReplace) {
                 boundElement.hide().after(replacer);
@@ -207,16 +207,16 @@
             
             if (!!initialColor) {
                 set(initialColor);
-                pallet.push(initialColor);
+                palette.push(initialColor);
             }
             
-            setPallet(pallet);
+            setPalette(palette);
             
             if (flat) {
                 show();
             }
             
-            palletContainer.delegate("span", "click touchstart", function(e) {
+            paletteContainer.delegate("span", "click touchstart", function(e) {
                 set($(this).css("background-color"));
                 e.stopPropagation();
             });
@@ -224,22 +224,22 @@
             isInitialized = true;
         }
         
-        function setPallet(p) {
-            if (showPallet) {
+        function setPalette(p) {
+            if (showPalette) {
                 var unique = [];
-                palletLookup = { };
+                paletteLookup = { };
                 for (var i = 0; i < p.length; i++) {
                     var hex = tinycolor(p[i]).toHexString();    
-                    if (!palletLookup.hasOwnProperty(hex)) {
-                        palletLookup[hex] = unique.push(p[i]) - 1;
+                    if (!paletteLookup.hasOwnProperty(hex)) {
+                        paletteLookup[hex] = unique.push(p[i]) - 1;
                     }
                 }
-                pallet = unique.slice(0, opts.maxPalletSize);
-                drawPallet();
+                palette = unique.slice(0, opts.maxPaletteSize);
+                drawPalette();
             }
         }
-        function drawPallet(active) {
-            palletContainer.html(palletTemplate(pallet, active));
+        function drawPalette(active) {
+            paletteContainer.html(paletteTemplate(palette, active));
         }
         function dragStart() {
             if (dragHeight === 0 || dragWidth === 0 || slideHeight === 0) {
@@ -293,9 +293,9 @@
             
             var realColor = get();
             
-            // Update the pallet with the current color
-            pallet.push(realColor.toHexString());
-            setPallet(pallet);
+            // Update the palette with the current color
+            palette.push(realColor.toHexString());
+            setPalette(palette);
             
             // Change hasn't been called yet, so call it now that the picker has closed
             if (!changeOnMove) {
@@ -354,8 +354,8 @@
                 textInput.val(realHex);
             }
             
-            if (showPallet) {
-                drawPallet(palletLookup[realHex]);
+            if (showPalette) {
+                drawPalette(paletteLookup[realHex]);
             }
         }
         

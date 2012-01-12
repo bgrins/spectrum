@@ -102,11 +102,11 @@ License: MIT
     text-align: center; 
 }
 
-.sp-pallet { 
+.sp-palette { 
     margin:3px 0; 
     padding: 0;
 }
-.sp-pallet span {
+.sp-palette span {
     display: block;
     float:left;
     width: 30px;
@@ -115,10 +115,10 @@ License: MIT
     cursor: pointer;
     border:solid 2px transparent;
 }
-.sp-pallet span:hover, .sp-pallet span.sp-pallet-active {
+.sp-palette span:hover, .sp-palette span.sp-palette-active {
     border-color: orange;
 }  
-.sp-pallet-disabled .sp-pallet { 
+.sp-palette-disabled .sp-palette { 
     display: none; 
 }
 
@@ -233,7 +233,7 @@ License: MIT
    background:transparent;
    border-radius: 3px;
 }
-.sp-small .sp-pallet span {
+.sp-small .sp-palette span {
     width: 16px;
 }
 
