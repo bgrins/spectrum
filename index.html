@@ -123,6 +123,7 @@ $("#picker").spectrum({
     showInput: (true|<b>false</b>),
     showButtons: (true|<b>false</b>),
     showPalette: (true|<b>false</b>),
+    showInitial: (true|<b>false</b>),
     palette: [color, color, ...],
     flat: (true|<b>false</b>),
     changeOnMove: (<b>true</b>|false)
@@ -224,6 +225,18 @@ $("#showPalette").spectrum({
 </pre>
         <div class='example'>
                 <input type='text' name='showPalette' id='showPalette' value='lightblue' />
+        </div>
+        
+        <h3>Show Initial</h3>
+        <p>Spectrum can show the color that was initially set when opening.  This provides an easy way to click back to what was set when opened.</p>
+        
+<pre class='prettyprint'>
+$("#showInitial").spectrum({
+    showInitial: true
+});
+</pre>
+        <div class='example'>
+                <input type='text' name='showInitial' id='showInitial' value='goldenrod' />
         </div>
         
         
@@ -442,6 +455,10 @@ $("#showPalette").spectrum({
     showPalette: true,
     palette: ['black', 'white', 'blanchedalmond', 'rgb(255, 128, 0);', 'hsv 100 70 50'],
     change: updateBorders
+});
+
+$("#showInitial").spectrum({
+    showInitial: true
 });
 
 $("#changeOnMove").spectrum({ change: updateBorders }).show();

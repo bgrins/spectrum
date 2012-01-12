@@ -82,7 +82,7 @@ License: MIT
 }
 
 .sp-show-small, .sp-small .sp-hide-small { display:none; }
-.sp-small .sp-show-small { display:inherit; }
+.sp-small .sp-show-small { display: inline-block; }
 
 .sp-container.sp-input-disabled .sp-input-container input,
 .sp-container.sp-buttons-disabled .sp-input-container div,
@@ -102,11 +102,11 @@ License: MIT
     text-align: center; 
 }
 
-.sp-palette { 
+.sp-thumb{ 
     margin:3px 0; 
     padding: 0;
 }
-.sp-palette span {
+.sp-thumb span {
     display: block;
     float:left;
     width: 30px;
@@ -115,10 +115,17 @@ License: MIT
     cursor: pointer;
     border:solid 2px transparent;
 }
-.sp-palette span:hover, .sp-palette span.sp-palette-active {
+.sp-thumb span:hover, .sp-thumb span.sp-thumb-active {
     border-color: orange;
 }  
 .sp-palette-disabled .sp-palette { 
+    display: none; 
+}
+.sp-initial span {
+    width: 110px;
+    height: 10px;
+}
+.sp-initial-disabled .sp-initial { 
     display: none; 
 }
 

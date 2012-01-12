@@ -11,13 +11,15 @@
         showInput: false,
         showButtons: false,
         changeOnMove: true,
+        showInitial: false,
         beforeShow: noop,
         move: noop,
         change: noop,
         show: noop,
         hide: noop,
         showPalette: false,
-        maxPaletteSize: 12,
+        addSelectionToPalette: true,
+        maxPaletteSize: 6,
         theme: 'sp-dark',
         palette: ['fff', '000']
     },
@@ -58,7 +60,8 @@
                         "</div>",
                     "</div>",
                 "</div>",
-                "<div class='sp-palette sp-cf'></div>",
+                "<div class='sp-initial sp-thumb sp-cf'></div>",
+                "<div class='sp-palette sp-thumb sp-cf'></div>",
                 "<div class='sp-input-container sp-cf'>",
                     "<input class='sp-input' type='text' spellcheck='false'  />",
                     "<div>",
@@ -74,7 +77,7 @@
     paletteTemplate = function(p, active) {
         var html = [];
         for (var i = 0; i < p.length; i++) {
-            var c = i == active ? " class='sp-palette-active' " : "";
+            var c = i == active ? " class='sp-thumb-active' " : "";
             html.push('<span style="background-color:' + tinycolor(p[i]).toHexString() + ';"' + c + '></span>');
         }
         return html.join('');
@@ -103,6 +106,8 @@
         var opts = instanceOptions(o, element),
             flat = opts.flat,
             showPalette = opts.showPalette,
+            showInitial = opts.showInitial && !flat,
+            addSelectionToPalette = opts.addSelectionToPalette,
             theme = opts.theme,
             callbacks = opts.callbacks,
             resize = throttle(reflow, 10),
@@ -130,6 +135,7 @@
             slideHelper = container.find(".sp-slider"),
             textInput = container.find(".sp-input"),
             paletteContainer = container.find(".sp-palette"),
+            initialColorContainer = container.find(".sp-initial"),
             cancelButton = container.find(".sp-cancel"),
             chooseButton = container.find(".sp-choose"),
             isInput = boundElement.is("input"),
@@ -152,6 +158,7 @@
             container.toggleClass("sp-input-disabled", !opts.showInput);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
             container.toggleClass("sp-palette-disabled", !showPalette);
+            container.toggleClass("sp-show-initial", !showPalette);
             
             if (shouldReplace) {
                 boundElement.hide().after(replacer);
@@ -207,7 +214,9 @@
             
             if (!!initialColor) {
                 set(initialColor);
-                palette.push(initialColor);
+                if (addSelectionToPalette) {
+                    palette.push(initialColor);
+                }
             }
             
             setPalette(palette);
@@ -216,10 +225,12 @@
                 show();
             }
             
-            paletteContainer.delegate("span", "click touchstart", function(e) {
+            function palletElementClick(e) {
                 set($(this).css("background-color"));
                 e.stopPropagation();
-            });
+            }
+            paletteContainer.delegate("span", "click touchstart", palletElementClick);
+            initialColorContainer.delegate("span", "click touchstart", palletElementClick);
             
             isInitialized = true;
         }
@@ -240,6 +251,17 @@
         }
         function drawPalette(active) {
             paletteContainer.html(paletteTemplate(palette, active));
+        }
+        function drawInitial() {
+            if (showInitial) {
+                var initial = colorOnShow;
+                var current = get();
+                var activeIndex = 0;
+                if (!tinycolor.equals(initial, current)) {
+                    activeIndex = 1;
+                }
+                initialColorContainer.html(paletteTemplate([initial, current], activeIndex));
+            }
         }
         function dragStart() {
             if (dragHeight === 0 || dragWidth === 0 || slideHeight === 0) {
@@ -274,6 +296,7 @@
             updateUI();
             
             colorOnShow = get();
+            drawInitial();
             callbacks.show(get());
         }
         
@@ -294,8 +317,10 @@
             var realColor = get();
             
             // Update the palette with the current color
-            palette.push(realColor.toHexString());
-            setPalette(palette);
+            if (addSelectionToPalette) {
+                palette.push(realColor.toHexString());
+                setPalette(palette);
+            }
             
             // Change hasn't been called yet, so call it now that the picker has closed
             if (!changeOnMove) {
@@ -357,6 +382,8 @@
             if (showPalette) {
                 drawPalette(paletteLookup[realHex]);
             }
+            
+            drawInitial();
         }
         
         function updateHelperLocations() {
