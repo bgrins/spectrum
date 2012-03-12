@@ -18,6 +18,7 @@
         show: noop,
         hide: noop,
         showPalette: false,
+        showPaletteOnly: false,
         addSelectionToPalette: true,
         maxPaletteSize: 6,
         theme: 'sp-dark',
@@ -107,7 +108,8 @@
         
         var opts = instanceOptions(o, element),
             flat = opts.flat,
-            showPalette = opts.showPalette,
+            showPaletteOnly = opts.showPaletteOnly,
+            showPalette = opts.showPalette || showPaletteOnly,
             showInitial = opts.showInitial && !flat,
             addSelectionToPalette = opts.addSelectionToPalette,
             theme = opts.theme,
@@ -160,6 +162,7 @@
             container.toggleClass("sp-input-disabled", !opts.showInput);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
             container.toggleClass("sp-palette-disabled", !showPalette);
+            container.toggleClass("sp-palette-only", showPaletteOnly);
             container.toggleClass("sp-show-initial", !showPalette);
             
             if (shouldReplace) {
@@ -634,18 +637,16 @@
                     if (opts == "show") { spect.show(); }
                     if (opts == "hide") { spect.hide(); }
                     if (opts == "set")  { spect.set(extra); }
-                    if (opts == "destroy")  { spect.destroy(); }
+                    if (opts == "destroy")  { 
+                        spect.destroy();
+                        $(this).removeData(dataID);
+                    }
                 }
             });
         }
         
         // Initializing a new one
-        return this.each(function() {
-            var existing = spectrums[$(this).data(dataID)];
-            if (existing) {
-                existing.destroy();
-            }
-            
+        return this.spectrum("destroy").each(function() {
             var spect = spectrum(this, opts);
             $(this).data(dataID, spect.id);
         }); 
@@ -657,7 +658,12 @@
     
     $(function() {
         if ($.fn.spectrum.load) {
-            $("input[type=spectrum]").spectrum($.fn.spectrum.loadOpts);
+            $("input[type=spectrum]").each(function() {
+                var existing = spectrums[$(this).data(dataID)];
+                if (!existing) {
+                    $(this).spectrum($.fn.spectrum.loadOpts);
+                }
+            });
         }
     });
     
