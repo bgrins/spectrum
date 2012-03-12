@@ -1,141 +1,171 @@
-var WebInspector = { };
+// http://trac.webkit.org/browser/trunk/Source/WebCore/inspector/front-end/Spectrum.js
 
-WebInspector.Spectrum = function(swatch, rgb)
+/*
+ * Copyright (C) 2011 Brian Grinstead All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1.  Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ * 2.  Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in the
+ *     documentation and/or other materials provided with the distribution.
+ * 3.  Neither the name of Apple Computer, Inc. ("Apple") nor the names of
+ *     its contributors may be used to endorse or promote products derived
+ *     from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY APPLE AND ITS CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL APPLE OR ITS CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/**
+ * @constructor
+ * @extends {WebInspector.Object}
+ */
+WebInspector.Spectrum = function()
 {
-    this.document = swatch.ownerDocument;
-    this.swatch = swatch;
-    this.element = this.document.createElement('div');
-    this.element.className = "sp-container";
-    this.element.innerHTML = WebInspector.Spectrum.markup;
-    this.element.addEventListener("click", WebInspector.Spectrum.stopPropagation, false);
-    
-    this.swatchInner = this.document.createElement('span');
-    this.swatchInner.className = 'swatch-inner';
-    this.swatch.appendChild(this.swatchInner);
-    this.swatch.parentNode.insertBefore( this.element, swatch.nextSibling );
-    
-    this.slider = this.element.querySelectorAll(".sp-hue")[0];
-    this.slideHelper = this.element.querySelectorAll(".sp-slider")[0];
-    this.dragger = this.element.querySelectorAll(".sp-color")[0];
-    this.dragHelper = this.element.querySelectorAll(".sp-dragger")[0];
-    this.rangeSlider = this.element.querySelectorAll(".sp-range")[0];
-    
-    WebInspector.Spectrum.draggable(this.slider, hueDrag.bind(this));
-    WebInspector.Spectrum.draggable(this.dragger, colorDrag.bind(this));
-    this.rangeSlider.addEventListener("change", alphaDrag.bind(this), false);
-    
-    if (rgb) {
-        this.rgb = rgb;
-        this.updateUI();
-    }
-    
-    function hueDrag(dragX, dragY) 
+    this._popover = new WebInspector.Popover();
+    this._popover.setCanShrink(false);
+    this._popover.element.addEventListener("mousedown", stopPropagation, false);
+
+    this._containerElement = document.createElement('div');
+    this._containerElement.className = "spectrum-container";
+    this._containerElement.tabIndex = 0;
+    this._containerElement.addEventListener("keydown", this._onKeyDown.bind(this), false);
+
+    var topElement = this._containerElement.createChild("div", "spectrum-top");
+    topElement.createChild("div", "spectrum-fill");
+
+    var topInnerElement = topElement.createChild("div", "spectrum-top-inner fill");
+    this._draggerElement = topInnerElement.createChild("div", "spectrum-color");
+    this._dragHelperElement = this._draggerElement.createChild("div", "spectrum-sat fill").createChild("div", "spectrum-val fill").createChild("div", "spectrum-dragger");
+
+    this._sliderElement = topInnerElement.createChild("div", "spectrum-hue");
+    this.slideHelper = this._sliderElement.createChild("div", "spectrum-slider");
+
+    var rangeContainer = this._containerElement.createChild("div", "spectrum-range-container");
+    var alphaLabel = rangeContainer.createChild("label");
+    alphaLabel.textContent = WebInspector.UIString("\u03B1:");
+
+    this._alphaElement = rangeContainer.createChild("input", "spectrum-range");
+    this._alphaElement.setAttribute("type", "range");
+    this._alphaElement.setAttribute("min", "0");
+    this._alphaElement.setAttribute("max", "100");
+    this._alphaElement.addEventListener("change", alphaDrag.bind(this), false);
+
+    var swatchElement = document.createElement("span");
+    swatchElement.className = "swatch";
+    this._swatchInnerElement = swatchElement.createChild("span", "swatch-inner");
+
+    var displayContainer = this._containerElement.createChild("div");
+    displayContainer.appendChild(swatchElement);
+    this._displayElement = displayContainer.createChild("span", "source-code spectrum-display-value");
+
+    WebInspector.Spectrum.draggable(this._sliderElement, hueDrag.bind(this));
+    WebInspector.Spectrum.draggable(this._draggerElement, colorDrag.bind(this));
+
+    function hueDrag(element, dragX, dragY)
     {
         this.hsv[0] = (dragY / this.slideHeight);
-        
-        this.updateUI();
-        this.onchange();  
+
+        this._onchange();
     }
-    
-    function colorDrag(dragX, dragY) 
+
+    function colorDrag(element, dragX, dragY)
     {
         this.hsv[1] = dragX / this.dragWidth;
         this.hsv[2] = (this.dragHeight - dragY) / this.dragHeight;
-        
-        this.updateUI();
-        this.onchange();
+
+        this._onchange();
     }
-    
-    function alphaDrag() 
+
+    function alphaDrag()
     {
-        this.hsv[3] = this.rangeSlider.value / 100;
-        
-        this.updateUI();
-        this.onchange();
+        this.hsv[3] = this._alphaElement.value / 100;
+
+        this._onchange();
     }
-}
 
-WebInspector.Spectrum.markup = [
-    "<div class='sp-top'>",
-        "<div class='sp-fill'></div>",
-        "<div class='sp-top-inner'>",
-            "<div class='sp-color'>",
-                "<div class='sp-sat'>",
-                    "<div class='sp-val'>",
-                        "<div class='sp-dragger'></div>",
-                    "</div>",
-                "</div>",
-            "</div>",
-            "<div class='sp-hue'>",
-                "<div class='sp-slider'></div>",
-            "</div>",
-        "</div>",
-    "</div>",
-    "<div class='sp-range-container'>",
-        "<input type='range' class='sp-range' min='0' max='100' />",
-    "</div>"
-].join('');
+    this._hideProxy = this.hide.bind(this);
+};
 
-WebInspector.Spectrum.hsvToRgb = function(h, s, v, a) {
+WebInspector.Spectrum.Events = {
+    ColorChanged: "ColorChanged",
+    Hidden: "Hidden"
+};
 
+WebInspector.Spectrum.hsvaToRGBA = function(h, s, v, a)
+{
     var r, g, b;
-    
+
     var i = Math.floor(h * 6);
     var f = h * 6 - i;
     var p = v * (1 - s);
     var q = v * (1 - f * s);
     var t = v * (1 - (1 - f) * s);
-    
+
     switch(i % 6) {
-    case 0: 
-        r = v, g = t, b = p; 
+    case 0:
+        r = v, g = t, b = p;
         break;
-    case 1: 
-        r = q, g = v, b = p; 
+    case 1:
+        r = q, g = v, b = p;
         break;
-    case 2: 
-        r = p, g = v, b = t; 
+    case 2:
+        r = p, g = v, b = t;
         break;
-    case 3: 
-        r = p, g = q, b = v; 
+    case 3:
+        r = p, g = q, b = v;
         break;
-    case 4: 
-        r = t, g = p, b = v; 
+    case 4:
+        r = t, g = p, b = v;
         break;
-    case 5: 
-        r = v, g = p, b = q; 
+    case 5:
+        r = v, g = p, b = q;
         break;
     }
-    
-    return [r * 255, g * 255, b * 255, a];
+
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255), a];
 };
 
-WebInspector.Spectrum.rgbToHsv = function(r, g, b, a) {
-
+WebInspector.Spectrum.rgbaToHSVA = function(r, g, b, a)
+{
     r = r / 255;
     g = g / 255;
     b = b / 255;
-    
-    var max = Math.max(r, g, b), min = Math.min(r, g, b);
-    var h, s, v = max;
+
+    var max = Math.max(r, g, b);
+    var min = Math.min(r, g, b);
+    var h;
+    var s;
+    var v = max;
 
     var d = max - min;
-    s = max == 0 ? 0 : d / max;
+    s = max ? d / max : 0;
 
-    if(max == min) {
-        // achromatic
-        h = 0; 
-    }
-    else {
+    if(max === min) {
+        // Achromatic.
+        h = 0;
+    } else {
         switch(max) {
-        case r: 
-            h = (g - b) / d + (g < b ? 6 : 0); 
+        case r:
+            h = (g - b) / d + (g < b ? 6 : 0);
             break;
-        case g: 
-            h = (b - r) / d + 2; 
+        case g:
+            h = (b - r) / d + 2;
             break;
-        case b: 
-            h = (r - g) / d + 4; 
+        case b:
+            h = (r - g) / d + 4;
             break;
         }
         h /= 6;
@@ -143,264 +173,273 @@ WebInspector.Spectrum.rgbToHsv = function(r, g, b, a) {
     return [h, s, v, a];
 };
 
-WebInspector.Spectrum.stopPropagation = function(e) {
-    e.stopPropagation();
-};
-
-WebInspector.Spectrum.addEvent = function (el, name, cb) {
-    if (typeof name === "object") {
-        for (var i in name) {
-            el.addEventListener(i, name[i], false); 
-        }   
-    }
-    else {
-         el.addEventListener(name, cb, false);   
-    }
-};
-    
- WebInspector.Spectrum.removeEvent = function(el, name, cb) {
-    if (typeof name === "object") {
-        for (var i in name) {
-            el.removeEventListener(i, name[i], false); 
-        }   
-    }
-    else {
-         el.removeEventListener(name, cb, false);   
-    }
-};
-
-
-WebInspector.Spectrum.getOffset = function(el) {
-    var curleft = curtop = 0;
-    if (el.offsetParent) {
-        do {
-            curleft += el.offsetLeft;
-            curtop += el.offsetTop;
-        } while (el = el.offsetParent);
-    }
-    return { left: curleft, top: curtop };
-};
-
+//FIXME: migrate to WebInspector.elementDragStart
+/**
+ * @param {Function=} onmove
+ * @param {Function=} onstart
+ * @param {Function=} onstop
+ */
 WebInspector.Spectrum.draggable = function(element, onmove, onstart, onstop) {
 
-    onmove = onmove || function() { };
-    onstart = onstart || function() { };
-    onstop = onstop || function() { };
-    
-    var doc = element.ownerDocument || document;
-    var dragging = false;
-    var offset = { };
-    var maxHeight = 0;
-    var maxWidth = 0;
-    
-    var duringDragEvents = { };
-    duringDragEvents["selectstart"] = prevent;
-    duringDragEvents["dragstart"] = prevent;
-    duringDragEvents["mousemove"] = move;
-    duringDragEvents["mouseup"] = stop;
+    var doc = document;
+    var dragging;
+    var offset;
+    var scrollOffset;
+    var maxHeight;
+    var maxWidth;
 
-    function prevent(e) 
+    function prevent(e)
     {
         if (e.stopPropagation)
             e.stopPropagation();
-        
+
         if (e.preventDefault)
             e.preventDefault();
-            
-        e.returnValue = false;
     }
-    
-    function move(e) 
+
+    function move(e)
     {
         if (dragging) {
-            
-            var dragX = Math.max(0, Math.min(e.pageX - offset.left, maxWidth));
-            var dragY = Math.max(0, Math.min(e.pageY - offset.top, maxHeight));
-            
-            onmove.apply(element, [dragX, dragY]); 
-        } 
-    }
-    
-    function start(e) 
-    { 
-        var rightclick = (e.which) ? (e.which == 3) : (e.button == 2);
-        
-        if (!rightclick && !dragging) { 
-            if (onstart.apply(element, arguments) !== false) {
-                dragging = true; 
-                maxHeight = element.clientHeight;
-                maxWidth = element.clientWidth;
-                
-                offset = WebInspector.Spectrum.getOffset(element);
-                
-                WebInspector.Spectrum.addEvent(doc, duringDragEvents);
-                
-                prevent(e);
-            }
+            var dragX = Math.max(0, Math.min(e.pageX - offset.left + scrollOffset.left, maxWidth));
+            var dragY = Math.max(0, Math.min(e.pageY - offset.top + scrollOffset.top, maxHeight));
+
+            if (onmove)
+                onmove(element, dragX, dragY);
         }
     }
-    
-    function stop() 
-    { 
-        if (dragging) { 
-            WebInspector.Spectrum.removeEvent(doc, duringDragEvents);
-            onstop.apply(element, arguments); 
+
+    function start(e)
+    {
+        var rightClick = e.which ? (e.which === 3) : (e.button === 2);
+
+        if (!rightClick && !dragging) {
+
+            if (onstart)
+                onstart(element, e)
+
+            dragging = true;
+            maxHeight = element.clientHeight;
+            maxWidth = element.clientWidth;
+
+            scrollOffset = element.scrollOffset();
+            offset = element.totalOffset();
+
+            doc.addEventListener("selectstart", prevent, false);
+            doc.addEventListener("dragstart", prevent, false);
+            doc.addEventListener("mousemove", move, false);
+            doc.addEventListener("mouseup", stop, false);
+
+            move(e);
+            prevent(e);
         }
-        dragging = false; 
     }
-    
-    WebInspector.Spectrum.addEvent(element, "mousedown", start);
+
+    function stop(e)
+    {
+        if (dragging) {
+            doc.removeEventListener("selectstart", prevent, false);
+            doc.removeEventListener("dragstart", prevent, false);
+            doc.removeEventListener("mousemove", move, false);
+            doc.removeEventListener("mouseup", stop, false);
+
+            if (onstop)
+                onstop(element, e);
+        }
+
+        dragging = false;
+    }
+
+    element.addEventListener("mousedown", start, false);
 };
 
 WebInspector.Spectrum.prototype = {
-    set rgb(color)
+    set color(color)
     {
-        this.hsv = WebInspector.Spectrum.rgbToHsv(color[0], color[1], color[2], color[3]);
+        var rgba = (color.rgba || color.rgb).slice(0);
+
+        if (rgba.length === 3)
+            rgba[3] = 1;
+
+        this.hsv = WebInspector.Spectrum.rgbaToHSVA(rgba[0], rgba[1], rgba[2], rgba[3]);
     },
 
-    get rgb()
+    get color()
     {
-        var rgb = WebInspector.Spectrum.hsvToRgb(this.hsv[0], this.hsv[1], this.hsv[2], this.hsv[3]);
-        return [Math.round(rgb[0]), Math.round(rgb[1]), Math.round(rgb[2]), rgb[3]];
-    },
-    
-    get rgbNoSatVal()
-    {
-        var rgb = WebInspector.Spectrum.hsvToRgb(this.hsv[0], 1, 1);
-        return [Math.round(rgb[0]), Math.round(rgb[1]), Math.round(rgb[2]), rgb[3]];
-    },
-    
-    onchange: function() {
-        this._onchange(this.rgb);
-    },
-    
-    _onchange: function() {
-    
+        var rgba = WebInspector.Spectrum.hsvaToRGBA(this.hsv[0], this.hsv[1], this.hsv[2], this.hsv[3]);
+        var color;
+
+        if (rgba[3] === 1)
+            color = WebInspector.Color.fromRGB(rgba[0], rgba[1], rgba[2]);
+        else
+            color = WebInspector.Color.fromRGBA(rgba[0], rgba[1], rgba[2], rgba[3]);
+
+        var colorValue = color.toString(this.outputColorFormat);
+        if (!colorValue)
+            colorValue = color.toString(); // this.outputColorFormat can be invalid for current color (e.g. "nickname").
+        return new WebInspector.Color(colorValue);
     },
 
-    updateHelperLocations: function() {
+    get outputColorFormat()
+    {
+        var cf = WebInspector.StylesSidebarPane.ColorFormat;
+        var format = this._originalFormat;
 
+        if (this.hsv[3] === 1) {
+            // Simplify transparent formats.
+            if (format === cf.RGBA)
+                format = cf.RGB;
+            else if (format === cf.HSLA)
+                format = cf.HSL;
+        } else {
+            // Everything except HSL(A) should be returned as RGBA if transparency is involved.
+            if (format === cf.HSL || format === cf.HSLA)
+                format = cf.HSLA;
+            else
+                format = cf.RGBA;
+        }
+
+        return format;
+    },
+
+    get colorHueOnly()
+    {
+        var rgba = WebInspector.Spectrum.hsvaToRGBA(this.hsv[0], 1, 1, 1);
+        return WebInspector.Color.fromRGBA(rgba[0], rgba[1], rgba[2], rgba[3]);
+    },
+
+    set displayText(text)
+    {
+        this._displayElement.textContent = text;
+    },
+
+    get visible()
+    {
+        return this._popover.visible;
+    },
+
+    _onchange: function()
+    {
+        this._updateUI();
+        this.dispatchEventToListeners(WebInspector.Spectrum.Events.ColorChanged, this.color);
+    },
+
+    _updateHelperLocations: function()
+    {
         var h = this.hsv[0];
         var s = this.hsv[1];
         var v = this.hsv[2];
-        
-        // Where to show the little circle in that displays your current selected color
+
+        // Where to show the little circle that displays your current selected color.
         var dragX = s * this.dragWidth;
         var dragY = this.dragHeight - (v * this.dragHeight);
-        
-        dragX = Math.max(
-            -this.dragHelperHeight, 
-            Math.min(this.dragWidth - this.dragHelperHeight, dragX - this.dragHelperHeight)
-        );
-        dragY = Math.max(
-            -this.dragHelperHeight, 
-            Math.min(this.dragHeight - this.dragHelperHeight, dragY - this.dragHelperHeight)
-        );
-        
-        this.dragHelper.positionAt(dragX, dragY);
-        
-        // Where to show the bar that displays your current selected hue
+
+        dragX = Math.max(-this._dragHelperElementHeight,
+                        Math.min(this.dragWidth - this._dragHelperElementHeight, dragX - this._dragHelperElementHeight));
+        dragY = Math.max(-this._dragHelperElementHeight,
+                        Math.min(this.dragHeight - this._dragHelperElementHeight, dragY - this._dragHelperElementHeight));
+
+        this._dragHelperElement.positionAt(dragX, dragY);
+
+        // Where to show the bar that displays your current selected hue.
         var slideY = (h * this.slideHeight) - this.slideHelperHeight;
         this.slideHelper.style.top = slideY + "px";
-        
-        
-        this.rangeSlider.value = this.hsv[3] * 100;
+
+        this._alphaElement.value = this.hsv[3] * 100;
     },
-    
-    updateUI: function() {
-    
-        this.updateHelperLocations();
-        
-        var rgb = this.rgb;
-        var rgbNoSatVal = this.rgbNoSatVal;
-        
-        var flatColor = "rgb(" + rgbNoSatVal[0] + ", " + rgbNoSatVal[1] + ", " + rgbNoSatVal[2] + ")";
-        var fullColor = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + rgb[3] + ")";
-        
-        this.dragger.style.backgroundColor = flatColor;
-        this.swatchInner.style.backgroundColor = fullColor;
-        
-        this.rangeSlider.value = this.hsv[3] * 100;
-    },
-    
-    toggle: function(e) {
-        if (this.element.hasStyleClass('sp-show')) 
-            this.hide(e);
-        else
-            this.show(e);
-    },
-    
-    show: function(e) {
-    
-        if (e) 
-            e.stopPropagation();
-        
-        this.element.addStyleClass('sp-show');
-        this.swatch.addStyleClass('swatch-active');
-        this.element.positionAt(this.swatch.offsetLeft, this.swatch.offsetTop + this.swatch.clientHeight);
-        
-        this.slideHeight = this.slider.offsetHeight;
-        this.dragWidth = this.dragger.offsetWidth;
-        this.dragHeight = this.dragger.offsetHeight;
-        this.dragHelperHeight = this.dragHelper.clientHeight;
-        this.slideHelperHeight = this.slideHelper.clientHeight;
-        
-        this.document.addEventListener("click", this.hide.bind(this), false);
-        
-        this.updateUI();
-    },
-    
-    hide: function(e) {
-        
-        if (e) 
-            e.stopPropagation();
-        
-        this.element.removeStyleClass('sp-show');
-        this.swatch.removeStyleClass('swatch-active');
-    },
-    
-    addChangeListener: function(listener) {
-        this._onchange = listener;
-    }
-    
-};
 
-
-
-
-
-/* Remove prototypes once moved into WebInspector project (these are pulled from utilities.js) */
-
-Function.prototype.bind = function(thisObject)
-{
-    var func = this;
-    var args = Array.prototype.slice.call(arguments, 1);
-    function bound()
+    _updateUI: function()
     {
-        return func.apply(thisObject, args.concat(Array.prototype.slice.call(arguments, 0)));
+        this._updateHelperLocations();
+
+        var rgb = (this.color.rgba || this.color.rgb).slice(0);
+
+        if (rgb.length === 3)
+            rgb[3] = 1;
+
+        var rgbHueOnly = this.colorHueOnly.rgb;
+
+        var flatColor = "rgb(" + rgbHueOnly[0] + ", " + rgbHueOnly[1] + ", " + rgbHueOnly[2] + ")";
+        var fullColor = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + rgb[3] + ")";
+
+        this._draggerElement.style.backgroundColor = flatColor;
+        this._swatchInnerElement.style.backgroundColor = fullColor;
+
+        this._alphaElement.value = this.hsv[3] * 100;
+    },
+
+    toggle: function(element, color, format)
+    {
+        if (this.visible)
+            this.hide();
+        else
+            this.show(element, color, format);
+
+        return this.visible;
+    },
+
+    show: function(element, color, format)
+    {
+        if (this.visible) {
+            if (this.anchorElement === element)
+                return false;
+
+            // Reopen the picker for another anchor element.
+            this.hide();
+        }
+
+        this.reposition(element);
+        this.anchorElement = element;
+
+        document.addEventListener("mousedown", this._hideProxy, false);
+        window.addEventListener("blur", this._hideProxy, false);
+
+        this.slideHeight = this._sliderElement.offsetHeight;
+        this.dragWidth = this._draggerElement.offsetWidth;
+        this.dragHeight = this._draggerElement.offsetHeight;
+        this._dragHelperElementHeight = this._dragHelperElement.offsetHeight / 2;
+        this.slideHelperHeight = this.slideHelper.offsetHeight / 2;
+
+        this.color = color;
+        this._originalFormat = format || color.format;
+
+        this._updateUI();
+
+        return true;
+    },
+
+    reposition: function(element)
+    {
+        if (!this._previousFocusElement)
+            this._previousFocusElement = WebInspector.currentFocusElement();
+        this._popover.show(this._containerElement, element);
+        WebInspector.markBeingEdited(this._containerElement, true);    
+        WebInspector.setCurrentFocusElement(this._containerElement);
+    },
+
+    hide: function()
+    {
+        WebInspector.markBeingEdited(this._containerElement, false);
+        this._popover.hide();
+
+        document.removeEventListener("mousedown", this._hideProxy, false);
+        window.removeEventListener("blur", this._hideProxy, false);
+
+        this.dispatchEventToListeners(WebInspector.Spectrum.Events.Hidden);
+
+        WebInspector.setCurrentFocusElement(this._previousFocusElement);
+        delete this._previousFocusElement;
+
+        delete this.anchorElement;
+    },
+
+    _onKeyDown: function(event)
+    {
+        if (event.keyIdentifier === "Enter" || event.keyIdentifier === "U+001B") { // Escape key
+            this.hide();
+            event.stopPropagation();
+            event.preventDefault();
+        }
     }
-    bound.toString = function() {
-        return "bound: " + func;
-    };
-    return bound;
-}
-Element.prototype.removeStyleClass = function(className)
-{
-    this.classList.remove(className);
-}
-Element.prototype.addStyleClass = function(className)
-{
-    this.classList.add(className);
 }
 
-Element.prototype.hasStyleClass = function(className)
-{
-    return this.classList.contains(className);
-}
-
-Element.prototype.positionAt = function(x, y)
-{
-    this.style.left = x + "px";
-    this.style.top = y + "px";
-}
-
+WebInspector.Spectrum.prototype.__proto__ = WebInspector.Object.prototype;
