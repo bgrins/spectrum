@@ -85,7 +85,9 @@
     
     function hideAll() {
         for (var i = 0; i < spectrums.length; i++) {
-            spectrums[i].hide();
+            if (spectrums[i]) {
+                spectrums[i].hide();
+            }
         }
     }
     function instanceOptions(o, callbackContext) {
@@ -171,7 +173,7 @@
                 $(body).append(container.hide());
             }
             
-            offsetElement.bind("click touchstart", function(e) {
+            offsetElement.bind("click.spectrum touchstart.spectrum", function(e) {
                 toggle();
                 
                 e.stopPropagation();
@@ -438,18 +440,27 @@
             updateHelperLocations();
         }
         
+        function destroy() {
+            boundElement.show();
+            offsetElement.unbind("click.spectrum touchstart.spectrum");
+            container.remove();
+            replacer.remove();
+            spectrums[spect.id] = null;
+        }
+        
         initialize();
         
         var spect = {
             show: show,
             hide: hide,
             set: set,
-            get: get
+            get: get,
+            destroy: destroy
         };
         
         spect.id = spectrums.push(spect) - 1;
         
-        return  spect;
+        return spect;
     }
     
     /**
@@ -619,14 +630,22 @@
             
             return this.each(function() {
                 var spect = spectrums[$(this).data(dataID)];
-                if (opts == "show") { spect.show(); }
-                if (opts == "hide") { spect.hide(); }
-                if (opts == "set")  { spect.set(extra); }
+                if (spect) {
+                    if (opts == "show") { spect.show(); }
+                    if (opts == "hide") { spect.hide(); }
+                    if (opts == "set")  { spect.set(extra); }
+                    if (opts == "destroy")  { spect.destroy(); }
+                }
             });
         }
         
         // Initializing a new one
         return this.each(function() {
+            var existing = spectrums[$(this).data(dataID)];
+            if (existing) {
+                existing.destroy();
+            }
+            
             var spect = spectrum(this, opts);
             $(this).data(dataID, spect.id);
         }); 
