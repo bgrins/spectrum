@@ -17,17 +17,17 @@ a:focus { outline: thin dotted; }
 #pick2-details { font: monospace; }
 #switch-current { float: left; position:relative; }
 /*#switch-current .spectrum-container { position: fixed; top:60px; left: 10px; }*/
-#docs-content { margin-left: 280px; padding: 10px; border:solid 10px #333; border-radius: 5px;  }
+#docs-content { margin-left: 280px; padding: 10px 30px; border:solid 10px #333; border-radius: 5px;  }
 .switch-current-output { display:none; margin:3px auto; width: 200px; text-align: center; }
 .type { padding-left: 4px; font-size: .8em; font-weight: bold;}
 .example { margin-top:10px; margin-left: 40px; }
-#docs { padding:10px;  }
+#docs { padding: 10px;  }
 #docs ul { margin-left: 25px; padding-left:0; }
 #docs li { list-style: square; margin-left: 6px; }
 #docs p { margin: 0; padding:0; padding-top:4px; margin-left: 25px; }
 #docs pre { margin-left: 25px; }
-#docs h2 { margin: .5em 0; border-bottom: solid 1px; }
-#docs h3 { margin-left: 15px; font-family: monospace; }
+#docs h2 { margin: .5em -25px; border-bottom: solid 1px; }
+#docs h3 { padding-left: 15px; margin: 10px -30px; margin-top: 40px; border-bottom: solid 1px #ccc;border-top: solid 1px #ccc; }
 #code-heading { font-size: 24px; text-align: center; margin: 6px 0; }
 #changeOnMove, #changeOnMoveNo { vertical-align: top; padding:5px 0; font-size:14px; width: 100px; }
 #docs-content { color: #222; }
