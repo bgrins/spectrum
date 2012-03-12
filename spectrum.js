@@ -111,6 +111,7 @@
             showPaletteOnly = opts.showPaletteOnly,
             showPalette = opts.showPalette || showPaletteOnly,
             showInitial = opts.showInitial && !flat,
+            showInput = opts.showInput,
             addSelectionToPalette = opts.addSelectionToPalette,
             theme = opts.theme,
             callbacks = opts.callbacks,
@@ -159,7 +160,7 @@
             }   
             
             container.toggleClass("sp-flat", flat);
-            container.toggleClass("sp-input-disabled", !opts.showInput);
+            container.toggleClass("sp-input-disabled", !showInput);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
             container.toggleClass("sp-palette-disabled", !showPalette);
             container.toggleClass("sp-palette-only", showPaletteOnly);
@@ -380,7 +381,7 @@
             previewElement.css("background-color", realHex);
             
             // Update the text entry input as it changes happen
-            if (isInput) {
+            if (showInput) {
                 textInput.val(realHex);
             }
             
