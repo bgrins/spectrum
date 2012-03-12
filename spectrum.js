@@ -163,7 +163,7 @@
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
             container.toggleClass("sp-palette-disabled", !showPalette);
             container.toggleClass("sp-palette-only", showPaletteOnly);
-            container.toggleClass("sp-show-initial", !showPalette);
+            container.toggleClass("sp-initial-disabled", !showInitial);
             
             if (shouldReplace) {
                 boundElement.hide().after(replacer);
