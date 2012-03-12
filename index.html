@@ -363,6 +363,12 @@ function updateBorders(color) {
     $("#docs-content").css("border-color", color.toHexString());
 }
 
+// Make sure that reinitializing spectrum succeeds.
+$(".basic").spectrum({
+    showInput: true,
+    showButtons: true
+});
+
 $("#pick1").spectrum({
     flat: true,
     change: function(color) {
