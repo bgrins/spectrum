@@ -92,6 +92,14 @@ License: MIT
 .sp-input-container {
     margin-top: 4px;
 }
+
+.sp-container.sp-palette-only {
+    padding: 4px;
+}
+.sp-container.sp-palette-only .sp-top, .sp-container.sp-palette-only .sp-val  {
+    display: none;
+}
+
 .sp-input-container div { float:right; }
 .sp-input:focus { border: 1px solid orange; }
 

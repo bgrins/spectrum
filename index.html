@@ -227,6 +227,22 @@ $("#showPalette").spectrum({
                 <input type='text' name='showPalette' id='showPalette' value='lightblue' />
         </div>
         
+        <h3>Show Palette Only</h3>
+        <p>Spectrum can show only the above palette</p>
+        
+<pre class='prettyprint'>
+$("#showPaletteOnly").spectrum({
+    showPaletteOnly: true,
+    palette: [
+        'black', 'white', 'blanchedalmond', 
+        'rgb(255, 128, 0);', 'hsv 100 70 50'
+    ]
+});
+</pre>
+        <div class='example'>
+                <input type='text' name='showPaletteOnly' id='showPaletteOnly' value='lightblue' />
+        </div>
+        
         <h3>Show Initial</h3>
         <p>Spectrum can show the color that was initially set when opening.  This provides an easy way to click back to what was set when opened.</p>
         
@@ -456,6 +472,14 @@ $("#showPalette").spectrum({
     showPalette: true,
     palette: ['black', 'white', 'blanchedalmond', 'rgb(255, 128, 0);', 'hsv 100 70 50'],
     change: updateBorders
+});
+
+$("#showPaletteOnly").spectrum({
+    showPaletteOnly: true,
+    palette: [
+        'black', 'white', 'blanchedalmond', 
+        'rgb(255, 128, 0);', 'hsv 100 70 50'
+    ]
 });
 
 $("#showInitial").spectrum({
