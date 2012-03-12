@@ -30,7 +30,7 @@
     <div id='docs-content'>
 <pre class='prettyprint' id='code-heading'>
 &lt;input type='spectrum' value='orange' /&gt;
-<input type='text' class='basic' value='orange' />
+<input type='spectrum' class='basic' value='orange' />
 </pre>
         <h2>Goals</h2>
         <p>I wanted a JavaScript colorpicker that didn't require images, and that had an API that made sense to me as a developer who has worked with color in a number of applications.  I had used existing plugins (which I was quite grateful for), but decided that I would make a smaller, simpler one.  Here are the goals I had:</p>
@@ -106,13 +106,13 @@ $(".basic").spectrum();
         Here is what it will look like: 
         </p>
         <div class='example'>
-            <input type='text' class='basic' value='red' />
-            <input type='text' class='basic' value='orange' />
-            <input type='text' class='basic' value='yellow' />
-            <input type='text' class='basic' value='green' />
-            <input type='text' class='basic' value='blue' />
-            <input type='text' class='basic' value='indigo' />
-            <input type='text' class='basic' value='violet' />
+            <input type='text' class='basic1' value='red' />
+            <input type='text' class='basic1' value='orange' />
+            <input type='text' class='basic1' value='yellow' />
+            <input type='text' class='basic1' value='green' />
+            <input type='text' class='basic1' value='blue' />
+            <input type='text' class='basic1' value='indigo' />
+            <input type='text' class='basic1' value='violet' />
         </div>
 
         <h2>Want A Lot More Control?</h2>
@@ -363,11 +363,6 @@ function updateBorders(color) {
     $("#docs-content").css("border-color", color.toHexString());
 }
 
-// Make sure that reinitializing spectrum succeeds.
-$(".basic").spectrum({
-    showInput: true,
-    showButtons: true
-});
 
 $("#pick1").spectrum({
     flat: true,
@@ -471,6 +466,7 @@ $("#changeOnMove").spectrum({ change: updateBorders }).show();
 $("#changeOnMoveNo").spectrum({ changeOnMove: false, change: updateBorders }).show();
 
 $(".basic").spectrum({ change: updateBorders });
+$(".basic1").spectrum({ change: updateBorders, showInput: true, showButtons: true });
 
 prettyPrint();
 

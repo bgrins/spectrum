@@ -634,18 +634,16 @@
                     if (opts == "show") { spect.show(); }
                     if (opts == "hide") { spect.hide(); }
                     if (opts == "set")  { spect.set(extra); }
-                    if (opts == "destroy")  { spect.destroy(); }
+                    if (opts == "destroy")  { 
+                        spect.destroy();
+                        $(this).removeData(dataID);
+                    }
                 }
             });
         }
         
         // Initializing a new one
-        return this.each(function() {
-            var existing = spectrums[$(this).data(dataID)];
-            if (existing) {
-                existing.destroy();
-            }
-            
+        return this.spectrum("destroy").each(function() {
             var spect = spectrum(this, opts);
             $(this).data(dataID, spect.id);
         }); 
@@ -657,7 +655,12 @@
     
     $(function() {
         if ($.fn.spectrum.load) {
-            $("input[type=spectrum]").spectrum($.fn.spectrum.loadOpts);
+            $("input[type=spectrum]").each(function() {
+                var existing = spectrums[$(this).data(dataID)];
+                if (!existing) {
+                    $(this).spectrum($.fn.spectrum.loadOpts);
+                }
+            });
         }
     });
     
