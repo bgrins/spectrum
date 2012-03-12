@@ -20,7 +20,7 @@
         showPalette: false,
         showPaletteOnly: false,
         addSelectionToPalette: true,
-        maxPaletteSize: 6,
+        maxPaletteSize: 7,
         theme: 'sp-dark',
         palette: ['fff', '000']
     },
@@ -79,7 +79,7 @@
         var html = [];
         for (var i = 0; i < p.length; i++) {
             var c = i == active ? " class='sp-thumb-active' " : "";
-            html.push('<span style="background-color:' + tinycolor(p[i]).toHexString() + ';"' + c + '></span>');
+            html.push('<span title="' + tinycolor(p[i]).toHexString() + '" style="background-color:' + tinycolor(p[i]).toHexString() + ';"' + c + '></span>');
         }
         return html.join('');
     };
