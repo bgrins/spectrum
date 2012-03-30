@@ -92,16 +92,16 @@ License: MIT
     background-image: -webkit-linear-gradient(left, #FFF, rgba(204, 154, 129, 0));
     background-image: -moz-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
     background-image: -o-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
-    -ms-filter: formatstring("\"progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr=#FFFFFFFF, endColorstr=#00CC9A81)\"");
-    filter : formatstring("progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr='#FFFFFFFF', endColorstr='#00CC9A81')");
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr=#FFFFFFFF, endColorstr=#00CC9A81)";
+    filter : progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr='#FFFFFFFF', endColorstr='#00CC9A81');
 }
 .sp-val {
     background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#000000), to(rgba(204, 154, 129, 0)));
     background-image: -webkit-linear-gradient(bottom, #000000, rgba(204, 154, 129, 0));
     background-image: -moz-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
     background-image: -o-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
-    -ms-filter: formatstring("\"progid:DXImageTransform.Microsoft.gradient(startColorstr=#00CC9A81, endColorstr=#FF000000)\"");
-    filter : formatstring("progid:DXImageTransform.Microsoft.gradient(startColorstr='#00CC9A81', endColorstr='#FF000000')");
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00CC9A81, endColorstr=#FF000000)";
+    filter : progid:DXImageTransform.Microsoft.gradient(startColorstr='#00CC9A81', endColorstr='#FF000000');
 }
 
 .sp-hue {
@@ -119,27 +119,27 @@ License: MIT
  
 .sp-1 { 
     height:17%; 
-    filter: formatstring("progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0000', endColorstr='#ffff00')");
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0000', endColorstr='#ffff00');
 }
 .sp-2 { 
     height:16%; 
-    filter: formatstring("progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffff00', endColorstr='#00ff00')");
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffff00', endColorstr='#00ff00');
 }
 .sp-3 { 
     height:17%; 
-    filter: formatstring("progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ff00', endColorstr='#00ffff')");
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ff00', endColorstr='#00ffff');
 }
 .sp-4 { 
     height:17%; 
-    filter: formatstring("progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffff', endColorstr='#0000ff')");
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffff', endColorstr='#0000ff');
 }
 .sp-5 { 
     height:16%; 
-    filter: formatstring("progid:DXImageTransform.Microsoft.gradient(startColorstr='#0000ff', endColorstr='#ff00ff')");
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0000ff', endColorstr='#ff00ff');
 }
 .sp-6 { 
     height:17%; 
-    filter: formatstring("progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff00ff', endColorstr='#ff0000')");
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff00ff', endColorstr='#ff0000');
 }
 
 /* Clearfix hack */
