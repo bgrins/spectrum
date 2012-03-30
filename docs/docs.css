@@ -15,9 +15,9 @@ a:focus { outline: thin dotted; }
 #header h1 { float:left; }
 #links { float:right; text-align: right; }
 #pick2-details { font: monospace; }
-#switch-current { float: left; position:relative; }
+#switch-current { float: left; position:relative; display:none;}
 /*#switch-current .spectrum-container { position: fixed; top:60px; left: 10px; }*/
-#docs-content { margin-left: 280px; padding: 10px 30px; border:solid 10px #333; border-radius: 5px;  }
+#docs-content { margin-left: 20px; padding: 10px 30px; border:solid 10px #333; border-radius: 5px;  }
 .switch-current-output { display:none; margin:3px auto; width: 200px; text-align: center; }
 .type { padding-left: 4px; font-size: .8em; font-weight: bold;}
 .example { margin-top:10px; margin-left: 40px; }
