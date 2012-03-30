@@ -17,7 +17,7 @@ a:focus { outline: thin dotted; }
 #pick2-details { font: monospace; }
 #switch-current { float: left; position:relative; display:none;}
 /*#switch-current .spectrum-container { position: fixed; top:60px; left: 10px; }*/
-#docs-content { margin-left: 20px; padding: 10px 30px; border:solid 10px #333; border-radius: 5px;  }
+#docs-content { margin: 0 auto; width: 90%; min-width: 600px; padding: 10px 30px; border:solid 10px #333; border-radius: 5px;  }
 .switch-current-output { display:none; margin:3px auto; width: 200px; text-align: center; }
 .type { padding-left: 4px; font-size: .8em; font-weight: bold;}
 .example { margin-top:10px; margin-left: 40px; }
@@ -29,9 +29,10 @@ a:focus { outline: thin dotted; }
 #docs h2 { margin: .5em -25px; border-bottom: solid 1px; }
 #docs h3 { padding-left: 15px; margin: 10px -30px; margin-top: 40px; border-bottom: solid 1px #ccc;border-top: solid 1px #ccc; }
 #code-heading { font-size: 24px; text-align: center; margin: 6px 0; }
-#changeOnMove, #changeOnMoveNo { vertical-align: top; padding:5px 0; font-size:14px; width: 100px; }
 #docs-content { color: #222; }
 #docs-content.dark { color: #ddd; }
+
+em.label { padding:4px; margin-left: 10px; display:inline-block; vertical-align: top; margin-top: 3px; }
 
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }

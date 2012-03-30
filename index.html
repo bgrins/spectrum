@@ -122,14 +122,12 @@ $(".basic").spectrum();
 $("#picker").spectrum({
     color: string,
     showInput: (true|<b>false</b>),
-    showButtons: (true|<b>false</b>),
     showPalette: (true|<b>false</b>),
     showPaletteOnly: (true|<b>false</b>),
-    maxPaletteSize: (number|<b>7</b>),
+    maxSelectionSize: (number|<b>7</b>),
     showInitial: (true|<b>false</b>),
-    palette: [color, color, ...],
-    flat: (true|<b>false</b>),
-    changeOnMove: (<b>true</b>|false)
+    palette: [[color, color], [color, color], ...],
+    flat: (true|<b>false</b>)
 });
 
 $("#picker").spectrum("show");
@@ -187,33 +185,6 @@ $("#showInput").spectrum({
             <input type='text' name='showInput' id='showInput' />
         </div>
         
-        <h3>Show Buttons</h3>
-        
-        <p>You can add buttons to indicate a way to exit the picker.
-        
-<pre class='prettyprint'>
-$("#showButtons").spectrum({
-    showButtons: true
-});
-</pre>
-        <div class='example'>
-            <input type='text' name='showButtons' id='showButtons' />
-        </div>
-        
-        <h3>Show Input AND Buttons</h3>
-        
-        <p>You can show both the input and the buttons, which will shrink the input.
-        
-<pre class='prettyprint'>
-$("#showInputAndButtons").spectrum({
-    showInput: true,
-    showButtons: true
-});
-</pre>
-        <div class='example'>
-            <input type='text' name='showInputAndButtons' id='showInputAndButtons' value="rgb(25, 99, 100);" />
-        </div>
-        
         <h3>Show Palette</h3>
         <p>Spectrum can show a palette below the colorpicker to make it convenient for users to choose from frequently or recently used colors.  When the colorpicker is closed, the current color will be added to the palette if it isn't there already.  Check it out here: </p>
         
@@ -221,8 +192,8 @@ $("#showInputAndButtons").spectrum({
 $("#showPalette").spectrum({
     showPalette: true,
     palette: [
-        'black', 'white', 'blanchedalmond', 
-        'rgb(255, 128, 0);', 'hsv 100 70 50'
+        ['black', 'white', 'blanchedalmond'], 
+        ['rgb(255, 128, 0);', 'hsv 100 70 50', 'lightyellow']
     ]
 });
 </pre>
@@ -258,6 +229,19 @@ $("#showInitial").spectrum({
                 <input type='text' name='showInitial' id='showInitial' value='goldenrod' />
         </div>
         
+        <h3>Show Input and Initial</h3>
+        <p>Spectrum can show the color that was initially set when opening.  This provides an easy way to click back to what was set when opened.</p>
+        
+<pre class='prettyprint'>
+$("#showInputAndInitial").spectrum({
+    showInitial: true,
+    showInput: true
+});
+</pre>
+        <div class='example'>
+                <input type='text' name='showInputAndInitial' id='showInputAndInitial' value='goldenrod' />
+        </div>
+        
         
         <h3>Flat versus Collapsed</h3>
         <p><strong>Collapsed</strong>
@@ -287,19 +271,6 @@ $("#flat").spectrum({
             <input type='text' name='flat' id='flat' />
         </div>
         
-        <h3>Change On Move</h3>
-        
-        <p>
-            Spectrum can change the original input either as the user drags around, or at the end
-            once they have selected a color.
-            Check out the examples below (with the original inputs visible) to see the difference.
-        </p>
-        
-        <div class='example'>
-                <input type='text' value='blanchedalmond' name='changeOnMove' id='changeOnMove' />
-                <br />
-                <input type='text' value='blanchedalmond' name='changeOnMoveNo' id='changeOnMoveNo' />
-        </div>
         
         <h2>Events</h2>
         
@@ -314,12 +285,17 @@ $("#picker").spectrum({
 
         <h3>change</h3>
             
-        <p>Called as the original input changes.  This may happen only once it is closed, if <code>changeOnMove</code> is set to false</p>
+        <p>Called as the original input changes.  Only happens when the input is closed or the 'Choose' button is clicked.
 <pre class='prettyprint'>
 change: function(color) {               
     color.toHexString(); // #ff0000
 }
 </pre>
+
+<div class='example'>
+    <input type='text' value='blanchedalmond' name='changeOnMoveNo' id='changeOnMoveNo' />
+    <em id='changeOnMoveNoLabel' class='label'></em>
+</div>
         <h3>move</h3>
             
         <p>Called as the user moves around within the colorpicker</p>
@@ -328,6 +304,13 @@ move: function(color) {
     color.toHexString(); // #ff0000
 }
 </pre>
+
+<div class='example'>
+    <input type='text' value='blanchedalmond' name='changeOnMove' id='changeOnMove' />
+    <em id='changeOnMoveLabel'  class='label'></em>
+</div>
+
+        
         <h3>hide</h3>
             
         <p>Called after the colorpicker is hidden.  This happens when clicking outside of the picker while it is open.  Note, when any colorpicker on the page is shown it will hide any that are already open.  This event is ignored on a flat colorpicker.</p>
@@ -355,6 +338,10 @@ beforeShow: function(color) {
     return false; // Will never show up
 }
 </pre>
+
+<div class='example'>
+    <input type='text' value='blanchedalmond' name='beforeShow' id='beforeShow' />
+</div>
         
         <h2>Skinning</h2>
         
@@ -420,35 +407,11 @@ $("#collapsed").spectrum({
 
 $("#flat").spectrum({
     flat: true,
-    change: updateBorders
+    move: updateBorders
 });
 
 $("#showInput").spectrum({
     color: "#dd33dd",
-    showInput: true,
-    change: updateBorders,
-    show: function() {
-       
-    },
-    hide: function() {
-       
-    } 
-});
-
-$("#showButtons").spectrum({
-    color: "#dd33dd",
-    showButtons: true,
-    change: updateBorders,
-    show: function() {
-       
-    },
-    hide: function() {
-       
-    } 
-});
-
-$("#showInputAndButtons").spectrum({
-    showButtons: true,
     showInput: true,
     change: updateBorders,
     show: function() {
@@ -472,7 +435,10 @@ $("#openWithLink").spectrum({
 
 $("#showPalette").spectrum({
     showPalette: true,
-    palette: ['black', 'white', 'blanchedalmond', 'rgb(255, 128, 0);', 'hsv 100 70 50'],
+    palette: [
+        ['black', 'white', 'blanchedalmond'], 
+        ['rgb(255, 128, 0);', 'hsv 100 70 50', 'lightyellow']
+    ],
     change: updateBorders
 });
 
@@ -488,12 +454,33 @@ $("#showInitial").spectrum({
     showInitial: true
 });
 
-$("#changeOnMove").spectrum({ change: updateBorders }).show();
-$("#changeOnMoveNo").spectrum({ changeOnMove: false, change: updateBorders }).show();
+$("#showInputAndInitial").spectrum({
+    showInitial: true,
+    showInput: true
+});
+
+
+$("#changeOnMove").spectrum({ 
+    move: function(c) {
+        var label = $("#changeOnMoveLabel");
+        label.text("Move called: " + c.toHexString());
+    } 
+});
+$("#changeOnMoveNo").spectrum({
+    change: function(c) {
+        var label = $("#changeOnMoveNoLabel");
+        label.text("Change called: " + c.toHexString());
+    }
+});
 
 $(".basic").spectrum({ change: updateBorders });
 $(".basic1").spectrum({ change: updateBorders });
 
+$("#beforeShow").spectrum({
+    beforeShow: function() {
+        return false;
+    }
+});
 prettyPrint();
 
 </script>

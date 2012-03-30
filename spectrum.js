@@ -9,10 +9,9 @@
         color: false,
         flat: false,
         showInput: false,
-        showButtons: false,
-        changeOnMove: true,
+        showButtons: true,
         showInitial: false,
-        clickOutFiresChange: true,
+        clickOutFiresChange: false,
         beforeShow: noop,
         move: noop,
         change: noop,
@@ -26,9 +25,7 @@
         cancelText: "cancel",
         chooseText: "choose",
         preferredFormat: false,
-        maxPaletteSize: 7,
         maxSelectionSize: 7,
-
         theme: 'sp-light',
         palette: ['fff', '000'],
         selectionPalette: []
@@ -90,7 +87,7 @@
         var html = [];
         for (var i = 0; i < p.length; i++) {
             var tiny = tinycolor(p[i]);
-            var c = tiny.toHsl().l < .5 ? "sp-dark" : "sp-light";
+            var c = tiny.toHsl().l < .5 ? "sp-thumb-dark" : "sp-thumb-light";
             c += (tinycolor.equals(color, p[i])) ? " sp-thumb-active" : "";
             html.push('<span title="' + tiny.toHexString() + '" data-color="' + tiny.toHexString() + '" style="background-color:' + tiny.toRgbString() + ';" class="' + c + '"></span>');
         }
@@ -160,7 +157,6 @@
             cancelButton = container.find(".sp-cancel"),
             chooseButton = container.find(".sp-choose"),
             isInput = boundElement.is("input"),
-            changeOnMove = (opts.changeOnMove || flat),
             shouldReplace = isInput && !flat,
             replacer = (shouldReplace) ? $(replaceInput).addClass(theme) : $([]),
             offsetElement = (shouldReplace) ? replacer : boundElement,
@@ -317,7 +313,7 @@
                 }
             }
 
-            return unique.reverse().slice(0, opts.maxPaletteSize);
+            return unique.reverse().slice(0, opts.maxSelectionSize);
         }
         function drawPalette() {
 
@@ -384,7 +380,7 @@
         }
 
         function cancel() {
-            set(colorOnShow);
+            hide();//set(colorOnShow);
         }
 
         function hide() {
@@ -400,13 +396,14 @@
             var realColor = get();
             var colorHasChanged = !tinycolor.equals(realColor, colorOnShow);
 
-            if (changeOnMove && colorHasChanged) {
-                addColorToSelectionPalette(realColor);
-            }
-
             // Change hasn't been called yet, so call it now that the picker has closed
-            if (opts.clickOutFiresChange && !changeOnMove && colorHasChanged) {
-                updateOriginalInput();
+            if (colorHasChanged) {
+                if (opts.clickOutFiresChange) {
+                    updateOriginalInput();
+                }
+                else {
+                    set(colorOnShow);
+                }
             }
 
             callbacks.hide(realColor);
@@ -428,7 +425,7 @@
             updateUI();
 
             // set can be called from a default value,  don't want to trigger a change in that case
-            if (isInitialized && !ignoreChange) {
+            if (isInitialized && !ignoreChange && color != colorOnShow) {
                 updateOriginalInput();
             }
         }
@@ -443,11 +440,7 @@
 
         function move() {
             updateUI();
-
-            if (changeOnMove) {
-                updateOriginalInput();
-            }
-
+            
             callbacks.move(get());
         }
 
@@ -513,11 +506,12 @@
             if (isInput) {
                 boundElement.val(color.toHexString());
             }
+            
+            colorOnShow = color;
 
             // Update the selection palette with the current color
-            if (!changeOnMove) {
-                addColorToSelectionPalette(color);
-            }
+            addColorToSelectionPalette(color);
+                
             callbacks.change(color);
         }
 
