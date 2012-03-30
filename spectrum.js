@@ -11,7 +11,6 @@
         showInput: false,
         showButtons: true,
         showInitial: false,
-        clickOutFiresChange: false,
         beforeShow: noop,
         move: noop,
         change: noop,
@@ -163,7 +162,6 @@
             previewElement = replacer.find(".sp-preview"),
             initialColor = opts.color || (isInput && boundElement.val()),
             colorOnShow = false,
-            isInitialized = false,
             preferredFormat = opts.preferredFormat,
             currentPreferredFormat = false;
 
@@ -252,7 +250,7 @@
             }, dragStart, dragStop);
 
             if (!!initialColor) {
-                set(initialColor);
+                set(initialColor, true);
                 addColorToSelectionPalette(initialColor);
             }
 
@@ -275,8 +273,6 @@
             var paletteEvent = $.browser.msie ? "mousedown.spectrum" : "click.spectrum touchstart.spectrum";
             paletteContainer.delegate("span", paletteEvent, palletElementClick);
             initialColorContainer.delegate("span::nth-child(1)", paletteEvent, { ignore: true }, palletElementClick);
-
-            isInitialized = true;
         }
         function addColorToSelectionPalette(color) {
             if (addSelectionToPalette) {
@@ -373,14 +369,15 @@
 
             reflow();
             updateUI();
-
+            
             colorOnShow = get();
+            
             drawInitial();
-            callbacks.show(get());
+            callbacks.show(colorOnShow);
         }
 
         function cancel() {
-            hide();//set(colorOnShow);
+            hide();
         }
 
         function hide() {
@@ -393,39 +390,40 @@
             replacer.removeClass("sp-active");
             container.hide();
 
-            var realColor = get();
-            var colorHasChanged = !tinycolor.equals(realColor, colorOnShow);
+            var colorHasChanged = !tinycolor.equals(get(), colorOnShow);
 
             // Change hasn't been called yet, so call it now that the picker has closed
             if (colorHasChanged) {
-                if (opts.clickOutFiresChange) {
-                    updateOriginalInput();
-                }
-                else {
-                    set(colorOnShow);
-                }
+                revert();
             }
 
-            callbacks.hide(realColor);
+            callbacks.hide(get());
         }
 
-        function set(color, ignoreChange) {
+        function revert() {
+            set(colorOnShow, true, true);
+        }
+        
+        function set(color, ignoreChange, ignoreFormatChange) {
             if (tinycolor.equals(color, get())) {
                 return;
             }
 
             var newColor = tinycolor(color);
             var newHsv = newColor.toHsv();
-
-            currentPreferredFormat = preferredFormat || newColor.format;
+            
             currentHue = newHsv.h;
             currentSaturation = newHsv.s;
             currentValue = newHsv.v;
 
             updateUI();
 
+            if (!ignoreFormatChange) {
+                currentPreferredFormat = preferredFormat || newColor.format;
+            }
+            
             // set can be called from a default value,  don't want to trigger a change in that case
-            if (isInitialized && !ignoreChange && color != colorOnShow) {
+            if (!ignoreChange && !tinycolor.equals(color, colorOnShow)) {
                 updateOriginalInput();
             }
         }
@@ -502,7 +500,7 @@
 
         function updateOriginalInput() {
             var color = get();
-
+            
             if (isInput) {
                 boundElement.val(color.toHexString());
             }
