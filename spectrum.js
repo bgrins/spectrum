@@ -32,7 +32,7 @@
     spectrums = [],
     IE = $.browser.msie,
     replaceInput = [
-        "<div class='sp-replacer sp-cf'>",
+        "<div class='sp-replacer'>",
             "<div class='sp-preview'></div>",
             "<div class='sp-dd'>&#9660;</div>",
         "</div>"
