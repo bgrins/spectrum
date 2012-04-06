@@ -678,9 +678,8 @@
                     if (!hasTouch) {
                         move(e);
                     }
-                    else {
-                        prevent(e);
-                    }
+                    
+                    prevent(e);
                 }
             }
         }
