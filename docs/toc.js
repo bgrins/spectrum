@@ -1,11 +1,3 @@
-/*!
-  * jquery.toc.js - A jQuery plugin that will automatically generate a table of contents. 
-  * v0.0.2
-  * https://github.com/jgallen23/toc
-  * copyright JGA 2012
-  * MIT License
-  */
-
 !function($) {
 $.fn.toc = function(options) {
   var self = this;
@@ -16,12 +8,32 @@ $.fn.toc = function(options) {
   var headingOffsets = [];
   var activeClassName = opts.prefix+'-active';
 
+  var findScrollableElement = function(els) {
+    for (var i = 0, argLength = arguments.length; i < argLength; i++) {
+      var el = arguments[i],
+          $scrollElement = $(el);
+      if ($scrollElement.scrollTop() > 0) {
+        return $scrollElement;
+      } else {
+        $scrollElement.scrollTop(1);
+        var isScrollable = $scrollElement.scrollTop() > 0;
+        $scrollElement.scrollTop(0);
+        if (isScrollable) {
+          return $scrollElement;
+        }
+      }
+    }
+    return [];
+  };
+  var scrollable = findScrollableElement(opts.container, 'body', 'html');
+
   var scrollTo = function(e) {
     if (opts.smoothScrolling) {
       e.preventDefault();
       var elScrollTo = $(e.target).attr('href');
       var $el = $(elScrollTo);
-      $(opts.container).animate({ scrollTop: $el.offset().top }, 400, 'swing', function() {
+      
+      scrollable.animate({ scrollTop: $el.offset().top }, 400, 'swing', function() {
         location.hash = elScrollTo;
       });
     }
@@ -50,7 +62,6 @@ $.fn.toc = function(options) {
     $(window).bind('scroll', highlightOnScroll);
     highlightOnScroll();
   }
-
 
   return this.each(function() {
     //build TOC
