@@ -55,13 +55,13 @@
 &lt;script src='<a href='https://raw.github.com/bgrins/spectrum/master/spectrum.js' target="_blank">https://raw.github.com/bgrins/spectrum/master/spectrum.js</a>'&gt;&lt;/script&gt;
 &lt;link rel='stylesheet' href='<a href='https://raw.github.com/bgrins/spectrum/master/spectrum.css' target="_blank">https://raw.github.com/bgrins/spectrum/master/spectrum.css</a>' /&gt;
 </pre>
-        <p><strong>We don't need no stinkin' images!</strong>  No zip files, either.  Just those two.</p>
+        <p><strong>We don't need no stinkin' images!</strong></p>
         <p>Nobody wants to add a bunch of code into their project.  Spectrum is contained in two files, and both are careful not to mess with your existing code.
         The JavaScript is well less than 10K gzipped, see the <a href='https://github.com/bgrins/spectrum/blob/master/README.md'>current size</a> in the README.
         
-        <h3>Progressive Enhancement</h3>
+        <h3>&lt;noscript&gt;</h3>
         <p>I wanted an option for the most basic use case, simlar to the <a href='http://dev.w3.org/html5/markup/input.color.html'>input[type=color]</a> HTML5 control.
-            Ideally, this mode would not require any extra JavaScript to fire it up, and it would need to work without JavaScript enabled.
+           This mode needs to work without JavaScript enabled - and fallback to an input[type=text] like other HTML5 inputs.
         </p>
     
         
@@ -72,7 +72,7 @@
         <h3>input[type=spectrum]</h3>
         
     <p>
-    If you just want to provide the most basic colorpicker for your user to choose instead of a text field, the easiest way is to create an input with the type of spectrum.
+    If you just want to provide the <strong>most basic</strong> colorpicker for your user to choose instead of a text field, the easiest way is to create an input with the type of spectrum.
     </p>
         
 <pre class='prettyprint' id='code-subheading'>
@@ -87,7 +87,10 @@
     </p>
 
         <h3>custom</h3>
-    <p>If you want to get more into the functionality, just create a normal input and initialize it as a normal jQuery plugin.  <strong>You can set a lot of options</strong> when initializing the colorpicker.  See 'Usage' section below.
+    <p>If you want to get more into the functionality, just create a normal input and initialize it as a normal jQuery plugin.  
+    <strong>You can set a lot of options</strong> when initializing the colorpicker.  
+    See the 'Options' section below.
+    </p>
     
 <pre class='prettyprint'>
 &lt;input type='text' id="custom" /&gt;

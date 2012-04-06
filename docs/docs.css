@@ -3,6 +3,7 @@
 html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 body { margin: 0; font-size: 14px; line-height: 1.5; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAG0lEQVQIW2OMqXogyYADMIIkl7QpPMcmP+gkAYLGGdeobP2EAAAAAElFTkSuQmCC); }
 body, button, input, select, textarea { font-family: Droid Sans, Tahoma, sans-serif; color: #222; }
+body p { font-family: Verdana; font-size: 12px; color: #333; line-height: 1.8; }
 h1 { font-family: Lucida Sans, Droid Sans, Verdana; font-size: 30px; margin: 0; padding:0; font-weight: lighter; position:fixed; top: 3px; left: 10px; }
 h1 a { text-decoration: none; color: #334 !important; }
 h1 a:hover { text-decoration: underline; color: #336 !important; }
@@ -31,7 +32,7 @@ a:focus { outline: thin dotted; }
 #docs p { margin: 0; padding:0; padding-top:4px; margin-left: 25px; }
 #docs pre { margin-left: 25px; }
 #docs h2 { margin: .5em -25px; border-bottom: solid 1px; }
-#docs h3 { padding-left: 15px; margin: 10px -30px; margin-top: 40px; border-bottom: solid 1px #ccc;border-top: solid 1px #ccc; }
+#docs h3 { padding: 10px 15px; margin: 10px -30px; margin-top: 40px; border-bottom: solid 1px #ccc;border-top: solid 1px #ccc; }
 #code-heading { font-size: 24px; text-align: center; margin: 6px 0; }
 #docs-content { color: #222; }
 #docs-content.dark { color: #ddd; }
