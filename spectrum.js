@@ -519,7 +519,7 @@
             dragHelperHeight = dragHelper.height();
             slideWidth = slider.width();
             slideHeight = slider.height();
-            slideHelperHelperHeight = slideHelper.height();
+            slideHelperHeight = slideHelper.height();
 
             if (!flat) {
                 container.offset(getOffset(container, offsetElement));
