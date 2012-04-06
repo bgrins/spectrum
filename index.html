@@ -40,8 +40,8 @@
     </div>
 
 <pre class='prettyprint hide' id='code-heading'>
-&lt;input type='spectrum' value='orange' /&gt;
-<input type='spectrum' class='basic' value='orange' />
+&lt;input type='color' value='#f594d0' /&gt;
+<input type='color' class='basic' value='#f594d0' />
 </pre>
         <h2>Why A Colorpicker?</h2>
         <p><em>I wasn't satisfied with the solutions available for colorpicking</em>.
@@ -60,7 +60,7 @@
         The JavaScript is well less than 10K gzipped, see the <a href='https://github.com/bgrins/spectrum/blob/master/README.md'>current size</a> in the README.
         
         <h3>&lt;noscript&gt;</h3>
-        <p>I wanted an option for the most basic use case, simlar to the <a href='http://dev.w3.org/html5/markup/input.color.html'>input[type=color]</a> HTML5 control.
+        <p>I wanted an option for the most basic use case, a polyfill for the <a href='http://dev.w3.org/html5/markup/input.color.html'>input[type=color]</a> HTML5 control.
            This mode needs to work without JavaScript enabled - and fallback to an input[type=text] like other HTML5 inputs.
         </p>
     
@@ -69,17 +69,19 @@
         <p>It is easy to skin and customize the plugin with CSS.
         
         <h2>Modes</h2>
-        <h3>input[type=spectrum]</h3>
+        <h3>input[type=color]</h3>
         
     <p>
-    If you just want to provide the <strong>most basic</strong> colorpicker for your user to choose instead of a text field, the easiest way is to create an input with the type of spectrum.
+    If you just want to provide the <strong>most basic</strong> colorpicker for your user to choose instead of a text field, the easiest way is to create an input with the type of color.  If the user's browser supports a native color control, it will fall back to using that.
+    </p>
+    <p><strong>Unlike the other modes, your value must be a 6 character hex value starting with a '#'.</strong>  Why?  Because the spec <a href='http://dev.w3.org/html5/markup/input.color.html#input.color.attrs.value'>says so</a>, that's why.
     </p>
         
 <pre class='prettyprint' id='code-subheading'>
-&lt;input type='spectrum' value='lightblue' /&gt;
+&lt;input type='color' value='#2a5a6a' /&gt;
 </pre>
     <div class='example'>
-    <input type='spectrum' value='lightblue' />
+    <input type='color' value='#2a5a6a' />
     </div>
     <p><strong>That's it!</strong> 
     The field will degrade to a text input if the user does not have JavaScript enabled,

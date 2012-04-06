@@ -506,7 +506,7 @@
             var color = get();
             
             if (isInput) {
-                boundElement.val(color.toHexString());
+                boundElement.val(color.toString(currentPreferredFormat));
             }
             
             colorOnShow = color;
@@ -748,14 +748,18 @@
     $.fn.spectrum.loadOpts = {};
     $.fn.spectrum.draggable = draggable;
 
+    $.fn.spectrum.processNativeColorInputs = function() {
+        var supportsColor = $("<input type='color' />")[0].type === "color";       
+        if (!supportsColor) {
+            $("input[type=color]").spectrum({
+                preferredFormat: "hex6"
+            });
+        }
+    };
+    
     $(function () {
         if ($.fn.spectrum.load) {
-            $("input[type=spectrum]").each(function () {
-                var existing = spectrums[$(this).data(dataID)];
-                if (!existing) {
-                    $(this).spectrum($.fn.spectrum.loadOpts);
-                }
-            });
+            $.fn.spectrum.processNativeColorInputs();
         }
     });
 
@@ -849,6 +853,9 @@
                 }
                 if (format === "hex") {
                     formattedString = this.toHexString();
+                }
+                if (format === "hex6") {
+                    formattedString = this.toHexString(true);
                 }
                 if (format === "name") {
                     formattedString = this.toName();
