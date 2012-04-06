@@ -184,7 +184,7 @@ License: MIT
     border: solid 1px #f0c49B;
     padding: 0;
 }
-.sp-container, .sp-container button, .sp-container input
+.sp-container, .sp-container button, .sp-container input, .sp-color, .sp-hue 
 {
     font: normal 12px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
     -webkit-box-sizing: border-box;
