@@ -220,7 +220,7 @@
             });
             textInput.keydown(function (e) { if (e.keyCode == 13) { setFromTextInput(); } });
 
-            cancelButton.bind("click touchstart", function (e) {
+            cancelButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
 
@@ -228,7 +228,7 @@
                 hide();
             });
 
-            chooseButton.bind("click touchstart", function (e) {
+            chooseButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
 
@@ -362,7 +362,7 @@
             hideAll();
             visible = true;
 
-            $(doc).bind("click.spectrum touchstart.spectrum", hide);
+            $(doc).bind("click.spectrum", hide);
             $(window).bind("resize.spectrum", resize);
             replacer.addClass("sp-active");
             container.show();
@@ -384,7 +384,7 @@
             if (!visible || flat) { return; }
             visible = false;
 
-            $(doc).unbind("click.spectrum touchstart.spectrum", hide);
+            $(doc).unbind("click.spectrum", hide);
             $(window).unbind("resize.spectrum", resize);
 
             replacer.removeClass("sp-active");

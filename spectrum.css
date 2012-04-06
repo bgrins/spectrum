@@ -152,7 +152,7 @@ License: MIT
 @media (max-device-width: 480px) {
     .sp-color { right: 40%; }
     .sp-hue { left: 63%; }
-    .sp-fill { padding-top: 80%; } 
+    .sp-fill { padding-top: 60%; } 
 }
 
 .sp-dragger {
