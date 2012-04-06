@@ -362,8 +362,8 @@
             hideAll();
             visible = true;
 
-            $(doc).bind("click touchstart", hide);
-            $(window).bind("resize", resize);
+            $(doc).bind("click.spectrum touchstart.spectrum", hide);
+            $(window).bind("resize.spectrum", resize);
             replacer.addClass("sp-active");
             container.show();
 
@@ -384,8 +384,8 @@
             if (!visible || flat) { return; }
             visible = false;
 
-            $(doc).unbind("click touchstart", hide);
-            $(window).unbind("resize", resize);
+            $(doc).unbind("click.spectrum touchstart.spectrum", hide);
+            $(window).unbind("resize.spectrum", resize);
 
             replacer.removeClass("sp-active");
             container.hide();
