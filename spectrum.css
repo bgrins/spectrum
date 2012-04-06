@@ -14,6 +14,7 @@ License: MIT
     left:0; 
     display:inline-block;
     *display: inline;
+    *zoom: 1;
     z-index: 100;
     overflow: hidden;
 }
@@ -205,7 +206,7 @@ License: MIT
 .sp-input-container {
     float:right;
     width: 100px;
-    margin-bottom:0;
+    margin-bottom: 4px;
 }
 .sp-initial-disabled  .sp-input-container {
     width: 100%;
@@ -279,10 +280,7 @@ License: MIT
 
 /* Buttons */
 .sp-button-container {
-    margin-top: 3px;
-    clear: both;
     float: right;
-    margin-top: 4px;
 }
 
 /* Replacer (the little preview div that shows up instead of the <input>) */
@@ -292,7 +290,7 @@ License: MIT
     cursor:pointer;
     padding: 4px;
     display:inline-block;
-    zoom: 1;
+    *zoom: 1;
     *display: inline;
     border: solid 1px #91765d;
     background: #eee;
