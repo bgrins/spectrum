@@ -59,20 +59,23 @@
         <p>Nobody wants to add a bunch of code into their project.  Spectrum is contained in two files, and both are careful not to mess with your existing code.
         The JavaScript is well less than 10K gzipped, see the <a href='https://github.com/bgrins/spectrum/blob/master/README.md'>current size</a> in the README.
         
-        <h3>&lt;noscript&gt;</h3>
+        <h3>Polyfill</h3>
         <p>I wanted an option for the most basic use case, a polyfill for the <a href='http://dev.w3.org/html5/markup/input.color.html'>input[type=color]</a> HTML5 control.
            This mode needs to work without JavaScript enabled - and fallback to an input[type=text] like other HTML5 inputs.
         </p>
     
         
         <h3>Customizable</h3>
-        <p>It is easy to skin and customize the plugin with CSS.
+        <p>Just because you don't <em>have</em> to change anything to get it to work, doesn't mean you <em>can't</em>!
+        It is easy to skin and customize the plugin with CSS, and there are a wide range of modes and options to explore.
         
         <h2>Modes</h2>
         <h3>input[type=color]</h3>
         
     <p>
-    If you just want to provide the <strong>most basic</strong> colorpicker for your user to choose instead of a text field, the easiest way is to create an input with the type of color.  If the user's browser supports a native color control, it will fall back to using that.
+    If you just want to provide a polyfill for the native color input, 
+    the easiest way is to create an input with the type of color.
+    Once a user's browser supports a native color control, it will opt to use their native control instead.
     </p>
     <p><strong>Unlike the other modes, your value must be a 6 character hex value starting with a '#'.</strong>  Why?  Because the spec <a href='http://dev.w3.org/html5/markup/input.color.html#input.color.attrs.value'>says so</a>, that's why.
     </p>
@@ -88,7 +91,7 @@
     so that they will still be able to manually enter a color.  You don't need to add a single line of code.
     </p>
 
-        <h3>custom</h3>
+        <h3>Custom</h3>
     <p>If you want to get more into the functionality, just create a normal input and initialize it as a normal jQuery plugin.  
     <strong>You can set a lot of options</strong> when initializing the colorpicker.  
     See the 'Options' section below.
@@ -110,7 +113,7 @@ $("#custom").spectrum({
             <input type='text' id='custom' />
         </div>
         
-        <h3>flat</h3>
+        <h3>Flat</h3>
         <p><strong>Flat</strong> 
             This means that it will always show up at full size, 
             and be positioned as an inline-block element.
