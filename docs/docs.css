@@ -21,12 +21,12 @@ a:focus { outline: thin dotted; }
 #pick2-details { font: monospace; }
 #switch-current { float: left; position:relative; display:none;}
 /*#switch-current .spectrum-container { position: fixed; top:60px; left: 10px; }*/
-#docs-content { margin-left: 170px; padding: 10px 30px; border:solid 10px #ecc; border-right:none;border-bottom:none; padding-bottom: 100px;  background: #fff; background: rgba(255, 255, 255, .6); }
+#docs-content { margin-left: 190px; padding: 10px 30px; border:solid 10px #ecc; border-right:none;border-bottom:none; padding-bottom: 100px;  background: #fff; background: rgba(255, 255, 255, .6); }
 .switch-current-output { display:none; margin:3px auto; width: 200px; text-align: center; }
 .type { padding-left: 4px; font-size: .8em; font-weight: bold;}
 .example { margin-top:10px; margin-left: 40px; }
 #docs {  }
-#docs ul { margin-left: 25px; padding-left:0; }
+#docs ul { margin-left: 25px; padding-left:10px; }
 #docs li { list-style: square; margin-left: 6px; }
 #docs p { margin: 0; padding:0; padding-top:4px; margin-left: 25px; }
 #docs pre { margin-left: 25px; }
@@ -37,7 +37,7 @@ a:focus { outline: thin dotted; }
 #docs-content.dark { color: #ddd; }
 
 em.label { padding:4px; margin-left: 10px; display:inline-block; vertical-align: top; margin-top: 3px; }
-
+.hide { display:none; }
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
 .clearfix { *zoom: 1; }
@@ -83,7 +83,7 @@ em.label { padding:4px; margin-left: 10px; display:inline-block; vertical-align:
     left: 0px;
     position: fixed;
     font-size: 11px;
-    width: 160px;
+    width: 180px;
     color: #222;
     overflow-y: auto;
     font-family: Georgia;
@@ -93,7 +93,7 @@ em.label { padding:4px; margin-left: 10px; display:inline-block; vertical-align:
     top:0;
     bottom:0;
     left: 0;
-    width: 150px;
+    width: 170px;
     background: #eee;
     line-height: 60px;
     padding-top: 3px;
@@ -129,9 +129,20 @@ em.label { padding:4px; margin-left: 10px; display:inline-block; vertical-align:
 }
 
 #toc .toc-h3 {
-    padding-left: 20px;
+    padding-left: 25px;
 }
 
 #toc .toc-active {
     background: #CCE;
+}
+
+
+
+
+.full-spectrum  {
+    margin: 0 auto;
+}
+.full-spectrum .sp-palette {
+
+max-width: 200px;
 }

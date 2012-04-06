@@ -34,80 +34,119 @@
         <div id='switch-current-rgb' class='switch-current-output'></div>
         <div id='switch-current-hex' class='switch-current-output'></div>
     </div>
-<pre class='prettyprint' id='code-heading'>
+    
+    <div style='text-align:center;'>
+    <input id="full" />
+    </div>
+
+<pre class='prettyprint hide' id='code-heading'>
 &lt;input type='spectrum' value='orange' /&gt;
 <input type='spectrum' class='basic' value='orange' />
 </pre>
-        <h2>Goals</h2>
-        <p>I wanted a JavaScript colorpicker that didn't require images, and that had an API that made sense to me as a developer who has worked with color in a number of applications.  I had used existing plugins (which I was quite grateful for), but decided that I would make a smaller, simpler one.  Here are the goals I had:</p>
+        <h2>Why A Colorpicker?</h2>
+        <p><em>I wasn't satisfied with the solutions available for colorpicking</em>.
+        Many of them included a ton of images, were hard to skin or customize, or were very large plugins.
+        Here are the goals I had when making a new one:
+        </p>
         
-        <div id='goals' class='clearfix'>
-          <div class='goal'>
-            <h4>Drop In</h4>
-            <p>
-                Spectrum requires one JavaScript file and one CSS file.  
-                No images or other resources required.  This makes it easy to add into projects.
-            </p>
-          </div>
-          <div class='goal'>
-            <h4>Progressive Enhancement</h4>
-            <p>
-              Automatically copy changes back into the <code>input</code>.<br />
-              Without JavaScript - you still see a text box.
-            </p>
-          </div>
-          <div class='goal'>
-            <h4>Browser Support</h4>
-            <ul>
-                <li>IE <small>6+</small></li>
-                <li>Chrome <small>4+</small></li>
-                <li>Firefox <small>3.6+</small></li>
-                <li>Safari <small>4+</small></li>
-                <li>Opera <small>11.1+</small></li>
-                <li>iOS</li>
-            </ul>
-            <small>I do not have mobile devices for testing!
-            Please <a href='http://github.com/bgrins/spectrum'>visit the project page</a> 
-            and let me know if your device does or doesn't work.</small>
-          </div>
-        </div>
+        <h3>Small Footprint</h3>
+        <p>Just include the needed CSS and JavaScript files, and you are ready to go!</p>
+<pre class='prettyprint' id='code-subheading'>
+&lt;script src='<a href='https://raw.github.com/bgrins/spectrum/master/spectrum.js' target="_blank">https://raw.github.com/bgrins/spectrum/master/spectrum.js</a>'&gt;&lt;/script&gt;
+&lt;link rel='stylesheet' href='<a href='https://raw.github.com/bgrins/spectrum/master/spectrum.css' target="_blank">https://raw.github.com/bgrins/spectrum/master/spectrum.css</a>' /&gt;
+</pre>
+        <p><strong>We don't need no stinkin' images!</strong>  No zip files, either.  Just those two.</p>
+        <p>Nobody wants to add a bunch of code into their project.  Spectrum is contained in two files, and both are careful not to mess with your existing code.
+        The JavaScript is well less than 10K gzipped, see the <a href='https://github.com/bgrins/spectrum/blob/master/README.md'>current size</a> in the README.
         
-        <h3>No Images</h3>
+        <h3>Progressive Enhancement</h3>
+        <p>I wanted an option for the most basic use case, simlar to the <a href='http://dev.w3.org/html5/markup/input.color.html'>input[type=color]</a> HTML5 control.
+            Ideally, this mode would not require any extra JavaScript to fire it up, and it would need to work without JavaScript enabled.
+        </p>
+    
+        
+        <h3>Customizable</h3>
+        <p>It is easy to skin and customize the plugin with CSS.
+        
+        <h2>Modes</h2>
+        <h3>input[type=spectrum]</h3>
+        
+    <p>
+    If you just want to provide the most basic colorpicker for your user to choose instead of a text field, the easiest way is to create an input with the type of spectrum.
+    </p>
         
 <pre class='prettyprint' id='code-subheading'>
-&lt;script src='<a href='https://raw.github.com/bgrins/spectrum/master/spectrum.js'>spectrum.js</a>'&gt;&lt;/script&gt;
-&lt;link rel='stylesheet' href='<a href='https://raw.github.com/bgrins/spectrum/master/spectrum.css'>spectrum.css</a>' /&gt;
-
 &lt;input type='spectrum' value='lightblue' /&gt;
 </pre>
-    <p><strong>That's it!</strong> 
-    The field will degrade to a text input if the user does not have JavaScript enabled,
-    so that they will still be able to manually enter a color.  
-    Spectrum will handle setting the value as it changes, so you don't need to add a single extra line of JavaScript.
-    </p>
     <div class='example'>
     <input type='spectrum' value='lightblue' />
     </div>
+    <p><strong>That's it!</strong> 
+    The field will degrade to a text input if the user does not have JavaScript enabled,
+    so that they will still be able to manually enter a color.  You don't need to add a single line of code.
+    </p>
 
+        <h3>custom</h3>
+    <p>If you want to get more into the functionality, just create a normal input and initialize it as a normal jQuery plugin.  <strong>You can set a lot of options</strong> when initializing the colorpicker.  See 'Usage' section below.
+    
+<pre class='prettyprint'>
+&lt;input type='text' id="custom" /&gt;
+</pre>
+    
+<pre class='prettyprint'>
+&lt;script&gt;
+$("#custom").spectrum({
+    color: "#f00"
+});
+&lt;/script&gt;
+</pre>
 
-        <h2>Usage</h2>
+        <div class='example'>
+            <input type='text' id='custom' />
+        </div>
+        
+        <h3>flat</h3>
+        <p><strong>Flat</strong> 
+            This means that it will always show up at full size, 
+            and be positioned as an inline-block element.
+            Look to the left for a full sized flat picker.
+        </p>
 
 <pre class='prettyprint'>
-$("#picker").spectrum({
-    color: string,
-    showInput: (true|<b>false</b>),
-    showPalette: (true|<b>false</b>),
-    showPaletteOnly: (true|<b>false</b>),
-    maxSelectionSize: (number|<b>7</b>),
-    showInitial: (true|<b>false</b>),
-    palette: [[color, color], [color, color], ...],
-    flat: (true|<b>false</b>)
+&lt;input type='text' id="flat" /&gt;
+</pre>
+<pre class='prettyprint'>
+$("#flat").spectrum({
+    flat: true
 });
-
-$("#picker").spectrum("show");
-$("#picker").spectrum("hide");
-$("#picker").spectrum("get");
-$("#picker").spectrum("set", colorString);
+</pre>
+        
+        <div class='example'>
+            <input type='text' id='flat' value="limegreen" />
+        </div>
+        
+        
+        <h2>Options</h2>
+<pre class='prettyprint'>
+$("#picker").spectrum({
+    color: <strong>tinycolor</strong>,
+    flat: bool,
+    showInput: bool,
+    showButtons: bool,
+    showInitial: bool,
+    localStorageKey: string,
+    showPalette: bool,
+    showPaletteOnly: bool,
+    showSelectionPalette: bool,
+    addSelectionToPalette: bool,
+    cancelText: string,
+    chooseText: string,
+    className: string,
+    preferredFormat: string,
+    maxSelectionSize: int,
+    palette: [[string]],
+    selectionPalette: [string]
+});
 </pre>
 
 
@@ -213,36 +252,6 @@ $("#showInputAndInitial").spectrum({
                 <input type='text' name='showInputAndInitial' id='showInputAndInitial' value='goldenrod' />
         </div>
         
-        
-        <h3>Flat versus Collapsed</h3>
-        <p><strong>Collapsed</strong>
-            A small div will take the place of the element, and the colorpicker will show up when the user clicks on it.  Here is an example of that:
-        </p>
-        
-<pre class='prettyprint'>
-$("#collapsed").spectrum();
-</pre>
-        
-        <div class='example'>
-            <input type='text' name='collapsed' id='collapsed' />
-        </div>
-        <p><strong>Flat</strong> 
-            This means that it will always show up at full size, 
-            and be positioned as an inline-block element.
-            Look to the left for a full sized flat picker.
-        </p>
-
-<pre class='prettyprint'>
-$("#flat").spectrum({
-    flat: true
-});
-</pre>
-        
-        <div class='example'>
-            <input type='text' name='flat' id='flat' />
-        </div>
-        
-        
         <h2>Events</h2>
         
 <pre class='prettyprint'>
@@ -314,6 +323,14 @@ beforeShow: function(color) {
     <input type='text' value='blanchedalmond' name='beforeShow' id='beforeShow' />
 </div>
         
+        <h2>Methods</h2>
+<pre class='prettyprint'>
+$("#picker").spectrum("show");
+$("#picker").spectrum("hide");
+$("#picker").spectrum("get");
+$("#picker").spectrum("set", colorString);
+</pre>
+
         <h2>Skinning</h2>
         
         <p>Since it is all built with HTML/CSS, you can skin it easily.  There are two parts to the <a href='https://github.com/bgrins/spectrum/blob/master/spectrum.css'>spectrum.css</a> file, the core rules (at the top of the file), and the themable rules (at the bottom).  Feel free to tweak these rules to make it look how you want.</p>
@@ -324,7 +341,20 @@ beforeShow: function(color) {
         </p>
         
         <h2>Nitty Gritty</h2>
-        <h3>IE Support</h3>
+        
+        <h3>Browser Support</h3>
+        <p>I wanted this to work in the latest and greatest browsers, but also target backwords compatibility and <strong>mobile support</strong>.  
+        Here are the currently supported browers:
+        <ul>
+            <li>IE <small>6+</small></li>
+            <li>Chrome <small>4+</small></li>
+            <li>Firefox <small>3.6+</small></li>
+            <li>Safari <small>4+</small></li>
+            <li>Opera <small>11.1+</small></li>
+            <li>iOS</li>
+        </ul>
+
+        <h3>IE Implementation</h3>
         <p>
         IE Support is provided using 
         <a href='http://msdn.microsoft.com/en-us/library/ms532997(v=vs.85).aspx'>proprietary filters</a>.  

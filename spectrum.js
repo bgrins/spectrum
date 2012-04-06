@@ -23,6 +23,7 @@
         addSelectionToPalette: true,
         cancelText: "cancel",
         chooseText: "choose",
+        className: "",
         preferredFormat: false,
         maxSelectionSize: 7,
         theme: 'sp-light',
@@ -180,6 +181,7 @@
             container.toggleClass("sp-palette-disabled", !showPalette);
             container.toggleClass("sp-palette-only", showPaletteOnly);
             container.toggleClass("sp-initial-disabled", !showInitial);
+            container.addClass(opts.className);
 
             if (shouldReplace) {
                 boundElement.hide().after(replacer);
@@ -261,9 +263,11 @@
             function palletElementClick(e) {
                 if (e.data && e.data.ignore) {
                     set($(this).data("color"), true);
+                    move();
                 }
                 else {
                     set($(this).data("color"));
+                    move();
                     hide();
                 }
 
