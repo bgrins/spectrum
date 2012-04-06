@@ -102,6 +102,12 @@ em.label { padding:4px; margin-left: 10px; display:inline-block; vertical-align:
     z-index: -1;
 }
 
+@media (max-device-width: 480px) {
+
+#toc, #toc-slider, h1 {
+    position:absolute;
+}
+}
 #toc ul {
     margin: 0;
     padding: 0;
