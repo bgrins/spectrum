@@ -7,18 +7,23 @@
 <script type="text/javascript" src="docs/jquery-1.6.2.js"></script>
 <script type="text/javascript" src="spectrum.js"></script>
 <script type="text/javascript" src="docs/prettify.js"></script>
+<script type='text/javascript' src='docs/toc.js'></script>
+<script type='text/javascript' src='docs/docs.js'></script>
 </head>
 
 <body>
 
 <div id='header'>
-    <h1>Spectrum - The No Hassle Colorpicker</h1>
+    <h1><a href='http://bgrins.github.com/spectrum'>Spectrum</a>  <em>The No Hassle jQuery Colorpicker</em></h1>
     <div id='links'>
-        <a href='http://github.com/bgrins/spectrum'>Source code and downloads</a> |
-        <a href='http://briangrinstead.com'>Me</a>
+        <a href='http://github.com/bgrins/spectrum'>Source code</a> |
+        <a href='http://twitter.com/bgrins'>@bgrins</a>
     </div>
     <br style='clear:both;' />
 </div>
+
+<div id='toc'></div>
+<div id='toc-slider'><h1>Spectrum</h1></div>
 
 <div id='docs'>
     <div id='docs-content'>
@@ -38,21 +43,21 @@
         
         <div id='goals' class='clearfix'>
           <div class='goal'>
-            <h3>Drop In</h3>
+            <h4>Drop In</h4>
             <p>
                 Spectrum requires one JavaScript file and one CSS file.  
                 No images or other resources required.  This makes it easy to add into projects.
             </p>
           </div>
           <div class='goal'>
-            <h3>Progressive Enhancement</h3>
+            <h4>Progressive Enhancement</h4>
             <p>
               Automatically copy changes back into the <code>input</code>.<br />
               Without JavaScript - you still see a text box.
             </p>
           </div>
           <div class='goal'>
-            <h3>Browser Support</h3>
+            <h4>Browser Support</h4>
             <ul>
                 <li>IE <small>6+</small></li>
                 <li>Chrome <small>4+</small></li>
@@ -67,7 +72,7 @@
           </div>
         </div>
         
-        <h2>1 JavaScript file, 1 CSS file</h2>
+        <h3>No Images</h3>
         
 <pre class='prettyprint' id='code-subheading'>
 &lt;script src='<a href='https://raw.github.com/bgrins/spectrum/master/spectrum.js'>spectrum.js</a>'&gt;&lt;/script&gt;
@@ -84,7 +89,29 @@
     <input type='spectrum' value='lightblue' />
     </div>
 
-        <h2>Want A Little More Control?</h2>
+
+        <h2>Usage</h2>
+
+<pre class='prettyprint'>
+$("#picker").spectrum({
+    color: string,
+    showInput: (true|<b>false</b>),
+    showPalette: (true|<b>false</b>),
+    showPaletteOnly: (true|<b>false</b>),
+    maxSelectionSize: (number|<b>7</b>),
+    showInitial: (true|<b>false</b>),
+    palette: [[color, color], [color, color], ...],
+    flat: (true|<b>false</b>)
+});
+
+$("#picker").spectrum("show");
+$("#picker").spectrum("hide");
+$("#picker").spectrum("get");
+$("#picker").spectrum("set", colorString);
+</pre>
+
+
+        <h3>Color</h3>
 
 <pre class='prettyprint'>
 &lt;input type='text' class='basic' value='red' /&gt;
@@ -115,62 +142,6 @@ $(".basic").spectrum();
             <input type='text' class='basic1' value='indigo' />
             <input type='text' class='basic1' value='violet' />
         </div>
-
-        <h2>Want A Lot More Control?</h2>
-
-<pre class='prettyprint'>
-$("#picker").spectrum({
-    color: string,
-    showInput: (true|<b>false</b>),
-    showPalette: (true|<b>false</b>),
-    showPaletteOnly: (true|<b>false</b>),
-    maxSelectionSize: (number|<b>7</b>),
-    showInitial: (true|<b>false</b>),
-    palette: [[color, color], [color, color], ...],
-    flat: (true|<b>false</b>)
-});
-
-$("#picker").spectrum("show");
-$("#picker").spectrum("hide");
-$("#picker").spectrum("get");
-$("#picker").spectrum("set", colorString);
-</pre>
-
-        <h3>Color</h3>
-        <p>Spectrum will use the color passed in to initialize.  If there is no color passed in,
-        it will try to parse a color based on the <code>value</code> of the input.  The color parsing is based on the <a href='https://github.com/bgrins/TinyColor'>TinyColor</a> plugin, and accepts many forms of input:</p>
-        
-<pre class='prettyprint'>
-red
-#fff
-fff
-#ffffff
-ffffff
-rgb(255, 0, 0)
-rgb 255 0 0
-hsl(0, 100, 50)
-hsl(0, 100%, 50%)
-hsl 0 100 50
-hsl 0 100% 50%
-hsv(0, 100%, 100%)
-hsv(0, 100, 100)
-hsv 0 100% 100%
-hsv 0 100 100
-</pre>
-        <p>It also provides the following forms of output:</p>
-<pre class='prettyprint'>
-var t = $("#element").spectrum("get");
-t.toHex()       // "ff0000"
-t.toHexString() // "#ff0000"
-t.toRgb()       // {"r":255,"g":0,"b":0}
-t.toRgbString() // "rgb(255, 0, 0)"
-t.toHsv()       // {"h":0,"s":1,"v":1}
-t.toHsvString() // "hsv(0, 100%, 100%)"
-t.toHsl()       // {"h":0,"s":1,"l":0.5}
-t.toHslString() // "hsl(0, 100%, 50%)"
-t.toName()      // "red"
-</pre>
-        
         
         <h3>Show Input</h3>
         
@@ -353,137 +324,54 @@ beforeShow: function(color) {
         </p>
         
         <h2>Nitty Gritty</h2>
+        <h3>IE Support</h3>
         <p>
         IE Support is provided using 
         <a href='http://msdn.microsoft.com/en-us/library/ms532997(v=vs.85).aspx'>proprietary filters</a>.  
         Other browsers use CSS gradients.
         </p>
+        
+        
+        <h3>Accepted Color Inputs</h3>
+        <p>Spectrum will use the color passed in to initialize.  If there is no color passed in,
+        it will try to parse a color based on the <code>value</code> of the input.  The color parsing is based on the <a href='https://github.com/bgrins/TinyColor'>TinyColor</a> plugin, and accepts many forms of input:</p>
+<pre class='prettyprint'>
+red
+#fff
+fff
+#ffffff
+ffffff
+rgb(255, 0, 0)
+rgb 255 0 0
+hsl(0, 100, 50)
+hsl(0, 100%, 50%)
+hsl 0 100 50
+hsl 0 100% 50%
+hsv(0, 100%, 100%)
+hsv(0, 100, 100)
+hsv 0 100% 100%
+hsv 0 100 100
+</pre>
+        <p>It also provides the following forms of output:</p>
+<pre class='prettyprint'>
+var t = $("#element").spectrum("get");
+t.toHex()       // "ff0000"
+t.toHexString() // "#ff0000"
+t.toRgb()       // {"r":255,"g":0,"b":0}
+t.toRgbString() // "rgb(255, 0, 0)"
+t.toHsv()       // {"h":0,"s":1,"v":1}
+t.toHsvString() // "hsv(0, 100%, 100%)"
+t.toHsl()       // {"h":0,"s":1,"l":0.5}
+t.toHslString() // "hsl(0, 100%, 50%)"
+t.toName()      // "red"
+</pre>
+        
+        
+        
     </div>
-    <br style='clear:both;' />
 </div>
 
 
-<script>
-
-function updateBorders(color) {
-    $("#docs-content").css("border-color", color.toHexString());
-}
-
-
-$("#pick1").spectrum({
-    flat: true,
-    change: function(color) {
-        var hsv = color.toHsv();
-        var rgb = color.toRgbString();
-        var hex = color.toHexString();
-        //console.log("callback",color.toHslString(), color.toHsl().h, color.toHsl().s, color.toHsl().l)
-        $("#docs-content").css({
-            'background-color': color.toRgbString()
-        }).toggleClass("dark", hsv.v < .5);
-        $("#switch-current-rgb").text(rgb);
-        $("#switch-current-hex").text(hex);
-    },
-    show: function() {
-       
-    },
-    hide: function() {
-       
-    },
-    showInput: true,
-    showPalette: true,
-    palette: ['white', '#306', '#c5c88d', '#ac5c5c', '#344660']
-});
-
-$("#collapsed").spectrum({
-    color: "#dd3333",
-    change: updateBorders,
-    show: function() {
-       
-    },
-    hide: function() {
-       
-    }
-});
-
-$("#flat").spectrum({
-    flat: true,
-    move: updateBorders
-});
-
-$("#showInput").spectrum({
-    color: "#dd33dd",
-    showInput: true,
-    change: updateBorders,
-    show: function() {
-       
-    },
-    hide: function() {
-       
-    } 
-});
-
-$("#openWithLink").spectrum({
-    color: "#dd3333",
-    change: updateBorders,
-    show: function() {
-       
-    },
-    hide: function() {
-       
-    }
-});
-
-$("#showPalette").spectrum({
-    showPalette: true,
-    palette: [
-        ['black', 'white', 'blanchedalmond'], 
-        ['rgb(255, 128, 0);', 'hsv 100 70 50', 'lightyellow']
-    ],
-    change: updateBorders
-});
-
-var textPalette = ["rgb(255, 255, 255)", "rgb(204, 204, 204)", "rgb(192, 192, 192)", "rgb(153, 153, 153)", "rgb(102, 102, 102)", "rgb(51, 51, 51)", "rgb(0, 0, 0)", "rgb(255, 204, 204)", "rgb(255, 102, 102)", "rgb(255, 0, 0)", "rgb(204, 0, 0)", "rgb(153, 0, 0)", "rgb(102, 0, 0)", "rgb(51, 0, 0)", "rgb(255, 204, 153)", "rgb(255, 153, 102)", "rgb(255, 153, 0)", "rgb(255, 102, 0)", "rgb(204, 102, 0)", "rgb(153, 51, 0)", "rgb(102, 51, 0)", "rgb(255, 255, 153)", "rgb(255, 255, 102)", "rgb(255, 204, 102)", "rgb(255, 204, 51)", "rgb(204, 153, 51)", "rgb(153, 102, 51)", "rgb(102, 51, 51)", "rgb(255, 255, 204)", "rgb(255, 255, 51)", "rgb(255, 255, 0)", "rgb(255, 204, 0)", "rgb(153, 153, 0)", "rgb(102, 102, 0)", "rgb(51, 51, 0)", "rgb(153, 255, 153)", "rgb(102, 255, 153)", "rgb(51, 255, 51)", "rgb(51, 204, 0)", "rgb(0, 153, 0)", "rgb(0, 102, 0)", "rgb(0, 51, 0)", "rgb(153, 255, 255)", "rgb(51, 255, 255)", "rgb(102, 204, 204)", "rgb(0, 204, 204)", "rgb(51, 153, 153)", "rgb(51, 102, 102)", "rgb(0, 51, 51)", "rgb(204, 255, 255)", "rgb(102, 255, 255)", "rgb(51, 204, 255)", "rgb(51, 102, 255)", "rgb(51, 51, 255)", "rgb(0, 0, 153)", "rgb(0, 0, 102)", "rgb(204, 204, 255)", "rgb(153, 153, 255)", "rgb(102, 102, 204)", "rgb(102, 51, 255)", "rgb(102, 0, 204)", "rgb(51, 51, 153)", "rgb(51, 0, 153)", "rgb(255, 204, 255)", "rgb(255, 153, 255)", "rgb(204, 102, 204)", "rgb(204, 51, 204)", "rgb(153, 51, 153)", "rgb(102, 51, 102)", "rgb(51, 0, 51)"];
-
-$("#showPaletteOnly").spectrum({
-    showPaletteOnly: true,
-    maxPaletteSize: textPalette.length,
-    palette: textPalette
-});
-
-$("#showInitial").spectrum({
-    showInitial: true
-});
-
-$("#showInputAndInitial").spectrum({
-    showInitial: true,
-    showInput: true
-});
-
-
-$("#changeOnMove").spectrum({ 
-    move: function(c) {
-        var label = $("#changeOnMoveLabel");
-        label.text("Move called: " + c.toHexString());
-    } 
-});
-$("#changeOnMoveNo").spectrum({
-    change: function(c) {
-        var label = $("#changeOnMoveNoLabel");
-        label.text("Change called: " + c.toHexString());
-    }
-});
-
-$(".basic").spectrum({ change: updateBorders });
-$(".basic1").spectrum({ change: updateBorders });
-
-$("#beforeShow").spectrum({
-    beforeShow: function() {
-        return false;
-    }
-});
-prettyPrint();
-
-</script>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
