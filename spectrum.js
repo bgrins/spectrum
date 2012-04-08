@@ -371,6 +371,9 @@
             replacer.addClass("sp-active");
             container.show();
 
+            if (showPalette) {
+                drawPalette();
+            }
             reflow();
             updateUI();
             
