@@ -223,19 +223,22 @@ $("#showPalette").spectrum({
         </div>
         
         <h3>Show Palette Only</h3>
+        <div class='note'>see a working <a href='http://jsfiddle.net/bgrins/S45tW/'>jsFiddle example</a></div>
         <p>Spectrum can show only the above palette</p>
         
 <pre class='prettyprint'>
 $("#showPaletteOnly").spectrum({
     showPaletteOnly: true,
+    color: 'blanchedalmond',
     palette: [
-        'black', 'white', 'blanchedalmond', 
-        'rgb(255, 128, 0);', 'hsv 100 70 50'
+        ['black', 'white', 'blanchedalmond', 
+        'rgb(255, 128, 0);', 'hsv 100 70 50'],
+        ['red', 'yellow', 'green', 'blue', 'violet']
     ]
 });
 </pre>
         <div class='example'>
-                <input type='text' name='showPaletteOnly' id='showPaletteOnly' value='lightblue' />
+                <input type='text' name='showPaletteOnly' id='showPaletteOnly'  />
         </div>
         
         <h3>Show Selection Palette</h3>
