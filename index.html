@@ -158,58 +158,64 @@ $("#picker").spectrum({
 
 
         <h3>Color</h3>
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                The initial color will be set with the <code>color</code> option.
+                If you don't pass in a color, Spectrum will use the <code>value</code> attribute on the input.
+                </p>
+                <p>
+                The color parsing is based on the <a href='https://github.com/bgrins/TinyColor'>TinyColor</a> plugin.  
+                This should parse any color string you throw at it.</p>
+                </p>
+            </div>
 
-<pre class='prettyprint'>
+            <pre class='prettyprint'>
 &lt;input type='text' class='basic' value='red' /&gt;
 &lt;input type='text' class='basic' value='#0f0' /&gt;
 &lt;input type='text' class='basic' value='blue' /&gt;
 &lt;br /&gt;
 &lt;input type='text' class='override' /&gt;
-</pre>
-    
-<pre class='prettyprint'>
+            </pre>
+                
+            <pre class='prettyprint'>
 &lt;script&gt;
 $(".basic").spectrum();
 $(".override").spectrum({
     color: "yellow"
 });
 &lt;/script&gt;
-</pre>
-        <div class='example'>
-            <input type='text' class='basic' value='red' />
-            <input type='text' class='basic' value='green' />
-            <input type='text' class='basic' value='blue' />
-            <br />
-            <input type='text' class='override' />
+            </pre>
+            <div class='example'>
+                <input type='text' class='basic' value='red' />
+                <input type='text' class='basic' value='green' />
+                <input type='text' class='basic' value='blue' />
+                <br />
+                <input type='text' class='override' />
+            </div>
         </div>
-
-        <p>
-        The initial color will be set with the <code>color</code> option.
-        If you don't pass in a color, Spectrum will use the <code>value</code> attribute on the input.
-        </p>
-        <p>
-        The color parsing is based on the <a href='https://github.com/bgrins/TinyColor'>TinyColor</a> plugin.  
-        This should parse any color string you throw at it.</p>
-        
-        </p>
         
         <h3>Show Input</h3>
-        
-        <p>You can add an input to allow free form typing.  The color parsing is very permissive in the allowed strings.  See <a href='https://github.com/bgrins/TinyColor'>TinyColor</a> for more details.
-        
-<pre class='prettyprint'>
+        <div class='option-content'>
+            <div class='description'>
+                <p>You can add an input to allow free form typing.  The color parsing is very permissive in the allowed strings.  See <a href='https://github.com/bgrins/TinyColor'>TinyColor</a> for more details.
+            </div>
+            <pre class='prettyprint'>
 $("#showInput").spectrum({
     showInput: true
 });
-</pre>
-        <div class='example'>
-            <input type='text' name='showInput' id='showInput' />
+            </pre>
+            <div class='example'>
+                <input type='text' name='showInput' id='showInput' />
+            </div>
         </div>
         
         <h3>Show Palette</h3>
-        <p>Spectrum can show a palette below the colorpicker to make it convenient for users to choose from frequently or recently used colors.  When the colorpicker is closed, the current color will be added to the palette if it isn't there already.  Check it out here: </p>
-        
-<pre class='prettyprint'>
+        <div class='option-content'>
+            <div class='description'>
+            <p>Spectrum can show a palette below the colorpicker to make it convenient for users to choose from frequently or recently used colors.  When the colorpicker is closed, the current color will be added to the palette if it isn't there already.  Check it out here: </p>
+            </div>
+            <pre class='prettyprint'>
 $("#showPalette").spectrum({
     showPalette: true,
     palette: [
@@ -217,16 +223,20 @@ $("#showPalette").spectrum({
         ['rgb(255, 128, 0);', 'hsv 100 70 50', 'lightyellow']
     ]
 });
-</pre>
-        <div class='example'>
-                <input type='text' name='showPalette' id='showPalette' value='lightblue' />
+            </pre>
+            <div class='example'>
+                    <input type='text' name='showPalette' id='showPalette' value='lightblue' />
+            </div>
         </div>
         
         <h3>Show Palette Only</h3>
-        <div class='note'>see a working <a href='http://jsfiddle.net/bgrins/S45tW/'>jsFiddle example</a></div>
-        <p>Spectrum can show only the above palette</p>
-        
-<pre class='prettyprint'>
+        <div class='option-content'>
+            <div class='note'>see a working <a href='http://jsfiddle.net/bgrins/S45tW/'>jsFiddle example</a></div>
+            <div class='description'>
+            <p>If you'd like, spectrum can show the palettes you specify, and nothing else.</p>
+            </div>
+            
+            <pre class='prettyprint'>
 $("#showPaletteOnly").spectrum({
     showPaletteOnly: true,
     color: 'blanchedalmond',
@@ -236,15 +246,23 @@ $("#showPaletteOnly").spectrum({
         ['red', 'yellow', 'green', 'blue', 'violet']
     ]
 });
-</pre>
-        <div class='example'>
+            </pre>
+            <div class='example'>
+            <span class='label label-result'>
+            Result
+            </span>
                 <input type='text' name='showPaletteOnly' id='showPaletteOnly'  />
+            </div>
         </div>
         
         <h3>Show Selection Palette</h3>
-        <p>Spectrum can keep track of what has been selected by the user with the <code>showSelectionPalette</code> option.</p>
-        <p>If the <code>localStorageKey</code> option is defined, the selection will be saved in the browser's localStorage object</p>
-<pre class='prettyprint'>
+        <div class='option-content'>
+            <div class='description'>
+                <p>Spectrum can keep track of what has been selected by the user with the <code>showSelectionPalette</code> option.</p>
+                <p>If the <code>localStorageKey</code> option is defined, the selection will be saved in the browser's localStorage object</p>
+            </div>
+            
+            <pre class='prettyprint'>
 $("#showSelectionPalette").spectrum({
     showPalette: true,
     showSelectionPalette: true, // true by default
@@ -256,58 +274,76 @@ $("#showSelectionPaletteStorage").spectrum({
     palette: [ ],
     localStorageKey: "spectrum.homepage", // Any Spectrum with the same string will share selection
 });
-</pre>
-        <div class='example'>
-                <span class='label label-info'>This colorpicker will store what you pick:</span><br /><br />
-                <input type='text' name='showSelectionPalette' id='showSelectionPalette' value='lightblue' /><br /><br />
-                <span class='label label-info'>Try reloading your page, it will still be here on this one:</span><br /><br />
-                <input type='text' name='showSelectionPaletteStorage' id='showSelectionPaletteStorage' value='lightblue' />
+            </pre>
+            
+            <div class='example'>
+                    <span class='label label-info'>This colorpicker will store what you pick:</span><br /><br />
+                    <input type='text' name='showSelectionPalette' id='showSelectionPalette' value='lightblue' /><br /><br />
+                    <span class='label label-info'>Try reloading your page, it will still be here on this one:</span><br /><br />
+                    <input type='text' name='showSelectionPaletteStorage' id='showSelectionPaletteStorage' value='lightblue' />
+            </div>
         </div>
         
         <h3>Show Initial</h3>
-        <p>Spectrum can show the color that was initially set when opening.  This provides an easy way to click back to what was set when opened.</p>
-        
-<pre class='prettyprint'>
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Spectrum can show the color that was initially set when opening.  
+                This provides an easy way to click back to what was set when opened.
+                </p>
+            </div>
+            
+            <pre class='prettyprint'>
 $("#showInitial").spectrum({
     showInitial: true
 });
-</pre>
-        <div class='example'>
-                <input type='text' name='showInitial' id='showInitial' value='goldenrod' />
+            </pre>
+            
+            <div class='example'>
+                    <input type='text' name='showInitial' id='showInitial' value='goldenrod' />
+            </div>
         </div>
-        
         <h3>Show Input and Initial</h3>
-        <p>Spectrum can show the color that was initially set when opening.  This provides an easy way to click back to what was set when opened.</p>
-        
-<pre class='prettyprint'>
+        <div class='option-content'>
+            <div class='description'>
+                <p>Spectrum can show the color that was initially set when opening.  This provides an easy way to click back to what was set when opened.</p>
+            </div>
+            <pre class='prettyprint'>
 $("#showInputAndInitial").spectrum({
     showInitial: true,
     showInput: true
 });
-</pre>
-        <div class='example'>
-                <input type='text' name='showInputAndInitial' id='showInputAndInitial' value='goldenrod' />
+            </pre>
+            
+            <div class='example'>
+                    <input type='text' name='showInputAndInitial' id='showInputAndInitial' value='goldenrod' />
+            </div>
         </div>
-        
         <h3>Button Text</h3>
-        <p>You can set the button's text using <code>cancelText</code> and <code>chooseText</code> properties.</p>
+        <div class='option-content'>
+            <div class='description'>
+                <p>You can set the button's text using <code>cancelText</code> and <code>chooseText</code> properties.</p>
+            </div>
         
-        
-<pre class='prettyprint'>
+            <pre class='prettyprint'>
 $("#buttonText").spectrum({
     chooseText: "Alright",
     cancelText: "No way"
 });
-</pre>
-        <div class='example'>
-                <input type='text' name='buttonText' id='buttonText' value='orangered' />
+            </pre>
+            
+            <div class='example'>
+                    <input type='text' name='buttonText' id='buttonText' value='orangered' />
+            </div>
         </div>
         
         <h3>Preferred Format</h3>
-        <p>You can set the format that is displayed</p>
+        <div class='option-content'>
+            <div class='description'>
+                <p>You can set the format that is displayed</p>
+            </div>
         
-        
-<pre class='prettyprint'>
+            <pre class='prettyprint'>
 $("#preferredHex").spectrum({
     preferredFormat: "hex",
     showInput: true
@@ -327,18 +363,19 @@ $("#preferredName").spectrum({
 $("#preferredNone").spectrum({
     showInput: true
 });
-</pre>
-        <div class='example'>
-                <div class='alert alert-info'>Hex</div>
-                <input type='text' name='preferredHex' id='preferredHex' value='orangered' />
-                <div class='alert alert-info'>Hsl</div>
-                <input type='text' name='preferredHsl' id='preferredHsl' value='orangered' />
-                <div class='alert alert-info'>Rgb</div>
-                <input type='text' name='preferredRgb' id='preferredRgb' value='orangered' />
-                <div class='alert alert-info'>Name (Falls back to hex)</div>
-                <input type='text' name='preferredName' id='preferredName' value='orangered' />
-                <div class='alert alert-info'>None (Depends on input - try changing formats with the text box)</div>
-                <input type='text' name='preferredNone' id='preferredNone' value='orangered' />
+            </pre>
+            <div class='example'>
+                    <div class='alert alert-info'>Hex</div>
+                    <input type='text' name='preferredHex' id='preferredHex' value='orangered' />
+                    <div class='alert alert-info'>Hsl</div>
+                    <input type='text' name='preferredHsl' id='preferredHsl' value='orangered' />
+                    <div class='alert alert-info'>Rgb</div>
+                    <input type='text' name='preferredRgb' id='preferredRgb' value='orangered' />
+                    <div class='alert alert-info'>Name (Falls back to hex)</div>
+                    <input type='text' name='preferredName' id='preferredName' value='orangered' />
+                    <div class='alert alert-info'>None (Depends on input - try changing formats with the text box)</div>
+                    <input type='text' name='preferredNone' id='preferredNone' value='orangered' />
+            </div>
         </div>
         
         <h2>Events</h2>

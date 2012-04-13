@@ -295,6 +295,7 @@ License: MIT
     border: solid 1px #91765d;
     background: #eee;
     color: #333;
+    vertical-align: middle;
 }
 .sp-replacer:hover, .sp-replacer.sp-active {
     border-color: #F0C49B;

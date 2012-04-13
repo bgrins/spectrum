@@ -25,20 +25,27 @@ a:focus { outline: thin dotted; }
 #docs-content { margin-left: 190px; padding: 10px 30px; border:solid 10px #ecc; border-right:none;border-bottom:none; padding-bottom: 100px;  background: #fff; background: rgba(255, 255, 255, .6); }
 .switch-current-output { display:none; margin:3px auto; width: 200px; text-align: center; }
 .type { padding-left: 4px; font-size: .8em; font-weight: bold;}
-.example { margin-top:10px; margin-left: 40px; }
+.description, .example { 
+    padding: 10px;
+    border: 1px solid #888;
+    background: white;
+    position:relative;
+    padding-top: 15px;
+}
 #docs {  }
 #docs ul { margin-left: 25px; padding-left:10px; }
 #docs li { list-style: square; margin-left: 6px; }
-#docs p { margin: 0; padding:0; padding-top:4px; margin-left: 25px; }
-#docs pre { margin-left: 25px; }
+#docs p { margin: 0; padding:0; padding-top:4px; }
+#docs pre { position:relative; }
 #docs h2 { margin: .5em -25px; border-bottom: solid 1px; }
-#docs h3 { padding: 10px 15px; margin: 10px -30px; margin-top: 40px; border-bottom: solid 1px #ccc;border-top: solid 1px #ccc; }
+#docs h3 { padding: 10px 15px; margin: 10px -30px; margin-top: 40px; border-bottom: solid 3px #aaa;border-top: solid 1px #ccc; }
 #code-heading { font-size: 24px; text-align: center; margin: 6px 0; }
 #docs-content { color: #222; }
 #docs-content.dark { color: #ddd; }
 code { font-weight: bold; color: #933; }
 .note { float:right; background: #eee; padding: 4px; font-size: 11px; border: solid 1px #bbb; border-radius: 4px;}
-
+.option-content .note { float:none; position:absolute; right: 0; top: -40px;}
+.option-content { position:relative; background: #ededed; border: solid 2px #aaa; border-top: none;  padding: 9px; width: 95%; margin: 0 auto; margin-top: -10px; padding-top: 20px; box-shadow: 0 0 10px #ccc;}
 .em-label { padding:4px; margin-left: 10px; display:inline-block; vertical-align: top; margin-top: 3px; }
 .hide { display:none; }
 .clearfix:before, .clearfix:after { content: ""; display: table; }
@@ -69,6 +76,15 @@ code { font-weight: bold; color: #933; }
 }
 .label-important:hover {
   background-color: #953b39;
+}
+.label-result {
+  background-color: #3a87ad;
+  margin-right: 5px;
+}
+.example .label-result {
+    position:absolute;
+    top: -10px;
+    left: 5px;
 }
 .label-warning {
   background-color: #f89406;
