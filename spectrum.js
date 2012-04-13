@@ -6,27 +6,30 @@
 
 (function (window, $, undefined) {
     var defaultOpts = {
-        color: false,
-        flat: false,
-        showInput: false,
-        showButtons: true,
-        showInitial: false,
+        
+        // Events
         beforeShow: noop,
         move: noop,
         change: noop,
         show: noop,
         hide: noop,
-        localStorageKey: false,
+        
+        // Options
+        color: false,
+        flat: false,
+        showInput: false,
+        showButtons: true,
+        showInitial: false,
         showPalette: false,
         showPaletteOnly: false,
-        showSelectionPalette: false,
-        addSelectionToPalette: true,
+        showSelectionPalette: true,
+        localStorageKey: false,
+        maxSelectionSize: 7,
         cancelText: "cancel",
         chooseText: "choose",
-        className: "",
         preferredFormat: false,
-        maxSelectionSize: 7,
-        theme: 'sp-light',
+        className: "",
+        theme: "sp-light",
         palette: ['fff', '000'],
         selectionPalette: []
     },
@@ -123,7 +126,6 @@
             showInitial = opts.showInitial && !flat,
             showInput = opts.showInput,
             showSelectionPalette = opts.showSelectionPalette,
-            addSelectionToPalette = opts.addSelectionToPalette,
             localStorageKey = opts.localStorageKey,
             theme = opts.theme,
             callbacks = opts.callbacks,
@@ -279,8 +281,7 @@
             initialColorContainer.delegate("span::nth-child(1)", paletteEvent, { ignore: true }, palletElementClick);
         }
         function addColorToSelectionPalette(color) {
-            if (addSelectionToPalette) {
-
+            if (showSelectionPalette) {
                 selectionPalette.push(tinycolor(color).toHexString());
                 if (localStorageKey && window.localStorage) {
                     window.localStorage[localStorageKey] = selectionPalette.join(",");

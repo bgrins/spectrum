@@ -7,20 +7,14 @@ $(function() {
 
 $("#full").spectrum({
     color: "#ECC",
-    showButtons: true,
     showInput: true,
-    flat: true,
     className: "full-spectrum",
     showInitial: true,
     showPalette: true,
     showSelectionPalette: true,
-    clickOutFiresChange: false,
-    selectionPalette: [],
     maxPaletteSize: 10,
     preferredFormat: "hex",
     localStorageKey: "spectrum.demo",
-    addSelectionToPalette: true,
-    changeOnMove: false,
     move: function (color) {
         updateBorders(color);
     },
@@ -177,6 +171,19 @@ $("#custom").spectrum({
 $("#buttonText").spectrum({
     chooseText: "Alright",
     cancelText: "No way"
+});
+
+
+$("#showSelectionPalette").spectrum({
+    showPalette: true,
+    showSelectionPalette: true, // true by default
+    palette: [ ]
+});
+$("#showSelectionPaletteStorage").spectrum({
+    showPalette: true,
+    localStorageKey: "spectrum.homepage", // Any picker with the same string will share selection
+    showSelectionPalette: true,
+    palette: [ ]
 });
 
 $('#toc').toc({

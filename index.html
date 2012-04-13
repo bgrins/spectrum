@@ -146,7 +146,6 @@ $("#picker").spectrum({
     showPalette: bool,
     showPaletteOnly: bool,
     showSelectionPalette: bool,
-    addSelectionToPalette: bool,
     cancelText: string,
     chooseText: string,
     className: string,
@@ -237,6 +236,29 @@ $("#showPaletteOnly").spectrum({
 </pre>
         <div class='example'>
                 <input type='text' name='showPaletteOnly' id='showPaletteOnly' value='lightblue' />
+        </div>
+        
+        <h3>Show Selection Palette</h3>
+        <p>Spectrum can keep track of what has been selected by the user with the <code>showSelectionPalette</code> option.</p>
+        <p>If the <code>localStorageKey</code> option is defined, the selection will be saved in the browser's localStorage object</p>
+<pre class='prettyprint'>
+$("#showSelectionPalette").spectrum({
+    showPalette: true,
+    showSelectionPalette: true, // true by default
+    palette: [ ]
+});
+$("#showSelectionPaletteStorage").spectrum({
+    showPalette: true,
+    showSelectionPalette: true,
+    palette: [ ],
+    localStorageKey: "spectrum.homepage", // Any Spectrum with the same string will share selection
+});
+</pre>
+        <div class='example'>
+                <span class='label label-info'>This colorpicker will store what you pick:</span><br /><br />
+                <input type='text' name='showSelectionPalette' id='showSelectionPalette' value='lightblue' /><br /><br />
+                <span class='label label-info'>Try reloading your page, it will still be here on this one:</span><br /><br />
+                <input type='text' name='showSelectionPaletteStorage' id='showSelectionPaletteStorage' value='lightblue' />
         </div>
         
         <h3>Show Initial</h3>
