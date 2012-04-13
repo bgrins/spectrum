@@ -186,6 +186,27 @@ $("#showSelectionPaletteStorage").spectrum({
     palette: [ ]
 });
 
+
+$("#preferredHex").spectrum({
+    preferredFormat: "hex",
+    showInput: true
+});
+$("#preferredHsl").spectrum({
+    preferredFormat: "hsl",
+    showInput: true
+});
+$("#preferredRgb").spectrum({
+    preferredFormat: "rgb",
+    showInput: true
+});
+$("#preferredName").spectrum({
+    preferredFormat: "name",
+    showInput: true
+});
+$("#preferredNone").spectrum({
+    showInput: true
+});
+
 $('#toc').toc({
     'selectors': 'h2,h3', //elements to use as headings
     'container': '#docs', //element to find all selectors in

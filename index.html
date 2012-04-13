@@ -300,6 +300,44 @@ $("#buttonText").spectrum({
                 <input type='text' name='buttonText' id='buttonText' value='orangered' />
         </div>
         
+        <h3>Preferred Format</h3>
+        <p>You can set the format that is displayed</p>
+        
+        
+<pre class='prettyprint'>
+$("#preferredHex").spectrum({
+    preferredFormat: "hex",
+    showInput: true
+});
+$("#preferredHsl").spectrum({
+    preferredFormat: "hsl",
+    showInput: true
+});
+$("#preferredRgb").spectrum({
+    preferredFormat: "rgb",
+    showInput: true
+});
+$("#preferredName").spectrum({
+    preferredFormat: "name",
+    showInput: true
+});
+$("#preferredNone").spectrum({
+    showInput: true
+});
+</pre>
+        <div class='example'>
+                <div class='alert alert-info'>Hex</div>
+                <input type='text' name='preferredHex' id='preferredHex' value='orangered' />
+                <div class='alert alert-info'>Hsl</div>
+                <input type='text' name='preferredHsl' id='preferredHsl' value='orangered' />
+                <div class='alert alert-info'>Rgb</div>
+                <input type='text' name='preferredRgb' id='preferredRgb' value='orangered' />
+                <div class='alert alert-info'>Name (Falls back to hex)</div>
+                <input type='text' name='preferredName' id='preferredName' value='orangered' />
+                <div class='alert alert-info'>None (Depends on input - try changing formats with the text box)</div>
+                <input type='text' name='preferredNone' id='preferredNone' value='orangered' />
+        </div>
+        
         <h2>Events</h2>
         
 <pre class='prettyprint'>
@@ -322,7 +360,7 @@ change: function(color) {
 
 <div class='example'>
     <input type='text' value='blanchedalmond' name='changeOnMoveNo' id='changeOnMoveNo' />
-    <em id='changeOnMoveNoLabel' class='label'></em>
+    <em id='changeOnMoveNoLabel' class='em-label'></em>
 </div>
         <h3>move</h3>
             
@@ -335,7 +373,7 @@ move: function(color) {
 
 <div class='example'>
     <input type='text' value='blanchedalmond' name='changeOnMove' id='changeOnMove' />
-    <em id='changeOnMoveLabel'  class='label'></em>
+    <em id='changeOnMoveLabel'  class='em-label'></em>
 </div>
 
         
