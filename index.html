@@ -141,7 +141,6 @@ $("#picker").spectrum({
     color: <strong>tinycolor</strong>,
     flat: bool,
     showInput: bool,
-    showButtons: bool,
     showInitial: bool,
     localStorageKey: string,
     showPalette: bool,
@@ -263,6 +262,20 @@ $("#showInputAndInitial").spectrum({
 </pre>
         <div class='example'>
                 <input type='text' name='showInputAndInitial' id='showInputAndInitial' value='goldenrod' />
+        </div>
+        
+        <h3>Button Text</h3>
+        <p>You can set the button's text using <code>cancelText</code> and <code>chooseText</code> properties.</p>
+        
+        
+<pre class='prettyprint'>
+$("#buttonText").spectrum({
+    chooseText: "Alright",
+    cancelText: "No way"
+});
+</pre>
+        <div class='example'>
+                <input type='text' name='buttonText' id='buttonText' value='orangered' />
         </div>
         
         <h2>Events</h2>

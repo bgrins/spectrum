@@ -174,6 +174,11 @@ $("#custom").spectrum({
     color: "#f00"
 });
 
+$("#buttonText").spectrum({
+    chooseText: "Alright",
+    cancelText: "No way"
+});
+
 $('#toc').toc({
     'selectors': 'h2,h3', //elements to use as headings
     'container': '#docs', //element to find all selectors in
