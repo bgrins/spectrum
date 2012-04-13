@@ -361,7 +361,10 @@
         }
 
         function show() {
-            if (visible) { return; }
+            if (visible) { 
+                reflow();
+                return;
+            }
             if (callbacks.beforeShow(get()) === false) return;
 
             hideAll();
