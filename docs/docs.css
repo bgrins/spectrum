@@ -36,6 +36,7 @@ a:focus { outline: thin dotted; }
 #code-heading { font-size: 24px; text-align: center; margin: 6px 0; }
 #docs-content { color: #222; }
 #docs-content.dark { color: #ddd; }
+code { font-weight: bold; color: #933; }
 
 em.label { padding:4px; margin-left: 10px; display:inline-block; vertical-align: top; margin-top: 3px; }
 .hide { display:none; }

@@ -1,7 +1,7 @@
 <!doctype html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<title>Spectrum - The No Hassle JavaScript Colorpicker</title>
+<title>Spectrum - The No Hassle jQuery Colorpicker</title>
 <link rel="stylesheet" type="text/css" href="spectrum.css">
 <link rel="stylesheet" type="text/css" href="docs/docs.css">
 <script type="text/javascript" src="docs/jquery-1.6.2.js"></script>
@@ -162,33 +162,37 @@ $("#picker").spectrum({
 
 <pre class='prettyprint'>
 &lt;input type='text' class='basic' value='red' /&gt;
-&lt;input type='text' class='basic' value='orange' /&gt;
-&lt;input type='text' class='basic' value='yellow' /&gt;
-&lt;input type='text' class='basic' value='green' /&gt;
+&lt;input type='text' class='basic' value='#0f0' /&gt;
 &lt;input type='text' class='basic' value='blue' /&gt;
-&lt;input type='text' class='basic' value='indigo' /&gt;
-&lt;input type='text' class='basic' value='violet' /&gt;
+&lt;br /&gt;
+&lt;input type='text' class='override' /&gt;
 </pre>
     
 <pre class='prettyprint'>
 &lt;script&gt;
 $(".basic").spectrum();
+$(".override").spectrum({
+    color: "yellow"
+});
 &lt;/script&gt;
 </pre>
+        <div class='example'>
+            <input type='text' class='basic' value='red' />
+            <input type='text' class='basic' value='green' />
+            <input type='text' class='basic' value='blue' />
+            <br />
+            <input type='text' class='override' />
+        </div>
 
         <p>
-        The picker will be initialized with the value based on the input, and will update the input as the color is changed.  
-        Here is what it will look like: 
+        The initial color will be set with the <code>color</code> option.
+        If you don't pass in a color, Spectrum will use the <code>value</code> attribute on the input.
         </p>
-        <div class='example'>
-            <input type='text' class='basic1' value='red' />
-            <input type='text' class='basic1' value='orange' />
-            <input type='text' class='basic1' value='yellow' />
-            <input type='text' class='basic1' value='green' />
-            <input type='text' class='basic1' value='blue' />
-            <input type='text' class='basic1' value='indigo' />
-            <input type='text' class='basic1' value='violet' />
-        </div>
+        <p>
+        The color parsing is based on the <a href='https://github.com/bgrins/TinyColor'>TinyColor</a> plugin.  
+        This should parse any color string you throw at it.</p>
+        
+        </p>
         
         <h3>Show Input</h3>
         

@@ -158,7 +158,10 @@ $("#changeOnMoveNo").spectrum({
 });
 
 $(".basic").spectrum({ change: updateBorders });
-$(".basic1").spectrum({ change: updateBorders });
+$(".override").spectrum({
+    color: "yellow",
+    change: updateBorders
+});
 
 $("#beforeShow").spectrum({
     beforeShow: function() {
