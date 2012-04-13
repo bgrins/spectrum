@@ -49,7 +49,7 @@
         Here are the goals I had when making a new one:
         </p>
         
-        <h3>Small Footprint</h3>
+        <h3 class='point'>Small Footprint</h3>
         <div class='note'>see a working <a href='http://jsfiddle.net/bgrins/ctkY3/'>jsFiddle example</a></div>
         <p>Just include the needed CSS and JavaScript files, and you are ready to go!  </p>
 <pre class='prettyprint' id='code-subheading'>
@@ -60,18 +60,18 @@
         <p>Nobody wants to add a bunch of code into their project.  Spectrum is contained in two files, and both are careful not to mess with your existing code.
         The JavaScript is well less than 10K gzipped, see the <a href='https://github.com/bgrins/spectrum/blob/master/README.md'>current size</a> in the README.
         
-        <h3>Polyfill</h3>
+        <h3 class='point'>Polyfill</h3>
         <p>I wanted an option for the most basic use case, a polyfill for the <a href='http://dev.w3.org/html5/markup/input.color.html'>input[type=color]</a> HTML5 control.
            This mode needs to work without JavaScript enabled - and fallback to an input[type=text] like other HTML5 inputs.
         </p>
     
         
-        <h3>Customizable</h3>
+        <h3 class='point'>Customizable</h3>
         <p>Just because you don't <em>have</em> to change anything to get it to work, doesn't mean you <em>can't</em>!
         It is easy to skin and customize the plugin with CSS, and there are a wide range of modes and options to explore.
         
         <h2>Modes</h2>
-        <h3>input[type=color]</h3>
+        <h3 class='point'>input[type=color]</h3>
         
     <p>
     If you just want to provide a polyfill for the native color input, 
@@ -92,7 +92,7 @@
     so that they will still be able to manually enter a color.  You don't need to add a single line of code.
     </p>
 
-        <h3>Custom</h3>
+        <h3 class='point'>Custom</h3>
     <p>If you want to get more into the functionality, just create a normal input and initialize it as a normal jQuery plugin.  
     <strong>You can set a lot of options</strong> when initializing the colorpicker.  
     See the 'Options' section below.
@@ -114,7 +114,7 @@ $("#custom").spectrum({
             <input type='text' id='custom' />
         </div>
         
-        <h3>Flat</h3>
+        <h3 class='point'>Flat</h3>
         <p><strong>Flat</strong> 
             This means that it will always show up at full size, 
             and be positioned as an inline-block element.
@@ -390,64 +390,100 @@ $("#picker").spectrum({
 </pre>
 
         <h3>change</h3>
+        <div class='option-content'>
+            <div class='description'>
+                <p>Called as the original input changes.  Only happens when the input is closed or the 'Choose' button is clicked.</p>
+            </div>
             
-        <p>Called as the original input changes.  Only happens when the input is closed or the 'Choose' button is clicked.
-<pre class='prettyprint'>
+            <pre class='prettyprint'>
 change: function(color) {               
     color.toHexString(); // #ff0000
 }
-</pre>
+            </pre>
 
-<div class='example'>
-    <input type='text' value='blanchedalmond' name='changeOnMoveNo' id='changeOnMoveNo' />
-    <em id='changeOnMoveNoLabel' class='em-label'></em>
-</div>
+            <div class='example'>
+                <input type='text' value='blanchedalmond' name='changeOnMoveNo' id='changeOnMoveNo' />
+                <em id='changeOnMoveNoLabel' class='em-label'></em>
+            </div>
+        </div>
+        
         <h3>move</h3>
+        
+        <div class='option-content'>
+            <div class='description'>
+                <p>Called as the user moves around within the colorpicker</p>
+            </div>
             
-        <p>Called as the user moves around within the colorpicker</p>
-<pre class='prettyprint'>
+            <pre class='prettyprint'>
 move: function(color) {             
     color.toHexString(); // #ff0000
 }
-</pre>
+            </pre>
 
-<div class='example'>
-    <input type='text' value='blanchedalmond' name='changeOnMove' id='changeOnMove' />
-    <em id='changeOnMoveLabel'  class='em-label'></em>
-</div>
-
+            <div class='example'>
+                <input type='text' value='blanchedalmond' name='changeOnMove' id='changeOnMove' />
+                <em id='changeOnMoveLabel'  class='em-label'></em>
+            </div>
+        </div>
         
         <h3>hide</h3>
             
-        <p>Called after the colorpicker is hidden.  This happens when clicking outside of the picker while it is open.  Note, when any colorpicker on the page is shown it will hide any that are already open.  This event is ignored on a flat colorpicker.</p>
-
-<pre class='prettyprint'>
-hide: function(color) {             
-    color.toHexString(); // #ff0000
-}
-</pre>
-        <h3>show</h3>
+        <div class='option-content'>
+            <div class='description'>
             
-        <p>Called after the colorpicker is opened.  This is ignored on a flat colorpicker.  Note, when any colorpicker on the page is shown it will hide any that are already open.</p>
+                <p>
+                Called after the colorpicker is hidden.  
+                This happens when clicking outside of the picker while it is open.  
+                Note, when any colorpicker on the page is shown it will hide any that are already open.  
+                This event is ignored on a flat colorpicker.
+                </p>
+            </div>
+            
+            <pre class='prettyprint'>
+            hide: function(color) {             
+                color.toHexString(); // #ff0000
+            }
+            </pre>
+        </div>
         
-<pre class='prettyprint'>
-show: function(color) {             
-    color.toHexString(); // #ff0000
-}
-</pre>
+        <h3>show</h3>
+        
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Called after the colorpicker is opened.  
+                This is ignored on a flat colorpicker.  
+                Note, when any colorpicker on the page is shown it will hide any that are already open.
+                </p>
+            </div>
+        
+            <pre class='prettyprint'>
+            show: function(color) {             
+                color.toHexString(); // #ff0000
+            }
+            </pre>
+        </div>
+        
         <h3>beforeShow</h3>
             
-        <p>You can prevent the colorpicker from showing up if you return false in the beforeShow event.  This event is ignored on a flat colorpicker.</p>
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                You can prevent the colorpicker from showing up if you return false in the beforeShow event.  
+                This event is ignored on a flat colorpicker.
+                </p>
+            </div>
         
-<pre class='prettyprint'>
+            <pre class='prettyprint'>
 beforeShow: function(color) {
     return false; // Will never show up
 }
-</pre>
+            </pre>
 
-<div class='example'>
-    <input type='text' value='blanchedalmond' name='beforeShow' id='beforeShow' />
-</div>
+            <div class='example'>
+                <input type='text' value='blanchedalmond' name='beforeShow' id='beforeShow' />
+            </div>
+        </div>
         
         <h2>Methods</h2>
 <pre class='prettyprint'>
@@ -461,14 +497,14 @@ $("#picker").spectrum("set", colorString);
         
         <p>Since it is all built with HTML/CSS, you can skin it easily.  There are two parts to the <a href='https://github.com/bgrins/spectrum/blob/master/spectrum.css'>spectrum.css</a> file, the core rules (at the top of the file), and the themable rules (at the bottom).  Feel free to tweak these rules to make it look how you want.</p>
         
-        <h3>Non-input elements</h3>
+        <h3 class='point'>Non-input elements</h3>
         <p>
             You can use any element you would like to trigger the colorpicker: <a href='#' id='openWithLink'>Click me to open a colorpicker</a>, though it is strongly recommended to stick with <code>&lt;input&gt;</code> tags.
         </p>
         
         <h2>Nitty Gritty</h2>
         
-        <h3>Browser Support</h3>
+        <h3 class='point'>Browser Support</h3>
         <p>I wanted this to work in the latest and greatest browsers, but also target backwords compatibility and <strong>mobile support</strong>.  
         Here are the currently supported browers:
         <ul>
@@ -480,7 +516,7 @@ $("#picker").spectrum("set", colorString);
             <li>iOS</li>
         </ul>
 
-        <h3>IE Implementation</h3>
+        <h3 class='point'>IE Implementation</h3>
         <p>
         IE Support is provided using 
         <a href='http://msdn.microsoft.com/en-us/library/ms532997(v=vs.85).aspx'>proprietary filters</a>.  
@@ -488,7 +524,7 @@ $("#picker").spectrum("set", colorString);
         </p>
         
         
-        <h3>Accepted Color Inputs</h3>
+        <h3 class='point'>Accepted Color Inputs</h3>
         <p>Spectrum will use the color passed in to initialize.  If there is no color passed in,
         it will try to parse a color based on the <code>value</code> of the input.  The color parsing is based on the <a href='https://github.com/bgrins/TinyColor'>TinyColor</a> plugin, and accepts many forms of input:</p>
 <pre class='prettyprint'>

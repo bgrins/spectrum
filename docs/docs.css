@@ -37,15 +37,22 @@ a:focus { outline: thin dotted; }
 #docs li { list-style: square; margin-left: 6px; }
 #docs p { margin: 0; padding:0; padding-top:4px; }
 #docs pre { position:relative; }
-#docs h2 { margin: .5em -25px; border-bottom: solid 1px; }
-#docs h3 { padding: 10px 15px; margin: 10px -30px; margin-top: 40px; border-bottom: solid 3px #aaa;border-top: solid 1px #ccc; }
+#docs h2 { margin: 30px -25px; border-bottom: solid 1px; }
+#docs h3 { padding: 10px 15px; margin: 10px auto; margin-top: 40px; border: solid 3px #aaa; 
+box-shadow: 0 3px 5px #333; }
+#docs h3.point { box-shadow: none;  margin-left: -30px; margin-right: -30px; border: solid 1px #999; border-left: none; border-right:none;}
 #code-heading { font-size: 24px; text-align: center; margin: 6px 0; }
 #docs-content { color: #222; }
 #docs-content.dark { color: #ddd; }
 code { font-weight: bold; color: #933; }
 .note { float:right; background: #eee; padding: 4px; font-size: 11px; border: solid 1px #bbb; border-radius: 4px;}
 .option-content .note { float:none; position:absolute; right: 0; top: -40px;}
-.option-content { position:relative; background: #ededed; border: solid 2px #aaa; border-top: none;  padding: 9px; width: 95%; margin: 0 auto; margin-top: -10px; padding-top: 20px; box-shadow: 0 0 10px #ccc;}
+.option-content { position:relative; background: #ededed; 
+border: solid 2px #aaa; border-top: none;
+padding: 12px; width: 95%; margin: 0 auto; 
+margin-top: -10px; padding-top: 20px; 
+box-shadow: 0 0 10px #ccc; border-radius: 0 0 5px 5px;
+}
 .em-label { padding:4px; margin-left: 10px; display:inline-block; vertical-align: top; margin-top: 3px; }
 .hide { display:none; }
 .clearfix:before, .clearfix:after { content: ""; display: table; }
