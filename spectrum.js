@@ -399,13 +399,11 @@
 
             var colorHasChanged = !tinycolor.equals(get(), colorOnShow);
 
-            if (clickoutFiresChange) {
-                if (colorHasChanged) {
+            if (colorHasChanged) {
+                if (clickoutFiresChange) {
                     updateOriginalInput();
                 }
-            }
-            else {
-                if (colorHasChanged) {
+                else {
                     revert();
                 }
             }
