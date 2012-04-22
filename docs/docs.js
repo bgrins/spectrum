@@ -49,7 +49,8 @@ $("#full").spectrum({
 });
 
 $("#hideButtons").spectrum({
-    showButtons: false
+    showButtons: false,
+    change: updateBorders
 });
 
 $("#pick1").spectrum({

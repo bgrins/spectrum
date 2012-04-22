@@ -166,8 +166,9 @@
             initialColor = opts.color || (isInput && boundElement.val()),
             colorOnShow = false,
             preferredFormat = opts.preferredFormat,
-            currentPreferredFormat = false;
-
+            currentPreferredFormat = false,
+            clickoutFiresChange = !opts.showButtons;
+            
         chooseButton.text(opts.chooseText);
         cancelButton.text(opts.cancelText);
 
@@ -228,7 +229,6 @@
                 e.stopPropagation();
                 e.preventDefault();
 
-                cancel();
                 hide();
             });
 
@@ -387,10 +387,6 @@
             callbacks.show(colorOnShow);
         }
 
-        function cancel() {
-            hide();
-        }
-
         function hide() {
             if (!visible || flat) { return; }
             visible = false;
@@ -403,9 +399,15 @@
 
             var colorHasChanged = !tinycolor.equals(get(), colorOnShow);
 
-            // Change hasn't been called yet, so call it now that the picker has closed
-            if (colorHasChanged) {
-                revert();
+            if (clickoutFiresChange) {
+                if (colorHasChanged) {
+                    updateOriginalInput();
+                }
+            }
+            else {
+                if (colorHasChanged) {
+                    revert();
+                }
             }
 
             callbacks.hide(get());
