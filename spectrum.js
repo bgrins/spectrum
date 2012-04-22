@@ -401,11 +401,13 @@
             replacer.removeClass("sp-active");
             container.hide();
 
-            var colorHasChanged = !tinycolor.equals(get(), colorOnShow);
+            if (opts.showButtons) {
+                var colorHasChanged = !tinycolor.equals(get(), colorOnShow);
 
-            // Change hasn't been called yet, so call it now that the picker has closed
-            if (colorHasChanged) {
-                revert();
+                // Change hasn't been called yet, so call it now that the picker has closed
+                if (colorHasChanged) {
+                    revert();
+                }
             }
 
             callbacks.hide(get());
