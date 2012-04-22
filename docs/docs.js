@@ -48,6 +48,10 @@ $("#full").spectrum({
     ]
 });
 
+$("#hideButtons").spectrum({
+    showButtons: false
+});
+
 $("#pick1").spectrum({
     flat: true,
     change: function(color) {
