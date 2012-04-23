@@ -166,7 +166,7 @@
             initialColor = opts.color || (isInput && boundElement.val()),
             colorOnShow = false,
             preferredFormat = opts.preferredFormat,
-            currentPreferredFormat = false,
+            currentPreferredFormat = preferredFormat,
             clickoutFiresChange = !opts.showButtons;
             
         chooseButton.text(opts.chooseText);
