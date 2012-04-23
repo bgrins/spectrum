@@ -252,10 +252,13 @@
                 currentValue = (dragHeight - dragY) / dragHeight;
                 move();
             }, dragStart, dragStop);
-
+            
             if (!!initialColor) {
                 set(initialColor, true);
                 addColorToSelectionPalette(initialColor);
+            }
+            else {
+                updateUI();
             }
 
             if (flat) {
