@@ -732,7 +732,7 @@
         if (typeof opts == "string") {
             if (opts == "get") {
                 return spectrums[this.eq(0).data(dataID)].get();
-            } else if (opts == "getSpect") {
+            } else if (opts == "container") {
                 return spectrums[$(this).data(dataID)].container;
             }
 
