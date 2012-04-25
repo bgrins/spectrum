@@ -559,7 +559,8 @@
                 set(c, true);
             },
             get: get,
-            destroy: destroy
+            destroy: destroy,
+            container: container
         };
 
         spect.id = spectrums.push(spect) - 1;
@@ -731,6 +732,8 @@
         if (typeof opts == "string") {
             if (opts == "get") {
                 return spectrums[this.eq(0).data(dataID)].get();
+            } else if (opts == "getSpect") {
+                return spectrums[$(this).data(dataID)].container;
             }
 
             return this.each(function () {
