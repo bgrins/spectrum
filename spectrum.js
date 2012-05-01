@@ -516,7 +516,7 @@
             var color = get();
             
             if (isInput) {
-                boundElement.val(color.toString(currentPreferredFormat));
+                boundElement.val(color.toString(currentPreferredFormat)).change();
             }
             
             colorOnShow = color;
