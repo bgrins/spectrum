@@ -22,7 +22,8 @@ a:focus { outline: thin dotted; }
 #pick2-details { font: monospace; }
 #switch-current { float: left; position:relative; display:none;}
 /*#switch-current .spectrum-container { position: fixed; top:60px; left: 10px; }*/
-#docs-content { margin-left: 190px; padding: 10px 30px; border:solid 10px #ecc; border-right:none;border-bottom:none; padding-bottom: 100px;  background: #fff; background: rgba(255, 255, 255, .6); }
+#docs-content { margin-left: 190px; padding: 10px 30px; border:solid 10px #ecc; border-right:none;border-bottom:none; padding-bottom: 20px;  background: #fff; background: rgba(255, 255, 255, .6); }
+.footer { padding-top: 50px; }
 .switch-current-output { display:none; margin:3px auto; width: 200px; text-align: center; }
 .type { padding-left: 4px; font-size: .8em; font-weight: bold;}
 .description, .example { 
