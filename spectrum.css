@@ -15,7 +15,7 @@ License: MIT
     display:inline-block;
     *display: inline;
     *zoom: 1;
-    z-index: 100;
+    z-index: 2147483647;
     overflow: hidden;
 }
 .sp-container.sp-flat {
