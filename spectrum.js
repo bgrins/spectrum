@@ -228,7 +228,6 @@
             cancelButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-
                 hide();
             });
 
@@ -237,7 +236,7 @@
                 e.preventDefault();
 
                 if (isValid()) {
-                    updateOriginalInput();
+                    updateOriginalInput(true);
                     hide();
                 }
             });
@@ -254,7 +253,7 @@
             }, dragStart, dragStop);
             
             if (!!initialColor) {
-                set(initialColor, true);
+                set(initialColor);
                 addColorToSelectionPalette(initialColor);
             }
             else {
@@ -267,11 +266,12 @@
 
             function palletElementClick(e) {
                 if (e.data && e.data.ignore) {
-                    set($(this).data("color"), true);
+                    set($(this).data("color"));
                     move();
                 }
                 else {
                     set($(this).data("color"));
+                    updateOriginalInput(true);
                     move();
                     hide();
                 }
@@ -352,7 +352,7 @@
         function setFromTextInput() {
             var tiny = tinycolor(textInput.val());
             if (tiny.ok) {
-                set(tiny, true);
+                set(tiny);
             }
             else {
                 textInput.addClass("sp-validation-error");
@@ -404,7 +404,7 @@
 
             if (colorHasChanged) {
                 if (clickoutFiresChange) {
-                    updateOriginalInput();
+                    updateOriginalInput(true);
                 }
                 else {
                     revert();
@@ -415,10 +415,10 @@
         }
 
         function revert() {
-            set(colorOnShow, true, true);
+            set(colorOnShow, true);
         }
-        
-        function set(color, ignoreChange, ignoreFormatChange) {
+
+        function set(color, ignoreFormatChange) {
             if (tinycolor.equals(color, get())) {
                 return;
             }
@@ -434,11 +434,6 @@
 
             if (!ignoreFormatChange) {
                 currentPreferredFormat = preferredFormat || newColor.format;
-            }
-            
-            // set can be called from a default value,  don't want to trigger a change in that case
-            if (!ignoreChange && !tinycolor.equals(color, colorOnShow)) {
-                updateOriginalInput();
             }
         }
 
@@ -512,19 +507,21 @@
             });
         }
 
-        function updateOriginalInput() {
+        function updateOriginalInput(fireCallback) {
             var color = get();
             
             if (isInput) {
                 boundElement.val(color.toString(currentPreferredFormat)).change();
             }
             
+            var hasChanged = !tinycolor.equals(color, colorOnShow);
             colorOnShow = color;
 
             // Update the selection palette with the current color
             addColorToSelectionPalette(color);
-                
-            callbacks.change(color);
+            if (fireCallback && hasChanged) {
+                callbacks.change(color);
+            }
         }
 
         function reflow() {
@@ -556,7 +553,8 @@
             show: show,
             hide: hide,
             set: function (c) {
-                set(c, true);
+                set(c);
+                updateOriginalInput();
             },
             get: get,
             destroy: destroy,
@@ -1563,4 +1561,3 @@
     window.tinycolor = tinycolor;
 
 })(this);
-
