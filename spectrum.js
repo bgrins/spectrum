@@ -228,9 +228,6 @@
             cancelButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-
-                set(colorOnShow);
-                updateOriginalInput(true);
                 hide();
             });
 
