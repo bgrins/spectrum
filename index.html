@@ -524,6 +524,42 @@ $("#picker").spectrum("set", colorString);
 $("#picker").spectrum("container");
 </pre>
 
+        <h3>set</h3>
+        
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Setting the colorpicker programmatically will update the original input.  
+                </p>
+                <p>
+                Note: this will <strong>not</strong> fire the <code>change</code> event,
+                to prevent infinite loops from calling <code>set</code> from within <code>change</code>.
+                </p>
+            </div>
+            
+            <pre class='prettyprint'>
+&lt;input type='text' value='blanchedalmond' name='triggerSet' id='triggerSet' /&gt;
+&lt;input type='text' placeholder='Enter A Color' id='enterAColor' /&gt;
+&lt;button id='btnEnterAColor'&gt;Trigger Set&lt;/button&gt;
+
+&lt;script&gt;
+$("#triggerSet").spectrum();
+
+// Show the original input to demonstrate the value changing when calling `set`
+$("#triggerSet").show();
+
+$("#btnEnterAColor").click(function() {
+    $("#triggerSet").spectrum("set", $("#enterAColor").val());
+});
+&lt;/script&gt;
+            </pre>
+            
+            <div class='example'>
+                <input type='text' value='blanchedalmond' name='triggerSet' id='triggerSet' /><br /><br />
+                <input type='text' placeholder='Enter A Color' id='enterAColor' /><button id='btnEnterAColor'>Trigger Set</button>
+            </div>
+        </div>
+        
         <h2>Skinning</h2>
         
         <p>Since it is all built with HTML/CSS, you can skin it easily.  There are two parts to the <a href='https://github.com/bgrins/spectrum/blob/master/spectrum.css'>spectrum.css</a> file, the core rules (at the top of the file), and the themable rules (at the bottom).  Feel free to tweak these rules to make it look how you want.</p>

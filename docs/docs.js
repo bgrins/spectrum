@@ -24,8 +24,8 @@ $("#full").spectrum({
     beforeShow: function () {
     
     },
-    hide: function () {
-    
+    hide: function (color) {
+        updateBorders(color);
     },
     
     palette: [
@@ -215,6 +215,18 @@ $("#preferredName").spectrum({
 $("#preferredNone").spectrum({
     showInput: true
 });
+
+$("#triggerSet").spectrum({
+    change: updateBorders
+});
+
+// Show the original input to demonstrate the value changing when calling `set`
+$("#triggerSet").show();
+
+$("#btnEnterAColor").click(function() {
+    $("#triggerSet").spectrum("set", $("#enterAColor").val());
+});
+
 
 $('#toc').toc({
     'selectors': 'h2,h3', //elements to use as headings
