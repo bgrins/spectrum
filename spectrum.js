@@ -254,6 +254,12 @@
             
             if (!!initialColor) {
                 set(initialColor);
+
+                // In case color was black - update the preview UI and set the format 
+                // since the set function will not run (default color is black).
+                updateUI();
+                currentPreferredFormat = preferredFormat || tinycolor(initialColor).format;
+
                 addColorToSelectionPalette(initialColor);
             }
             else {
