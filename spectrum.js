@@ -6,14 +6,14 @@
 
 (function (window, $, undefined) {
     var defaultOpts = {
-        
+
         // Events
         beforeShow: noop,
         move: noop,
         change: noop,
         show: noop,
         hide: noop,
-        
+
         // Options
         color: false,
         flat: false,
@@ -43,7 +43,7 @@
     ].join(''),
     markup = (function () {
 
-        // IE does not support gradients with multiple stops, so we need to simulate            
+        // IE does not support gradients with multiple stops, so we need to simulate
         //  that for the rainbow slider with 8 divs that each have a single gradient
         var gradientFix = "";
         if (IE) {
@@ -168,7 +168,7 @@
             preferredFormat = opts.preferredFormat,
             currentPreferredFormat = preferredFormat,
             clickoutFiresChange = !opts.showButtons;
-            
+
         chooseButton.text(opts.chooseText);
         cancelButton.text(opts.cancelText);
 
@@ -251,11 +251,11 @@
                 currentValue = (dragHeight - dragY) / dragHeight;
                 move();
             }, dragStart, dragStop);
-            
+
             if (!!initialColor) {
                 set(initialColor);
 
-                // In case color was black - update the preview UI and set the format 
+                // In case color was black - update the preview UI and set the format
                 // since the set function will not run (default color is black).
                 updateUI();
                 currentPreferredFormat = preferredFormat || tinycolor(initialColor).format;
@@ -370,7 +370,7 @@
         }
 
         function show() {
-            if (visible) { 
+            if (visible) {
                 reflow();
                 return;
             }
@@ -389,9 +389,9 @@
             }
             reflow();
             updateUI();
-            
+
             colorOnShow = get();
-            
+
             drawInitial();
             callbacks.show(colorOnShow);
         }
@@ -431,7 +431,7 @@
 
             var newColor = tinycolor(color);
             var newHsv = newColor.toHsv();
-            
+
             currentHue = newHsv.h;
             currentSaturation = newHsv.s;
             currentValue = newHsv.v;
@@ -453,7 +453,7 @@
 
         function move() {
             updateUI();
-            
+
             callbacks.move(get());
         }
 
@@ -515,11 +515,11 @@
 
         function updateOriginalInput(fireCallback) {
             var color = get();
-            
+
             if (isInput) {
                 boundElement.val(color.toString(currentPreferredFormat)).change();
             }
-            
+
             var hasChanged = !tinycolor.equals(color, colorOnShow);
             colorOnShow = color;
 
@@ -600,7 +600,7 @@
         return offset;
     }
 
-    /** 
+    /**
     * noop - do nothing
     */
     function noop() {
@@ -697,7 +697,7 @@
                     if (!hasTouch) {
                         move(e);
                     }
-                    
+
                     prevent(e);
                 }
             }
@@ -766,14 +766,14 @@
     $.fn.spectrum.draggable = draggable;
 
     $.fn.spectrum.processNativeColorInputs = function() {
-        var supportsColor = $("<input type='color' />")[0].type === "color";       
+        var supportsColor = $("<input type='color' />")[0].type === "color";
         if (!supportsColor) {
             $("input[type=color]").spectrum({
                 preferredFormat: "hex6"
             });
         }
     };
-    
+
     $(function () {
         if ($.fn.spectrum.load) {
             $.fn.spectrum.processNativeColorInputs();
@@ -888,7 +888,7 @@
             }
         };
     }
-    
+
     // If input is an object, force 1 into "1.0" to handle ratios properly
     // String input requires "1.0" as input, so 1 will be treated as 1
     tinycolor.fromRatio = function(color) {
@@ -914,7 +914,7 @@
     //     "rgb 255 0 0" or "rgb (255, 0, 0)"
     //     "rgb 1.0 0 0" or "rgb (1, 0, 0)"
     //     "rgba (255, 0, 0, 1)" or "rgba 255, 0, 0, 1"
-    //     "rgba (1.0, 0, 0, 1)" or "rgba 1.0, 0, 0, 1" 
+    //     "rgba (1.0, 0, 0, 1)" or "rgba 1.0, 0, 0, 1"
     //     "hsl(0, 100%, 50%)" or "hsl 0 100% 50%"
     //     "hsla(0, 100%, 50%, 1)" or "hsla 0 100% 50%, 1"
     //     "hsv(0, 100%, 100%)" or "hsv 0 100% 100%"
@@ -957,7 +957,7 @@
         rgb.b = mathMin(255, mathMax(rgb.b, 0));
 
 
-        // Don't let the range of [0,255] come back in [0,1].  
+        // Don't let the range of [0,255] come back in [0,1].
         // Potentially lose a little bit of precision here, but will fix issues where
         // .5 gets interpreted as half of the total, instead of half of 1.
         // If it was supposed to be 128, this was already taken care of in the conversion function
@@ -980,13 +980,13 @@
     // Conversion Functions
     // --------------------
 
-    // `rgbToHsl`, `rgbToHsv`, `hslToRgb`, `hsvToRgb` modified from:   
+    // `rgbToHsl`, `rgbToHsv`, `hslToRgb`, `hsvToRgb` modified from:
     // <http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript>
 
-    // `rgbToRgb`  
+    // `rgbToRgb`
     // Handle bounds / percentage checking to conform to CSS color spec
-    // <http://www.w3.org/TR/css3-color/>  
-    // *Assumes:* r, g, b in [0, 255] or [0, 1]  
+    // <http://www.w3.org/TR/css3-color/>
+    // *Assumes:* r, g, b in [0, 255] or [0, 1]
     // *Returns:* { r, g, b } in [0, 255]
     function rgbToRgb(r, g, b) {
         return {
@@ -996,10 +996,10 @@
         };
     }
 
-    // `rgbToHsl`  
-    // Converts an RGB color value to HSL.  
-    // *Assumes:* r, g, and b are contained in [0, 255] or [0, 1]  
-    // *Returns:* { h, s, l } in [0,1]  
+    // `rgbToHsl`
+    // Converts an RGB color value to HSL.
+    // *Assumes:* r, g, and b are contained in [0, 255] or [0, 1]
+    // *Returns:* { h, s, l } in [0,1]
     function rgbToHsl(r, g, b) {
 
         r = bound01(r, 255);
@@ -1027,10 +1027,10 @@
         return { h: h, s: s, l: l };
     }
 
-    // `hslToRgb`  
-    // Converts an HSL color value to RGB.  
-    // *Assumes:* h is contained in [0, 1] or [0, 360] and s and l are contained [0, 1] or [0, 100]  
-    // *Returns:* { r, g, b } in the set [0, 255]  
+    // `hslToRgb`
+    // Converts an HSL color value to RGB.
+    // *Assumes:* h is contained in [0, 1] or [0, 360] and s and l are contained [0, 1] or [0, 100]
+    // *Returns:* { r, g, b } in the set [0, 255]
     function hslToRgb(h, s, l) {
         var r, g, b;
 
@@ -1061,10 +1061,10 @@
         return { r: r * 255, g: g * 255, b: b * 255 };
     }
 
-    // `rgbToHsv`  
-    // Converts an RGB color value to HSV  
-    // *Assumes:* r, g, and b are contained in the set [0, 255] or [0, 1]  
-    // *Returns:* { h, s, v } in [0,1]  
+    // `rgbToHsv`
+    // Converts an RGB color value to HSV
+    // *Assumes:* r, g, and b are contained in the set [0, 255] or [0, 1]
+    // *Returns:* { h, s, v } in [0,1]
     function rgbToHsv(r, g, b) {
 
         r = bound01(r, 255);
@@ -1091,8 +1091,8 @@
         return { h: h, s: s, v: v };
     }
 
-    // `hsvToRgb`  
-    // Converts an HSV color value to RGB. 
+    // `hsvToRgb`
+    // Converts an HSV color value to RGB.
     // *Assumes:* h is contained in [0, 1] or [0, 360] and s and v are contained in [0, 1] or [0, 100]
     // *Returns:* { r, g, b } in the set [0, 255]
     function hsvToRgb(h, s, v) {
@@ -1115,10 +1115,10 @@
         return { r: r * 255, g: g * 255, b: b * 255 };
     }
 
-    // `rgbToHex`  
-    // Converts an RGB color to hex  
-    // Assumes r, g, and b are contained in the set [0, 255]  
-    // Returns a 3 or 6 character hex  
+    // `rgbToHex`
+    // Converts an RGB color to hex
+    // Assumes r, g, and b are contained in the set [0, 255]
+    // Returns a 3 or 6 character hex
     function rgbToHex(r, g, b, force6Char) {
         function pad(c) {
             return c.length == 1 ? '0' + c : '' + c;
@@ -1138,7 +1138,7 @@
         return hex.join("");
     }
 
-    // `equals`  
+    // `equals`
     // Can be called with any tinycolor input
     tinycolor.equals = function (color1, color2) {
         if (!color1 || !color2) { return false; }
@@ -1155,7 +1155,7 @@
 
     // Modification Functions
     // ----------------------
-    // Thanks to less.js for some of the basics here  
+    // Thanks to less.js for some of the basics here
     // <https://github.com/cloudhead/less.js/blob/master/lib/less/functions.js>
 
 
@@ -1491,8 +1491,8 @@
         // Allow positive/negative integer/number.  Don't capture the either/or, just the entire outcome.
         var CSS_UNIT = "(?:" + CSS_NUMBER + ")|(?:" + CSS_INTEGER + ")";
 
-        // Actual matching.  
-        // Parentheses and commas are optional, but not required.  
+        // Actual matching.
+        // Parentheses and commas are optional, but not required.
         // Whitespace can take the place of commas or opening paren
         var PERMISSIVE_MATCH3 = "[\\s|\\(]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")\\s*\\)?";
         var PERMISSIVE_MATCH4 = "[\\s|\\(]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")\\s*\\)?";
@@ -1508,7 +1508,7 @@
         };
     })();
 
-    // `stringInputToObject`  
+    // `stringInputToObject`
     // Permissive string parsing.  Take in a number of formats, and output an object
     // based on detected format.  Returns `{ r, g, b }` or `{ h, s, l }` or `{ h, s, v}`
     function stringInputToObject(color) {
@@ -1523,9 +1523,9 @@
             return { r: 0, g: 0, b: 0, a: 0 };
         }
 
-        // Try to match string input using regular expressions.  
-        // Keep most of the number bounding out of this function - don't worry about [0,1] or [0,100] or [0,360]  
-        // Just return an object and let the conversion functions handle that.  
+        // Try to match string input using regular expressions.
+        // Keep most of the number bounding out of this function - don't worry about [0,1] or [0,100] or [0,360]
+        // Just return an object and let the conversion functions handle that.
         // This way the result will be the same whether the tinycolor is initialized with string or object.
         var match;
         if ((match = matchers.rgb.exec(color))) {
