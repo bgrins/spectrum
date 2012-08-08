@@ -766,7 +766,9 @@
     $.fn.spectrum.draggable = draggable;
 
     $.fn.spectrum.processNativeColorInputs = function() {
-        var supportsColor = $("<input type='color' />")[0].type === "color";
+        var colorInput = $("<input type='color' value='!' />")[0];
+        var supportsColor = colorInput.type === "color" && colorInput.value != "!";
+
         if (!supportsColor) {
             $("input[type=color]").spectrum({
                 preferredFormat: "hex6"
