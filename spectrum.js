@@ -558,6 +558,7 @@
         var spect = {
             show: show,
             hide: hide,
+            toggle: toggle,
             set: function (c) {
                 set(c);
                 updateOriginalInput();
@@ -745,6 +746,7 @@
                 if (spect) {
                     if (opts == "show") { spect.show(); }
                     if (opts == "hide") { spect.hide(); }
+                    if (opts == "toggle") { spect.toggle(); }
                     if (opts == "set") { spect.set(extra); }
                     if (opts == "destroy") {
                         spect.destroy();
