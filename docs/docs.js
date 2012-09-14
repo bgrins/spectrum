@@ -1,6 +1,10 @@
 
 function updateBorders(color) {
-    $("#docs-content").css("border-color", color.toHexString());
+var hexColor = "transparent";
+ if(color) {
+    hexColor = color.toHexString();
+} 
+$("#docs-content").css("border-color", hexColor);
 }
 
 $(function() {
@@ -106,6 +110,19 @@ $("#showInput").spectrum({
     }
 });
 
+$("#showInputWithClear").spectrum({
+    allowEmpty:true,
+    color: "",
+    showInput: true,
+    change: updateBorders,
+    show: function() {
+       
+    },
+    hide: function() {
+       
+    } 
+});
+
 $("#openWithLink").spectrum({
     color: "#dd3333",
     change: updateBorders,
@@ -144,7 +161,16 @@ $("#showInitial").spectrum({
 
 $("#showInputAndInitial").spectrum({
     showInitial: true,
-    showInput: true
+    showInput: true,
+    change: updateBorders
+});
+
+$("#showInputInitialClear").spectrum({
+    allowEmpty:true,
+    showInitial: true,
+    showInput: true,
+    change: updateBorders,
+    preferredFormat:'hex'
 });
 
 
@@ -179,8 +205,10 @@ $("#custom").spectrum({
 });
 
 $("#buttonText").spectrum({
+    allowEmpty:true,
     chooseText: "Alright",
-    cancelText: "No way"
+    cancelText: "No way",
+    clearText: "Kill Color!"
 });
 
 
