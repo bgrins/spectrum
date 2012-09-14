@@ -281,6 +281,9 @@ License: MIT
     float:left;
     margin:0;
 }
+.sp-initial .sp-no-color {
+	background-position:5px 3px;
+}
 
 /* Buttons */
 .sp-button-container {

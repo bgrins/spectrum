@@ -92,10 +92,17 @@
     paletteTemplate = function (p, color, className) {
         var html = [];
         for (var i = 0; i < p.length; i++) {
-            var tiny = tinycolor(p[i]);
-            var c = tiny.toHsl().l < .5 ? "sp-thumb-dark" : "sp-thumb-light";
-            c += (tinycolor.equals(color, p[i])) ? " sp-thumb-active" : "";
-            html.push('<span title="' + tiny.toHexString() + '" data-color="' + tiny.toHexString() + '" style="background-color:' + tiny.toRgbString() + ';" class="' + c + '"></span>');
+            var current = p[i];
+            if(current) {
+                var tiny = tinycolor(p[i]);
+                var c = tiny.toHsl().l < .5 ? "sp-thumb-dark" : "sp-thumb-light";
+                c += (tinycolor.equals(color, p[i])) ? " sp-thumb-active" : "";
+                html.push('<span title="' + tiny.toHexString() + '" data-color="' + tiny.toHexString() + '" style="background-color:' + tiny.toRgbString() + ';" class="' + c + '"></span>');
+            }
+            else {
+                c = 'sp-no-color';
+                html.push('<span title="No Color" data-color="" style="background-color:transparent;" class="' + c + '"></span>');
+            }
         }
         return "<div class='sp-cf " + className + "'>" + html.join('') + "</div>";
     };
@@ -263,11 +270,16 @@
             });
 
             draggable(slider, function (dragX, dragY) {
+                //set defaults incase there was no color selected initially
+                currentSaturation = currentSaturation || 0;
+                currentValue = currentValue || 0;
                 currentHue = (dragY / slideHeight);
                 move();
             }, dragStart, dragStop);
 
             draggable(dragger, function (dragX, dragY) {
+                //set defaults incase there was no color selected initially
+                currentHue = currentHue || 0;
                 currentSaturation = dragX / dragWidth;
                 currentValue = (dragHeight - dragY) / dragHeight;
                 move();
@@ -455,17 +467,14 @@
 
         function set(color, ignoreFormatChange) {
 
-
+            if (tinycolor.equals(color, get())) {
+                    return;
+            }
             if (!color && allowEmpty) {
                 currentHue = null;
                 currentSaturation = null;
                 currentValue = null;
             } else {
-
-                if (tinycolor.equals(color, get())) {
-                    return;
-                }
-
                 var newColor = tinycolor(color);
                 var newHsv = newColor.toHsv();
 
@@ -473,10 +482,11 @@
                 currentSaturation = newHsv.s;
                 currentValue = newHsv.v;
             }
+ 
             updateUI();
 
             if (color && !ignoreFormatChange) {
-             	currentPreferredFormat = preferredFormat || newColor.format;
+                currentPreferredFormat = preferredFormat || newColor.format;
             }
         }
 
@@ -509,32 +519,31 @@
             var flatColor = tinycolor({ h: currentHue, s: "1.0", v: "1.0" });
             dragger.css("background-color", flatColor.toHexString());
 
-            var realColor = get();
+            var realColor = get(),
+                displayColor = '';
 
             //reset background info for preview element
             previewElement.removeClass("sp-no-color");
             previewElement.css('background-color', 'transparent');
 
             if (!realColor && allowEmpty) {
-                // Update the replaced elements background color (with actual selected color)
+                // Update the replaced elements background with icon indicating no color selection
                 previewElement.addClass("sp-no-color");
-
-                // Update the text entry input as it changes happen
-                if (showInput) {
-                    textInput.val("");
-                }
-            } else {
+            } 
+            else {
                 var realHex = realColor.toHexString();
 
                 // Update the replaced elements background color (with actual selected color)
                 previewElement.css("background-color", realHex);
-
-                // Update the text entry input as it changes happen
-                if (showInput) {
-                    textInput.val(realColor.toString(currentPreferredFormat));
-                }
+                
+                //Get color which can be displayed to the user
+                displayColor = realColor.toString(currentPreferredFormat);
             }
 
+            // Update the text entry input as it changes happen
+            if (showInput) {
+                textInput.val(displayColor);
+            }
             if (showPalette) {
                 drawPalette();
             }
@@ -571,27 +580,22 @@
         }
 
         function updateOriginalInput(fireCallback) {
-            var color = get();
-            var hasChanged = false;
-
-            if (!color && allowEmpty) {
-                if (isInput) {
-                    boundElement.val("").change();
-                }
-                hasChanged = true;
-
-            } else {
-                if (isInput) {
-                    boundElement.val(color.toString(currentPreferredFormat)).change();
-                }
-
+            var color = get(),
+                displayColor = '',
                 hasChanged = !tinycolor.equals(color, colorOnShow);
-                colorOnShow = color;
+                
+            colorOnShow = color;
+
+            if (color) {
+                displayColor = color.toString(currentPreferredFormat)
 
                 // Update the selection palette with the current color
                 addColorToSelectionPalette(color);
             }
 
+            if (isInput) {
+                boundElement.val(displayColor).change();
+            }
 
             if (fireCallback && hasChanged) {
                 callbacks.change(color);
