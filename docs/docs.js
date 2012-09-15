@@ -97,6 +97,13 @@ $("#flat").spectrum({
     move: updateBorders
 });
 
+$("#flatClearable").spectrum({
+    flat: true,
+    move: updateBorders,
+    change: updateBorders,
+    allowEmpty:true
+});
+
 $("#showInput").spectrum({
     color: "#dd33dd",
     showInput: true,

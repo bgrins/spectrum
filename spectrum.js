@@ -27,7 +27,6 @@
         localStorageKey: false,
         maxSelectionSize: 7,
         cancelText: "cancel",
-        clearText: "clear color",
         chooseText: "choose",
         preferredFormat: false,
         className: "",
@@ -70,6 +69,8 @@
                                     "</div>",
                                 "</div>",
                             "</div>",
+                            "<div class='sp-no-color' title='Clear Color Selection'>",
+                            "</div>",
                             "<div class='sp-hue'>",
                                 "<div class='sp-slider'></div>",
                                 gradientFix,
@@ -81,7 +82,6 @@
                     "</div>",
                     "<div class='sp-initial sp-thumb sp-cf'></div>",
                     "<div class='sp-button-container sp-cf'>",
-                        "<a class='sp-clear' href='#'></a>",
                         "<a class='sp-cancel' href='#'></a>",
                         "<button class='sp-choose'></button>",
                     "</div>",
@@ -168,7 +168,7 @@
             paletteContainer = container.find(".sp-palette"),
             initialColorContainer = container.find(".sp-initial"),
             cancelButton = container.find(".sp-cancel"),
-            clearButton = container.find(".sp-clear"),
+            clearButton = container.find(".sp-top-inner .sp-no-color"),
             chooseButton = container.find(".sp-choose"),
             isInput = boundElement.is("input"),
             shouldReplace = isInput && !flat,
@@ -183,7 +183,6 @@
 
         chooseButton.text(opts.chooseText);
         cancelButton.text(opts.cancelText);
-        clearButton.text(opts.clearText);
 
         function initialize() {
 
@@ -252,10 +251,14 @@
                 e.stopPropagation();
                 e.preventDefault();
 
-                if (isValid()) {
-                    set(null);
+                currentHue = null,
+                currentValue = null,
+                currentSaturation = null;
+
+                updateUI();
+                if(flat) {
+                    //for the flat style, this is a change event
                     updateOriginalInput(true);
-                    hide();
                 }
             });
 
@@ -546,6 +549,13 @@
             }
             if (showPalette) {
                 drawPalette();
+            }
+            
+            if (allowEmpty) {
+                
+                var noColorHeight = clearButton.height(),
+                    padding = 8;
+                slider.css({"top": (noColorHeight + padding) +"px"});
             }
 
             drawInitial();
