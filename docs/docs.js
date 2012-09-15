@@ -213,8 +213,7 @@ $("#custom").spectrum({
 $("#buttonText").spectrum({
     allowEmpty:true,
     chooseText: "Alright",
-    cancelText: "No way",
-    clearText: "Kill Color!"
+    cancelText: "No way"
 });
 
 
