@@ -150,6 +150,27 @@ $("#flat").spectrum({
     <div class='example'>
          <input type='text' id='flat' value="limegreen" />
     </div> 
+
+<h3 class='point'>Flat with Clear</h3>
+        <p><strong>Flat</strong> 
+            This means that it will always show up at full size, 
+            and be positioned as an inline-block element.
+            Look to the left for a full sized flat picker.
+        </p>
+
+<pre class='prettyprint'>
+&lt;input type='text' id="flat" /&gt;
+</pre>
+<pre class='prettyprint'>
+$("#flatClearable").spectrum({
+    flat: true,
+    allowEmpty:true
+});
+</pre>
+        
+    <div class='example'>
+         <input type='text' id='flatClearable' value="limegreen" />
+    </div> 
         
         <h2>Options</h2>
 <pre class='prettyprint'>
@@ -380,8 +401,7 @@ $("#showInputInitialClear").spectrum({
 $("#buttonText").spectrum({
     allowEmpty:true,
     chooseText: "Alright",
-    cancelText: "No way",
-    clearText: "Kill Color!"
+    cancelText: "No way"
 });
             </pre>
             

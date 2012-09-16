@@ -98,6 +98,13 @@ $("#flat").spectrum({
     move: updateBorders
 });
 
+$("#flatClearable").spectrum({
+    flat: true,
+    move: updateBorders,
+    change: updateBorders,
+    allowEmpty:true
+});
+
 $("#showInput").spectrum({
     color: "#dd33dd",
     showInput: true,
@@ -207,8 +214,7 @@ $("#custom").spectrum({
 $("#buttonText").spectrum({
     allowEmpty:true,
     chooseText: "Alright",
-    cancelText: "No way",
-    clearText: "Kill Color!"
+    cancelText: "No way"
 });
 
 
