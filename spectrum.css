@@ -62,7 +62,7 @@ License: MIT
 /* Don't allow text selection */
 .sp-container, .sp-replacer, .sp-preview, .sp-dragger, .sp-slider , .sp-container.sp-dragging .sp-input, .sp-container button  {
     -webkit-user-select:none;
-    -moz-user-select: none;
+    -moz-user-select: -moz-none;
     -o-user-select:none;
     user-select: none;
 }
