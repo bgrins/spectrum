@@ -1,5 +1,7 @@
 
 // TinyColor.js - <https://github.com/bgrins/TinyColor> - 2011 Brian Grinstead - v0.5
+(function() {
+
 
 (function (window) {
 
@@ -1574,8 +1576,4 @@
 
 })(this, jQuery);
 
-
-
-
-
-
+})();
