@@ -1,5 +1,3 @@
-
-
 /***
 Spectrum: The No Hassle Colorpicker
 https://github.com/bgrins/spectrum
@@ -8,10 +6,10 @@ Author: Brian Grinstead
 License: MIT
 ***/
 
-.sp-container { 
-    position:absolute; 
-    top:0; 
-    left:0; 
+.sp-container {
+    position:absolute;
+    top:0;
+    left:0;
     display:inline-block;
     *display: inline;
     *zoom: 1;
@@ -24,18 +22,18 @@ License: MIT
 
 /* http://ansciath.tumblr.com/post/7347495869/css-aspect-ratio */
 .sp-top {
-  position:relative; 
+  position:relative;
   width: 100%;
   display:inline-block;
 }
 .sp-top-inner {
-   position:absolute; 
-   top:0; 
-   left:0; 
-   bottom:0; 
+   position:absolute;
+   top:0;
+   left:0;
+   bottom:0;
    right:0;
 }
-.sp-color { 
+.sp-color {
     position: absolute;
     top:0;
     left:0;
@@ -50,23 +48,23 @@ License: MIT
     left:84%;
     height: 100%;
 }
-.sp-fill { 
+.sp-fill {
     padding-top: 80%;
 }
-.sp-sat, .sp-val { 
-    position: absolute; 
-    top:0; 
-    left:0; 
-    right:0; 
-    bottom:0; 
+.sp-sat, .sp-val {
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
 }
 
 /* Don't allow text selection */
-.sp-container, .sp-replacer, .sp-preview, .sp-dragger, .sp-slider , .sp-container.sp-dragging .sp-input, .sp-container button  { 
-    -webkit-user-select:none; 
-    -moz-user-select: none; 
-    -o-user-select:none; 
-    user-select: none; 
+.sp-container, .sp-replacer, .sp-preview, .sp-dragger, .sp-slider , .sp-container.sp-dragging .sp-input, .sp-container button  {
+    -webkit-user-select:none;
+    -moz-user-select: none;
+    -o-user-select:none;
+    user-select: none;
 }
 
 .sp-container.sp-input-disabled .sp-input-container {
@@ -82,8 +80,8 @@ License: MIT
     display: none;
 }
 
-.sp-initial-disabled .sp-initial { 
-    display: none; 
+.sp-initial-disabled .sp-initial {
+    display: none;
 }
 
 
@@ -116,34 +114,34 @@ License: MIT
     background: -webkit-gradient(linear, left top, left bottom, from(#ff0000), color-stop(0.17, #ffff00), color-stop(0.33, #00ff00), color-stop(0.5, #00ffff), color-stop(0.67, #0000ff), color-stop(0.83, #ff00ff), to(#ff0000));
     background: -webkit-linear-gradient(top, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
 }
- 
-/* IE filters do not support multiple color stops.  
+
+/* IE filters do not support multiple color stops.
    Generate 6 divs, line them up, and do two color gradients for each.
    Yes, really.
  */
- 
-.sp-1 { 
-    height:17%; 
+
+.sp-1 {
+    height:17%;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0000', endColorstr='#ffff00');
 }
-.sp-2 { 
-    height:16%; 
+.sp-2 {
+    height:16%;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffff00', endColorstr='#00ff00');
 }
-.sp-3 { 
-    height:17%; 
+.sp-3 {
+    height:17%;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ff00', endColorstr='#00ffff');
 }
-.sp-4 { 
-    height:17%; 
+.sp-4 {
+    height:17%;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffff', endColorstr='#0000ff');
 }
-.sp-5 { 
-    height:16%; 
+.sp-5 {
+    height:16%;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0000ff', endColorstr='#ff00ff');
 }
-.sp-6 { 
-    height:17%; 
+.sp-6 {
+    height:17%;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff00ff', endColorstr='#ff0000');
 }
 
@@ -156,30 +154,30 @@ License: MIT
 @media (max-device-width: 480px) {
     .sp-color { right: 40%; }
     .sp-hue { left: 63%; }
-    .sp-fill { padding-top: 60%; } 
+    .sp-fill { padding-top: 60%; }
 }
 
 .sp-dragger {
-   border-radius: 5px; 
-   height: 5px; 
-   width: 5px; 
+   border-radius: 5px;
+   height: 5px;
+   width: 5px;
    border: 1px solid #fff;
    background: #000;
    cursor: pointer;
-   position:absolute; 
-   top:0; 
+   position:absolute;
+   top:0;
    left: 0;
 }
-.sp-slider { 
-    position: absolute; 
-    top:0; 
+.sp-slider {
+    position: absolute;
+    top:0;
     cursor:pointer;
-    height: 3px; 
+    height: 3px;
     left: -1px;
     right: -1px;
     border: 1px solid #000;
-    background: white; 
-    opacity: .8; 
+    background: white;
+    opacity: .8;
 }
 
 /* Basic display options (colors, fonts, global widths) */
@@ -189,7 +187,7 @@ License: MIT
     border: solid 1px #f0c49B;
     padding: 0;
 }
-.sp-container, .sp-container button, .sp-container input, .sp-color, .sp-hue 
+.sp-container, .sp-container button, .sp-container input, .sp-color, .sp-hue
 {
     font: normal 12px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
     -webkit-box-sizing: border-box;
@@ -197,11 +195,11 @@ License: MIT
     -ms-box-sizing: border-box;
     box-sizing: border-box;
 }
-.sp-top 
+.sp-top
 {
     margin-bottom: 3px;
 }
-.sp-color, .sp-hue 
+.sp-color, .sp-hue
 {
     border: solid 1px #666;
 }
@@ -226,9 +224,9 @@ License: MIT
    color: #222;
 }
 .sp-input:focus  {
-    border: 1px solid orange; 
+    border: 1px solid orange;
 }
-.sp-input.sp-validation-error  
+.sp-input.sp-validation-error
 {
     border: 1px solid red;
     background: #fdd;
@@ -241,14 +239,14 @@ License: MIT
     padding-bottom: 300px;
     margin-bottom: -290px;
 }
-.sp-picker-container 
+.sp-picker-container
 {
     width: 172px;
     border-left: solid 1px #fff;
 }
 
 /* Palettes */
-.sp-palette-container 
+.sp-palette-container
 {
     border-right: solid 1px #ccc;
 }
@@ -258,7 +256,7 @@ License: MIT
     position:relative;
     float:left;
     width: 24px;
-    height: 15px; 
+    height: 15px;
     margin: 3px;
     cursor: pointer;
     border:solid 2px transparent;
@@ -268,7 +266,7 @@ License: MIT
 }
 
 /* Initial */
-.sp-initial 
+.sp-initial
 {
     float: left;
     border: solid 1px #333;
@@ -305,9 +303,9 @@ License: MIT
     border-color: #F0C49B;
     color: #111;
 }
-.sp-dd { 
+.sp-dd {
     padding: 2px 0;
-    height: 16px; 
+    height: 16px;
     line-height: 16px;
     float:left;
     font-size:10px;
@@ -320,20 +318,20 @@ License: MIT
     float:left;
 }
 
-.sp-palette  
+.sp-palette
 {
     *width: 220px;
     max-width: 220px;
 }
-.sp-palette span  
+.sp-palette span
 {
-    width:16px; 
-    height: 16px; 
+    width:16px;
+    height: 16px;
     margin:2px 1px;
-    border: solid 1px #d0d0d0; 
+    border: solid 1px #d0d0d0;
 }
 
-.sp-container 
+.sp-container
 {
     padding-bottom:0;
 }
@@ -370,7 +368,7 @@ License: MIT
     border: 1px solid #bbb;
     border-bottom: 1px solid #999;
     cursor: pointer;
-    text-shadow: 0 1px 0 #ddd; 
+    text-shadow: 0 1px 0 #ddd;
 }
 .sp-container button:active {
     border: 1px solid #aaa;
@@ -390,25 +388,25 @@ License: MIT
     margin-right: 5px;
     vertical-align: middle;
     text-decoration:none;
-    
+
 }
-.sp-cancel:hover 
+.sp-cancel:hover
 {
     color: #d93f3f !important;
     text-decoration: underline;
-} 
+}
 
 
-.sp-palette span:hover, .sp-palette span.sp-thumb-active 
+.sp-palette span:hover, .sp-palette span.sp-thumb-active
 {
     border-color: #000;
 }
-.sp-palette span.sp-thumb-light.sp-thumb-active 
+.sp-palette span.sp-thumb-light.sp-thumb-active
 {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIVJREFUeNpiYBhsgJFMffxAXABlN5JruT4Q3wfi/0DsT64h8UD8HmpIPCWG/KemIfOJCUB+Aoacx6EGBZyHBqI+WsDCwuQ9mhxeg2A210Ntfo8klk9sOMijaURm7yc1UP2RNCMbKE9ODK1HM6iegYLkfx8pligC9lCD7KmRof0ZhjQACDAAceovrtpVBRkAAAAASUVORK5CYII=);
 }
 
-.sp-palette span.sp-thumb-dark.sp-thumb-active 
+.sp-palette span.sp-thumb-dark.sp-thumb-active
 {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRyoQAAAMdJREFUOE+tkgsNwzAMRMugEAahEAahEAZhEAqlEAZhEAohEAYh81X2dIm8fKpEspLGvudPOsUYpxE2BIJCroJmEW9qJ+MKaBFhEMNabSy9oIcIPwrB+afvAUFoK4H0tMaQ3XtlrggDhOVVMuT4E5MMG0FBbCEYzjYT7OxLEvIHQLY2zWwQ3D+9luyOQTfKDiFD3iUIfPk8VqrKjgAiSfGFPecrg6HN6m/iBcwiDAo7WiBeawa+Kwh7tZoSCGLMqwlSAzVDhoK+6vH4G0P5wdkAAAAASUVORK5CYII=);
 }
