@@ -396,7 +396,12 @@
             callbacks.show(colorOnShow);
         }
 
-        function hide() {
+        function hide(e) {
+
+            // Return on right click
+            if (e && e.type == "click" && e.button == 2) { return; }
+
+            // Return if hiding is unnecessary
             if (!visible || flat) { return; }
             visible = false;
 
