@@ -4,6 +4,10 @@
 // License: MIT
 // Requires: jQuery, spectrum.css
 
+
+$(function() {
+
+
 (function (window, $, undefined) {
     var defaultOpts = {
 
@@ -1576,3 +1580,5 @@
     window.tinycolor = tinycolor;
 
 })(this);
+
+});
