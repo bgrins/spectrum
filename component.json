@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "main": ["./spectrum.css", "./spectrum.js"],
   "dependencies": {
-    "jquery": "~1.7.2"
+    "jquery": ">=1.7.2"
   }
 }
