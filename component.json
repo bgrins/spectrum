@@ -1,6 +1,6 @@
 {
   "name": "spectrum",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": ["./spectrum.css", "./spectrum.js"],
   "dependencies": {
     "jquery": ">=1.7.2"
