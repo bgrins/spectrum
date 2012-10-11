@@ -5,7 +5,7 @@
 // Requires: jQuery, spectrum.css
 
 
-$(function() {
+(function() {
 
 
 (function (window, $, undefined) {
@@ -1581,4 +1581,4 @@ $(function() {
 
 })(this);
 
-});
+})();
