@@ -564,6 +564,7 @@
             show: show,
             hide: hide,
             toggle: toggle,
+            reflow: reflow,
             set: function (c) {
                 set(c);
                 updateOriginalInput();
@@ -752,6 +753,7 @@
                     if (opts == "show") { spect.show(); }
                     if (opts == "hide") { spect.hide(); }
                     if (opts == "toggle") { spect.toggle(); }
+                    if (opts == "reflow") { spect.reflow(); }
                     if (opts == "set") { spect.set(extra); }
                     if (opts == "destroy") {
                         spect.destroy();
@@ -772,7 +774,7 @@
     $.fn.spectrum.loadOpts = {};
     $.fn.spectrum.draggable = draggable;
 
-    $.fn.spectrum.processNativeColorInputs = function() {
+    $.fn.spectrum.processNativeColorInputs = function () {
         var colorInput = $("<input type='color' value='!' />")[0];
         var supportsColor = colorInput.type === "color" && colorInput.value != "!";
 
@@ -886,7 +888,7 @@
 
         // If input is an object, force 1 into "1.0" to handle ratios properly
         // String input requires "1.0" as input, so 1 will be treated as 1
-        tinycolor.fromRatio = function(color) {
+        tinycolor.fromRatio = function (color) {
 
             if (typeof color == "object") {
                 for (var i in color) {
