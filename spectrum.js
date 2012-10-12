@@ -19,6 +19,7 @@
         flat: false,
         showInput: false,
         showButtons: true,
+        clickoutFiresChange: true,
         showInitial: false,
         showPalette: false,
         showPaletteOnly: false,
@@ -167,7 +168,7 @@
             colorOnShow = false,
             preferredFormat = opts.preferredFormat,
             currentPreferredFormat = preferredFormat,
-            clickoutFiresChange = !opts.showButtons;
+            clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange;
 
         chooseButton.text(opts.chooseText);
         cancelButton.text(opts.cancelText);
