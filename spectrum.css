@@ -1,4 +1,4 @@
-/***
+﻿/***
 Spectrum: The No Hassle Colorpicker
 https://github.com/bgrins/spectrum
 
@@ -46,7 +46,6 @@ License: MIT
     right:0;
     bottom:0;
     left:84%;
-    height: 100%;
 }
 .sp-fill {
     padding-top: 80%;
@@ -57,6 +56,40 @@ License: MIT
     left:0;
     right:0;
     bottom:0;
+}
+
+.sp-alpha-enabled .sp-top 
+{
+    margin-bottom: 18px;
+}
+.sp-alpha-enabled .sp-alpha 
+{
+    display: block;
+}
+
+.sp-alpha-handle 
+{
+    position:absolute;
+    top:-4px;
+    bottom: -4px;
+    width: 5px;
+    left: 50%;
+    cursor: pointer;
+    border: 1px solid black;
+    background: white;
+    opacity: .8;
+}
+.sp-alpha
+{
+    display: none;
+    position: absolute;
+    bottom: -12px;
+    right: 5px;
+    left: 5px;
+    
+    height: 5px;
+    background: -webkit-linear-gradient(top, #999, #bbb);
+    
 }
 
 /* Don't allow text selection */

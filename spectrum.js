@@ -1,4 +1,4 @@
-// Spectrum: The No Hassle Colorpicker
+﻿// Spectrum: The No Hassle Colorpicker
 // https://github.com/bgrins/spectrum
 // Author: Brian Grinstead
 // License: MIT
@@ -30,6 +30,7 @@
         chooseText: "choose",
         preferredFormat: false,
         className: "",
+        showAlpha: true,
         theme: "sp-light",
         palette: ['fff', '000'],
         selectionPalette: []
@@ -74,6 +75,7 @@
                                 gradientFix,
                             "</div>",
                         "</div>",
+                        "<div class='sp-alpha'><div class='sp-alpha-handle'></div></div>",
                     "</div>",
                     "<div class='sp-input-container sp-cf'>",
                         "<input class='sp-input' type='text' spellcheck='false'  />",
@@ -126,6 +128,7 @@
             showPalette = opts.showPalette || showPaletteOnly,
             showInitial = opts.showInitial && !flat,
             showInput = opts.showInput,
+            showAlpha = opts.showAlpha,
             showSelectionPalette = opts.showSelectionPalette,
             localStorageKey = opts.localStorageKey,
             theme = opts.theme,
@@ -137,10 +140,12 @@
             dragHelperHeight = 0,
             slideHeight = 0,
             slideWidth = 0,
+            alphaWidth = 0,
             slideHelperHeight = 0,
             currentHue = 0,
             currentSaturation = 0,
             currentValue = 0,
+            currentAlpha = 1,
             palette = opts.palette.slice(0),
             paletteArray = $.isArray(palette[0]) ? palette : [palette],
             selectionPalette = opts.selectionPalette.slice(0),
@@ -154,6 +159,8 @@
             dragHelper = container.find(".sp-dragger"),
             slider = container.find(".sp-hue"),
             slideHelper = container.find(".sp-slider"),
+            alphaSlider = container.find(".sp-alpha"),
+            alphaSlideHelper = container.find(".sp-alpha-handle"),
             textInput = container.find(".sp-input"),
             paletteContainer = container.find(".sp-palette"),
             initialColorContainer = container.find(".sp-initial"),
@@ -181,6 +188,7 @@
 
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !showInput);
+            container.toggleClass("sp-alpha-enabled", showAlpha);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons || flat);
             container.toggleClass("sp-palette-disabled", !showPalette);
             container.toggleClass("sp-palette-only", showPaletteOnly);
@@ -240,6 +248,11 @@
                     updateOriginalInput(true);
                     hide();
                 }
+            });
+
+            draggable(alphaSlider, function (dragX, dragY) {
+                currentAlpha = (dragX / alphaWidth);
+                move();
             });
 
             draggable(slider, function (dragX, dragY) {
@@ -512,6 +525,11 @@
                 "left": dragX
             });
 
+            var alphaX = currentAlpha * alphaWidth;
+            alphaSlideHelper.css({
+                "left": alphaX
+            });
+
             // Where to show the bar that displays your current selected hue
             var slideY = (currentHue) * slideHeight;
             slideHelper.css({
@@ -539,6 +557,7 @@
         function reflow() {
             dragWidth = dragger.width();
             dragHeight = dragger.height();
+            alphaWidth = alphaSlider.width();
             dragHelperHeight = dragHelper.height();
             slideWidth = slider.width();
             slideHeight = slider.height();
