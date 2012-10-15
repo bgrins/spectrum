@@ -1195,7 +1195,7 @@
         // Can be called with any tinycolor input
         tinycolor.equals = function (color1, color2) {
             if (!color1 || !color2) { return false; }
-            return tinycolor(color1).toHex() == tinycolor(color2).toHex();
+            return tinycolor(color1).toRgbString() == tinycolor(color2).toRgbString();
         };
         tinycolor.random = function () {
             return tinycolor.fromRatio({
