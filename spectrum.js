@@ -39,7 +39,7 @@
     IE = $.browser.msie,
     replaceInput = [
         "<div class='sp-replacer'>",
-            "<div class='sp-preview'></div>",
+            "<div class='sp-preview'><div class='sp-preview-inner'></div></div>",
             "<div class='sp-dd'>&#9660;</div>",
         "</div>"
     ].join(''),
@@ -75,7 +75,7 @@
                                 gradientFix,
                             "</div>",
                         "</div>",
-                        "<div class='sp-alpha'><div class='sp-alpha-handle'></div></div>",
+                        "<div class='sp-alpha'><div class='sp-alpha-inner'><div class='sp-alpha-handle'></div></div></div>",
                     "</div>",
                     "<div class='sp-input-container sp-cf'>",
                         "<input class='sp-input' type='text' spellcheck='false'  />",
@@ -93,9 +93,10 @@
         var html = [];
         for (var i = 0; i < p.length; i++) {
             var tiny = tinycolor(p[i]);
-            var c = tiny.toHsl().l < .5 ? "sp-thumb-dark" : "sp-thumb-light";
+            var c = tiny.toHsl().l < .5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
             c += (tinycolor.equals(color, p[i])) ? " sp-thumb-active" : "";
-            html.push('<span title="' + tiny.toHexString() + '" data-color="' + tiny.toHexString() + '" style="background-color:' + tiny.toRgbString() + ';" class="' + c + '"></span>');
+
+            html.push('<span title="' + tiny.toHexString() + '" data-color="' + tiny.toHexString() + '" class="' + c + '"><em style="background-color:' + tiny.toRgbString() + ';" /></span>');
         }
         return "<div class='sp-cf " + className + "'>" + html.join('') + "</div>";
     };
@@ -141,6 +142,7 @@
             slideHeight = 0,
             slideWidth = 0,
             alphaWidth = 0,
+            alphaSlideHelperWidth = 0,
             slideHelperHeight = 0,
             currentHue = 0,
             currentSaturation = 0,
@@ -159,7 +161,7 @@
             dragHelper = container.find(".sp-dragger"),
             slider = container.find(".sp-hue"),
             slideHelper = container.find(".sp-slider"),
-            alphaSlider = container.find(".sp-alpha"),
+            alphaSlider = container.find(".sp-alpha-inner"),
             alphaSlideHelper = container.find(".sp-alpha-handle"),
             textInput = container.find(".sp-input"),
             paletteContainer = container.find(".sp-palette"),
@@ -170,7 +172,7 @@
             shouldReplace = isInput && !flat,
             replacer = (shouldReplace) ? $(replaceInput).addClass(theme) : $([]),
             offsetElement = (shouldReplace) ? replacer : boundElement,
-            previewElement = replacer.find(".sp-preview"),
+            previewElement = replacer.find(".sp-preview-inner"),
             initialColor = opts.color || (isInput && boundElement.val()),
             colorOnShow = false,
             preferredFormat = opts.preferredFormat,
@@ -491,14 +493,36 @@
             var flatColor = tinycolor({ h: currentHue, s: "1.0", v: "1.0" });
             dragger.css("background-color", flatColor.toHexString());
 
+            // Get a format that alpha will be included in (hex and names ignore alpha)
+            var format = currentPreferredFormat;
+            if (currentAlpha < 1) {
+                if (format === "hex" || format === "name") {
+                    format = "rgb";
+                }
+            }
+
             var realColor = get(),
-                realHex = realColor.toHexString();
+                realHex = realColor.toHexString(),
+                realRgb = realColor.toString(format);
+
 
             // Update the replaced elements background color (with actual selected color)
             previewElement.css("background-color", realHex);
+            previewElement.css("background-color", realRgb);
+
+            if (showAlpha) {
+                var rgb = realColor.toRgb();
+                rgb.a = 0;
+                var realAlpha = tinycolor(rgb).toRgbString();
+                var gradient = "linear-gradient(left, " + realAlpha + ", " + realHex + ")";
+                alphaSlider.css("background", "-webkit-" + gradient);
+                alphaSlider.css("background", "-moz-" + gradient);
+                alphaSlider.css("background", "-ms-" + gradient);
+                alphaSlider.css("background", gradient);
+            }
+
 
             // Update the text entry input as it changes happen
-            var format = currentPreferredFormat;
             if (showInput) {
                 if (currentAlpha < 1) {
                     if (format === "hex" || format === "name") {
@@ -538,7 +562,7 @@
 
             var alphaX = currentAlpha * alphaWidth;
             alphaSlideHelper.css({
-                "left": alphaX
+                "left": alphaX - (alphaSlideHelperWidth / 2)
             });
 
             // Where to show the bar that displays your current selected hue
@@ -568,11 +592,12 @@
         function reflow() {
             dragWidth = dragger.width();
             dragHeight = dragger.height();
-            alphaWidth = alphaSlider.width();
             dragHelperHeight = dragHelper.height();
             slideWidth = slider.width();
             slideHeight = slider.height();
             slideHelperHeight = slideHelper.height();
+            alphaWidth = alphaSlider.width();
+            alphaSlideHelperWidth = alphaSlideHelper.width();
 
             if (!flat) {
                 container.offset(getOffset(container, offsetElement));
