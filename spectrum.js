@@ -250,8 +250,12 @@
                 }
             });
 
-            draggable(alphaSlider, function (dragX, dragY) {
+            draggable(alphaSlider, function (dragX, dragY, e) {
                 currentAlpha = (dragX / alphaWidth);
+                if (e.shiftKey) {
+                    currentAlpha = Math.round(currentAlpha * 10) / 10;
+                }
+
                 move();
             });
 
@@ -454,6 +458,7 @@
             currentHue = newHsv.h;
             currentSaturation = newHsv.s;
             currentValue = newHsv.v;
+            currentAlpha = newHsv.a;
 
             updateUI();
 
@@ -463,7 +468,7 @@
         }
 
         function get() {
-            return tinycolor.fromRatio({ h: currentHue, s: currentSaturation, v: currentValue });
+            return tinycolor.fromRatio({ h: currentHue, s: currentSaturation, v: currentValue, a: Math.round(currentAlpha * 100) / 100 });
         }
 
         function isValid() {
@@ -493,8 +498,14 @@
             previewElement.css("background-color", realHex);
 
             // Update the text entry input as it changes happen
+            var format = currentPreferredFormat;
             if (showInput) {
-                textInput.val(realColor.toString(currentPreferredFormat));
+                if (currentAlpha < 1) {
+                    if (format === "hex" || format === "name") {
+                        format = "rgb";
+                    }
+                }
+                textInput.val(realColor.toString(format));
             }
 
             if (showPalette) {
@@ -704,7 +715,7 @@
                     prevent(e);
                 }
 
-                onmove.apply(element, [dragX, dragY]);
+                onmove.apply(element, [dragX, dragY, e]);
             }
         }
         function start(e) {
