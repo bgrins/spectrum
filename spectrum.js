@@ -515,6 +515,8 @@
                 rgb.a = 0;
                 var realAlpha = tinycolor(rgb).toRgbString();
                 var gradient = "linear-gradient(left, " + realAlpha + ", " + realHex + ")";
+
+                alphaSlider.css("filter", tinycolor(realAlpha).toFilter({ gradientType: 1 }, realHex));
                 alphaSlider.css("background", "-webkit-" + gradient);
                 alphaSlider.css("background", "-moz-" + gradient);
                 alphaSlider.css("background", "-ms-" + gradient);
@@ -909,11 +911,19 @@
                 toName: function () {
                     return hexNames[rgbToHex(r, g, b)] || false;
                 },
-                toFilter: function () {
-                    var hex = rgbToHex(r, g, b);
-                    var alphaHex = Math.round(parseFloat(a) * 255).toString(16);
-                    return "progid:DXImageTransform.Microsoft.gradient(startColorstr=#" +
-                    alphaHex + hex + ",endColorstr=#" + alphaHex + hex + ")";
+                toFilter: function (opts, secondColor) {
+
+                    var hex = secondHex = rgbToHex(r, g, b);
+                    var alphaHex = secondAlphaHex = Math.round(parseFloat(a) * 255).toString(16);
+                    var gradientType = opts && opts.gradientType ? "GradientType = 1, " : "";
+
+                    if (secondColor) {
+                        var s = tinycolor(secondColor);
+                        secondHex = s.toHex();
+                        secondAlphaHex = Math.round(parseFloat(s.alpha) * 255).toString(16);
+                    }
+
+                    return "progid:DXImageTransform.Microsoft.gradient("+gradientType+"startColorstr=#" + pad2(alphaHex) + hex + ",endColorstr=#" + pad2(secondAlphaHex) + secondHex + ")";
                 },
                 toString: function (format) {
                     format = format || this.format;
@@ -1173,14 +1183,11 @@
         // Assumes r, g, and b are contained in the set [0, 255]
         // Returns a 3 or 6 character hex
         function rgbToHex(r, g, b, force6Char) {
-            function pad(c) {
-                return c.length == 1 ? '0' + c : '' + c;
-            }
 
             var hex = [
-                pad(mathRound(r).toString(16)),
-                pad(mathRound(g).toString(16)),
-                pad(mathRound(b).toString(16))
+                pad2(mathRound(r).toString(16)),
+                pad2(mathRound(g).toString(16)),
+                pad2(mathRound(b).toString(16))
             ];
 
             // Return a 3 character hex if possible
@@ -1531,6 +1538,11 @@
         // Check to see if string passed in is a percentage
         function isPercentage(n) {
             return typeof n === "string" && n.indexOf('%') != -1;
+        }
+
+        // Force a hex value to have 2 characters
+        function pad2(c) {
+            return c.length == 1 ? '0' + c : '' + c;
         }
 
         var matchers = (function () {
