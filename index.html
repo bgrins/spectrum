@@ -15,9 +15,7 @@
     <script type='text/javascript' src='docs/toc.js'></script>
     <script type='text/javascript' src='docs/docs.js'></script>
 </head>
-
 <body>
-
 <div id='header'>
     <h1><a href='http://bgrins.github.com/spectrum'>Spectrum</a></h1> <h2><em>The No Hassle jQuery Colorpicker</em></h2>
     <div id='links'>
@@ -160,6 +158,7 @@ $("#picker").spectrum({
     flat: bool,
     showInput: bool,
     showInitial: bool,
+    showAlpha: bool,
     localStorageKey: string,
     showPalette: bool,
     showPaletteOnly: bool,
@@ -225,6 +224,24 @@ $("#showInput").spectrum({
             </pre>
             <div class='example'>
                 <input type='text' name='showInput' id='showInput' />
+            </div>
+        </div>
+
+        <h3>Show Alpha</h3>
+        <div class='option-content'>
+            <div class='description'>
+                <p>You can allow alpha transparency selection.  Check out these examples: </p>
+            </div>
+            <pre class='prettyprint'>
+$("#showAlpha").spectrum({
+    showAlpha: true
+});
+            </pre>
+            <div class='example'>
+                <input type='text' name='showAlpha' id='showAlpha' />
+            </div>
+            <div class='example'>
+                <input type='text' name='showAlphaWithInput' id='showAlphaWithInput' />
             </div>
         </div>
 
@@ -531,7 +548,50 @@ $("#picker").spectrum("toggle");
 $("#picker").spectrum("get");
 $("#picker").spectrum("set", colorString);
 $("#picker").spectrum("container");
+$("#picker").spectrum("reflow");
+$("#picker").spectrum("destroy");
 </pre>
+
+
+        <h3>show</h3>
+
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Shows the colorpicker.
+                </p>
+            </div>
+        </div>
+
+        <h3>hide</h3>
+
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Hides the colorpicker.
+                </p>
+            </div>
+        </div>
+
+        <h3>toggle</h3>
+
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Toggles the colorpicker.
+                </p>
+            </div>
+        </div>
+
+        <h3>get</h3>
+
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Gets the current value from the colorpicker.
+                </p>
+            </div>
+        </div>
 
         <h3>set</h3>
 
@@ -568,6 +628,37 @@ $("#btnEnterAColor").click(function() {
                 <input type='text' placeholder='Enter A Color' id='enterAColor' /><button id='btnEnterAColor'>Trigger Set</button>
             </div>
         </div>
+
+        <h3>container</h3>
+
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Retrieves the container element of the colorpicker, in case you want to manaully position it or do other things.
+                </p>
+            </div>
+        </div>
+
+        <h3>reflow</h3>
+
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Resets the positioning of the container element.  This could be used if the colorpicker is inside of a moving area.
+                </p>
+            </div>
+        </div>
+
+        <h3>destroy</h3>
+
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Removes the colorpicker functionality and restores the element to its original state.
+                </p>
+            </div>
+        </div>
+
 
         <h2>Skinning</h2>
 

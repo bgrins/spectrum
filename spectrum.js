@@ -30,7 +30,7 @@
         chooseText: "choose",
         preferredFormat: false,
         className: "",
-        showAlpha: true,
+        showAlpha: false,
         theme: "sp-light",
         palette: ['fff', '000'],
         selectionPalette: []

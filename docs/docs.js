@@ -106,6 +106,25 @@ $("#showInput").spectrum({
     }
 });
 
+$("#showAlpha").spectrum({
+    color: "rgba(255, 128, 0, .5)",
+    showAlpha: true,
+    change: updateBorders
+});
+
+$("#showAlphaWithInput").spectrum({
+    color: "rgba(255, 128, 0, .5)",
+    showAlpha: true,
+    showInput: true,
+    showPalette: true,
+    palette: [
+        ["rgba(255, 128, 0, .9)", "rgba(255, 128, 0, .5)"],
+        ["red", "green", "blue"],
+        ["hsla(25, 50, 75, .5)", "rgba(100, .5, .5, .8)"]
+    ],
+    change: updateBorders
+});
+
 $("#openWithLink").spectrum({
     color: "#dd3333",
     change: updateBorders,
