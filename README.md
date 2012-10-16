@@ -23,5 +23,5 @@ The tool I use for measuring JavaScript size: http://closure-compiler.appspot.co
     
 Here is the JavaScript size
 
-    Original Size:    35.93KB (11.25KB gzipped)
-    Compiled Size:	17.56KB (6.79KB gzipped)
+	Original Size:	55.43KB (12.89KB gzipped)
+	Compiled Size:	18.6KB (7.15KB gzipped)

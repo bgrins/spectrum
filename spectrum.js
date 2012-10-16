@@ -19,7 +19,7 @@
         flat: false,
         showInput: false,
         showButtons: true,
-        clickoutFiresChange: true,
+        clickoutFiresChange: false,
         showInitial: false,
         showPalette: false,
         showPaletteOnly: false,
@@ -37,6 +37,16 @@
     },
     spectrums = [],
     IE = $.browser.msie,
+    rgbaSupport = (function() { 
+        function contains( str, substr ) {
+            return !!~('' + str).indexOf(substr);
+        }
+
+        var elem = document.createElement('div');
+        var style = elem.style;
+        style.cssText = 'background-color:rgba(0,0,0,.5)';
+        return contains(style.backgroundColor, 'rgba') || contains(style.backgroundColor, 'hsla');
+    })(),
     replaceInput = [
         "<div class='sp-replacer'>",
             "<div class='sp-preview'><div class='sp-preview-inner'></div></div>",
@@ -88,15 +98,17 @@
                 "</div>",
             "</div>"
         ].join("");
-    })(),
-    paletteTemplate = function (p, color, className) {
+    })();
+
+    function paletteTemplate (p, color, className) {
         var html = [];
         for (var i = 0; i < p.length; i++) {
             var tiny = tinycolor(p[i]);
             var c = tiny.toHsl().l < .5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
             c += (tinycolor.equals(color, p[i])) ? " sp-thumb-active" : "";
 
-            html.push('<span title="' + tiny.toHexString() + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><em style="background-color:' + tiny.toRgbString() + ';" /></span>');
+            var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
+            html.push('<span title="' + tiny.toHexString() + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><em style="' + swatchStyle + ';" /></span>');
         }
         return "<div class='sp-cf " + className + "'>" + html.join('') + "</div>";
     };
@@ -161,7 +173,8 @@
             dragHelper = container.find(".sp-dragger"),
             slider = container.find(".sp-hue"),
             slideHelper = container.find(".sp-slider"),
-            alphaSlider = container.find(".sp-alpha-inner"),
+            alphaSliderInner = container.find(".sp-alpha-inner"),
+            alphaSlider = container.find(".sp-alpha"),
             alphaSlideHelper = container.find(".sp-alpha-handle"),
             textInput = container.find(".sp-input"),
             paletteContainer = container.find(".sp-palette"),
@@ -503,12 +516,17 @@
 
             var realColor = get(),
                 realHex = realColor.toHexString(),
-                realRgb = realColor.toString(format);
+                realRgb = realColor.toRgbString();
 
 
             // Update the replaced elements background color (with actual selected color)
-            previewElement.css("background-color", realHex);
-            previewElement.css("background-color", realRgb);
+            if (rgbaSupport || realColor.alpha === 1) {
+                previewElement.css("background-color", realRgb);
+            }
+            else {
+                previewElement.css("background-color", "transparent");
+                previewElement.css("filter", realColor.toFilter());
+            }
 
             if (showAlpha) {
                 var rgb = realColor.toRgb();
@@ -516,11 +534,15 @@
                 var realAlpha = tinycolor(rgb).toRgbString();
                 var gradient = "linear-gradient(left, " + realAlpha + ", " + realHex + ")";
 
-                alphaSlider.css("filter", tinycolor(realAlpha).toFilter({ gradientType: 1 }, realHex));
-                alphaSlider.css("background", "-webkit-" + gradient);
-                alphaSlider.css("background", "-moz-" + gradient);
-                alphaSlider.css("background", "-ms-" + gradient);
-                alphaSlider.css("background", gradient);
+                if (IE) {
+                    alphaSliderInner.css("filter", tinycolor(realAlpha).toFilter({ gradientType: 1 }, realHex));
+                }
+                else {
+                    alphaSliderInner.css("background", "-webkit-" + gradient);
+                    alphaSliderInner.css("background", "-moz-" + gradient);
+                    alphaSliderInner.css("background", "-ms-" + gradient);
+                    alphaSliderInner.css("background", gradient);
+                }
             }
 
 
@@ -913,7 +935,7 @@
                 },
                 toFilter: function (opts, secondColor) {
 
-                    var hex = secondHex = rgbToHex(r, g, b);
+                    var hex = secondHex = rgbToHex(r, g, b, true);
                     var alphaHex = secondAlphaHex = Math.round(parseFloat(a) * 255).toString(16);
                     var gradientType = opts && opts.gradientType ? "GradientType = 1, " : "";
 

@@ -46,6 +46,7 @@ License: MIT
     right:0;
     bottom:0;
     left:84%;
+    height: 100%;
 }
 .sp-fill {
     padding-top: 80%;
@@ -90,7 +91,6 @@ License: MIT
     height: 8px;
 }
 .sp-alpha-inner{
-    background-color: #aaa;
     border: solid 1px #333;
 }
 
