@@ -163,6 +163,7 @@ $("#picker").spectrum({
     showPalette: bool,
     showPaletteOnly: bool,
     showSelectionPalette: bool,
+    clickoutFiresChange: bool,
     cancelText: string,
     chooseText: string,
     className: string,
@@ -319,6 +320,29 @@ $("#showSelectionPaletteStorage").spectrum({
             </div>
         </div>
 
+        <h3>Clickout Fires Change</h3>
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                When clicking outside of the colorpicker, you can force it to fire a <code>change</code> event rather than having it revert the change.
+                </p>
+            </div>
+
+            <pre class='prettyprint'>
+$("#clickoutFiresChange").spectrum({
+    clickoutFiresChange: true
+});
+$("#clickoutDoesntChange").spectrum({
+
+});
+            </pre>
+
+            <div class='example'>
+                    <input type='text' name='clickoutFiresChange' id='clickoutFiresChange' value='goldenrod' />
+                    <input type='text' name='clickoutDoesntFireChange' id='clickoutDoesntFireChange' value='goldenrod' />
+            </div>
+        </div>
+
         <h3>Show Initial</h3>
         <div class='option-content'>
             <div class='description'>
@@ -338,6 +362,7 @@ $("#showInitial").spectrum({
                     <input type='text' name='showInitial' id='showInitial' value='goldenrod' />
             </div>
         </div>
+
         <h3>Show Input and Initial</h3>
         <div class='option-content'>
             <div class='description'>

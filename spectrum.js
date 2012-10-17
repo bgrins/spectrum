@@ -252,7 +252,7 @@
             cancelButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-                hide();
+                hide("cancel");
             });
 
             chooseButton.bind("click.spectrum", function (e) {
@@ -447,7 +447,7 @@
             var colorHasChanged = !tinycolor.equals(get(), colorOnShow);
 
             if (colorHasChanged) {
-                if (clickoutFiresChange) {
+                if (clickoutFiresChange && e !== "cancel") {
                     updateOriginalInput(true);
                 }
                 else {

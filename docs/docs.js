@@ -157,6 +157,15 @@ $("#showPaletteOnly").spectrum({
     ]
 });
 
+$("#clickoutFiresChange").spectrum({
+    clickoutFiresChange: true,
+    change: updateBorders
+});
+
+$("#clickoutDoesntFireChange").spectrum({
+    change: updateBorders
+});
+
 $("#showInitial").spectrum({
     showInitial: true
 });
