@@ -37,7 +37,7 @@
     },
     spectrums = [],
     IE = $.browser.msie,
-    rgbaSupport = (function() { 
+    rgbaSupport = (function() {
         function contains( str, substr ) {
             return !!~('' + str).indexOf(substr);
         }
@@ -108,7 +108,7 @@
             c += (tinycolor.equals(color, p[i])) ? " sp-thumb-active" : "";
 
             var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
-            html.push('<span title="' + tiny.toHexString() + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><em style="' + swatchStyle + ';" /></span>');
+            html.push('<span title="' + tiny.toHexString() + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><span class="sp-thumb-inner" style="' + swatchStyle + ';" /></span>');
         }
         return "<div class='sp-cf " + className + "'>" + html.join('') + "</div>";
     };
@@ -319,8 +319,8 @@
             }
 
             var paletteEvent = IE ? "mousedown.spectrum" : "click.spectrum touchstart.spectrum";
-            paletteContainer.delegate("span", paletteEvent, palletElementClick);
-            initialColorContainer.delegate("span::nth-child(1)", paletteEvent, { ignore: true }, palletElementClick);
+            paletteContainer.delegate(".sp-thumb-el", paletteEvent, palletElementClick);
+            initialColorContainer.delegate(".sp-thumb-el::nth-child(1)", paletteEvent, { ignore: true }, palletElementClick);
         }
         function addColorToSelectionPalette(color) {
             if (showSelectionPalette) {
