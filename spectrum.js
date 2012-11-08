@@ -137,11 +137,6 @@
 
         var opts = instanceOptions(o, element),
             flat = opts.flat,
-            showPaletteOnly = opts.showPaletteOnly,
-            showPalette = opts.showPalette || showPaletteOnly,
-            showInitial = opts.showInitial && !flat,
-            showInput = opts.showInput,
-            showAlpha = opts.showAlpha,
             showSelectionPalette = opts.showSelectionPalette,
             localStorageKey = opts.localStorageKey,
             theme = opts.theme,
@@ -195,20 +190,26 @@
         chooseButton.text(opts.chooseText);
         cancelButton.text(opts.cancelText);
 
+        function applyOptions() {
+
+            container.toggleClass("sp-flat", flat);
+            container.toggleClass("sp-input-disabled", !opts.showInput);
+            container.toggleClass("sp-alpha-enabled", opts.showAlpha);
+            container.toggleClass("sp-buttons-disabled", !opts.showButtons || flat);
+            container.toggleClass("sp-palette-disabled", !opts.showPalette);
+            container.toggleClass("sp-palette-only", opts.showPaletteOnly);
+            container.toggleClass("sp-initial-disabled", !opts.showInitial);
+            container.addClass(opts.className);
+
+            reflow();
+        }
         function initialize() {
 
             if (IE) {
                 container.find("*:not(input)").attr("unselectable", "on");
             }
 
-            container.toggleClass("sp-flat", flat);
-            container.toggleClass("sp-input-disabled", !showInput);
-            container.toggleClass("sp-alpha-enabled", showAlpha);
-            container.toggleClass("sp-buttons-disabled", !opts.showButtons || flat);
-            container.toggleClass("sp-palette-disabled", !showPalette);
-            container.toggleClass("sp-palette-only", showPaletteOnly);
-            container.toggleClass("sp-initial-disabled", !showInitial);
-            container.addClass(opts.className);
+            applyOptions();
 
             if (shouldReplace) {
                 boundElement.hide().after(replacer);
@@ -320,7 +321,7 @@
 
             var paletteEvent = IE ? "mousedown.spectrum" : "click.spectrum touchstart.spectrum";
             paletteContainer.delegate(".sp-thumb-el", paletteEvent, palletElementClick);
-            initialColorContainer.delegate(".sp-thumb-el::nth-child(1)", paletteEvent, { ignore: true }, palletElementClick);
+            initialColorContainer.delegate(".sp-thumb-el:nth-child(1)", paletteEvent, { ignore: true }, palletElementClick);
         }
         function addColorToSelectionPalette(color) {
             if (showSelectionPalette) {
@@ -336,7 +337,7 @@
             var p = selectionPalette;
             var paletteLookup = {};
 
-            if (showPalette) {
+            if (opts.showPalette) {
 
                 for (var i = 0; i < paletteArray.length; i++) {
                     for (var j = 0; j < paletteArray[i].length; j++) {
@@ -373,7 +374,7 @@
             paletteContainer.html(html.join(""));
         }
         function drawInitial() {
-            if (showInitial) {
+            if (opts.showInitial) {
                 var initial = colorOnShow;
                 var current = get();
                 initialColorContainer.html(paletteTemplate([initial, current], current, "sp-palette-row-initial"));
@@ -417,7 +418,7 @@
             replacer.addClass("sp-active");
             container.show();
 
-            if (showPalette) {
+            if (opts.showPalette) {
                 drawPalette();
             }
             reflow();
@@ -528,7 +529,7 @@
                 previewElement.css("filter", realColor.toFilter());
             }
 
-            if (showAlpha) {
+            if (opts.showAlpha) {
                 var rgb = realColor.toRgb();
                 rgb.a = 0;
                 var realAlpha = tinycolor(rgb).toRgbString();
@@ -547,7 +548,7 @@
 
 
             // Update the text entry input as it changes happen
-            if (showInput) {
+            if (opts.showInput) {
                 if (currentAlpha < 1) {
                     if (format === "hex" || format === "name") {
                         format = "rgb";
@@ -556,7 +557,7 @@
                 textInput.val(realColor.toString(format));
             }
 
-            if (showPalette) {
+            if (opts.showPalette) {
                 drawPalette();
             }
 
@@ -638,6 +639,15 @@
             spectrums[spect.id] = null;
         }
 
+        function option(optionName, optionValue) {
+            if (optionValue === undefined) {
+                return opts[optionName];
+            }
+
+            opts[optionName] = optionValue;
+            applyOptions();
+        }
+
         initialize();
 
         var spect = {
@@ -645,6 +655,7 @@
             hide: hide,
             toggle: toggle,
             reflow: reflow,
+            option: option,
             set: function (c) {
                 set(c);
                 updateOriginalInput();
@@ -823,8 +834,12 @@
         if (typeof opts == "string") {
             if (opts == "get") {
                 return spectrums[this.eq(0).data(dataID)].get();
-            } else if (opts == "container") {
+            }
+            else if (opts == "container") {
                 return spectrums[$(this).data(dataID)].container;
+            }
+            else if (opts == "option") {
+                return spectrums[this.eq(0).data(dataID)].option(arguments[1], arguments[2]);
             }
 
             return this.each(function () {

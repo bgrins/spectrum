@@ -7,6 +7,7 @@ $(function() {
 
 $("#full").spectrum({
     color: "#ECC",
+    flat: true,
     showInput: true,
     className: "full-spectrum",
     showInitial: true,
@@ -46,6 +47,14 @@ $("#full").spectrum({
         "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)",
         "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
     ]
+});
+
+$(document).on("click", ".toggleBtn", function() {
+    var option = $(this).data("rule");
+    var existing = $("#full").spectrum("option", option);
+
+    console.log(option, existing);
+    $("#full").spectrum("option", option, !existing);
 });
 
 $("#hideButtons").spectrum({
