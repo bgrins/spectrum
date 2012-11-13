@@ -36,7 +36,7 @@
         selectionPalette: []
     },
     spectrums = [],
-    IE = $.browser.msie,
+    IE = !!/msie/i.exec( window.navigator.userAgent ),
     rgbaSupport = (function() {
         function contains( str, substr ) {
             return !!~('' + str).indexOf(substr);
