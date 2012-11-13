@@ -780,9 +780,7 @@
                     $(doc).bind(duringDragEvents);
                     $(doc.body).addClass("sp-dragging");
 
-                    if (!hasTouch) {
-                        move(e);
-                    }
+                    move(e);
 
                     prevent(e);
                 }
