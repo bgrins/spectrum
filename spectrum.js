@@ -968,7 +968,7 @@
                         formattedString = this.toHsvString();
                     }
 
-                    return formattedString || this.toHexString();
+                    return formattedString || this.toHexString(true);
                 }
             };
         }
