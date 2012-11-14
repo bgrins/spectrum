@@ -570,7 +570,6 @@
         }
 
         function updateHelperLocations() {
-            var h = currentHue;
             var s = currentSaturation;
             var v = currentValue;
 
@@ -940,8 +939,10 @@
                 },
                 toFilter: function (opts, secondColor) {
 
-                    var hex = secondHex = rgbToHex(r, g, b, true);
-                    var alphaHex = secondAlphaHex = Math.round(parseFloat(a) * 255).toString(16);
+                    var hex = rgbToHex(r, g, b, true);
+                    var secondHex = hex;
+                    var alphaHex = Math.round(parseFloat(a) * 255).toString(16);
+                    var secondAlphaHex = alphaHex;
                     var gradientType = opts && opts.gradientType ? "GradientType = 1, " : "";
 
                     if (secondColor) {
@@ -993,7 +994,7 @@
 
             return tinycolor(color);
 
-        }
+        };
 
         // Given a string or object, convert that input to RGB
         // Possible string inputs:
@@ -1032,7 +1033,7 @@
                     format = "hsv";
                 }
                 else if (color.hasOwnProperty("h") && color.hasOwnProperty("s") && color.hasOwnProperty("l")) {
-                    var rgb = hslToRgb(color.h, color.s, color.l);
+                    rgb = hslToRgb(color.h, color.s, color.l);
                     ok = true;
                     format = "hsl";
                 }
@@ -1137,7 +1138,7 @@
                 return p;
             }
 
-            if (s == 0) {
+            if (s === 0) {
                 r = g = b = l; // achromatic
             }
             else {
@@ -1165,7 +1166,7 @@
             var h, s, v = max;
 
             var d = max - min;
-            s = max == 0 ? 0 : d / max;
+            s = max === 0 ? 0 : d / max;
 
             if (max == min) {
                 h = 0; // achromatic
@@ -1186,21 +1187,19 @@
         // *Assumes:* h is contained in [0, 1] or [0, 360] and s and v are contained in [0, 1] or [0, 100]
         // *Returns:* { r, g, b } in the set [0, 255]
         function hsvToRgb(h, s, v) {
-            var r, g, b;
-
             h = bound01(h, 360) * 6;
             s = bound01(s, 100);
             v = bound01(v, 100);
 
             var i = math.floor(h),
-            f = h - i,
-            p = v * (1 - s),
-            q = v * (1 - f * s),
-            t = v * (1 - (1 - f) * s),
-            mod = i % 6,
-            r = [v, q, p, p, t, v][mod],
-            g = [t, v, v, q, p, p][mod],
-            b = [p, p, t, v, v, q][mod];
+                f = h - i,
+                p = v * (1 - s),
+                q = v * (1 - f * s),
+                t = v * (1 - (1 - f) * s),
+                mod = i % 6,
+                r = [v, q, p, p, t, v][mod],
+                g = [t, v, v, q, p, p][mod],
+                b = [p, p, t, v, v, q][mod];
 
             return { r: r * 255, g: g * 255, b: b * 255 };
         }
@@ -1275,7 +1274,7 @@
         };
         tinycolor.complement = function (color) {
             var hsl = tinycolor(color).toHsl();
-            hsl.h = (hsl.h + .5) % 1;
+            hsl.h = (hsl.h + 0.5) % 1;
             return tinycolor(hsl);
         };
 
@@ -1318,7 +1317,7 @@
             slices = slices || 30;
 
             var hsl = tinycolor(color).toHsl();
-            var part = 360 / slices
+            var part = 360 / slices;
             var ret = [tinycolor(color)];
 
             hsl.h *= 360;
