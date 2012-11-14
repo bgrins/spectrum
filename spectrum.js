@@ -1,4 +1,4 @@
-﻿// Spectrum Colorpicker v1.0.0
+﻿// Spectrum Colorpicker v1.0.1
 // https://github.com/bgrins/spectrum
 // Author: Brian Grinstead
 // License: MIT
@@ -103,14 +103,14 @@
         var html = [];
         for (var i = 0; i < p.length; i++) {
             var tiny = tinycolor(p[i]);
-            var c = tiny.toHsl().l < .5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
+            var c = tiny.toHsl().l < 0.5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
             c += (tinycolor.equals(color, p[i])) ? " sp-thumb-active" : "";
 
             var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
             html.push('<span title="' + tiny.toHexString() + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><span class="sp-thumb-inner" style="' + swatchStyle + ';" /></span>');
         }
         return "<div class='sp-cf " + className + "'>" + html.join('') + "</div>";
-    };
+    }
 
     function hideAll() {
         for (var i = 0; i < spectrums.length; i++) {
@@ -119,6 +119,7 @@
             }
         }
     }
+
     function instanceOptions(o, callbackContext) {
         var opts = $.extend({}, defaultOpts, o);
         opts.callbacks = {
@@ -334,19 +335,20 @@
             var unique = [];
             var p = selectionPalette;
             var paletteLookup = {};
+            var hex;
 
             if (showPalette) {
 
                 for (var i = 0; i < paletteArray.length; i++) {
                     for (var j = 0; j < paletteArray[i].length; j++) {
-                        var hex = tinycolor(paletteArray[i][j]).toHexString();
+                        hex = tinycolor(paletteArray[i][j]).toHexString();
                         paletteLookup[hex] = true;
                     }
                 }
 
-                for (var i = 0; i < p.length; i++) {
+                for (i = 0; i < p.length; i++) {
                     var color = tinycolor(p[i]);
-                    var hex = color.toHexString();
+                    hex = color.toHexString();
 
                     if (!paletteLookup.hasOwnProperty(hex)) {
                         unique.push(p[i]);
@@ -398,7 +400,12 @@
         }
 
         function toggle() {
-            (visible) ? hide() : show();
+            if (visible) {
+                hide();
+            }
+            else {
+                show();
+            }
         }
 
         function show() {
@@ -666,7 +673,6 @@
         var extraY = 0;
         var dpWidth = picker.outerWidth();
         var dpHeight = picker.outerHeight();
-        var inputWidth = input.outerWidth();
         var inputHeight = input.outerHeight();
         var doc = picker[0].ownerDocument;
         var docElem = doc.documentElement;
@@ -709,7 +715,7 @@
         var args = slice.call(arguments, 2);
         return function () {
             return func.apply(obj, args.concat(slice.call(arguments)));
-        }
+        };
     }
 
     /**
@@ -746,7 +752,7 @@
         function move(e) {
             if (dragging) {
                 // Mouseup happened outside of window
-                if (IE && !(document.documentMode >= 9) && !e.button) {
+                if (IE && document.documentMode < 9 && !e.button) {
                     return stop();
                 }
 
@@ -1660,4 +1666,4 @@
         }
     });
 
-})(this, jQuery);
+})(window, jQuery);
