@@ -1536,7 +1536,7 @@
             }
 
             // Handle floating point rounding errors
-            if ((math.abs(n - max) < 0.000001)) {
+            if (math.abs(n - max) < 0.000001) {
                 return 1;
             }
             else if (n >= 1) {
