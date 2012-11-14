@@ -1,8 +1,7 @@
-﻿// Spectrum: The No Hassle Colorpicker
+﻿// Spectrum Colorpicker v1.0.0
 // https://github.com/bgrins/spectrum
 // Author: Brian Grinstead
 // License: MIT
-// Requires: jQuery, spectrum.css
 
 (function (window, $, undefined) {
     var defaultOpts = {
