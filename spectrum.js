@@ -1,4 +1,4 @@
-﻿// Spectrum Colorpicker v1.0.0
+﻿// Spectrum Colorpicker v1.0.1
 // https://github.com/bgrins/spectrum
 // Author: Brian Grinstead
 // License: MIT
@@ -103,14 +103,14 @@
         var html = [];
         for (var i = 0; i < p.length; i++) {
             var tiny = tinycolor(p[i]);
-            var c = tiny.toHsl().l < .5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
+            var c = tiny.toHsl().l < 0.5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
             c += (tinycolor.equals(color, p[i])) ? " sp-thumb-active" : "";
 
             var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
             html.push('<span title="' + tiny.toHexString() + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><span class="sp-thumb-inner" style="' + swatchStyle + ';" /></span>');
         }
         return "<div class='sp-cf " + className + "'>" + html.join('') + "</div>";
-    };
+    }
 
     function hideAll() {
         for (var i = 0; i < spectrums.length; i++) {
@@ -119,6 +119,7 @@
             }
         }
     }
+
     function instanceOptions(o, callbackContext) {
         var opts = $.extend({}, defaultOpts, o);
         opts.callbacks = {
@@ -334,19 +335,20 @@
             var unique = [];
             var p = selectionPalette;
             var paletteLookup = {};
+            var hex;
 
             if (showPalette) {
 
                 for (var i = 0; i < paletteArray.length; i++) {
                     for (var j = 0; j < paletteArray[i].length; j++) {
-                        var hex = tinycolor(paletteArray[i][j]).toHexString();
+                        hex = tinycolor(paletteArray[i][j]).toHexString();
                         paletteLookup[hex] = true;
                     }
                 }
 
-                for (var i = 0; i < p.length; i++) {
+                for (i = 0; i < p.length; i++) {
                     var color = tinycolor(p[i]);
-                    var hex = color.toHexString();
+                    hex = color.toHexString();
 
                     if (!paletteLookup.hasOwnProperty(hex)) {
                         unique.push(p[i]);
@@ -398,7 +400,12 @@
         }
 
         function toggle() {
-            (visible) ? hide() : show();
+            if (visible) {
+                hide();
+            }
+            else {
+                show();
+            }
         }
 
         function show() {
@@ -563,7 +570,6 @@
         }
 
         function updateHelperLocations() {
-            var h = currentHue;
             var s = currentSaturation;
             var v = currentValue;
 
@@ -666,7 +672,6 @@
         var extraY = 0;
         var dpWidth = picker.outerWidth();
         var dpHeight = picker.outerHeight();
-        var inputWidth = input.outerWidth();
         var inputHeight = input.outerHeight();
         var doc = picker[0].ownerDocument;
         var docElem = doc.documentElement;
@@ -709,7 +714,7 @@
         var args = slice.call(arguments, 2);
         return function () {
             return func.apply(obj, args.concat(slice.call(arguments)));
-        }
+        };
     }
 
     /**
@@ -746,7 +751,7 @@
         function move(e) {
             if (dragging) {
                 // Mouseup happened outside of window
-                if (IE && !(document.documentMode >= 9) && !e.button) {
+                if (IE && document.documentMode < 9 && !e.button) {
                     return stop();
                 }
 
@@ -934,8 +939,10 @@
                 },
                 toFilter: function (opts, secondColor) {
 
-                    var hex = secondHex = rgbToHex(r, g, b, true);
-                    var alphaHex = secondAlphaHex = Math.round(parseFloat(a) * 255).toString(16);
+                    var hex = rgbToHex(r, g, b, true);
+                    var secondHex = hex;
+                    var alphaHex = Math.round(parseFloat(a) * 255).toString(16);
+                    var secondAlphaHex = alphaHex;
                     var gradientType = opts && opts.gradientType ? "GradientType = 1, " : "";
 
                     if (secondColor) {
@@ -987,7 +994,7 @@
 
             return tinycolor(color);
 
-        }
+        };
 
         // Given a string or object, convert that input to RGB
         // Possible string inputs:
@@ -1026,7 +1033,7 @@
                     format = "hsv";
                 }
                 else if (color.hasOwnProperty("h") && color.hasOwnProperty("s") && color.hasOwnProperty("l")) {
-                    var rgb = hslToRgb(color.h, color.s, color.l);
+                    rgb = hslToRgb(color.h, color.s, color.l);
                     ok = true;
                     format = "hsl";
                 }
@@ -1131,7 +1138,7 @@
                 return p;
             }
 
-            if (s == 0) {
+            if (s === 0) {
                 r = g = b = l; // achromatic
             }
             else {
@@ -1159,7 +1166,7 @@
             var h, s, v = max;
 
             var d = max - min;
-            s = max == 0 ? 0 : d / max;
+            s = max === 0 ? 0 : d / max;
 
             if (max == min) {
                 h = 0; // achromatic
@@ -1180,21 +1187,19 @@
         // *Assumes:* h is contained in [0, 1] or [0, 360] and s and v are contained in [0, 1] or [0, 100]
         // *Returns:* { r, g, b } in the set [0, 255]
         function hsvToRgb(h, s, v) {
-            var r, g, b;
-
             h = bound01(h, 360) * 6;
             s = bound01(s, 100);
             v = bound01(v, 100);
 
             var i = math.floor(h),
-            f = h - i,
-            p = v * (1 - s),
-            q = v * (1 - f * s),
-            t = v * (1 - (1 - f) * s),
-            mod = i % 6,
-            r = [v, q, p, p, t, v][mod],
-            g = [t, v, v, q, p, p][mod],
-            b = [p, p, t, v, v, q][mod];
+                f = h - i,
+                p = v * (1 - s),
+                q = v * (1 - f * s),
+                t = v * (1 - (1 - f) * s),
+                mod = i % 6,
+                r = [v, q, p, p, t, v][mod],
+                g = [t, v, v, q, p, p][mod],
+                b = [p, p, t, v, v, q][mod];
 
             return { r: r * 255, g: g * 255, b: b * 255 };
         }
@@ -1269,7 +1274,7 @@
         };
         tinycolor.complement = function (color) {
             var hsl = tinycolor(color).toHsl();
-            hsl.h = (hsl.h + .5) % 1;
+            hsl.h = (hsl.h + 0.5) % 1;
             return tinycolor(hsl);
         };
 
@@ -1312,7 +1317,7 @@
             slices = slices || 30;
 
             var hsl = tinycolor(color).toHsl();
-            var part = 360 / slices
+            var part = 360 / slices;
             var ret = [tinycolor(color)];
 
             hsl.h *= 360;
@@ -1531,7 +1536,7 @@
             }
 
             // Handle floating point rounding errors
-            if ((math.abs(n - max) < 0.000001)) {
+            if (math.abs(n - max) < 0.000001) {
                 return 1;
             }
             else if (n >= 1) {
@@ -1660,4 +1665,4 @@
         }
     });
 
-})(this, jQuery);
+})(window, jQuery);
