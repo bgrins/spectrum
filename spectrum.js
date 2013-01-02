@@ -230,14 +230,6 @@
                 }
             }
 
-            offsetElement.hover(function () {
-                if(!disabled) {
-                    offsetElement.addClass("sp-active");
-                }
-            }, function () {
-                offsetElement.removeClass("sp-active");
-            });
-
             offsetElement.bind("click.spectrum touchstart.spectrum", function (e) {
                 if (!disabled) {
                     toggle();
