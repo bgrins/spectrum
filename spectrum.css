@@ -337,9 +337,15 @@ License: MIT
     color: #333;
     vertical-align: middle;
 }
-.sp-replacer:hover, .sp-replacer.sp-active {
+.sp-replacer.sp-active {
     border-color: #F0C49B;
     color: #111;
+}
+.sp-replacer.sp-disabled 
+{
+    cursor:default;
+    border-color: silver;
+    color: silver;
 }
 .sp-dd {
     padding: 2px 0;

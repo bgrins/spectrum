@@ -168,6 +168,7 @@
         var doc = element.ownerDocument,
             body = doc.body,
             boundElement = $(element),
+            disabled = boundElement.prop("disabled"),
             container = $(markup, doc).addClass(theme),
             dragger = container.find(".sp-color"),
             dragHelper = container.find(".sp-dragger"),
@@ -229,15 +230,26 @@
                 }
             }
 
-            offsetElement.bind("click.spectrum touchstart.spectrum", function (e) {
-                toggle();
-
-                e.stopPropagation();
-
-                if (!$(e.target).is("input")) {
-                    e.preventDefault();
-                }
+            offsetElement.hover(function () {
+                if(!disabled) { offsetElement.addClass("sp-active"); }
+            }, function () {
+                //Remove the if(!disabled) statement, in case control is disabled while hovering
+                offsetElement.removeClass("sp-active");
             });
+
+            offsetElement.bind("click.spectrum touchstart.spectrum", function (e) {
+                if (!disabled) { toggle(); }
+
+                    e.stopPropagation();
+
+                    if (!$(e.target).is("input")) {
+                        e.preventDefault();
+                    }
+            });
+
+            if (disabled) {
+                offsetElement.addClass("sp-disabled");
+            }
 
             // Prevent clicks from bubbling up to document.  This would cause it to be hidden.
             container.click(stopPropagation);
