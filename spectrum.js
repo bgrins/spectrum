@@ -168,7 +168,7 @@
         var doc = element.ownerDocument,
             body = doc.body,
             boundElement = $(element),
-            disabled = boundElement.prop("disabled"),
+            disabled = boundElement.is(":disabled"),
             container = $(markup, doc).addClass(theme),
             dragger = container.find(".sp-color"),
             dragHelper = container.find(".sp-dragger"),
@@ -231,20 +231,23 @@
             }
 
             offsetElement.hover(function () {
-                if(!disabled) { offsetElement.addClass("sp-active"); }
+                if(!disabled) {
+                    offsetElement.addClass("sp-active");
+                }
             }, function () {
-                //Remove the if(!disabled) statement, in case control is disabled while hovering
                 offsetElement.removeClass("sp-active");
             });
 
             offsetElement.bind("click.spectrum touchstart.spectrum", function (e) {
-                if (!disabled) { toggle(); }
+                if (!disabled) {
+                    toggle();
+                }
 
-                    e.stopPropagation();
+                e.stopPropagation();
 
-                    if (!$(e.target).is("input")) {
-                        e.preventDefault();
-                    }
+                if (!$(e.target).is("input")) {
+                    e.preventDefault();
+                }
             });
 
             if (disabled) {
