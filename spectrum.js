@@ -230,23 +230,24 @@
                 }
             }
 
-            if (!disabled) {
-                offsetElement.hover(function () {
-                    offsetElement.addClass("sp-active");
-                }, function () {
-                    offsetElement.removeClass("sp-active");
-                });
+            offsetElement.hover(function () {
+                if(!disabled) { offsetElement.addClass("sp-active"); }
+            }, function () {
+                //Remove the if(!disabled) statement, in case control is disabled while hovering
+                offsetElement.removeClass("sp-active");
+            });
 
-                offsetElement.bind("click.spectrum touchstart.spectrum", function (e) {
-                    toggle();
+            offsetElement.bind("click.spectrum touchstart.spectrum", function (e) {
+                if (!disabled) { toggle(); }
 
                     e.stopPropagation();
 
                     if (!$(e.target).is("input")) {
                         e.preventDefault();
                     }
-                });
-            } else {
+            });
+
+            if (disabled) {
                 offsetElement.addClass("sp-disabled");
             }
 
