@@ -341,8 +341,7 @@ License: MIT
     border-color: #F0C49B;
     color: #111;
 }
-.sp-replacer.sp-disabled 
-{
+.sp-replacer.sp-disabled {
     cursor:default;
     border-color: silver;
     color: silver;
