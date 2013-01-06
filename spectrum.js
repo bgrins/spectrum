@@ -1,4 +1,4 @@
-﻿// Spectrum Colorpicker v1.0.2
+// Spectrum Colorpicker v1.0.2
 // https://github.com/bgrins/spectrum
 // Author: Brian Grinstead
 // License: MIT
@@ -32,7 +32,8 @@
         showAlpha: false,
         theme: "sp-light",
         palette: ['fff', '000'],
-        selectionPalette: []
+        selectionPalette: [],
+        disabled: false
     },
     spectrums = [],
     IE = !!/msie/i.exec( window.navigator.userAgent ),
@@ -168,7 +169,7 @@
         var doc = element.ownerDocument,
             body = doc.body,
             boundElement = $(element),
-            disabled = boundElement.is(":disabled"),
+            disabled = boundElement.is(":disabled") || (opts.disabled == true),
             container = $(markup, doc).addClass(theme),
             dragger = container.find(".sp-color"),
             dragHelper = container.find(".sp-dragger"),
@@ -195,6 +196,7 @@
 
         chooseButton.text(opts.chooseText);
         cancelButton.text(opts.cancelText);
+        if(opts.disabled) disable();
 
         function initialize() {
 
@@ -650,6 +652,18 @@
             spectrums[spect.id] = null;
         }
 
+        function enable() {
+            disabled = false;
+            boundElement.attr('disabled', false);
+            offsetElement.removeClass("sp-disabled");
+        }
+
+        function disable() {
+            disabled = true;
+            boundElement.attr('disabled', true);
+            offsetElement.addClass("sp-disabled");
+        }
+
         initialize();
 
         var spect = {
@@ -657,6 +671,8 @@
             hide: hide,
             toggle: toggle,
             reflow: reflow,
+            enable: enable,
+            disable: disable,
             set: function (c) {
                 set(c);
                 updateOriginalInput();
@@ -845,6 +861,8 @@
                     if (opts == "toggle") { spect.toggle(); }
                     if (opts == "reflow") { spect.reflow(); }
                     if (opts == "set") { spect.set(extra); }
+                    if (opts == 'enable') { spect.enable(); }
+                    if (opts == 'disable') { spect.disable(); }
                     if (opts == "destroy") {
                         spect.destroy();
                         $(this).removeData(dataID);
