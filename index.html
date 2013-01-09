@@ -159,6 +159,7 @@ $("#picker").spectrum({
     showInput: bool,
     showInitial: bool,
     showAlpha: bool,
+    disabled: bool,
     localStorageKey: string,
     showPalette: bool,
     showPaletteOnly: bool,
@@ -243,6 +244,26 @@ $("#showAlpha").spectrum({
             </div>
             <div class='example'>
                 <input type='text' name='showAlphaWithInput' id='showAlphaWithInput' />
+            </div>
+        </div>
+
+        <h3>Disabled</h3>
+        <div class='option-content'>
+            <div class='description'>
+            <p>Spectrum can be automatically disabled if you pass in the <code>disabled</code> flag.  Additionally, if the input that you initialize spectrum on is disabled, this will be the default value.</p>
+            </div>
+            <pre class='prettyprint'>
+$("#disabled").spectrum({
+    disabled: true
+});
+$("input:disabled").spectrum({
+
+});
+            </pre>
+            <div class='example'>
+                    <input type='text' name='disabled' id='disabled' value='lightblue' />
+                    <input type='text' disabled value='lightblue' />
+                    <button id='toggle-disabled' class='btn'>Toggle Disabled</button>
             </div>
         </div>
 
@@ -575,6 +596,8 @@ $("#picker").spectrum("set", colorString);
 $("#picker").spectrum("container");
 $("#picker").spectrum("reflow");
 $("#picker").spectrum("destroy");
+$("#picker").spectrum("enable");
+$("#picker").spectrum("disable");
 </pre>
 
 
@@ -680,6 +703,32 @@ $("#btnEnterAColor").click(function() {
             <div class='description'>
                 <p>
                 Removes the colorpicker functionality and restores the element to its original state.
+                </p>
+            </div>
+        </div>
+
+        <h3>enable</h3>
+
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Allows selection of the colorpicker component.  If it is already enabled, this method does nothing.
+                </p>
+                <p>
+                Additionally, this will cause the original (now hidden) input to be set as disabled.
+                </p>
+            </div>
+        </div>
+
+        <h3>disable</h3>
+
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Disables selection of the colorpicker component.  Adds the <code>sp-disabled</code> class onto the replacer element.  If it is already disabled, this method does nothing.
+                </p>
+                <p>
+                Additionally, this will remove the <code>disabled</code> property on the original (now hidden).
                 </p>
             </div>
         </div>

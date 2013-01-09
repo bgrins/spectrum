@@ -53,6 +53,26 @@ $("#hideButtons").spectrum({
     change: updateBorders
 });
 
+
+var isDisabled = true;
+$("#toggle-disabled").click(function() {
+    if (isDisabled) {
+        $("#disabled").spectrum("enable");
+    }
+    else {
+        $("#disabled").spectrum("disable");
+    }
+    isDisabled = !isDisabled;
+    return false;
+});
+
+$("input:disabled").spectrum({
+
+});
+$("#disabled").spectrum({
+    disabled: true
+});
+
 $("#pick1").spectrum({
     flat: true,
     change: function(color) {
