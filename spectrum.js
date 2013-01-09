@@ -169,7 +169,7 @@
         var doc = element.ownerDocument,
             body = doc.body,
             boundElement = $(element),
-            disabled = boundElement.is(":disabled") || (opts.disabled == true),
+            disabled = boundElement.is(":disabled") || (opts.disabled === true),
             container = $(markup, doc).addClass(theme),
             dragger = container.find(".sp-color"),
             dragHelper = container.find(".sp-dragger"),
