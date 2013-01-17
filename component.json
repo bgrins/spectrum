@@ -2,6 +2,9 @@
   "name": "spectrum",
   "version": "1.0.2",
   "main": ["./spectrum.css", "./spectrum.js"],
+  "docs": "http://bgrins.github.com/spectrum",
+  "homepage": "http://bgrins.github.com/spectrum",
+  "demo": "http://jsfiddle.net/bgrins/ctkY3/",
   "dependencies": {
     "jquery": ">=1.7.2"
   }
