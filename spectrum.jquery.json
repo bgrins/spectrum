@@ -1,0 +1,12 @@
+{
+    "name": "spectrum",
+    "version": "1.0.2",
+    "title": "The No Hassle jQuery Colorpicker",
+    "keywords": ["color", "colorpicker", "ui"],
+    "licenses": [
+      {
+        "type": "MIT",
+        "url": "https://github.com/bgrins/spectrum/blob/master/LICENSE"
+      }
+    ]
+}
