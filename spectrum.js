@@ -191,7 +191,6 @@
 
         chooseButton.text(opts.chooseText);
         cancelButton.text(opts.cancelText);
-        if(opts.disabled) disable();
 
         function applyOptions() {
 
@@ -206,6 +205,7 @@
 
             reflow();
         }
+
         function initialize() {
 
             if (IE) {
@@ -245,8 +245,8 @@
                 }
             });
 
-            if (disabled) {
-                offsetElement.addClass("sp-disabled");
+            if(opts.disabled) {
+                disable();
             }
 
             // Prevent clicks from bubbling up to document.  This would cause it to be hidden.
@@ -662,6 +662,7 @@
             applyOptions();
 
         }
+
         function enable() {
             disabled = false;
             boundElement.attr("disabled", false);
