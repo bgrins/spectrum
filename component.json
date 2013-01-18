@@ -1,6 +1,6 @@
 {
-  "name": "Spectrum",
-  "version": "1.0.3",
+  "name": "spectrum",
+  "version": "1.0.4",
   "main": ["./spectrum.css", "./spectrum.js"],
   "docs": "http://bgrins.github.com/spectrum",
   "homepage": "http://bgrins.github.com/spectrum",
