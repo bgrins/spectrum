@@ -1,5 +1,5 @@
 {
-  "name": "spectrum",
+  "name": "Spectrum",
   "version": "1.0.2",
   "main": ["./spectrum.css", "./spectrum.js"],
   "docs": "http://bgrins.github.com/spectrum",
