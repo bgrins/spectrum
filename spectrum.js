@@ -164,7 +164,7 @@
         var doc = element.ownerDocument,
             body = doc.body,
             boundElement = $(element),
-            disabled = boundElement.is(":disabled") || (opts.disabled === true),
+            disabled = false,
             container = $(markup, doc).addClass(theme),
             dragger = container.find(".sp-color"),
             dragHelper = container.find(".sp-dragger"),
@@ -189,8 +189,6 @@
             currentPreferredFormat = preferredFormat,
             clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange;
 
-        chooseButton.text(opts.chooseText);
-        cancelButton.text(opts.cancelText);
 
         function applyOptions() {
 
@@ -224,6 +222,7 @@
             else {
                 $(body).append(container.hide());
             }
+
             if (localStorageKey && window.localStorage) {
                 try {
                     selectionPalette = window.localStorage[localStorageKey].split(",");
@@ -245,7 +244,7 @@
                 }
             });
 
-            if(opts.disabled) {
+            if(boundElement.is(":disabled") || (opts.disabled === true)) {
                 disable();
             }
 
@@ -259,12 +258,14 @@
             });
             textInput.keydown(function (e) { if (e.keyCode == 13) { setFromTextInput(); } });
 
+            cancelButton.text(opts.cancelText);
             cancelButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
                 hide("cancel");
             });
 
+            chooseButton.text(opts.chooseText);
             chooseButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
@@ -332,6 +333,7 @@
             paletteContainer.delegate(".sp-thumb-el", paletteEvent, palletElementClick);
             initialColorContainer.delegate(".sp-thumb-el:nth-child(1)", paletteEvent, { ignore: true }, palletElementClick);
         }
+
         function addColorToSelectionPalette(color) {
             if (showSelectionPalette) {
                 selectionPalette.push(tinycolor(color).toHexString());
@@ -369,6 +371,7 @@
 
             return unique.reverse().slice(0, opts.maxSelectionSize);
         }
+
         function drawPalette() {
 
             var currentColor = get();
@@ -383,6 +386,7 @@
 
             paletteContainer.html(html.join(""));
         }
+
         function drawInitial() {
             if (opts.showInitial) {
                 var initial = colorOnShow;
@@ -390,15 +394,18 @@
                 initialColorContainer.html(paletteTemplate([initial, current], current, "sp-palette-row-initial"));
             }
         }
+
         function dragStart() {
             if (dragHeight === 0 || dragWidth === 0 || slideHeight === 0) {
                 reflow();
             }
             container.addClass(draggingClass);
         }
+
         function dragStop() {
             container.removeClass(draggingClass);
         }
+
         function setFromTextInput() {
             var tiny = tinycolor(textInput.val());
             if (tiny.ok) {

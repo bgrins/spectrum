@@ -35,17 +35,25 @@
 </div>
 
 <div class="container">
-    <div id="example-container">
-        <input id="full">
 
+    <p>
+        Spectrum can be customized to show and hide different components of the colorpicker.  Try clicking some of the buttons below to see how it can change.
+    </p>
+
+    <div id="example-container">
+
+        <div class='btn-group'>
+            <button class='btn toggleBtn' data-rule='showPalette'>Show Palette</button>
+            <button class='btn toggleBtn' data-rule='showInput'>Show Input</button>
+            <button class='btn toggleBtn' data-rule='showInitial'>Show Initial</button>
+            <button class='btn toggleBtn' data-rule='showPaletteOnly'>Show Palette Only</button>
+            <button class='btn toggleBtn' data-rule='showAlpha'>Show Alpha</button>
+            <button class='btn toggleBtn' data-rule='showButtons'>Show Buttons</button>
+        </div>
+        <br />
         <br />
 
-        <button class='btn toggleBtn' data-rule='showPalette'>Show Palette</button>
-        <button class='btn toggleBtn' data-rule='showInput'>Show Input</button>
-        <button class='btn toggleBtn' data-rule='showInitial'>Show Initial</button>
-        <button class='btn toggleBtn' data-rule='showPaletteOnly'>Show Palette Only</button>
-        <button class='btn toggleBtn' data-rule='showAlpha'>Show Alpha</button>
-        <button class='btn toggleBtn' data-rule='showButtons'>Show Buttons</button>
+        <input id="full">
 
     </div>
 </div>
