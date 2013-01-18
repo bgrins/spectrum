@@ -9,7 +9,8 @@
 
     <link rel="stylesheet" type="text/css" href="spectrum.css">
     <link rel="stylesheet" type="text/css" href="docs/docs.css">
-    <script type="text/javascript" src="docs/jquery-1.8.2.js"></script>
+
+    <script type="text/javascript" src="docs/jquery-1.8.3.js"></script>
     <script type="text/javascript" src="spectrum.js"></script>
     <script type="text/javascript" src="docs/prettify.js"></script>
     <script type='text/javascript' src='docs/toc.js'></script>
@@ -19,8 +20,8 @@
 <div id='header'>
     <h1><a href='http://bgrins.github.com/spectrum'>Spectrum</a></h1> <h2><em>The No Hassle jQuery Colorpicker</em></h2>
     <div id='links'>
-        <a href='http://github.com/bgrins/spectrum'>Source code</a> |
-        <a href='http://twitter.com/bgrins'>@bgrins</a>
+        View the <a href='http://github.com/bgrins/spectrum'>Source code</a>.
+        Spectrum is a project by <a href='http://twitter.com/bgrins'>@bgrins</a>.
     </div>
     <br style='clear:both;' />
 </div>
@@ -86,6 +87,21 @@
         <p>Along with desktop browser support, I wanted a mobile colorpicker that was touch friendly, worked in iOS and Android, and used standards
             that maximize future mobile support.
         </p>
+
+        <h3 class='point'>Devtools</h3>
+
+        <p>
+            Believe it or not, <strong>this colorpicker lives inside of Chrome devtools</strong> to make picking colors easier for web developers and designers.
+        </p>
+
+        <p>
+            When I started the project, I wrote about <a href="http://www.briangrinstead.com/blog/chrome-developer-tools-colorpicker-concept">developer tools concept colorpicker implementation</a>.  After that, I was <a href="http://groups.google.com/group/google-chrome-developer-tools/browse_thread/thread/4dd1e853b8051727/4549a6f0788885d4">contacted on the devtools mailing list</a> and got some initial feedback about the possibility of integrating it with devtools.  Then I pulled the jQuery dependency out of a branch and I submitted a patch to the WebKit project.
+        </p>
+
+        <p>
+            From there, I opened a development case, entitled <a href="https://bugs.webkit.org/show_bug.cgi?id=71262">Web Inspector: Add colorpicker functionality to color swatches in Styles Sidebar</a>.  50+ comments and 10 patches later, the case <a href="http://www.webkit.org/blog/1804/last-week-in-webkit-calculated-css-values-and-the-translate-attribute/">landed in WebKit</a>. Thanks to all the WebKit developers who helped me along the way with getting the code and UI ready for committing.
+        </p>
+
 
         <h2>Modes</h2>
         <h3 class='point'>input[type=color]</h3>
@@ -167,6 +183,7 @@ $("#picker").spectrum({
     showInput: bool,
     showInitial: bool,
     showAlpha: bool,
+    disabled: bool,
     localStorageKey: string,
     showPalette: bool,
     showPaletteOnly: bool,
@@ -251,6 +268,26 @@ $("#showAlpha").spectrum({
             </div>
             <div class='example'>
                 <input type='text' name='showAlphaWithInput' id='showAlphaWithInput' />
+            </div>
+        </div>
+
+        <h3>Disabled</h3>
+        <div class='option-content'>
+            <div class='description'>
+            <p>Spectrum can be automatically disabled if you pass in the <code>disabled</code> flag.  Additionally, if the input that you initialize spectrum on is disabled, this will be the default value.</p>
+            </div>
+            <pre class='prettyprint'>
+$("#disabled").spectrum({
+    disabled: true
+});
+$("input:disabled").spectrum({
+
+});
+            </pre>
+            <div class='example'>
+                    <input type='text' name='disabled' id='disabled' value='lightblue' />
+                    <input type='text' disabled value='lightblue' />
+                    <button id='toggle-disabled' class='btn'>Toggle Disabled</button>
             </div>
         </div>
 
@@ -583,6 +620,8 @@ $("#picker").spectrum("set", colorString);
 $("#picker").spectrum("container");
 $("#picker").spectrum("reflow");
 $("#picker").spectrum("destroy");
+$("#picker").spectrum("enable");
+$("#picker").spectrum("disable");
 </pre>
 
 
@@ -692,6 +731,32 @@ $("#btnEnterAColor").click(function() {
             </div>
         </div>
 
+        <h3>enable</h3>
+
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Allows selection of the colorpicker component.  If it is already enabled, this method does nothing.
+                </p>
+                <p>
+                Additionally, this will cause the original (now hidden) input to be set as disabled.
+                </p>
+            </div>
+        </div>
+
+        <h3>disable</h3>
+
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Disables selection of the colorpicker component.  Adds the <code>sp-disabled</code> class onto the replacer element.  If it is already disabled, this method does nothing.
+                </p>
+                <p>
+                Additionally, this will remove the <code>disabled</code> property on the original (now hidden).
+                </p>
+            </div>
+        </div>
+
 
         <h2>Skinning</h2>
 
@@ -770,7 +835,7 @@ t.toName()      // "red"
         <a href='http://bgrins.github.com/spectrum'>Spectrum colorpicker</a>
         </p>
         <p>
-        If you want to let me (<a href='http://twitter.com/bgrins'>@bgrins</a>) know you are using it, send me a link and I'll add you to the <a href='https://github.com/bgrins/spectrum/wiki/Sites-Using-Spectrum'>list of projects using Spectrum</a>!
+        If you want to let me (<a href='http://twitter.com/bgrins'>@bgrins</a>) know you are using it, send me a link where it can be seen or add it to the <a href='https://github.com/bgrins/spectrum/wiki/Sites-Using-Spectrum'>list of projects using Spectrum</a>!
         </p>
     </div>
 

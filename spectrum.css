@@ -1,7 +1,6 @@
 ﻿/***
-Spectrum: The No Hassle Colorpicker
+Spectrum Colorpicker v1.0.2
 https://github.com/bgrins/spectrum
-
 Author: Brian Grinstead
 License: MIT
 ***/
@@ -341,6 +340,11 @@ License: MIT
 .sp-replacer:hover, .sp-replacer.sp-active {
     border-color: #F0C49B;
     color: #111;
+}
+.sp-replacer.sp-disabled {
+    cursor:default;
+    border-color: silver;
+    color: silver;
 }
 .sp-dd {
     padding: 2px 0;
