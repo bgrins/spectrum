@@ -1,13 +1,18 @@
 {
     "name": "spectrum",
     "version": "1.0.4",
-    "title": "Spectrum - The No Hassle jQuery Colorpicker",
+    "title": "Spectrum Colorpicker",
+    "description": "The No Hassle jQuery Colorpicker",
     "author": {
         "name" : "Brian Grinstead",
         "email" : "briangrinstead@gmail.com",
         "url" : "http://briangrinstead.com/"
     },
-    "keywords": ["color", "colorpicker", "ui"],
+    "keywords": [
+        "color",
+        "colorpicker",
+        "ui"
+    ],
     "licenses": [
       {
         "type": "MIT",
