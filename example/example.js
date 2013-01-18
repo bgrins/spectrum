@@ -1,7 +1,13 @@
 
 $(function() {
 
-    console.log("HERE");
+    $(document).on("click", ".toggleBtn", function() {
+        var option = $(this).data("rule");
+        var existing = $("#full").spectrum("option", option);
+
+        console.log(option, existing);
+        $("#full").spectrum("option", option, !existing);
+    });
 
     $("#full").spectrum({
         color: "#ECC",
@@ -45,7 +51,4 @@ $(function() {
         ]
     });
 
-    $("#toggle-buttons").click(function() {
-        $("#full").spectrum("option", "show-buttons", "true");
-    });
 });
