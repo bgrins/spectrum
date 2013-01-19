@@ -23,3 +23,31 @@ test( "Default Color Is Set By Input Value", function() {
   equal ( noValue.spectrum("get").toHex(), "000", "Defaults to black with no value set");
 
 });
+
+test( "Options Can Be Set and Gotten Programmatically ", function() {
+
+  var spec = $("<input id='spec' />").spectrum({
+    color: "#ECC",
+    flat: true,
+    showInput: true,
+    className: "full-spectrum",
+    showInitial: true,
+    showPalette: true,
+    showSelectionPalette: true,
+    maxPaletteSize: 10,
+    preferredFormat: "hex",
+    localStorageKey: "spectrum.example",
+    palette: [['red'], ['green']]
+  });
+
+  var allOptions = spec.spectrum("option");
+  equal ( allOptions.flat, true, "Fetching all options provides accurate value");
+
+  var singleOption = spec.spectrum("option", "className");
+  equal ( singleOption, "full-spectrum", "Fetching a single option returns that value");
+
+  spec.spectrum("option", "className", "changed");
+  singleOption = spec.spectrum("option", "className");
+  equal ( singleOption, "changed", "Changing an option then fetching it is updated");
+
+});
