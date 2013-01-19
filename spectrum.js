@@ -661,13 +661,15 @@
         }
 
         function option(optionName, optionValue) {
+            if (optionName === undefined) {
+                return $.extend({}, opts);
+            }
             if (optionValue === undefined) {
                 return opts[optionName];
             }
 
             opts[optionName] = optionValue;
             applyOptions();
-
         }
 
         function enable() {

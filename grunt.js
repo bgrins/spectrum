@@ -17,6 +17,10 @@ module.exports = function(grunt) {
       }
     },
 
+    qunit: {
+      all: ['test/index.html']
+    },
+
     min: {
       'build/spectrum-min.js': ['spectrum.js']
     }
@@ -30,7 +34,7 @@ module.exports = function(grunt) {
     });
   });
 
-  grunt.registerTask('default', 'lint');
-  grunt.registerTask('build', 'min docco');
+  grunt.registerTask('default', 'lint qunit');
+  grunt.registerTask('build', 'lint qunit min docco');
 
 };
