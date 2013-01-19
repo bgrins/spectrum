@@ -679,6 +679,7 @@
         }
 
         function disable() {
+            hide();
             disabled = true;
             boundElement.attr("disabled", true);
             offsetElement.addClass("sp-disabled");
@@ -867,36 +868,44 @@
     */
     var dataID = "spectrum.id";
     $.fn.spectrum = function (opts, extra) {
-        if (typeof opts == "string") {
-            if (opts == "get") {
-                return spectrums[this.eq(0).data(dataID)].get();
-            }
-            else if (opts == "container") {
-                return spectrums[$(this).data(dataID)].container;
-            }
-            else if (opts == "option") {
-                return spectrums[this.eq(0).data(dataID)].option(arguments[1], arguments[2]);
-            }
 
-            return this.each(function () {
+        if (typeof opts == "string") {
+
+            var returnValue = this;
+            var args = Array.prototype.slice.call( arguments, 1 );
+
+            this.each(function () {
                 var spect = spectrums[$(this).data(dataID)];
                 if (spect) {
-                    if (opts == "show") { spect.show(); }
-                    if (opts == "hide") { spect.hide(); }
-                    if (opts == "toggle") { spect.toggle(); }
-                    if (opts == "reflow") { spect.reflow(); }
-                    if (opts == "set") { spect.set(extra); }
-                    if (opts == 'enable') { spect.enable(); }
-                    if (opts == 'disable') { spect.disable(); }
-                    if (opts == "destroy") {
+
+                    var method = spect[opts];
+                    if (!method) {
+                        throw new Error( "Spectrum: no such method: '" + opts + "'" );
+                    }
+
+                    if (opts == "get") {
+                        returnValue = spect.get();
+                    }
+                    else if (opts == "container") {
+                        returnValue = spect.container;
+                    }
+                    else if (opts == "option") {
+                        returnValue = spect.option.apply(spect, args);
+                    }
+                    else if (opts == "destroy") {
                         spect.destroy();
                         $(this).removeData(dataID);
                     }
+                    else {
+                        method.apply(spect, args);
+                    }
                 }
             });
+
+            return returnValue;
         }
 
-        // Initializing a new one
+        // Initializing a new instance of spectrum
         return this.spectrum("destroy").each(function () {
             var spect = spectrum(this, opts);
             $(this).data(dataID, spect.id);
