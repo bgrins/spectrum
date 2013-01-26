@@ -329,7 +329,7 @@
 
             var paletteEvent = IE ? "mousedown.spectrum" : "click.spectrum touchstart.spectrum";
             paletteContainer.delegate(".sp-thumb-el", paletteEvent, palletElementClick);
-            initialColorContainer.delegate(".sp-thumb-el::nth-child(1)", paletteEvent, { ignore: true }, palletElementClick);
+            initialColorContainer.delegate(".sp-thumb-el:nth-child(1)", paletteEvent, { ignore: true }, palletElementClick);
         }
         function addColorToSelectionPalette(color) {
             if (showSelectionPalette) {
