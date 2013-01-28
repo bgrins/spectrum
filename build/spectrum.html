@@ -1,4 +1,4 @@
-<!DOCTYPE html>  <html> <head>   <title>spectrum.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               spectrum.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>Spectrum Colorpicker v1.0.6
+<!DOCTYPE html>  <html> <head>   <title>spectrum.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               spectrum.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>Spectrum Colorpicker v1.0.7
 https://github.com/bgrins/spectrum
 Author: Brian Grinstead
 License: MIT</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">$</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
@@ -127,11 +127,6 @@ License: MIT</p>             </td>             <td class="code">               <
 
         <span class="kd">var</span> <span class="nx">opts</span> <span class="o">=</span> <span class="nx">instanceOptions</span><span class="p">(</span><span class="nx">o</span><span class="p">,</span> <span class="nx">element</span><span class="p">),</span>
             <span class="nx">flat</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">flat</span><span class="p">,</span>
-            <span class="nx">showPaletteOnly</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">showPaletteOnly</span><span class="p">,</span>
-            <span class="nx">showPalette</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">showPalette</span> <span class="o">||</span> <span class="nx">showPaletteOnly</span><span class="p">,</span>
-            <span class="nx">showInitial</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">showInitial</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">flat</span><span class="p">,</span>
-            <span class="nx">showInput</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">showInput</span><span class="p">,</span>
-            <span class="nx">showAlpha</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">showAlpha</span><span class="p">,</span>
             <span class="nx">showSelectionPalette</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">showSelectionPalette</span><span class="p">,</span>
             <span class="nx">localStorageKey</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">localStorageKey</span><span class="p">,</span>
             <span class="nx">theme</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">theme</span><span class="p">,</span>
@@ -158,7 +153,7 @@ License: MIT</p>             </td>             <td class="code">               <
         <span class="kd">var</span> <span class="nx">doc</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">ownerDocument</span><span class="p">,</span>
             <span class="nx">body</span> <span class="o">=</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span>
             <span class="nx">boundElement</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">),</span>
-            <span class="nx">disabled</span> <span class="o">=</span> <span class="nx">boundElement</span><span class="p">.</span><span class="nx">is</span><span class="p">(</span><span class="s2">&quot;:disabled&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">disabled</span> <span class="o">===</span> <span class="kc">true</span><span class="p">),</span>
+            <span class="nx">disabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
             <span class="nx">container</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">markup</span><span class="p">,</span> <span class="nx">doc</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="nx">theme</span><span class="p">),</span>
             <span class="nx">dragger</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;.sp-color&quot;</span><span class="p">),</span>
             <span class="nx">dragHelper</span> <span class="o">=</span> <span class="nx">container</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;.sp-dragger&quot;</span><span class="p">),</span>
@@ -183,9 +178,20 @@ License: MIT</p>             </td>             <td class="code">               <
             <span class="nx">currentPreferredFormat</span> <span class="o">=</span> <span class="nx">preferredFormat</span><span class="p">,</span>
             <span class="nx">clickoutFiresChange</span> <span class="o">=</span> <span class="o">!</span><span class="nx">opts</span><span class="p">.</span><span class="nx">showButtons</span> <span class="o">||</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">clickoutFiresChange</span><span class="p">;</span>
 
-        <span class="nx">chooseButton</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">chooseText</span><span class="p">);</span>
-        <span class="nx">cancelButton</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">cancelText</span><span class="p">);</span>
-        <span class="k">if</span><span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">disabled</span><span class="p">)</span> <span class="nx">disable</span><span class="p">();</span>
+
+        <span class="kd">function</span> <span class="nx">applyOptions</span><span class="p">()</span> <span class="p">{</span>
+
+            <span class="nx">container</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;sp-flat&quot;</span><span class="p">,</span> <span class="nx">flat</span><span class="p">);</span>
+            <span class="nx">container</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;sp-input-disabled&quot;</span><span class="p">,</span> <span class="o">!</span><span class="nx">opts</span><span class="p">.</span><span class="nx">showInput</span><span class="p">);</span>
+            <span class="nx">container</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;sp-alpha-enabled&quot;</span><span class="p">,</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">showAlpha</span><span class="p">);</span>
+            <span class="nx">container</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;sp-buttons-disabled&quot;</span><span class="p">,</span> <span class="o">!</span><span class="nx">opts</span><span class="p">.</span><span class="nx">showButtons</span> <span class="o">||</span> <span class="nx">flat</span><span class="p">);</span>
+            <span class="nx">container</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;sp-palette-disabled&quot;</span><span class="p">,</span> <span class="o">!</span><span class="nx">opts</span><span class="p">.</span><span class="nx">showPalette</span><span class="p">);</span>
+            <span class="nx">container</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;sp-palette-only&quot;</span><span class="p">,</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">showPaletteOnly</span><span class="p">);</span>
+            <span class="nx">container</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;sp-initial-disabled&quot;</span><span class="p">,</span> <span class="o">!</span><span class="nx">opts</span><span class="p">.</span><span class="nx">showInitial</span><span class="p">);</span>
+            <span class="nx">container</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">className</span><span class="p">);</span>
+
+            <span class="nx">reflow</span><span class="p">();</span>
+        <span class="p">}</span>
 
         <span class="kd">function</span> <span class="nx">initialize</span><span class="p">()</span> <span class="p">{</span>
 
@@ -193,14 +199,7 @@ License: MIT</p>             </td>             <td class="code">               <
                 <span class="nx">container</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;*:not(input)&quot;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;unselectable&quot;</span><span class="p">,</span> <span class="s2">&quot;on&quot;</span><span class="p">);</span>
             <span class="p">}</span>
 
-            <span class="nx">container</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;sp-flat&quot;</span><span class="p">,</span> <span class="nx">flat</span><span class="p">);</span>
-            <span class="nx">container</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;sp-input-disabled&quot;</span><span class="p">,</span> <span class="o">!</span><span class="nx">showInput</span><span class="p">);</span>
-            <span class="nx">container</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;sp-alpha-enabled&quot;</span><span class="p">,</span> <span class="nx">showAlpha</span><span class="p">);</span>
-            <span class="nx">container</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;sp-buttons-disabled&quot;</span><span class="p">,</span> <span class="o">!</span><span class="nx">opts</span><span class="p">.</span><span class="nx">showButtons</span> <span class="o">||</span> <span class="nx">flat</span><span class="p">);</span>
-            <span class="nx">container</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;sp-palette-disabled&quot;</span><span class="p">,</span> <span class="o">!</span><span class="nx">showPalette</span><span class="p">);</span>
-            <span class="nx">container</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;sp-palette-only&quot;</span><span class="p">,</span> <span class="nx">showPaletteOnly</span><span class="p">);</span>
-            <span class="nx">container</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s2">&quot;sp-initial-disabled&quot;</span><span class="p">,</span> <span class="o">!</span><span class="nx">showInitial</span><span class="p">);</span>
-            <span class="nx">container</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">className</span><span class="p">);</span>
+            <span class="nx">applyOptions</span><span class="p">();</span>
 
             <span class="k">if</span> <span class="p">(</span><span class="nx">shouldReplace</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">boundElement</span><span class="p">.</span><span class="nx">hide</span><span class="p">().</span><span class="nx">after</span><span class="p">(</span><span class="nx">replacer</span><span class="p">);</span>
@@ -212,6 +211,7 @@ License: MIT</p>             </td>             <td class="code">               <
             <span class="k">else</span> <span class="p">{</span>
                 <span class="nx">$</span><span class="p">(</span><span class="nx">body</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">container</span><span class="p">.</span><span class="nx">hide</span><span class="p">());</span>
             <span class="p">}</span>
+
             <span class="k">if</span> <span class="p">(</span><span class="nx">localStorageKey</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">localStorage</span><span class="p">)</span> <span class="p">{</span>
                 <span class="k">try</span> <span class="p">{</span>
                     <span class="nx">selectionPalette</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">localStorage</span><span class="p">[</span><span class="nx">localStorageKey</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">);</span>
@@ -233,20 +233,22 @@ License: MIT</p>             </td>             <td class="code">               <
                 <span class="p">}</span>
             <span class="p">});</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">disabled</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">offsetElement</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;sp-disabled&quot;</span><span class="p">);</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">boundElement</span><span class="p">.</span><span class="nx">is</span><span class="p">(</span><span class="s2">&quot;:disabled&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">disabled</span> <span class="o">===</span> <span class="kc">true</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nx">disable</span><span class="p">();</span>
             <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Prevent clicks from bubbling up to document.  This would cause it to be hidden.</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="nx">container</span><span class="p">.</span><span class="nx">click</span><span class="p">(</span><span class="nx">stopPropagation</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Handle user typed input</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="nx">textInput</span><span class="p">.</span><span class="nx">change</span><span class="p">(</span><span class="nx">setFromTextInput</span><span class="p">);</span>
             <span class="nx">textInput</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;paste&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                 <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">setFromTextInput</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
             <span class="p">});</span>
             <span class="nx">textInput</span><span class="p">.</span><span class="nx">keydown</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">==</span> <span class="mi">13</span><span class="p">)</span> <span class="p">{</span> <span class="nx">setFromTextInput</span><span class="p">();</span> <span class="p">}</span> <span class="p">});</span>
 
+            <span class="nx">cancelButton</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">cancelText</span><span class="p">);</span>
             <span class="nx">cancelButton</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;click.spectrum&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
                 <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
                 <span class="nx">hide</span><span class="p">(</span><span class="s2">&quot;cancel&quot;</span><span class="p">);</span>
             <span class="p">});</span>
 
+            <span class="nx">chooseButton</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">chooseText</span><span class="p">);</span>
             <span class="nx">chooseButton</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;click.spectrum&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
                 <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
@@ -311,6 +313,7 @@ since the set function will not run (default color is black).</p>             </
             <span class="nx">paletteContainer</span><span class="p">.</span><span class="nx">delegate</span><span class="p">(</span><span class="s2">&quot;.sp-thumb-el&quot;</span><span class="p">,</span> <span class="nx">paletteEvent</span><span class="p">,</span> <span class="nx">palletElementClick</span><span class="p">);</span>
             <span class="nx">initialColorContainer</span><span class="p">.</span><span class="nx">delegate</span><span class="p">(</span><span class="s2">&quot;.sp-thumb-el:nth-child(1)&quot;</span><span class="p">,</span> <span class="nx">paletteEvent</span><span class="p">,</span> <span class="p">{</span> <span class="nx">ignore</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span> <span class="nx">palletElementClick</span><span class="p">);</span>
         <span class="p">}</span>
+
         <span class="kd">function</span> <span class="nx">addColorToSelectionPalette</span><span class="p">(</span><span class="nx">color</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="nx">showSelectionPalette</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">selectionPalette</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">tinycolor</span><span class="p">(</span><span class="nx">color</span><span class="p">).</span><span class="nx">toHexString</span><span class="p">());</span>
@@ -326,7 +329,7 @@ since the set function will not run (default color is black).</p>             </
             <span class="kd">var</span> <span class="nx">paletteLookup</span> <span class="o">=</span> <span class="p">{};</span>
             <span class="kd">var</span> <span class="nx">hex</span><span class="p">;</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">showPalette</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">showPalette</span><span class="p">)</span> <span class="p">{</span>
 
                 <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">paletteArray</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
                     <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">paletteArray</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
@@ -348,6 +351,7 @@ since the set function will not run (default color is black).</p>             </
 
             <span class="k">return</span> <span class="nx">unique</span><span class="p">.</span><span class="nx">reverse</span><span class="p">().</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">maxSelectionSize</span><span class="p">);</span>
         <span class="p">}</span>
+
         <span class="kd">function</span> <span class="nx">drawPalette</span><span class="p">()</span> <span class="p">{</span>
 
             <span class="kd">var</span> <span class="nx">currentColor</span> <span class="o">=</span> <span class="nx">get</span><span class="p">();</span>
@@ -362,22 +366,26 @@ since the set function will not run (default color is black).</p>             </
 
             <span class="nx">paletteContainer</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">html</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">));</span>
         <span class="p">}</span>
+
         <span class="kd">function</span> <span class="nx">drawInitial</span><span class="p">()</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">showInitial</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">showInitial</span><span class="p">)</span> <span class="p">{</span>
                 <span class="kd">var</span> <span class="nx">initial</span> <span class="o">=</span> <span class="nx">colorOnShow</span><span class="p">;</span>
                 <span class="kd">var</span> <span class="nx">current</span> <span class="o">=</span> <span class="nx">get</span><span class="p">();</span>
                 <span class="nx">initialColorContainer</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">paletteTemplate</span><span class="p">([</span><span class="nx">initial</span><span class="p">,</span> <span class="nx">current</span><span class="p">],</span> <span class="nx">current</span><span class="p">,</span> <span class="s2">&quot;sp-palette-row-initial&quot;</span><span class="p">));</span>
             <span class="p">}</span>
         <span class="p">}</span>
+
         <span class="kd">function</span> <span class="nx">dragStart</span><span class="p">()</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="nx">dragHeight</span> <span class="o">===</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">dragWidth</span> <span class="o">===</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">slideHeight</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">reflow</span><span class="p">();</span>
             <span class="p">}</span>
             <span class="nx">container</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="nx">draggingClass</span><span class="p">);</span>
         <span class="p">}</span>
+
         <span class="kd">function</span> <span class="nx">dragStop</span><span class="p">()</span> <span class="p">{</span>
             <span class="nx">container</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="nx">draggingClass</span><span class="p">);</span>
         <span class="p">}</span>
+
         <span class="kd">function</span> <span class="nx">setFromTextInput</span><span class="p">()</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">tiny</span> <span class="o">=</span> <span class="nx">tinycolor</span><span class="p">(</span><span class="nx">textInput</span><span class="p">.</span><span class="nx">val</span><span class="p">());</span>
             <span class="k">if</span> <span class="p">(</span><span class="nx">tiny</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span> <span class="p">{</span>
@@ -412,7 +420,7 @@ since the set function will not run (default color is black).</p>             </
             <span class="nx">replacer</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;sp-active&quot;</span><span class="p">);</span>
             <span class="nx">container</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">showPalette</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">showPalette</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">drawPalette</span><span class="p">();</span>
             <span class="p">}</span>
             <span class="nx">reflow</span><span class="p">();</span>
@@ -507,7 +515,7 @@ since the set function will not run (default color is black).</p>             </
                 <span class="nx">previewElement</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;filter&quot;</span><span class="p">,</span> <span class="nx">realColor</span><span class="p">.</span><span class="nx">toFilter</span><span class="p">());</span>
             <span class="p">}</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">showAlpha</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">showAlpha</span><span class="p">)</span> <span class="p">{</span>
                 <span class="kd">var</span> <span class="nx">rgb</span> <span class="o">=</span> <span class="nx">realColor</span><span class="p">.</span><span class="nx">toRgb</span><span class="p">();</span>
                 <span class="nx">rgb</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
                 <span class="kd">var</span> <span class="nx">realAlpha</span> <span class="o">=</span> <span class="nx">tinycolor</span><span class="p">(</span><span class="nx">rgb</span><span class="p">).</span><span class="nx">toRgbString</span><span class="p">();</span>
@@ -522,7 +530,7 @@ since the set function will not run (default color is black).</p>             </
                     <span class="nx">alphaSliderInner</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;background&quot;</span><span class="p">,</span> <span class="s2">&quot;-ms-&quot;</span> <span class="o">+</span> <span class="nx">gradient</span><span class="p">);</span>
                     <span class="nx">alphaSliderInner</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;background&quot;</span><span class="p">,</span> <span class="nx">gradient</span><span class="p">);</span>
                 <span class="p">}</span>
-            <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Update the text entry input as it changes happen</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="k">if</span> <span class="p">(</span><span class="nx">showInput</span><span class="p">)</span> <span class="p">{</span>
+            <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Update the text entry input as it changes happen</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">showInput</span><span class="p">)</span> <span class="p">{</span>
                 <span class="k">if</span> <span class="p">(</span><span class="nx">currentAlpha</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
                     <span class="k">if</span> <span class="p">(</span><span class="nx">format</span> <span class="o">===</span> <span class="s2">&quot;hex&quot;</span> <span class="o">||</span> <span class="nx">format</span> <span class="o">===</span> <span class="s2">&quot;name&quot;</span><span class="p">)</span> <span class="p">{</span>
                         <span class="nx">format</span> <span class="o">=</span> <span class="s2">&quot;rgb&quot;</span><span class="p">;</span>
@@ -531,7 +539,7 @@ since the set function will not run (default color is black).</p>             </
                 <span class="nx">textInput</span><span class="p">.</span><span class="nx">val</span><span class="p">(</span><span class="nx">realColor</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="nx">format</span><span class="p">));</span>
             <span class="p">}</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="nx">showPalette</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">showPalette</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">drawPalette</span><span class="p">();</span>
             <span class="p">}</span>
 
@@ -603,6 +611,18 @@ since the set function will not run (default color is black).</p>             </
             <span class="nx">spectrums</span><span class="p">[</span><span class="nx">spect</span><span class="p">.</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
         <span class="p">}</span>
 
+        <span class="kd">function</span> <span class="nx">option</span><span class="p">(</span><span class="nx">optionName</span><span class="p">,</span> <span class="nx">optionValue</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">optionName</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">opts</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">optionValue</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">opts</span><span class="p">[</span><span class="nx">optionName</span><span class="p">];</span>
+            <span class="p">}</span>
+
+            <span class="nx">opts</span><span class="p">[</span><span class="nx">optionName</span><span class="p">]</span> <span class="o">=</span> <span class="nx">optionValue</span><span class="p">;</span>
+            <span class="nx">applyOptions</span><span class="p">();</span>
+        <span class="p">}</span>
+
         <span class="kd">function</span> <span class="nx">enable</span><span class="p">()</span> <span class="p">{</span>
             <span class="nx">disabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
             <span class="nx">boundElement</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
@@ -610,6 +630,7 @@ since the set function will not run (default color is black).</p>             </
         <span class="p">}</span>
 
         <span class="kd">function</span> <span class="nx">disable</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">hide</span><span class="p">();</span>
             <span class="nx">disabled</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
             <span class="nx">boundElement</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
             <span class="nx">offsetElement</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;sp-disabled&quot;</span><span class="p">);</span>
@@ -622,6 +643,7 @@ since the set function will not run (default color is black).</p>             </
             <span class="nx">hide</span><span class="o">:</span> <span class="nx">hide</span><span class="p">,</span>
             <span class="nx">toggle</span><span class="o">:</span> <span class="nx">toggle</span><span class="p">,</span>
             <span class="nx">reflow</span><span class="o">:</span> <span class="nx">reflow</span><span class="p">,</span>
+            <span class="nx">option</span><span class="o">:</span> <span class="nx">option</span><span class="p">,</span>
             <span class="nx">enable</span><span class="o">:</span> <span class="nx">enable</span><span class="p">,</span>
             <span class="nx">disable</span><span class="o">:</span> <span class="nx">disable</span><span class="p">,</span>
             <span class="nx">set</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="p">{</span>
@@ -793,30 +815,42 @@ since the set function will not run (default color is black).</p>             </
 <span class="cm">    */</span>
     <span class="kd">var</span> <span class="nx">dataID</span> <span class="o">=</span> <span class="s2">&quot;spectrum.id&quot;</span><span class="p">;</span>
     <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">spectrum</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">opts</span><span class="p">,</span> <span class="nx">extra</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">opts</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span> <span class="o">==</span> <span class="s2">&quot;get&quot;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="nx">spectrums</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">eq</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataID</span><span class="p">)].</span><span class="nx">get</span><span class="p">();</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span> <span class="o">==</span> <span class="s2">&quot;container&quot;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="nx">spectrums</span><span class="p">[</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataID</span><span class="p">)].</span><span class="nx">container</span><span class="p">;</span>
-            <span class="p">}</span>
 
-            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">opts</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="kd">var</span> <span class="nx">returnValue</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+            <span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span> <span class="nx">arguments</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+
+            <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                 <span class="kd">var</span> <span class="nx">spect</span> <span class="o">=</span> <span class="nx">spectrums</span><span class="p">[</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataID</span><span class="p">)];</span>
                 <span class="k">if</span> <span class="p">(</span><span class="nx">spect</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span> <span class="o">==</span> <span class="s2">&quot;show&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="nx">spect</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span> <span class="p">}</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span> <span class="o">==</span> <span class="s2">&quot;hide&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="nx">spect</span><span class="p">.</span><span class="nx">hide</span><span class="p">();</span> <span class="p">}</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span> <span class="o">==</span> <span class="s2">&quot;toggle&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="nx">spect</span><span class="p">.</span><span class="nx">toggle</span><span class="p">();</span> <span class="p">}</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span> <span class="o">==</span> <span class="s2">&quot;reflow&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="nx">spect</span><span class="p">.</span><span class="nx">reflow</span><span class="p">();</span> <span class="p">}</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span> <span class="o">==</span> <span class="s2">&quot;set&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="nx">spect</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">extra</span><span class="p">);</span> <span class="p">}</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span> <span class="o">==</span> <span class="s1">&#39;enable&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="nx">spect</span><span class="p">.</span><span class="nx">enable</span><span class="p">();</span> <span class="p">}</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span> <span class="o">==</span> <span class="s1">&#39;disable&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="nx">spect</span><span class="p">.</span><span class="nx">disable</span><span class="p">();</span> <span class="p">}</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span> <span class="o">==</span> <span class="s2">&quot;destroy&quot;</span><span class="p">)</span> <span class="p">{</span>
+
+                    <span class="kd">var</span> <span class="nx">method</span> <span class="o">=</span> <span class="nx">spect</span><span class="p">[</span><span class="nx">opts</span><span class="p">];</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">method</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span> <span class="s2">&quot;Spectrum: no such method: &#39;&quot;</span> <span class="o">+</span> <span class="nx">opts</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span> <span class="p">);</span>
+                    <span class="p">}</span>
+
+                    <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span> <span class="o">==</span> <span class="s2">&quot;get&quot;</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">returnValue</span> <span class="o">=</span> <span class="nx">spect</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
+                    <span class="p">}</span>
+                    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span> <span class="o">==</span> <span class="s2">&quot;container&quot;</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">returnValue</span> <span class="o">=</span> <span class="nx">spect</span><span class="p">.</span><span class="nx">container</span><span class="p">;</span>
+                    <span class="p">}</span>
+                    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span> <span class="o">==</span> <span class="s2">&quot;option&quot;</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">returnValue</span> <span class="o">=</span> <span class="nx">spect</span><span class="p">.</span><span class="nx">option</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">spect</span><span class="p">,</span> <span class="nx">args</span><span class="p">);</span>
+                    <span class="p">}</span>
+                    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">opts</span> <span class="o">==</span> <span class="s2">&quot;destroy&quot;</span><span class="p">)</span> <span class="p">{</span>
                         <span class="nx">spect</span><span class="p">.</span><span class="nx">destroy</span><span class="p">();</span>
                         <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">removeData</span><span class="p">(</span><span class="nx">dataID</span><span class="p">);</span>
                     <span class="p">}</span>
+                    <span class="k">else</span> <span class="p">{</span>
+                        <span class="nx">method</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">spect</span><span class="p">,</span> <span class="nx">args</span><span class="p">);</span>
+                    <span class="p">}</span>
                 <span class="p">}</span>
             <span class="p">});</span>
-        <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>Initializing a new one</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">spectrum</span><span class="p">(</span><span class="s2">&quot;destroy&quot;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+            <span class="k">return</span> <span class="nx">returnValue</span><span class="p">;</span>
+        <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>Initializing a new instance of spectrum</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">spectrum</span><span class="p">(</span><span class="s2">&quot;destroy&quot;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">spect</span> <span class="o">=</span> <span class="nx">spectrum</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">opts</span><span class="p">);</span>
             <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataID</span><span class="p">,</span> <span class="nx">spect</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
         <span class="p">});</span>
