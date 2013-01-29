@@ -17,7 +17,7 @@
 
     <style>
 
-    #example-container {
+    .example-container {
         margin-top: 10px;
         text-align: center;
         background: #333;
@@ -26,7 +26,7 @@
         padding-top: 0;
         border-radius: 5px;
     }
-    #example-controls {
+    .example-controls {
         background: #999;
         margin: 0 -3px;
         padding: 10px 0;
@@ -37,6 +37,24 @@
         display: inline-block;
         font-weight: bold;
 
+    }
+    #palettes .sp-palette {
+        max-width: 500px;
+    }
+
+
+    .newGmail .sp-palette-row-0, .newGmail .sp-palette-row-1 {
+        margin-bottom: 5px;
+    }
+
+    .newGmail .sp-palette .sp-thumb-el {
+        width: 20px;
+        height: 20px;
+        margin: 1px 1px;
+    }
+
+    .newGmail .sp-palette .sp-thumb-el:hover, .newGmail  .sp-palette .sp-thumb-el.sp-thumb-active {
+        border-color: #000;
     }
     </style>
 </head>
@@ -59,8 +77,8 @@
         Spectrum can be customized to show and hide different portions of the colorpicker.  Try clicking some of the buttons below to see how it can change.
     </p>
 
-    <div id="example-container">
-        <div id="example-controls">
+    <div class="example-container">
+        <div class="example-controls">
             <div class='btn-group'>
                 <button class='btn toggleBtn' data-rule='showPalette'>Show Palette</button>
                 <button class='btn toggleBtn' data-rule='showInput'>Show Input</button>
@@ -80,6 +98,24 @@
         <input id="full">
 
     </div>
+
+    <hr />
+    <h2>Spectrum Colorpicker Sample Palettes</h2>
+    <div class='alert'>
+
+        <p>
+        NOTE: these palettes are also a work in progress.  Ideally the site will eventually allow you to choose between a few options and download them.
+        </p>
+
+        <p>
+        The <code>newGmail</code> palette below is an example of customizing the palette size and layout with CSS.
+        </p>
+
+    </div>
+    <div id="palettes" class="example-container">
+
+    </div>
+
 </div>
 
 
