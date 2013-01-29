@@ -20,6 +20,22 @@
     #example-container {
         margin-top: 10px;
         text-align: center;
+        background: #333;
+        background: -webkit-linear-gradient(top, #eee, #ddd);
+        padding: 3px;
+        padding-top: 0;
+        border-radius: 5px;
+    }
+    #example-controls {
+        background: #999;
+        margin: 0 -3px;
+        padding: 10px 0;
+        margin-bottom: 15px;
+
+    }
+    label {
+        display: inline-block;
+        font-weight: bold;
 
     }
     </style>
@@ -36,23 +52,30 @@
 
 <div class="container">
 
-    <p>NOTE: this page is currently in development.  Please refer to the <a href='http://github.com/bgrins/spectrum'>Home Page</a> instead.
+    <h2>Spectrum Colorpicker Crazy Configurator</h2>
+    <div class='alert'>NOTE: this page is currently in development.  Please refer to the <a href='http://github.com/bgrins/spectrum'>Home Page</a> for demos and documentation instead.
+    </div>
     <p>
-        Spectrum can be customized to show and hide different components of the colorpicker.  Try clicking some of the buttons below to see how it can change.
+        Spectrum can be customized to show and hide different portions of the colorpicker.  Try clicking some of the buttons below to see how it can change.
     </p>
 
     <div id="example-container">
+        <div id="example-controls">
+            <div class='btn-group'>
+                <button class='btn toggleBtn' data-rule='showPalette'>Show Palette</button>
+                <button class='btn toggleBtn' data-rule='showInput'>Show Input</button>
+                <button class='btn toggleBtn' data-rule='showInitial'>Show Initial</button>
+                <button class='btn toggleBtn' data-rule='showAlpha'>Show Alpha</button>
+                <button class='btn toggleBtn' data-rule='showPaletteOnly'>Show Palette Only</button>
+            </div>
+            <br />
+            <br />
+            <p>
+            <label>Draggable Size <input type='range' value='172' id='size' max='500' min='50' /></label>
 
-        <div class='btn-group'>
-            <button class='btn toggleBtn' data-rule='showPalette'>Show Palette</button>
-            <button class='btn toggleBtn' data-rule='showInput'>Show Input</button>
-            <button class='btn toggleBtn' data-rule='showInitial'>Show Initial</button>
-            <button class='btn toggleBtn' data-rule='showPaletteOnly'>Show Palette Only</button>
-            <button class='btn toggleBtn' data-rule='showAlpha'>Show Alpha</button>
-            <button class='btn toggleBtn' data-rule='showButtons'>Show Buttons</button>
+            <label>Hue Size <input type='range' value='16' id='huesize' max='90' min='5' /></label>
+            </p>
         </div>
-        <br />
-        <br />
 
         <input id="full">
 

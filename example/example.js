@@ -1,15 +1,25 @@
 
 $(function() {
 
+    var colorpickerInput = $("#full");
+
+
+    function toggleButtonState() {
+        var options = colorpickerInput.spectrum("option");
+        $(".toggleBtn").each(function() {
+            $(this).toggleClass("active", !!options[$(this).data("rule")]);
+        });
+    }
+
     $(document).on("click", ".toggleBtn", function() {
         var option = $(this).data("rule");
-        var existing = $("#full").spectrum("option", option);
+        var existing = colorpickerInput.spectrum("option", option);
 
-        console.log(option, existing);
-        $("#full").spectrum("option", option, !existing);
+        colorpickerInput.spectrum("option", option, !existing);
+        toggleButtonState();
     });
 
-    $("#full").spectrum({
+    colorpickerInput.spectrum({
         color: "#ECC",
         flat: true,
         showInput: true,
@@ -50,5 +60,24 @@ $(function() {
             "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
         ]
     });
+
+    $("#size").change(function() {
+        var size = Math.min(500, Math.max(50, $(this).val()));
+        $(".sp-picker-container").width(size);
+
+        colorpickerInput.spectrum("reflow");
+    });
+
+    $("#huesize").change(function() {
+        var size = Math.min(80, Math.max(5, $(this).val()));
+
+        $(".sp-hue").css("left", (103 - size) + "%");
+        $(".sp-color").css("right", size + "%");
+        $(".sp-fill").css("padding-top", (100 - size) + "%");
+
+        colorpickerInput.spectrum("reflow");
+    });
+
+    toggleButtonState();
 
 });
