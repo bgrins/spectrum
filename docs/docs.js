@@ -249,6 +249,10 @@ $("#preferredHex").spectrum({
     preferredFormat: "hex",
     showInput: true
 });
+$("#preferredHex6").spectrum({
+    preferredFormat: "hex6",
+    showInput: true
+});
 $("#preferredHsl").spectrum({
     preferredFormat: "hsl",
     showInput: true
