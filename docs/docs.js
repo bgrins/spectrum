@@ -170,6 +170,7 @@ var textPalette = ["rgb(255, 255, 255)", "rgb(204, 204, 204)", "rgb(192, 192, 19
 $("#showPaletteOnly").spectrum({
     color: 'blanchedalmond',
     showPaletteOnly: true,
+    showPalette:true,
     palette: [
         ['black', 'white', 'blanchedalmond',
         'rgb(255, 128, 0);', 'hsv 100 70 50'],
