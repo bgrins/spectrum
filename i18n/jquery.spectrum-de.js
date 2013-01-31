@@ -1,7 +1,6 @@
 // Spectrum Colorpicker
+// German (de) localization
 // https://github.com/bgrins/spectrum
-// Author: Brian Grinstead
-// License: MIT
 
 (function ( $ ) {
 
