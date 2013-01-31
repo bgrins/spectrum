@@ -1,7 +1,6 @@
 // Spectrum Colorpicker
+// Swedish (sv) localization
 // https://github.com/bgrins/spectrum
-// Author: Brian Grinstead
-// License: MIT
 
 (function ( $ ) {
 
