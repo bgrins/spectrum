@@ -225,7 +225,7 @@
 
             if (localStorageKey && window.localStorage) {
                 try {
-                    selectionPalette = window.localStorage[localStorageKey].split(",");
+                    selectionPalette = window.localStorage[localStorageKey].split(";");
                 }
                 catch (e) {
 
@@ -336,9 +336,9 @@
 
         function addColorToSelectionPalette(color) {
             if (showSelectionPalette) {
-                selectionPalette.push(tinycolor(color).toHexString());
+                selectionPalette.push(tinycolor(color).toRgbString());
                 if (localStorageKey && window.localStorage) {
-                    window.localStorage[localStorageKey] = selectionPalette.join(",");
+                    window.localStorage[localStorageKey] = selectionPalette.join(";");
                 }
             }
         }
@@ -347,24 +347,24 @@
             var unique = [];
             var p = selectionPalette;
             var paletteLookup = {};
-            var hex;
+            var rgb;
 
             if (opts.showPalette) {
 
                 for (var i = 0; i < paletteArray.length; i++) {
                     for (var j = 0; j < paletteArray[i].length; j++) {
-                        hex = tinycolor(paletteArray[i][j]).toHexString();
-                        paletteLookup[hex] = true;
+                        rgb = tinycolor(paletteArray[i][j]).toRgbString();
+                        paletteLookup[rgb] = true;
                     }
                 }
 
                 for (i = 0; i < p.length; i++) {
                     var color = tinycolor(p[i]);
-                    hex = color.toHexString();
+                    rgb = color.toRgbString();
 
-                    if (!paletteLookup.hasOwnProperty(hex)) {
+                    if (!paletteLookup.hasOwnProperty(rgb)) {
                         unique.push(p[i]);
-                        paletteLookup[hex] = true;
+                        paletteLookup[rgb] = true;
                     }
                 }
             }
