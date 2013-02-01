@@ -336,7 +336,12 @@
 
         function addColorToSelectionPalette(color) {
             if (showSelectionPalette) {
-                selectionPalette.push(tinycolor(color).toRgbString());
+                var colorRgb = tinycolor(color).toRgbString();
+
+                if ($.inArray(colorRgb, selectionPalette) === -1) {
+                    selectionPalette.push(colorRgb);
+                }
+
                 if (localStorageKey && window.localStorage) {
                     window.localStorage[localStorageKey] = selectionPalette.join(";");
                 }
