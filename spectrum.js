@@ -922,6 +922,10 @@
     $.fn.spectrum.draggable = draggable;
     $.fn.spectrum.defaults = defaultOpts;
 
+    $.spectrum = { };
+    $.spectrum.localization = { };
+    $.spectrum.palettes = { };
+
     $.fn.spectrum.processNativeColorInputs = function () {
         var colorInput = $("<input type='color' value='!' />")[0];
         var supportsColor = colorInput.type === "color" && colorInput.value != "!";

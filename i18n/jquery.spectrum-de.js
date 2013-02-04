@@ -4,9 +4,11 @@
 
 (function ( $ ) {
 
-  $.extend($.fn.spectrum.defaults, {
-      cancelText: "Abbrechen",
-      chooseText: "Wählen"
-  });
+    var localization = $.spectrum.localization["de"] = {
+        cancelText: "Abbrechen",
+        chooseText: "Wählen"
+    };
+
+    $.extend($.fn.spectrum.defaults, localization);
 
 })( jQuery );
