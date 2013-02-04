@@ -4,9 +4,11 @@
 
 (function ( $ ) {
 
-  $.extend($.fn.spectrum.defaults, {
-      cancelText: "Kumoa",
-      chooseText: "Valitse"
-  });
+    var localization = $.spectrum.localization["fi"] = {
+        cancelText: "Kumoa",
+        chooseText: "Valitse"
+    };
+
+    $.extend($.fn.spectrum.defaults, localization);
 
 })( jQuery );

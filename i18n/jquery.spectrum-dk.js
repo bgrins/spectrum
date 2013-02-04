@@ -3,8 +3,12 @@
 // https://github.com/bgrins/spectrum
 
 (function ( $ ) {
-	$.extend($.fn.spectrum.defaults, {
+
+    var localization = $.spectrum.localization["dk"] = {
 		cancelText: "annuller",
 		chooseText: "Vælg"
-	});
+    };
+
+    $.extend($.fn.spectrum.defaults, localization);
+
 })( jQuery );
