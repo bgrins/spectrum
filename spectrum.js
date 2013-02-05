@@ -224,12 +224,23 @@
             }
 
             if (localStorageKey && window.localStorage) {
+
+                // Migrate old palettes over to new format.  May want to remove this eventually.
+                try {
+                    var oldPalette = window.localStorage[localStorageKey].split(",#");
+                    if (oldPalette.length > 1) {
+                        delete window.localStorage[localStorageKey];
+                        $.each(oldPalette, function(i, c) {
+                             addColorToSelectionPalette(c);
+                        });
+                    }
+                }
+                catch(e) { }
+
                 try {
                     selectionPalette = window.localStorage[localStorageKey].split(";");
                 }
-                catch (e) {
-
-                }
+                catch (e) { }
             }
 
             offsetElement.bind("click.spectrum touchstart.spectrum", function (e) {
@@ -337,7 +348,6 @@
         function addColorToSelectionPalette(color) {
             if (showSelectionPalette) {
                 var colorRgb = tinycolor(color).toRgbString();
-
                 if ($.inArray(colorRgb, selectionPalette) === -1) {
                     selectionPalette.push(colorRgb);
                 }
@@ -367,8 +377,7 @@
                 }
 
                 for (i = 0; i < p.length; i++) {
-                    var color = tinycolor(p[i]);
-                    rgb = color.toRgbString();
+                    rgb = tinycolor(p[i]).toRgbString();
 
                     if (!paletteLookup.hasOwnProperty(rgb)) {
                         unique.push(p[i]);
