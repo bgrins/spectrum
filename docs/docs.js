@@ -12,6 +12,7 @@ $("#full").spectrum({
     showInitial: true,
     showPalette: true,
     showSelectionPalette: true,
+    showAlpha: true,
     maxPaletteSize: 10,
     preferredFormat: "hex",
     localStorageKey: "spectrum.demo",
