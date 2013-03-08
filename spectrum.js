@@ -65,7 +65,7 @@
         }
 
         return [
-            "<div class='sp-container'>",
+            "<div class='sp-container sp-hidden'>",
                 "<div class='sp-palette-container'>",
                     "<div class='sp-palette sp-thumb sp-cf'></div>",
                 "</div>",
@@ -220,7 +220,7 @@
                 boundElement.after(container).hide();
             }
             else {
-                $(body).append(container.hide());
+                $(body).append(container);
             }
 
             if (localStorageKey && window.localStorage) {
@@ -455,7 +455,7 @@
             $(doc).bind("click.spectrum", hide);
             $(window).bind("resize.spectrum", resize);
             replacer.addClass("sp-active");
-            container.show();
+            container.removeClass("sp-hidden");
 
             if (opts.showPalette) {
                 drawPalette();
@@ -482,7 +482,7 @@
             $(window).unbind("resize.spectrum", resize);
 
             replacer.removeClass("sp-active");
-            container.hide();
+            container.addClass("sp-hidden");
 
             var colorHasChanged = !tinycolor.equals(get(), colorOnShow);
 
@@ -1744,5 +1744,9 @@
             $.fn.spectrum.processNativeColorInputs();
         }
     });
+
+
+    function log(){window.console&&(log=Function.prototype.bind?Function.prototype.bind.call(console.log,console):function(){Function.prototype.apply.call(console.log,console,arguments)},log.apply(this,arguments))};
+
 
 })(window, jQuery);
