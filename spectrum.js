@@ -350,6 +350,9 @@
                 var colorRgb = tinycolor(color).toRgbString();
                 if ($.inArray(colorRgb, selectionPalette) === -1) {
                     selectionPalette.push(colorRgb);
+                    while(selectionPalette.length > maxSelectionSize) {
+                        selectionPalette.shift();
+                    }
                 }
 
                 if (localStorageKey && window.localStorage) {
