@@ -517,7 +517,7 @@
 
             updateUI();
 
-            if (!ignoreFormatChange) {
+            if (newColor.ok && !ignoreFormatChange) {
                 currentPreferredFormat = preferredFormat || newColor.format;
             }
         }
