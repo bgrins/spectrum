@@ -6,7 +6,7 @@
 (function (window, $, undefined) {
     var defaultOpts = {
 
-        // Events
+        // Callbacks
         beforeShow: noop,
         move: noop,
         change: noop,
@@ -443,11 +443,18 @@
         }
 
         function show() {
+            var event = $.Event('beforeShow.spectrum');
+
             if (visible) {
                 reflow();
                 return;
             }
-            if (callbacks.beforeShow(get()) === false) return;
+
+            boundElement.trigger(event, [ get() ]);
+
+            if (callbacks.beforeShow(get()) === false || event.isDefaultPrevented()) {
+                return;
+            }
 
             hideAll();
             visible = true;
@@ -467,6 +474,7 @@
 
             drawInitial();
             callbacks.show(colorOnShow);
+            boundElement.trigger('show.spectrum', [ colorOnShow ]);
         }
 
         function hide(e) {
@@ -496,6 +504,7 @@
             }
 
             callbacks.hide(get());
+            boundElement.trigger('hide.spectrum', [ get() ]);
         }
 
         function revert() {
@@ -534,6 +543,7 @@
             updateUI();
 
             callbacks.move(get());
+            boundElement.trigger('move.spectrum', [ get() ]);
         }
 
         function updateUI() {
@@ -649,6 +659,7 @@
             addColorToSelectionPalette(color);
             if (fireCallback && hasChanged) {
                 callbacks.change(color);
+                boundElement.trigger('change.spectrum', [ color ]);
             }
         }
 
