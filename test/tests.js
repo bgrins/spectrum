@@ -13,6 +13,57 @@ test( "jQuery Plugin Can Be Created", function() {
 
   el.spectrum("set", "red");
   equal ( el.spectrum("get").toName(), "red", "Basic color setting");
+
+  el.spectrum("destroy");
+});
+
+test( "Events Fire", function() {
+  var el = $("<input id='spec' />").spectrum();
+  var count = 0;
+  expect(5);
+
+  el.on("beforeShow.spectrum", function(e) {
+
+    // Cancel the event the first time
+    if (count === 0) {
+      ok(true, "Cancel beforeShow");
+      count++;
+      return false;
+    }
+
+    ok (count === 1, "Allow beforeShow");
+    count++;
+  });
+
+
+  el.on("show.spectrum", function(e) {
+    ok(count === 2, "Show");
+    count++;
+  });
+
+  el.on("hide.spectrum", function(e) {
+    ok(count === 3, "Hide");
+
+    count++;
+  });
+
+  el.on("move.spectrum", function(e) {
+
+  });
+
+  el.on("change.spectrum", function(e, color) {
+    ok(count === 4, "Change");
+    //equal(color.toHexString(), "#ff0000");
+    count++;
+  });
+
+  el.spectrum("show");
+  el.spectrum("show");
+  el.spectrum("hide");
+
+  el.spectrum("set", "red");
+
+  el.spectrum("destroy");
 });
 
 module("Defaults");
@@ -28,6 +79,10 @@ test( "Default Color Is Set By Input Value", function() {
   var noValue = $("<input id='spec' />").spectrum();
   equal ( noValue.spectrum("get").toHex(), "000", "Defaults to black with no value set");
 
+
+  red.spectrum("destroy");
+  noColor.spectrum("destroy");
+  noValue.spectrum("destroy");
 });
 
 module("Options");
@@ -58,6 +113,7 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
   singleOption = spec.spectrum("option", "className");
   equal ( singleOption, "changed", "Changing an option then fetching it is updated");
 
+  spec.spectrum("destroy");
 });
 
 module("Methods");
@@ -78,7 +134,7 @@ test( "Methods work as described", function() {
   ok (el.spectrum("container").is(":visible"), "Spectrum is visible after toggle");
 
   el.spectrum("toggle");
-  ok (!el.spectrum("container").is(":visible"), "Spectrum is no longer visible after toggle");
+  ok (el.spectrum("container").not(":visible"), "Spectrum is no longer visible after toggle");
 
   // Method - set / get
   el.spectrum("set", "orange");
@@ -118,4 +174,5 @@ test( "Methods work as described", function() {
   equal (el.spectrum("container"), el , "No usage after being destroyed");
   equal (el.spectrum("get"), el , "No usage after being destroyed");
 
+  el.spectrum("destroy");
 });
