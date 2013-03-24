@@ -159,6 +159,7 @@
             palette = opts.palette.slice(0),
             paletteArray = $.isArray(palette[0]) ? palette : [palette],
             selectionPalette = opts.selectionPalette.slice(0),
+            maxSelectionSize = opts.maxSelectionSize,
             draggingClass = "sp-dragging";
 
         var doc = element.ownerDocument,
@@ -350,6 +351,9 @@
                 var colorRgb = tinycolor(color).toRgbString();
                 if ($.inArray(colorRgb, selectionPalette) === -1) {
                     selectionPalette.push(colorRgb);
+                    while(selectionPalette.length > maxSelectionSize) {
+                        selectionPalette.shift();
+                    }
                 }
 
                 if (localStorageKey && window.localStorage) {

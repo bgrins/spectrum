@@ -85,6 +85,32 @@ test( "Default Color Is Set By Input Value", function() {
   noValue.spectrum("destroy");
 });
 
+module("Palettes");
+
+test( "Local Storage Is Limited ", function() {
+
+  var el = $("<input id='spec' value='red' />").spectrum({
+    localStorageKey: "spectrum.tests",
+    maxSelectionSize: 3
+  });
+
+  el.spectrum("set", "#f00");
+  el.spectrum("set", "#e00");
+  el.spectrum("set", "#d00");
+  el.spectrum("set", "#c00");
+  el.spectrum("set", "#b00");
+  el.spectrum("set", "#a00");
+
+  equal (
+    localStorage["spectrum.tests"],
+    "rgb(204, 0, 0);rgb(187, 0, 0);rgb(170, 0, 0)",
+    "Local storage array has been limited"
+  );
+
+  el.spectrum("destroy");
+
+});
+
 module("Options");
 
 test( "Options Can Be Set and Gotten Programmatically", function() {
