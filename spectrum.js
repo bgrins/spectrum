@@ -24,7 +24,7 @@
         showPaletteOnly: false,
         showSelectionPalette: true,
         localStorageKey: false,
-        appendToBody: false,
+        appendToBody: true,
         maxSelectionSize: 7,
         cancelText: "cancel",
         chooseText: "choose",
@@ -215,7 +215,7 @@
             applyOptions();
 
             if (shouldReplace) {
-                boundElement.hide().after(replacer);
+                boundElement.after(replacer).hide();
             }
 
             if (flat || !opts.appendToBody) {
