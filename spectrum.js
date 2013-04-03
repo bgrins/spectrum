@@ -579,8 +579,6 @@
                 realHex = realColor.toHexString(),
                 realRgb = realColor.toRgbString();
 
-            log(currentAlpha, format, realColor.toString(), realRgb);
-
             // Update the replaced elements background color (with actual selected color)
             if (rgbaSupport || realColor.alpha === 1) {
                 previewElement.css("background-color", realRgb);
@@ -1121,7 +1119,7 @@
                 }
                 color = newColor;
             }
-            log(color);
+
             return tinycolor(color, opts);
         };
 
