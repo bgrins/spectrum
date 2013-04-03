@@ -679,6 +679,7 @@
             alphaSlideHelperWidth = alphaSlideHelper.width();
 
             if (!flat) {
+                container.css("position", "absolute");
                 container.offset(getOffset(container, offsetElement));
             }
 
