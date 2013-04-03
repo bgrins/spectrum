@@ -74,15 +74,22 @@ test( "Default Color Is Set By Input Value", function() {
   equal ( red.spectrum("get").toName(), "red", "Basic color setting");
 
   var noColor = $("<input id='spec' value='not a color' />").spectrum();
-  equal ( noColor.spectrum("get").toHex(), "000", "Defaults to black with an invalid color");
+  equal ( noColor.spectrum("get").toHex(), "000000", "Defaults to black with an invalid color");
 
   var noValue = $("<input id='spec' />").spectrum();
-  equal ( noValue.spectrum("get").toHex(), "000", "Defaults to black with no value set");
+  equal ( noValue.spectrum("get").toHex(), "000000", "Defaults to black with no value set");
+
+  var noValueHex3 = $("<input id='spec' />").spectrum({
+    preferredFormat: "hex3"
+  });
+  equal ( noValueHex3.spectrum("get").toHex(true), "000", "Defaults to 3 char hex with no value set");
+  equal ( noValueHex3.spectrum("get").toString(), "#000", "Defaults to 3 char hex with no value set");
 
 
   red.spectrum("destroy");
   noColor.spectrum("destroy");
   noValue.spectrum("destroy");
+  noValueHex3.spectrum("destroy");
 });
 
 module("Palettes");
