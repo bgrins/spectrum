@@ -24,7 +24,7 @@
         showPaletteOnly: false,
         showSelectionPalette: true,
         localStorageKey: false,
-        appendToBody: true,
+        appendTo: "body",
         maxSelectionSize: 7,
         cancelText: "cancel",
         chooseText: "choose",
@@ -218,11 +218,17 @@
                 boundElement.after(replacer).hide();
             }
 
-            if (flat || !opts.appendToBody) {
+            if (flat) {
                 boundElement.after(container).hide();
             }
             else {
-                $(body).append(container);
+
+                var appendTo = $(opts.appendTo);
+                if (appendTo.length !== 1) {
+                    appendTo = $("body");
+                }
+
+                appendTo.append(container);
             }
 
             if (localStorageKey && window.localStorage) {
