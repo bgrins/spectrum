@@ -146,7 +146,31 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
   singleOption = spec.spectrum("option", "className");
   equal ( singleOption, "changed", "Changing an option then fetching it is updated");
 
+
+  var appendToDefault = $("<input />").spectrum({
+  });
+
+  var container= $("<div id='c' />").appendTo("body");
+  var appendToOther = $("<input />").spectrum({
+    appendTo: container
+  });
+
+  var appendToOtherFlat = $("<input />").spectrum({
+    appendTo: container,
+    flat: true
+  });
+
+  equal ( appendToDefault.spectrum("container").parent()[0], document.body, "Appended to body by default");
+
+  equal ( appendToOther.spectrum("container").parent()[0], container[0], "Can be appended to another element");
+
+  equal ( appendToOtherFlat.spectrum("container").parent()[0], $(appendToOtherFlat).parent()[0], "Flat CANNOT be appended to another element, will be same as input");
+
+
   spec.spectrum("destroy");
+  appendToDefault.spectrum("destroy");
+  appendToOther.spectrum("destroy");
+  appendToOtherFlat.spectrum("destroy");
 });
 
 module("Methods");
