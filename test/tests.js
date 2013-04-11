@@ -155,6 +155,11 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
     appendTo: container
   });
 
+  var appendToParent = $("<input />").appendTo("#c").spectrum({
+    appendTo: "parent"
+  });
+
+
   var appendToOtherFlat = $("<input />").spectrum({
     appendTo: container,
     flat: true
@@ -166,11 +171,14 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
 
   equal ( appendToOtherFlat.spectrum("container").parent()[0], $(appendToOtherFlat).parent()[0], "Flat CANNOT be appended to another element, will be same as input");
 
+  equal ( appendToParent.spectrum("container").parent()[0], container[0], "Passing 'parent' to appendTo works as expected");
+
 
   spec.spectrum("destroy");
   appendToDefault.spectrum("destroy");
   appendToOther.spectrum("destroy");
   appendToOtherFlat.spectrum("destroy");
+  appendToParent.spectrum("destroy").remove();
 });
 
 module("Methods");
