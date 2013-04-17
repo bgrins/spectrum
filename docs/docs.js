@@ -157,6 +157,10 @@ $("#openWithLink").spectrum({
     }
 });
 
+$("#className").spectrum({
+    className: 'awesome'
+});
+
 $("#showPalette").spectrum({
     showPalette: true,
     palette: [

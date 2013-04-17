@@ -454,6 +454,35 @@ $("#hideButtons").spectrum({
             </div>
         </div>
 
+        <h3>className</h3>
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                You can add an additional class name to the replacer and container element using the <code>className</code> property.
+                </p>
+            </div>
+
+            <pre class='prettyprint'>
+$("#className").spectrum({
+    className: 'awesome'
+});
+            </pre>
+            <pre class='prettyprint'>
+.awesome {
+    background: purple;
+}
+            </pre>
+            <style type='text/css'>
+.awesome {
+    background: purple;
+}
+            </style>
+
+            <div class='example'>
+                    <input type='text' name='className' id='className' value='orangered' />
+            </div>
+        </div>
+
         <h3>Preferred Format</h3>
         <div class='option-content'>
             <div class='description'>
