@@ -101,6 +101,18 @@
         ].join("");
     })();
 
+    var log = function() { };
+    if (window.console) {
+      if (Function.prototype.bind) {
+        log = Function.prototype.bind.call(console.log, console);
+      }
+      else {
+        log = function() {
+          Function.prototype.apply.call(console.log, console, arguments);
+        };
+      }
+    }
+
     function paletteTemplate (p, color, className) {
         var html = [];
         for (var i = 0; i < p.length; i++) {
@@ -1853,16 +1865,10 @@
 
     })(this);
 
-
-
     $(function () {
         if ($.fn.spectrum.load) {
             $.fn.spectrum.processNativeColorInputs();
         }
     });
-
-
-    function log(){window.console&&(log=Function.prototype.bind?Function.prototype.bind.call(console.log,console):function(){Function.prototype.apply.call(console.log,console,arguments)},log.apply(this,arguments))};
-
 
 })(window, jQuery);
