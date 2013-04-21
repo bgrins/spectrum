@@ -4,19 +4,19 @@ html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-
 body { margin: 0; font-size: 14px; line-height: 1.5; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAG0lEQVQIW2OMqXogyYADMIIkl7QpPMcmP+gkAYLGGdeobP2EAAAAAElFTkSuQmCC); }
 body, button, input, select, textarea { font-family: Droid Sans, Tahoma, sans-serif; color: #222; }
 body p { font-family: Verdana; font-size: 12px; color: #333; line-height: 1.8; }
-h1 { font-family: Lucida Sans, Droid Sans, Verdana; font-size: 30px; margin: 0; padding:0; font-weight: lighter; position:fixed; top: 3px; left: 10px; }
+h1 { font-family: Lucida Sans, Droid Sans, Verdana; font-size: 30px; line-height: inherit;  margin: 0; padding:0; font-weight: lighter; position:fixed; top: 3px; left: 10px; }
 h1 a { text-decoration: none; color: #334 !important; }
 h1 a:hover { text-decoration: underline; color: #336 !important; }
 #header { background: #eee; background: #eee; height: 60px; line-height: 60px; padding: 3px 10px;}
 
 #goals { margin:0 auto; padding:0; width: 98%; }
 .goal { float: left; width: 29%; margin:1%; padding:1%; color: #335; min-height: 300px; background: #eee; border-radius: 10px; font-family: Verdana; }
-#docs .goal h4 { text-align: center; margin: .5em 0; font-weight: lighter; text-decoration: underline; font-family: Verdana; } 
+#docs .goal h4 { text-align: center; margin: .5em 0; font-weight: lighter; text-decoration: underline; font-family: Verdana; }
 a { color: #00e; }
 a:visited { color: #009; }
 a:hover { color: #06e; }
 a:focus { outline: thin dotted; }
-#header h2 { float:left; margin:0; padding:0; margin-left: 180px; font-size: 14px; font-weight: normal; font-family: Georgia;}
+#header h2 { float:left; margin:0; padding:0; margin-left: 180px; font-size: 14px; line-height: inherit; font-weight: normal; font-family: Georgia;}
 #header h2 em {background: #444; color: #fff; font-style: normal; padding: 5px; border-radius: 5px; border: solid 1px #999; box-shadow: 0 0 4px #333;}
 #links { float:right; text-align: right; }
 #pick2-details { font: monospace; }
@@ -26,7 +26,7 @@ a:focus { outline: thin dotted; }
 .footer { padding-top: 50px; }
 .switch-current-output { display:none; margin:3px auto; width: 200px; text-align: center; }
 .type { padding-left: 4px; font-size: .8em; font-weight: bold;}
-.description, .example { 
+.description, .example {
     padding: 10px;
     border: 1px solid #888;
     background: white;
@@ -39,7 +39,7 @@ a:focus { outline: thin dotted; }
 #docs p { margin: 0; padding:0; padding-top:4px; }
 #docs pre { position:relative; }
 #docs h2 { margin: 30px -25px; border-bottom: solid 1px; }
-#docs h3 { padding: 10px 15px; margin: 10px auto; margin-top: 40px; border: solid 3px #aaa; 
+#docs h3 { padding: 10px 15px; margin: 10px auto; margin-top: 40px; border: solid 3px #aaa;
 box-shadow: 0 3px 5px #333; }
 #docs h3.point { box-shadow: none;  margin-left: -30px; margin-right: -30px; border: solid 1px #999; border-left: none; border-right:none;}
 #code-heading { font-size: 24px; text-align: center; margin: 6px 0; }
@@ -48,10 +48,10 @@ box-shadow: 0 3px 5px #333; }
 code { font-weight: bold; color: #933; }
 .note { float:right; background: #eee; padding: 4px; font-size: 11px; border: solid 1px #bbb; border-radius: 4px;}
 .option-content .note { float:none; position:absolute; right: 0; top: -40px;}
-.option-content { position:relative; background: #ededed; 
+.option-content { position:relative; background: #ededed;
 border: solid 2px #aaa; border-top: none;
-padding: 12px; width: 95%; margin: 0 auto; 
-margin-top: -10px; padding-top: 20px; 
+padding: 12px; width: 95%; margin: 0 auto;
+margin-top: -10px; padding-top: 20px;
 box-shadow: 0 0 10px #ccc; border-radius: 0 0 5px 5px;
 }
 .em-label { padding:4px; margin-left: 10px; display:inline-block; vertical-align: top; margin-top: 3px; }
