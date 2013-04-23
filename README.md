@@ -7,12 +7,18 @@ I wanted a colorpicker that didn't require images, and that had an API that made
 
 I started using canvas, then switched to CSS gradients, since it turned out to be easier to manage, and provided better cross browser support.
 
+### jQuery Plugin Repository
+
 Spectrum is registered as a jQuery plugin on the jQuery plugin repository here: http://plugins.jquery.com/spectrum/
 
+### Continuous Integration
+
+Current build status:
 [![Build Status](https://secure.travis-ci.org/bgrins/spectrum.png?branch=master)](http://travis-ci.org/bgrins/spectrum)
 
+Visit https://travis-ci.org/bgrins/spectrum to view the status of the automated tests.
 
-## To Build Locally
+### Building Spectrum Locally
 
 If you'd like to download and use the plugin, head over to http://bgrins.github.io/spectrum/ and click the 'Download Zip' button.
 
