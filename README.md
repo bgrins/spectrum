@@ -11,3 +11,13 @@ Spectrum is registered as a jQuery plugin on the jQuery plugin repository here: 
 
 [![Build Status](https://secure.travis-ci.org/bgrins/spectrum.png?branch=master)](http://travis-ci.org/bgrins/spectrum)
 
+
+## To Build Locally
+
+If you'd like to download and use the plugin, head over to http://bgrins.github.io/spectrum/ and click the 'Download Zip' button.
+
+If you'd like to run the development version, spectrum uses Grunt to automate the testing, linting, and building.  Head over to http://gruntjs.com/getting-started for more information.  First, clone the repository, then run:
+
+    npm install -g grunt-cli
+    npm install
+    grunt build

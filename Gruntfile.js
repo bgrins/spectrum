@@ -18,12 +18,26 @@ module.exports = function(grunt) {
         }
       },
       all: ['spectrum.js']
+    },
+
+
+    uglify: {
+      options: {
+        mangle: false
+      },
+      dist: {
+        files: {
+          'build/spectrum-min.js': ['spectrum.js']
+        }
+      }
     }
+
   });
 
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
 
   // Testing tasks
@@ -34,5 +48,8 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', ['test']);
+
+  //Build Task.
+  grunt.registerTask('build', ['test', 'uglify']);
 
 };

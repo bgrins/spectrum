@@ -1,7 +1,10 @@
 {
-  "devDependencies": {
-    "grunt": "~0.4.0",
-    "grunt-contrib-jshint": "~0.4.3",
-    "grunt-contrib-qunit": "~0.2.0"
-  }
+    "name": "spectrum",
+    "version": "1.1.0",
+    "devDependencies": {
+        "grunt": "~0.4.0",
+        "grunt-contrib-jshint": "~0.4.3",
+        "grunt-contrib-qunit": "~0.2.0",
+        "grunt-contrib-uglify": "~0.2.0"
+    }
 }
