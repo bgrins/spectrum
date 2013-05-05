@@ -104,6 +104,9 @@ License: MIT
 .sp-container.sp-input-disabled .sp-input-container {
     display: none;
 }
+.sp-flat .sp-cancel {
+    display: none;
+}
 .sp-container.sp-buttons-disabled .sp-button-container {
     display: none;
 }
