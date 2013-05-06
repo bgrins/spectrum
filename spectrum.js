@@ -820,8 +820,8 @@
         var duringDragEvents = {};
         duringDragEvents["selectstart"] = prevent;
         duringDragEvents["dragstart"] = prevent;
-        duringDragEvents["touchmove mousemove")] = move;
-        duringDragEvents["touchend mouseup")] = stop;
+        duringDragEvents["touchmove mousemove"] = move;
+        duringDragEvents["touchend mouseup"] = stop;
 
         function prevent(e) {
             if (e.stopPropagation) {
