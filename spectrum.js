@@ -161,7 +161,8 @@
             paletteArray = $.isArray(palette[0]) ? palette : [palette],
             selectionPalette = opts.selectionPalette.slice(0),
             maxSelectionSize = opts.maxSelectionSize,
-            draggingClass = "sp-dragging";
+            draggingClass = "sp-dragging",
+            shiftMovementDirection = null;
 
         var doc = element.ownerDocument,
             body = doc.body,
@@ -309,10 +310,32 @@
                 move();
             }, dragStart, dragStop);
 
-            draggable(dragger, function (dragX, dragY) {
-                currentSaturation = parseFloat(dragX / dragWidth);
-                currentValue = parseFloat((dragHeight - dragY) / dragHeight);
+            draggable(dragger, function (dragX, dragY, e) {
+
+                // shift+drag should snap the movement to either the x or y axis.
+                if (!e.shiftKey) {
+                    shiftMovementDirection = null;
+                }
+                else if (!shiftMovementDirection) {
+                    var oldDragX = currentSaturation * dragWidth;
+                    var oldDragY = dragHeight - (currentValue * dragHeight);
+                    var furtherFromX = Math.abs(dragX - oldDragX) > Math.abs(dragY - oldDragY);
+
+                    shiftMovementDirection = furtherFromX ? "x" : "y";
+                }
+
+                var setSaturation = !shiftMovementDirection || shiftMovementDirection === "x";
+                var setValue = !shiftMovementDirection || shiftMovementDirection === "y";
+
+                if (setSaturation) {
+                    currentSaturation = parseFloat(dragX / dragWidth);
+                }
+                if (setValue) {
+                    currentValue = parseFloat((dragHeight - dragY) / dragHeight);
+                }
+                
                 move();
+
             }, dragStart, dragStop);
 
             if (!!initialColor) {
@@ -428,6 +451,7 @@
                 reflow();
             }
             container.addClass(draggingClass);
+            shiftMovementDirection = null;
         }
 
         function dragStop() {
