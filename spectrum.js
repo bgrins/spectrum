@@ -530,7 +530,7 @@
             var newColor = tinycolor(color);
             var newHsv = newColor.toHsv();
 
-            currentHue = newHsv.h;
+            currentHue = (newHsv.h % 360) / 360;
             currentSaturation = newHsv.s;
             currentValue = newHsv.v;
             currentAlpha = newHsv.a;
