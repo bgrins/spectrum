@@ -1,4 +1,4 @@
-// Spectrum Colorpicker v1.1.0
+// Spectrum Colorpicker v1.1.1
 // https://github.com/bgrins/spectrum
 // Author: Brian Grinstead
 // License: MIT
@@ -333,7 +333,7 @@
                 if (setValue) {
                     currentValue = parseFloat((dragHeight - dragY) / dragHeight);
                 }
-                
+
                 move();
 
             }, dragStart, dragStop);
