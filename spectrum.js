@@ -195,6 +195,10 @@
 
         function applyOptions() {
 
+            if (opts.showPaletteOnly) {
+                opts.showPalette = true;
+            }
+
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
