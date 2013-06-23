@@ -174,6 +174,16 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
   equal ( appendToParent.spectrum("container").parent()[0], container[0], "Passing 'parent' to appendTo works as expected");
 
 
+  // Issue #70 - https://github.com/bgrins/spectrum/issues/70
+  equal (spec.spectrum("option", "showPalette"), true, "showPalette is true by default");
+  spec.spectrum("option", "showPalette", false);
+
+  equal (spec.spectrum("option", "showPalette"), false, "showPalette is false after setting showPalette");
+  spec.spectrum("option", "showPaletteOnly", true);
+
+  equal (spec.spectrum("option", "showPaletteOnly"), true, "showPaletteOnly is true after setting showPaletteOnly");
+  equal (spec.spectrum("option", "showPalette"), true, "showPalette is true after setting showPaletteOnly");
+
   spec.spectrum("destroy");
   appendToDefault.spectrum("destroy");
   appendToOther.spectrum("destroy");
