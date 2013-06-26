@@ -688,7 +688,7 @@
             var color = get();
 
             if (isInput) {
-                boundElement.val(color.toString(currentPreferredFormat)).change();
+                boundElement.val(color.toString(currentPreferredFormat));
             }
 
             var hasChanged = !tinycolor.equals(color, colorOnShow);

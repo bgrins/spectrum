@@ -20,7 +20,7 @@ test( "jQuery Plugin Can Be Created", function() {
 test( "Events Fire", function() {
   var el = $("<input id='spec' />").spectrum();
   var count = 0;
-  expect(5);
+  expect(4);
 
   el.on("beforeShow.spectrum", function(e) {
 
@@ -51,10 +51,9 @@ test( "Events Fire", function() {
 
   });
 
+  // change.spectrum
   el.on("change.spectrum", function(e, color) {
-    ok(count === 4, "Change");
-    //equal(color.toHexString(), "#ff0000");
-    count++;
+    ok(false, "Change should not fire from `set` call");
   });
 
   el.spectrum("show");
@@ -250,4 +249,25 @@ test( "Methods work as described", function() {
   equal (el.spectrum("get"), el , "No usage after being destroyed");
 
   el.spectrum("destroy");
+});
+
+// https://github.com/bgrins/spectrum/issues/97
+test( "Change events fire as described" , function() {
+
+  expect(0);
+  var input = $("<input />");
+
+  input.on("change", function() {
+    ok(false, "Change should not be fired inside of input change");
+  });
+
+  input.spectrum({
+    color: "red",
+    change: function() {
+      ok (false, "Change should not be fired inside of spectrum callback");
+    }
+  });
+
+  input.spectrum("set", "orange");
+
 });
