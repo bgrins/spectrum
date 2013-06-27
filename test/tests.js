@@ -51,8 +51,7 @@ test( "Events Fire", function() {
 
   });
 
-  // change.spectrum
-  el.on("change.spectrum", function(e, color) {
+  el.on("change", function(e, color) {
     ok(false, "Change should not fire from `set` call");
   });
 
