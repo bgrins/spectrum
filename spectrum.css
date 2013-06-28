@@ -12,7 +12,8 @@ License: MIT
     display:inline-block;
     *display: inline;
     *zoom: 1;
-    z-index: 2147483647;
+    /* https://github.com/bgrins/spectrum/issues/40 */
+    z-index: 9999994;
     overflow: hidden;
 }
 .sp-container.sp-flat {
