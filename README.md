@@ -40,6 +40,11 @@ If you'd like to run the development version, spectrum uses Grunt to automate th
 
     npm install -g grunt-cli
     npm install
+
+    # runs jshint and the unit test suite
+    grunt
+
+    # runs jshint, the unit test suite, and builds a minified version of the file.
     grunt build
 
 ### Internationalization
