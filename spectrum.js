@@ -439,9 +439,11 @@
         function updateDatalistPalette() {	
             var listID = $(element).attr('list');
             if(listID) {
-                datalistPalette = $('#'+listID).first().filter('datalist').find('option')
+                datalistPalette = $('#'+listID).first().filter('datalist').find('option:not(:disabled)')
                                         .toArray().map(function(opt) {
                                             return $(opt).val();
+                                        }).filter(function(opt) {
+                                            return opt != '';
                                         });
             } else {
                 datalistPalette = [];
