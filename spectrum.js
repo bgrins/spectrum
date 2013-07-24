@@ -250,10 +250,6 @@
                 }
                 catch(e) { }
 
-                try {
-                    selectionPalette = window.localStorage[localStorageKey].split(";");
-                }
-                catch (e) { }
             }
 
             offsetElement.bind("click.spectrum touchstart.spectrum", function (e) {
@@ -502,6 +498,11 @@
             $(window).bind("resize.spectrum", resize);
             replacer.addClass("sp-active");
             container.removeClass("sp-hidden");
+
+            try {
+                selectionPalette = window.localStorage[localStorageKey].split(";");
+            }
+            catch (e) { }
 
             if (opts.showPalette) {
                 drawPalette();
