@@ -59,17 +59,13 @@ License: MIT
     bottom:0;
 }
 
-.sp-alpha-enabled .sp-top
-{
+.sp-alpha-enabled .sp-top {
     margin-bottom: 18px;
 }
-.sp-alpha-enabled .sp-alpha
-{
+.sp-alpha-enabled .sp-alpha {
     display: block;
 }
-
-.sp-alpha-handle
-{
+.sp-alpha-handle {
     position:absolute;
     top:-4px;
     bottom: -4px;
@@ -80,9 +76,7 @@ License: MIT
     background: white;
     opacity: .8;
 }
-
-.sp-alpha
-{
+.sp-alpha {
     display: none;
     position: absolute;
     bottom: -14px;
@@ -90,7 +84,7 @@ License: MIT
     left: 0;
     height: 8px;
 }
-.sp-alpha-inner{
+.sp-alpha-inner {
     border: solid 1px #333;
 }
 
@@ -154,7 +148,6 @@ License: MIT
    Generate 6 divs, line them up, and do two color gradients for each.
    Yes, really.
  */
-
 .sp-1 {
     height:17%;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0000', endColorstr='#ffff00');
@@ -195,7 +188,6 @@ License: MIT
     .sp-hue { left: 63%; }
     .sp-fill { padding-top: 60%; }
 }
-
 .sp-dragger {
    border-radius: 5px;
    height: 5px;
@@ -219,7 +211,7 @@ License: MIT
     opacity: .8;
 }
 
-/* Basic display options (colors, fonts, global widths) */
+/* Basic themeable display options (colors, fonts, global widths) */
 .sp-container {
     border-radius: 0;
     background-color: #ECECEC;

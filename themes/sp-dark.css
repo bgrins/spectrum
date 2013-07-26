@@ -1,0 +1,24 @@
+/* Container */
+.sp-dark.sp-container {
+    background-color: #333;
+    border: solid 1px #555;
+}
+
+/* Replacer (the little preview div that shows up instead of the <input>) */
+.sp-dark.sp-replacer {
+    border: solid 1px #fff;
+    background: #333;
+    color: #eee;
+    vertical-align: middle;
+}
+.sp-replacer:hover, .sp-replacer.sp-active {
+    border-color: #F0C49B;
+    color: #fff;
+}
+.sp-replacer.sp-disabled {
+    border-color: silver;
+    color: silver;
+}
+.sp-dark .sp-preview {
+    border: solid 1px #eee;
+}
