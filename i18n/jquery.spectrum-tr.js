@@ -1,5 +1,5 @@
 // Spectrum Colorpicker
-// Italian (it) localization
+// Turkish (tr) localization
 // https://github.com/bgrins/spectrum
 
 (function ( $ ) {
