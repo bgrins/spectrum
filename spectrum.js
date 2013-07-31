@@ -205,7 +205,7 @@
             container.toggleClass("sp-input-disabled", !opts.showInput);
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
-            container.toggleClass("sp-palette-disabled", !opts.showPalette && !opts.showDatalistPalette);
+            container.toggleClass("sp-palette-disabled", !opts.showPalette && !(opts.showDatalistPalette && datalistPalette.length > 0));
             container.toggleClass("sp-palette-only", opts.showPaletteOnly);
             container.toggleClass("sp-initial-disabled", !opts.showInitial);
             container.addClass(opts.className);
@@ -421,7 +421,7 @@
                     paletteLookup[rgb] = true;
                 }
             }
-    		
+
             if (opts.showPalette || opts.showDatalistPalette) {
                 for (i = 0; i < p.length; i++) {
                     rgb = tinycolor(p[i]).toRgbString();
@@ -435,8 +435,8 @@
 
             return unique.reverse().slice(0, opts.maxSelectionSize);
         }
-		
-        function updateDatalistPalette() {	
+
+        function updateDatalistPalette() {    
             var listID = $(element).attr('list');
             if(listID) {
                 datalistPalette = $('#'+listID).first().filter('datalist').find('option:not(:disabled)')
@@ -448,6 +448,7 @@
             } else {
                 datalistPalette = [];
             }
+            applyOptions();
         }
 
         function drawPalette() {
@@ -456,6 +457,7 @@
             
             if(opts.showPalette || opts.showDatalistPalette) {			
                 if(opts.showDatalistPalette) {
+                    updateDatalistPalette();
                     html.push(paletteTemplate(datalistPalette, currentColor, "sp-palette-row sp-palette-datalist"));
                 }			
                 if(opts.showPalette) {
@@ -673,7 +675,6 @@
                 textInput.val(realColor.toString(format));
             }
 
-            updateDatalistPalette();
             drawPalette();
 
             drawInitial();
