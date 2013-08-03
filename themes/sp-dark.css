@@ -20,5 +20,8 @@
     color: silver;
 }
 .sp-dark .sp-preview {
-    border: solid 1px #eee;
+    border: solid 1px #999;
+}
+.sp-dark .sp-cancel {
+    color: #f99f9f !important;
 }

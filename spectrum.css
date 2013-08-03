@@ -211,7 +211,12 @@ License: MIT
     opacity: .8;
 }
 
-/* Basic themeable display options (colors, fonts, global widths) */
+/*
+Theme authors:
+Here are the basic themeable display options (colors, fonts, global widths).
+See http://bgrins.github.io/spectrum/themes/ for instructions.
+*/
+
 .sp-container {
     border-radius: 0;
     background-color: #ECECEC;
