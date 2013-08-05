@@ -406,9 +406,10 @@
             var p = selectionPalette;
             var paletteLookup = {};
             var rgb;
+            var i;
 
             if (opts.showPalette) {
-                for (var i = 0; i < paletteArray.length; i++) {
+                for (i = 0; i < paletteArray.length; i++) {
                     for (var j = 0; j < paletteArray[i].length; j++) {
                         rgb = tinycolor(paletteArray[i][j]).toRgbString();
                         paletteLookup[rgb] = true;
@@ -416,7 +417,7 @@
                 }
             }
             if (opts.showDatalistPalette) {
-                for (var i = 0; i < datalistPalette.length; i++) {
+                for (i = 0; i < datalistPalette.length; i++) {
                     rgb = tinycolor(datalistPalette[i]).toRgbString();
                     paletteLookup[rgb] = true;
                 }
@@ -436,14 +437,14 @@
             return unique.reverse().slice(0, opts.maxSelectionSize);
         }
 
-        function updateDatalistPalette() {    
+        function updateDatalistPalette() {
             var listID = $(element).attr('list');
             if(listID) {
                 datalistPalette = $('#'+listID).first().filter('datalist').find('option:not(:disabled)')
                                         .toArray().map(function(opt) {
                                             return $(opt).val();
                                         }).filter(function(opt) {
-                                            return opt != '';
+                                            return opt !== '';
                                         });
             } else {
                 datalistPalette = [];
@@ -455,15 +456,15 @@
             var currentColor = get();
             var html = [];
             
-            if(opts.showPalette || opts.showDatalistPalette) {			
+            if(opts.showPalette || opts.showDatalistPalette) {
                 if(opts.showDatalistPalette) {
                     updateDatalistPalette();
                     html.push(paletteTemplate(datalistPalette, currentColor, "sp-palette-row sp-palette-datalist"));
-                }			
+                }
                 if(opts.showPalette) {
                     html.push($.map(paletteArray, function (palette, i) {
                         return paletteTemplate(palette, currentColor, "sp-palette-row sp-palette-row-" + i);
-                    }));			
+                    }));
                 }
                 if (selectionPalette) {
                         html.push(paletteTemplate(getUniqueSelectionPalette(), currentColor, "sp-palette-row sp-palette-row-selection"));
@@ -532,10 +533,10 @@
             $(doc).bind("click.spectrum", hide);
             $(window).bind("resize.spectrum", resize);
             replacer.addClass("sp-active");
-            container.removeClass("sp-hidden");			
-			
+            container.removeClass("sp-hidden");
+
             drawPalette();
-            
+
             reflow();
             updateUI();
 
