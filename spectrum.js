@@ -23,6 +23,7 @@
         showPalette: false,
         showPaletteOnly: false,
         showSelectionPalette: true,
+        showDatalistPalette: true,
         localStorageKey: false,
         appendTo: "body",
         maxSelectionSize: 7,
@@ -160,6 +161,7 @@
             palette = opts.palette.slice(0),
             paletteArray = $.isArray(palette[0]) ? palette : [palette],
             selectionPalette = opts.selectionPalette.slice(0),
+            datalistPalette = [],
             maxSelectionSize = opts.maxSelectionSize,
             draggingClass = "sp-dragging",
             shiftMovementDirection = null;
@@ -203,7 +205,7 @@
             container.toggleClass("sp-input-disabled", !opts.showInput);
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
-            container.toggleClass("sp-palette-disabled", !opts.showPalette);
+            container.toggleClass("sp-palette-disabled", !opts.showPalette && !(opts.showDatalistPalette && datalistPalette.length > 0));
             container.toggleClass("sp-palette-only", opts.showPaletteOnly);
             container.toggleClass("sp-initial-disabled", !opts.showInitial);
             container.addClass(opts.className);
@@ -404,16 +406,24 @@
             var p = selectionPalette;
             var paletteLookup = {};
             var rgb;
+            var i;
 
             if (opts.showPalette) {
-
-                for (var i = 0; i < paletteArray.length; i++) {
+                for (i = 0; i < paletteArray.length; i++) {
                     for (var j = 0; j < paletteArray[i].length; j++) {
                         rgb = tinycolor(paletteArray[i][j]).toRgbString();
                         paletteLookup[rgb] = true;
                     }
                 }
+            }
+            if (opts.showDatalistPalette) {
+                for (i = 0; i < datalistPalette.length; i++) {
+                    rgb = tinycolor(datalistPalette[i]).toRgbString();
+                    paletteLookup[rgb] = true;
+                }
+            }
 
+            if (opts.showPalette || opts.showDatalistPalette) {
                 for (i = 0; i < p.length; i++) {
                     rgb = tinycolor(p[i]).toRgbString();
 
@@ -427,16 +437,37 @@
             return unique.reverse().slice(0, opts.maxSelectionSize);
         }
 
+        function updateDatalistPalette() {
+            var listID = $(element).attr('list');
+            if(listID) {
+                datalistPalette = $("datalist#" + listID).find("option").filter(function() {
+                  return !$(this).is(":disabled") && $.trim(this.value) !== "";
+                }).map(function() {
+                  return this.value;
+                }).toArray();
+            } else {
+                datalistPalette = [];
+            }
+            applyOptions();
+        }
+
         function drawPalette() {
-
             var currentColor = get();
-
-            var html = $.map(paletteArray, function (palette, i) {
-                return paletteTemplate(palette, currentColor, "sp-palette-row sp-palette-row-" + i);
-            });
-
-            if (selectionPalette) {
-                html.push(paletteTemplate(getUniqueSelectionPalette(), currentColor, "sp-palette-row sp-palette-row-selection"));
+            var html = [];
+            
+            if(opts.showPalette || opts.showDatalistPalette) {
+                if(opts.showDatalistPalette) {
+                    updateDatalistPalette();
+                    html.push(paletteTemplate(datalistPalette, currentColor, "sp-palette-row sp-palette-datalist"));
+                }
+                if(opts.showPalette) {
+                    html.push($.map(paletteArray, function (palette, i) {
+                        return paletteTemplate(palette, currentColor, "sp-palette-row sp-palette-row-" + i);
+                    }));
+                }
+                if (selectionPalette) {
+                        html.push(paletteTemplate(getUniqueSelectionPalette(), currentColor, "sp-palette-row sp-palette-row-selection"));
+                }
             }
 
             paletteContainer.html(html.join(""));
@@ -503,9 +534,8 @@
             replacer.addClass("sp-active");
             container.removeClass("sp-hidden");
 
-            if (opts.showPalette) {
-                drawPalette();
-            }
+            drawPalette();
+
             reflow();
             updateUI();
 
@@ -645,9 +675,7 @@
                 textInput.val(realColor.toString(format));
             }
 
-            if (opts.showPalette) {
-                drawPalette();
-            }
+            drawPalette();
 
             drawInitial();
         }
