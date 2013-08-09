@@ -1881,7 +1881,7 @@
 
         root.tinycolor = tinycolor;
 
-    })(this);
+    })(window);
 
     $(function () {
         if ($.fn.spectrum.load) {
