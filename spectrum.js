@@ -1925,6 +1925,8 @@
 
     })();
 
+    // Expose tinycolor to window, does not need to run in non-browser context.
+    window.tinycolor = tinycolor;
 
     $(function () {
         if ($.fn.spectrum.load) {
