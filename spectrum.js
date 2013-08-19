@@ -1910,23 +1910,11 @@
         return false;
     }
 
-    // Node: Export function
-    if (typeof module !== "undefined" && module.exports) {
-        module.exports = tinycolor;
-    }
-    // AMD/requirejs: Define the module
-    else if (typeof define !== "undefined") {
-        define(function () {return tinycolor;});
-    }
-    // Browser: Expose to window
-    else {
-        window.tinycolor = tinycolor;
-    }
+    // Expose tinycolor to window, does not need to run in non-browser context.
+    window.tinycolor = tinycolor;
 
     })();
 
-    // Expose tinycolor to window, does not need to run in non-browser context.
-    window.tinycolor = tinycolor;
 
     $(function () {
         if ($.fn.spectrum.load) {
