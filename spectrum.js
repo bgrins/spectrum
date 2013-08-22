@@ -1051,6 +1051,9 @@
             getAlpha: function() {
                 return a;
             },
+            getAlphaHex: function() {
+                return pad2(convertDecimalToHex(a));
+            },
             setAlpha: function(value) {
                 a = boundAlpha(value);
                 roundA = mathRound(100*a) / 100;
@@ -1082,6 +1085,9 @@
             },
             toHexString: function(allow3Char) {
                 return '#' + rgbToHex(r, g, b, allow3Char);
+            },
+            toHex8String: function() {
+                return '#' + rgbaToHex(r, g, b, a);
             },
             toRgb: function() {
                 return { r: mathRound(r), g: mathRound(g), b: mathRound(b), a: a };
@@ -1140,6 +1146,9 @@
                 }
                 if (format === "hex3") {
                     formattedString = this.toHexString(true);
+                }
+                if (format === "hex8") {
+                    formattedString = this.toHex8String();
                 }
                 if (format === "name") {
                     formattedString = this.toName();
@@ -1398,6 +1407,21 @@
         if (allow3Char && hex[0].charAt(0) == hex[0].charAt(1) && hex[1].charAt(0) == hex[1].charAt(1) && hex[2].charAt(0) == hex[2].charAt(1)) {
             return hex[0].charAt(0) + hex[1].charAt(0) + hex[2].charAt(0);
         }
+
+        return hex.join("");
+    }
+    // `rgbaToHex`
+    // Converts an RGBA color plus alpha transparency to hex
+    // Assumes r, g, b and a are contained in the set [0, 255]
+    // Returns an 8 character hex
+    function rgbaToHex(r, g, b, a) {
+
+        var hex = [
+            pad2(mathRound(r).toString(16)),
+            pad2(mathRound(g).toString(16)),
+            pad2(mathRound(b).toString(16)),
+            pad2(convertDecimalToHex(a))
+        ];
 
         return hex.join("");
     }
@@ -1827,6 +1851,15 @@
         return n;
     }
 
+    // Converts a decimal to a hex value, rounding to two digits
+    function convertDecimalToHex(d) {
+        return (d * 255).toString(16).substring(0,2);
+    }
+    // Converts a hex value to a decimal
+    function convertHexToDecimal(h) {
+        return (parseInt(h, 16) / 255);
+    }
+
     var matchers = (function() {
 
         // <http://www.w3.org/TR/css3-values/#integers>
@@ -1851,7 +1884,8 @@
             hsla: new RegExp("hsla" + PERMISSIVE_MATCH4),
             hsv: new RegExp("hsv" + PERMISSIVE_MATCH3),
             hex3: /^([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
-            hex6: /^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/
+            hex6: /^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/,
+            hex8: /^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/
         };
     })();
 
@@ -1889,6 +1923,15 @@
         }
         if ((match = matchers.hsv.exec(color))) {
             return { h: match[1], s: match[2], v: match[3] };
+        }
+        if ((match = matchers.hex8.exec(color))) {
+            return {
+                r: parseHex(match[1]),
+                g: parseHex(match[2]),
+                b: parseHex(match[3]),
+                a: convertHexToDecimal(match[4]),
+                format: named ? "name" : "hex8"
+            };
         }
         if ((match = matchers.hex6.exec(color))) {
             return {
