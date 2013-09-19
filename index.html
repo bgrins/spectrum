@@ -685,6 +685,21 @@ $("#picker").spectrum("disable");
                 <p>
                 Toggles the colorpicker.
                 </p>
+                <p class="warning">
+                <b>Warning:</b> If you are calling toggle from a click handler, make sure you <code>return false</code> to prevent the colorpicker from immediately hiding after it is toggled.
+                </p>
+            </div>
+
+            <pre class='prettyprint'>
+$("#btn-toggle").click(function() {
+    $("#toggle").spectrum("toggle");
+    return false;
+});
+            </pre>
+
+            <div class='example'>
+                <input type='text' value='blanchedalmond' name='toggle' id='toggle' />
+                <button id='btn-toggle'>Toggle</button>
             </div>
         </div>
 

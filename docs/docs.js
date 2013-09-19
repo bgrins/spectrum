@@ -287,6 +287,13 @@ $("#btnEnterAColor").click(function() {
 });
 
 
+$("#toggle").spectrum();
+$("#btn-toggle").click(function() {
+    $("#toggle").spectrum("toggle");
+    return false;
+});
+
+
 $('#toc').toc({
     'selectors': 'h2,h3', //elements to use as headings
     'container': '#docs', //element to find all selectors in
