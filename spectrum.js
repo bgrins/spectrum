@@ -34,7 +34,8 @@
         theme: "sp-light",
         palette: ['fff', '000'],
         selectionPalette: [],
-        disabled: false
+        disabled: false,
+        closeOnSelect: false
     },
     spectrums = [],
     IE = !!/msie/i.exec( window.navigator.userAgent ),
@@ -340,7 +341,7 @@
 
                 move();
 
-            }, dragStart, dragStop);
+            }, dragStart, opts.closeOnSelect ? dragStopAndClose : dragStop);
 
             if (!!initialColor) {
                 set(initialColor);
@@ -460,6 +461,12 @@
 
         function dragStop() {
             container.removeClass(draggingClass);
+        }
+
+        function dragStopAndClose() {
+            container.removeClass(draggingClass);
+            updateOriginalInput(true);
+            hide();
         }
 
         function setFromTextInput() {
