@@ -392,7 +392,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
   background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
   background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
   background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
-  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
   background-image: linear-gradient(to bottom, #eeeeee, #cccccc);
   border: 1px solid #ccc;
   border-bottom: 1px solid #bbb;
@@ -411,7 +410,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     background-image: -moz-linear-gradient(top, #dddddd, #bbbbbb);
     background-image: -ms-linear-gradient(top, #dddddd, #bbbbbb);
     background-image: -o-linear-gradient(top, #dddddd, #bbbbbb);
-    background-image: -ms-linear-gradient(top, #dddddd, #bbbbbb);
     background-image: linear-gradient(to bottom, #dddddd, #bbbbbb);
     border: 1px solid #bbb;
     border-bottom: 1px solid #999;
