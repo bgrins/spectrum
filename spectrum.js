@@ -34,8 +34,7 @@
         theme: "sp-light",
         palette: ['fff', '000'],
         selectionPalette: [],
-        disabled: false,
-        closeOnSelect: false
+        disabled: false
     },
     spectrums = [],
     IE = !!/msie/i.exec( window.navigator.userAgent ),
@@ -341,7 +340,7 @@
 
                 move();
 
-            }, dragStart, opts.closeOnSelect ? dragStopAndClose : dragStop);
+            }, dragStart, dragStop);
 
             if (!!initialColor) {
                 set(initialColor);
@@ -463,12 +462,6 @@
             container.removeClass(draggingClass);
         }
 
-        function dragStopAndClose() {
-            container.removeClass(draggingClass);
-            updateOriginalInput(true);
-            hide();
-        }
-
         function setFromTextInput() {
             var tiny = tinycolor(textInput.val());
             if (tiny.ok) {
@@ -521,6 +514,14 @@
             drawInitial();
             callbacks.show(colorOnShow);
             boundElement.trigger('show.spectrum', [ colorOnShow ]);
+
+            // listen for enter key events
+            $(doc).bind("keydown", function (e) {
+                if(e.which == 13) {
+                    updateOriginalInput(true);
+                    hide();
+                }
+            });
         }
 
         function hide(e) {
@@ -532,6 +533,7 @@
             if (!visible || flat) { return; }
             visible = false;
 
+            $(doc).unbind("keydown");
             $(doc).unbind("click.spectrum", hide);
             $(window).unbind("resize.spectrum", resize);
 
