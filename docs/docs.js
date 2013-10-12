@@ -302,7 +302,7 @@ $('#toc').toc({
     'highlightOnScroll': true, //add class to heading that is currently in focus
     'highlightOffset': 100, //offset to trigger the next headline
     'anchorName': function(i, heading, prefix) { //custom function for anchor name
-        return prefix+i;
+        return heading.id || prefix+i;
     }
 });
 

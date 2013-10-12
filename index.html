@@ -48,13 +48,13 @@
 <input type='color' class='basic' value='#f594d0' />
 </pre>
 
-        <h2>Why A Colorpicker?</h2>
+        <h2 id="why">Why A Colorpicker?</h2>
         <p><em>I wasn't satisfied with the solutions available for colorpicking</em>.
         Many of them included a ton of images, were hard to skin or customize, or were very large plugins.
         Here are the goals I had when making a new one:
         </p>
 
-        <h3 class='point'>Small Footprint</h3>
+        <h3 id="why-footprint" class='point'>Small Footprint</h3>
         <div class='note'>see a working <a href='http://jsfiddle.net/bgrins/ctkY3/'>jsFiddle example</a></div>
         <p>Just include the needed CSS and JavaScript files, and you are ready to go!  </p>
 <pre class='prettyprint' id='code-subheading'>
@@ -64,23 +64,23 @@
         <p><strong>We don't need no stinkin' images!</strong></p>
         <p>Nobody wants to add a bunch of code into their project.  Spectrum is contained in two files, and both are careful not to mess with your existing code.</p>
 
-        <h3 class='point'>Polyfill</h3>
+        <h3 id="why-polyfill" class='point'>Polyfill</h3>
         <p>I wanted an option for the most basic use case, a polyfill for the <a href='http://dev.w3.org/html5/markup/input.color.html'>input[type=color]</a> HTML5 control.
            This mode needs to work without JavaScript enabled - and fallback to an input[type=text] like other HTML5 inputs.
         </p>
 
 
-        <h3 class='point'>Customizable</h3>
+        <h3 id="why-customizable" class='point'>Customizable</h3>
         <p>Just because you don't <em>have</em> to change anything to get it to work, doesn't mean you <em>can't</em>!
         It is easy to skin and customize the plugin with CSS, and there are a wide range of modes and options to explore.
         </p>
 
-        <h3 class='point'>Mobile Support</h3>
+        <h3 id="why-mobile" class='point'>Mobile Support</h3>
         <p>Along with desktop browser support, I wanted a mobile colorpicker that was touch friendly, worked in iOS and Android, and used standards
             that maximize future mobile support.
         </p>
 
-        <h3 class='point'>Devtools</h3>
+        <h3 id="why-devtools" class='point'>Devtools</h3>
 
         <p>
             Believe it or not, <strong>this colorpicker lives inside of Chrome and Safari devtools</strong> to make picking colors easier for web developers and designers.
@@ -95,8 +95,8 @@
         </p>
 
 
-        <h2>Modes</h2>
-        <h3 class='point'>input[type=color]</h3>
+        <h2 id="modes">Modes</h2>
+        <h3 id="modes-input" class='point'>input[type=color]</h3>
 
     <p>
     If you just want to provide a polyfill for the native color input,
@@ -123,7 +123,7 @@
     so that they will still be able to manually enter a color.  You don't need to add a single line of code.
     </p>
 
-        <h3 class='point'>Custom</h3>
+        <h3 id="modes-custom" class='point'>Custom</h3>
     <p>If you want to get more into the functionality, just create a normal input and initialize it as a normal jQuery plugin.
     <strong>You can set a lot of options</strong> when initializing the colorpicker.
     See the 'Options' section below.
@@ -145,7 +145,7 @@ $("#custom").spectrum({
             <input type='text' id='custom' />
         </div>
 
-        <h3 class='point'>Flat</h3>
+        <h3 id="modes-flat" class='point'>Flat</h3>
         <p><strong>Flat</strong>
             This means that it will always show up at full size,
             and be positioned as an inline-block element.
@@ -172,7 +172,7 @@ $("#flat").spectrum({
 </div>
 -->
 
-        <h2>Options</h2>
+        <h2 id="options">Options</h2>
 <pre class='prettyprint'>
 $("#picker").spectrum({
     color: <strong>tinycolor</strong>,
@@ -196,8 +196,7 @@ $("#picker").spectrum({
 });
 </pre>
 
-
-        <h3>Color</h3>
+        <h3 id="options-color">Color</h3>
         <div class='option-content'>
             <div class='description'>
                 <p>
@@ -235,7 +234,7 @@ $(".override").spectrum({
             </div>
         </div>
 
-        <h3>Show Input</h3>
+        <h3 id="options-showInput">Show Input</h3>
         <div class='option-content'>
             <div class='description'>
                 <p>You can add an input to allow free form typing.  The color parsing is very permissive in the allowed strings.  See <a href='https://github.com/bgrins/TinyColor'>TinyColor</a> for more details.
@@ -250,7 +249,7 @@ $("#showInput").spectrum({
             </div>
         </div>
 
-        <h3>Show Alpha</h3>
+        <h3 id="options-showAlpha">Show Alpha</h3>
         <div class='option-content'>
             <div class='description'>
                 <p>You can allow alpha transparency selection.  Check out these examples: </p>
@@ -268,7 +267,7 @@ $("#showAlpha").spectrum({
             </div>
         </div>
 
-        <h3>Disabled</h3>
+        <h3 id="options-disabled">Disabled</h3>
         <div class='option-content'>
             <div class='description'>
             <p>Spectrum can be automatically disabled if you pass in the <code>disabled</code> flag.  Additionally, if the input that you initialize spectrum on is disabled, this will be the default value.  Note: you <strong>cannot</strong> enable spectrum if the input is disabled (see below).</p>
@@ -288,7 +287,7 @@ $("input:disabled").spectrum({
             </div>
         </div>
 
-        <h3>Show Palette</h3>
+        <h3 id="options-showPalette">Show Palette</h3>
         <div class='option-content'>
             <div class='description'>
             <p>Spectrum can show a palette below the colorpicker to make it convenient for users to choose from frequently or recently used colors.  When the colorpicker is closed, the current color will be added to the palette if it isn't there already.  Check it out here: </p>
@@ -307,7 +306,7 @@ $("#showPalette").spectrum({
             </div>
         </div>
 
-        <h3>Show Palette Only</h3>
+        <h3 id="options-showPaletteOnly">Show Palette Only</h3>
         <div class='option-content'>
             <div class='note'>see a working <a href='http://jsfiddle.net/bgrins/S45tW/'>jsFiddle example</a></div>
             <div class='description'>
@@ -334,7 +333,7 @@ $("#showPaletteOnly").spectrum({
             </div>
         </div>
 
-        <h3>Show Selection Palette</h3>
+        <h3 id="options-showSelectionPalette">Show Selection Palette</h3>
         <div class='option-content'>
             <div class='description'>
                 <p>Spectrum can keep track of what has been selected by the user with the <code>showSelectionPalette</code> option.</p>
@@ -363,7 +362,7 @@ $("#showSelectionPaletteStorage").spectrum({
             </div>
         </div>
 
-        <h3>Clickout Fires Change</h3>
+        <h3 id="options-clickoutFiresChange">Clickout Fires Change</h3>
         <div class='option-content'>
             <div class='description'>
                 <p>
@@ -386,7 +385,7 @@ $("#clickoutDoesntChange").spectrum({
             </div>
         </div>
 
-        <h3>Show Initial</h3>
+        <h3 id="options-showInitial">Show Initial</h3>
         <div class='option-content'>
             <div class='description'>
                 <p>
@@ -406,7 +405,7 @@ $("#showInitial").spectrum({
             </div>
         </div>
 
-        <h3>Show Input and Initial</h3>
+        <h3 id="options-showInputAndInitial">Show Input and Initial</h3>
         <div class='option-content'>
             <div class='description'>
                 <p>If you specify both the <code>showInput</code> and <code>showInitial</code> options, the CSS keeps things in order by wrapping the buttons to the bottom row, and shrinking the input.   <em>Note: this is all customizable via CSS.</em></p>
@@ -422,7 +421,7 @@ $("#showInputAndInitial").spectrum({
                     <input type='text' name='showInputAndInitial' id='showInputAndInitial' value='goldenrod' />
             </div>
         </div>
-        <h3>Button Text</h3>
+        <h3 id="options-buttonText">Button Text</h3>
         <div class='option-content'>
             <div class='description'>
                 <p>You can set the button's text using <code>cancelText</code> and <code>chooseText</code> properties.</p>
@@ -440,7 +439,7 @@ $("#buttonText").spectrum({
             </div>
         </div>
 
-        <h3>Show Buttons</h3>
+        <h3 id="options-showButtons">Show Buttons</h3>
         <div class='option-content'>
             <div class='description'>
                 <p>
@@ -460,7 +459,7 @@ $("#hideButtons").spectrum({
             </div>
         </div>
 
-        <h3>className</h3>
+        <h3 id="options-className">className</h3>
         <div class='option-content'>
             <div class='description'>
                 <p>
@@ -489,7 +488,7 @@ $("#className").spectrum({
             </div>
         </div>
 
-        <h3>Preferred Format</h3>
+        <h3 id="options-preferredFormat">Preferred Format</h3>
         <div class='option-content'>
             <div class='description'>
                 <p>You can set the format that is displayed</p>
@@ -536,7 +535,7 @@ $("#preferredNone").spectrum({
             </div>
         </div>
 
-        <h2>Events</h2>
+        <h2 id="events">Events</h2>
 
 <pre class='prettyprint'>
 $("#picker").spectrum({
@@ -547,7 +546,7 @@ $("#picker").spectrum({
 });
 </pre>
 
-        <h3>change</h3>
+        <h3 id="events-change">change</h3>
         <div class='option-content'>
             <div class='description'>
                 <p>Called as the original input changes.  Only happens when the input is closed or the 'Choose' button is clicked.</p>
@@ -565,7 +564,7 @@ change: function(color) {
             </div>
         </div>
 
-        <h3>move</h3>
+        <h3 id="events-move">move</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -584,7 +583,7 @@ move: function(color) {
             </div>
         </div>
 
-        <h3>hide</h3>
+        <h3 id="events-hide">hide</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -604,7 +603,7 @@ move: function(color) {
             </pre>
         </div>
 
-        <h3>show</h3>
+        <h3 id="events-show">show</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -622,7 +621,7 @@ move: function(color) {
             </pre>
         </div>
 
-        <h3>beforeShow</h3>
+        <h3 id="events-beforeShow">beforeShow</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -643,7 +642,7 @@ beforeShow: function(color) {
             </div>
         </div>
 
-        <h2>Methods</h2>
+        <h2 id="methods">Methods</h2>
 <pre class='prettyprint'>
 $("#picker").spectrum("show");
 $("#picker").spectrum("hide");
@@ -659,7 +658,7 @@ $("#picker").spectrum("option", optionName);
 $("#picker").spectrum("option", optionName, newOptionValue);
 </pre>
 
-        <h3>show</h3>
+        <h3 id="methods-show">show</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -669,7 +668,7 @@ $("#picker").spectrum("option", optionName, newOptionValue);
             </div>
         </div>
 
-        <h3>hide</h3>
+        <h3 id="methods-hide">hide</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -679,7 +678,7 @@ $("#picker").spectrum("option", optionName, newOptionValue);
             </div>
         </div>
 
-        <h3>toggle</h3>
+        <h3 id="methods-toggle">toggle</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -704,7 +703,7 @@ $("#btn-toggle").click(function() {
             </div>
         </div>
 
-        <h3>get</h3>
+        <h3 id="methods-get">get</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -714,7 +713,7 @@ $("#btn-toggle").click(function() {
             </div>
         </div>
 
-        <h3>set</h3>
+        <h3 id="methods-set">set</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -750,7 +749,7 @@ $("#btnEnterAColor").click(function() {
             </div>
         </div>
 
-        <h3>container</h3>
+        <h3 id="methods-container">container</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -760,7 +759,7 @@ $("#btnEnterAColor").click(function() {
             </div>
         </div>
 
-        <h3>reflow</h3>
+        <h3 id="methods-reflow">reflow</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -770,7 +769,7 @@ $("#btnEnterAColor").click(function() {
             </div>
         </div>
 
-        <h3>destroy</h3>
+        <h3 id="methods-destroy">destroy</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -780,7 +779,7 @@ $("#btnEnterAColor").click(function() {
             </div>
         </div>
 
-        <h3>enable</h3>
+        <h3 id="methods-enable">enable</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -793,7 +792,7 @@ $("#btnEnterAColor").click(function() {
             </div>
         </div>
 
-        <h3>disable</h3>
+        <h3 id="methods-disable">disable</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -806,7 +805,7 @@ $("#btnEnterAColor").click(function() {
             </div>
         </div>
 
-        <h3>option</h3>
+        <h3 id="methods-option">option</h3>
 
         <div class='option-content'>
             <div class='description'>
@@ -835,18 +834,18 @@ $("input").spectrum("option", "showInput"); // false
         </div>
 
 
-        <h2>Skinning</h2>
+        <h2 id="skinning">Skinning</h2>
 
         <p>Since it is all built with HTML/CSS, you can skin it easily.  There are two parts to the <a href='https://github.com/bgrins/spectrum/blob/master/spectrum.css'>spectrum.css</a> file, the core rules (at the top of the file), and the themable rules (at the bottom).  Feel free to tweak these rules to make it look how you want.</p>
 
-        <h3 class='point'>Non-input elements</h3>
+        <h3 id="skinning-nonInput" class='point'>Non-input elements</h3>
         <p>
             You can use any element you would like to trigger the colorpicker: <a href='#' id='openWithLink'>Click me to open a colorpicker</a>, though it is strongly recommended to stick with <code>&lt;input&gt;</code> tags.
         </p>
 
-        <h2>Nitty Gritty</h2>
+        <h2 id="details">Nitty Gritty</h2>
 
-        <h3 class='point'>Browser Support</h3>
+        <h3 id="details-browserSupport" class='point'>Browser Support</h3>
         <p>I wanted this to work in the latest and greatest browsers, but also target backwords compatibility and <strong>mobile support</strong>.
         Here are the currently supported browers:
         <ul>
@@ -858,7 +857,7 @@ $("input").spectrum("option", "showInput"); // false
             <li>iOS</li>
         </ul>
 
-        <h3 class='point'>IE Implementation</h3>
+        <h3 id="details-ieImplementation" class='point'>IE Implementation</h3>
         <p>
         IE Support is provided using
         <a href='http://msdn.microsoft.com/en-us/library/ms532997(v=vs.85).aspx'>proprietary filters</a>.
@@ -866,7 +865,7 @@ $("input").spectrum("option", "showInput"); // false
         </p>
 
 
-        <h3 class='point'>Accepted Color Inputs</h3>
+        <h3 id="details-acceptedColorInputs" class='point'>Accepted Color Inputs</h3>
         <p>Spectrum will use the color passed in to initialize.  If there is no color passed in,
         it will try to parse a color based on the <code>value</code> of the input.  The color parsing is based on the <a href='https://github.com/bgrins/TinyColor'>TinyColor</a> plugin, and accepts many forms of input:</p>
 <pre class='prettyprint'>

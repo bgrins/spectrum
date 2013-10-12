@@ -71,12 +71,15 @@ $.fn.toc = function(options) {
       headingOffsets.push($h.offset().top - opts.highlightOffset);
 
       //add anchor
-      var anchor = $('<span/>').attr('id', opts.anchorName(i, heading, opts.prefix)).insertBefore($h);
-
+      var anchorName = opts.anchorName(i, heading, opts.prefix);
+      var anchor = $([]);
+      if (!document.getElementById(anchorName)) {
+        anchor = $('<span/>').attr('id', opts.anchorName(i, heading, opts.prefix)).insertBefore($h);
+      }
       //build TOC item
       var a = $('<a/>')
       .text($h.text())
-      .attr('href', '#' + opts.anchorName(i, heading, opts.prefix))
+      .attr('href', '#' + anchorName)
       .bind('click', scrollTo);
 
       var li = $('<li/>')
@@ -95,7 +98,7 @@ jQuery.fn.toc.defaults = {
   container: 'body',
   selectors: 'h1,h2,h3',
   smoothScrolling: true,
-  prefix: 'toc',
+  prefix: '',
   highlightOnScroll: true,
   highlightOffset: 100,
   anchorName: function(i, heading, prefix) {
