@@ -655,8 +655,9 @@ $("#picker").spectrum("reflow");
 $("#picker").spectrum("destroy");
 $("#picker").spectrum("enable");
 $("#picker").spectrum("disable");
+$("#picker").spectrum("option", optionName);
+$("#picker").spectrum("option", optionName, newOptionValue);
 </pre>
-
 
         <h3>show</h3>
 
@@ -802,6 +803,34 @@ $("#btnEnterAColor").click(function() {
                 <p>
                 Additionally, this will remove the <code>disabled</code> property on the original (now hidden).
                 </p>
+            </div>
+        </div>
+
+        <h3>option</h3>
+
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Calling <code>option</code> with an option name will return the current value of that option.  So, for example:
+                </p>
+                <pre class='prettyprint'>
+$("input").spectrum({
+    showInput: true
+});
+
+$("input").spectrum("option", "showInput"); // true
+                </pre>
+                <p>
+                Calling <code>option</code> with an option name and an option value will set the option to the new value.
+                </p>
+                <pre class='prettyprint'>
+$("input").spectrum({
+    showInput: true
+});
+
+$("input").spectrum("option", "showInput", false);
+$("input").spectrum("option", "showInput"); // false
+                </pre>
             </div>
         </div>
 
