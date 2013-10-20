@@ -294,10 +294,7 @@
                 e.stopPropagation();
                 e.preventDefault();
 
-                if (isValid()) {
-                    updateOriginalInput(true);
-                    hide();
-                }
+                chooseAndClose();
             });
 
             draggable(alphaSlider, function (dragX, dragY, e) {
@@ -499,6 +496,7 @@
             visible = true;
 
             $(doc).bind("click.spectrum", hide);
+            $(doc).bind("keydown.spectrum", keydownHandler);
             $(window).bind("resize.spectrum", resize);
             replacer.addClass("sp-active");
             container.removeClass("sp-hidden");
@@ -526,6 +524,7 @@
             visible = false;
 
             $(doc).unbind("click.spectrum", hide);
+            $(doc).unbind("keydown.spectrum", keydownHandler);
             $(window).unbind("resize.spectrum", resize);
 
             replacer.removeClass("sp-active");
@@ -699,6 +698,24 @@
             if (fireCallback && hasChanged) {
                 callbacks.change(color);
                 boundElement.trigger('change', [ color ]);
+            }
+        }
+
+        function chooseAndClose() {
+            if (isValid()) {
+                updateOriginalInput(true);
+                hide();
+            }
+        }
+
+        function keydownHandler(e) {
+            if (!flat) {
+                if (e.keyCode === 13) { // Enter
+                    chooseAndClose();
+                }
+                else if (e.keyCode === 27) { // Escape
+                    revert();
+                }
             }
         }
 
