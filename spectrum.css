@@ -364,9 +364,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     margin-right: 5px;
     float:left;
     z-index: 0;
-    /* force background images and colors */
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
 }
 
 .sp-palette
