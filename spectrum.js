@@ -17,6 +17,7 @@
         color: false,
         flat: false,
         showInput: false,
+        allowEmpty: false,
         showButtons: true,
         clickoutFiresChange: false,
         showInitial: false,
@@ -81,6 +82,8 @@
                                     "</div>",
                                 "</div>",
                             "</div>",
+                            "<div class='sp-clear sp-clear-display' title='Clear Color Selection'>",
+                            "</div>",
                             "<div class='sp-hue'>",
                                 "<div class='sp-slider'></div>",
                                 gradientFix,
@@ -104,12 +107,18 @@
     function paletteTemplate (p, color, className) {
         var html = [];
         for (var i = 0; i < p.length; i++) {
-            var tiny = tinycolor(p[i]);
-            var c = tiny.toHsl().l < 0.5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
-            c += (tinycolor.equals(color, p[i])) ? " sp-thumb-active" : "";
+            var current = p[i];
+            if(current) {
+                var tiny = tinycolor(current);
+                var c = tiny.toHsl().l < 0.5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
+                c += (tinycolor.equals(color, current)) ? " sp-thumb-active" : "";
 
-            var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
-            html.push('<span title="' + tiny.toRgbString() + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><span class="sp-thumb-inner" style="' + swatchStyle + ';" /></span>');
+                var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
+                html.push('<span title="' + tiny.toRgbString() + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><span class="sp-thumb-inner" style="' + swatchStyle + ';" /></span>');
+            } else {
+                var c = 'sp-clear-display';
+                html.push('<span title="No Color Selected" data-color="" style="background-color:transparent;" class="' + c + '"></span>');
+            }
         }
         return "<div class='sp-cf " + className + "'>" + html.join('') + "</div>";
     }
@@ -180,6 +189,7 @@
             paletteContainer = container.find(".sp-palette"),
             initialColorContainer = container.find(".sp-initial"),
             cancelButton = container.find(".sp-cancel"),
+            clearButton = container.find(".sp-clear"),
             chooseButton = container.find(".sp-choose"),
             isInput = boundElement.is("input"),
             shouldReplace = isInput && !flat,
@@ -190,7 +200,8 @@
             colorOnShow = false,
             preferredFormat = opts.preferredFormat,
             currentPreferredFormat = preferredFormat,
-            clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange;
+            clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange,
+            isEmpty = !initialColor;
 
 
         function applyOptions() {
@@ -202,6 +213,7 @@
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
+            container.toggleClass("sp-clear-enabled", opts.allowEmpty);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
             container.toggleClass("sp-palette-disabled", !opts.showPalette);
             container.toggleClass("sp-palette-only", opts.showPaletteOnly);
@@ -221,6 +233,10 @@
 
             if (shouldReplace) {
                 boundElement.after(replacer).hide();
+            }
+
+            if (!opts.allowEmpty) {
+                clearButton.hide();
             }
 
             if (flat) {
@@ -289,6 +305,21 @@
                 hide("cancel");
             });
 
+
+            clearButton.bind("click.spectrum", function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+
+               isEmpty = true;
+
+                updateUI();
+                if(flat) {
+                    //for the flat style, this is a change event
+                    updateOriginalInput(true);
+                }
+            });
+            
+
             chooseButton.text(opts.chooseText);
             chooseButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
@@ -302,6 +333,7 @@
 
             draggable(alphaSlider, function (dragX, dragY, e) {
                 currentAlpha = (dragX / alphaWidth);
+                isEmpty = false;
                 if (e.shiftKey) {
                     currentAlpha = Math.round(currentAlpha * 10) / 10;
                 }
@@ -311,6 +343,7 @@
 
             draggable(slider, function (dragX, dragY) {
                 currentHue = parseFloat(dragY / slideHeight);
+                isEmpty = false;
                 move();
             }, dragStart, dragStop);
 
@@ -337,6 +370,8 @@
                 if (setValue) {
                     currentValue = parseFloat((dragHeight - dragY) / dragHeight);
                 }
+                
+                isEmpty = false;
 
                 move();
 
@@ -463,12 +498,20 @@
         }
 
         function setFromTextInput() {
-            var tiny = tinycolor(textInput.val());
-            if (tiny.ok) {
-                set(tiny);
+
+            var value = textInput.val();
+
+            if ((value === null || value === "") && opts.allowEmpty) {
+                set(null);
             }
             else {
-                textInput.addClass("sp-validation-error");
+                var tiny = tinycolor(value);
+                if (tiny.ok) {
+                    set(tiny);
+                }
+                else {
+                    textInput.addClass("sp-validation-error");
+                }
             }
         }
 
@@ -555,23 +598,33 @@
                 return;
             }
 
-            var newColor = tinycolor(color);
-            var newHsv = newColor.toHsv();
+            var newColor;
+            if (!color && opts.allowEmpty) {
+                isEmpty = true;
+            } else {
+                isEmpty = false;
+                newColor = tinycolor(color);
+                var newHsv = newColor.toHsv();
 
-            currentHue = (newHsv.h % 360) / 360;
-            currentSaturation = newHsv.s;
-            currentValue = newHsv.v;
-            currentAlpha = newHsv.a;
-
+                currentHue = (newHsv.h % 360) / 360;
+                currentSaturation = newHsv.s;
+                currentValue = newHsv.v;
+                currentAlpha = newHsv.a;
+            }
             updateUI();
 
-            if (newColor.ok && !ignoreFormatChange) {
+            if (newColor && newColor.ok && !ignoreFormatChange) {
                 currentPreferredFormat = preferredFormat || newColor.format;
             }
         }
 
         function get(opts) {
             opts = opts || { };
+            
+            if (isEmpty) {
+                return null;
+            }
+
             return tinycolor.fromRatio({
                 h: currentHue,
                 s: currentSaturation,
@@ -610,44 +663,59 @@
             }
 
             var realColor = get({ format: format }),
-                realHex = realColor.toHexString(),
+                displayColor = '';
+
+             //reset background info for preview element
+            previewElement.removeClass("sp-clear-display");
+            previewElement.css('background-color', 'transparent');
+
+            if (!realColor && opts.allowEmpty) {
+                // Update the replaced elements background with icon indicating no color selection
+                previewElement.addClass("sp-clear-display");
+            } 
+            else {
+               var realHex = realColor.toHexString(),
                 realRgb = realColor.toRgbString();
 
-            // Update the replaced elements background color (with actual selected color)
-            if (rgbaSupport || realColor.alpha === 1) {
-                previewElement.css("background-color", realRgb);
-            }
-            else {
-                previewElement.css("background-color", "transparent");
-                previewElement.css("filter", realColor.toFilter());
-            }
-
-            if (opts.showAlpha) {
-                var rgb = realColor.toRgb();
-                rgb.a = 0;
-                var realAlpha = tinycolor(rgb).toRgbString();
-                var gradient = "linear-gradient(left, " + realAlpha + ", " + realHex + ")";
-
-                if (IE) {
-                    alphaSliderInner.css("filter", tinycolor(realAlpha).toFilter({ gradientType: 1 }, realHex));
+                // Update the replaced elements background color (with actual selected color)
+                if (rgbaSupport || realColor.alpha === 1) {
+                    previewElement.css("background-color", realRgb);
                 }
                 else {
-                    alphaSliderInner.css("background", "-webkit-" + gradient);
-                    alphaSliderInner.css("background", "-moz-" + gradient);
-                    alphaSliderInner.css("background", "-ms-" + gradient);
-                    alphaSliderInner.css("background", gradient);
+                    previewElement.css("background-color", "transparent");
+                    previewElement.css("filter", realColor.toFilter());
                 }
+
+                if (opts.showAlpha) {
+                    var rgb = realColor.toRgb();
+                    rgb.a = 0;
+                    var realAlpha = tinycolor(rgb).toRgbString();
+                    var gradient = "linear-gradient(left, " + realAlpha + ", " + realHex + ")";
+
+                    if (IE) {
+                        alphaSliderInner.css("filter", tinycolor(realAlpha).toFilter({ gradientType: 1 }, realHex));
+                    }
+                    else {
+                        alphaSliderInner.css("background", "-webkit-" + gradient);
+                        alphaSliderInner.css("background", "-moz-" + gradient);
+                        alphaSliderInner.css("background", "-ms-" + gradient);
+                        alphaSliderInner.css("background", gradient);
+                    }
+                }
+
+                displayColor = realColor.toString(format);
+
             }
-
-
             // Update the text entry input as it changes happen
             if (opts.showInput) {
-                textInput.val(realColor.toString(format));
+                textInput.val(displayColor);
             }
 
             if (opts.showPalette) {
                 drawPalette();
             }
+
+           
 
             drawInitial();
         }
@@ -656,46 +724,65 @@
             var s = currentSaturation;
             var v = currentValue;
 
-            // Where to show the little circle in that displays your current selected color
-            var dragX = s * dragWidth;
-            var dragY = dragHeight - (v * dragHeight);
-            dragX = Math.max(
-                -dragHelperHeight,
-                Math.min(dragWidth - dragHelperHeight, dragX - dragHelperHeight)
-            );
-            dragY = Math.max(
-                -dragHelperHeight,
-                Math.min(dragHeight - dragHelperHeight, dragY - dragHelperHeight)
-            );
-            dragHelper.css({
-                "top": dragY,
-                "left": dragX
-            });
+            if(opts.allowEmpty && isEmpty) {
+                //if selected color is empty, hide the helpers
+                alphaSlideHelper.hide();
+                slideHelper.hide();
+                dragHelper.hide();
+            }
+            else {
 
-            var alphaX = currentAlpha * alphaWidth;
-            alphaSlideHelper.css({
-                "left": alphaX - (alphaSlideHelperWidth / 2)
-            });
+                //make sure helpers are visible
+                alphaSlideHelper.show();
+                slideHelper.show();
+                dragHelper.show();
+                
+                // Where to show the little circle in that displays your current selected color
+                var dragX = s * dragWidth;
+                var dragY = dragHeight - (v * dragHeight);
+                dragX = Math.max(
+                    -dragHelperHeight,
+                    Math.min(dragWidth - dragHelperHeight, dragX - dragHelperHeight)
+                );
+                dragY = Math.max(
+                    -dragHelperHeight,
+                    Math.min(dragHeight - dragHelperHeight, dragY - dragHelperHeight)
+                );
+                dragHelper.css({
+                    "top": dragY,
+                    "left": dragX
+                });
 
-            // Where to show the bar that displays your current selected hue
-            var slideY = (currentHue) * slideHeight;
-            slideHelper.css({
-                "top": slideY - slideHelperHeight
-            });
+                var alphaX = currentAlpha * alphaWidth;
+                alphaSlideHelper.css({
+                    "left": alphaX - (alphaSlideHelperWidth / 2)
+                });
+
+                // Where to show the bar that displays your current selected hue
+                var slideY = (currentHue) * slideHeight;
+                slideHelper.css({
+                    "top": slideY - slideHelperHeight
+                });
+            }
         }
 
         function updateOriginalInput(fireCallback) {
-            var color = get();
+            var color = get(),
+                displayColor = '',
+                hasChanged = !tinycolor.equals(color, colorOnShow);
 
-            if (isInput) {
-                boundElement.val(color.toString(currentPreferredFormat));
+            if(color) {
+                displayColor = color.toString(currentPreferredFormat);
+                // Update the selection palette with the current color
+                addColorToSelectionPalette(color);
             }
 
-            var hasChanged = !tinycolor.equals(color, colorOnShow);
-            colorOnShow = color;
+            if (isInput) {
+                boundElement.val(displayColor);
+            }
 
-            // Update the selection palette with the current color
-            addColorToSelectionPalette(color);
+            colorOnShow = color;
+            
             if (fireCallback && hasChanged) {
                 callbacks.change(color);
                 boundElement.trigger('change', [ color ]);
