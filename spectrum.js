@@ -116,8 +116,8 @@
                 var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
                 html.push('<span title="' + tiny.toRgbString() + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><span class="sp-thumb-inner" style="' + swatchStyle + ';" /></span>');
             } else {
-                var c = 'sp-clear-display';
-                html.push('<span title="No Color Selected" data-color="" style="background-color:transparent;" class="' + c + '"></span>');
+                var cls = 'sp-clear-display';
+                html.push('<span title="No Color Selected" data-color="" style="background-color:transparent;" class="' + cls + '"></span>');
             }
         }
         return "<div class='sp-cf " + className + "'>" + html.join('') + "</div>";
@@ -201,7 +201,8 @@
             preferredFormat = opts.preferredFormat,
             currentPreferredFormat = preferredFormat,
             clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange,
-            isEmpty = !initialColor;
+            isEmpty = !initialColor,
+            allowEmpty = opts.allowEmpty;
 
 
         function applyOptions() {
@@ -235,7 +236,7 @@
                 boundElement.after(replacer).hide();
             }
 
-            if (!opts.allowEmpty) {
+            if (!allowEmpty) {
                 clearButton.hide();
             }
 
@@ -312,7 +313,7 @@
 
                isEmpty = true;
 
-                updateUI();
+                move();
                 if(flat) {
                     //for the flat style, this is a change event
                     updateOriginalInput(true);
@@ -501,7 +502,7 @@
 
             var value = textInput.val();
 
-            if ((value === null || value === "") && opts.allowEmpty) {
+            if ((value === null || value === "") && allowEmpty) {
                 set(null);
             }
             else {
@@ -599,7 +600,7 @@
             }
 
             var newColor;
-            if (!color && opts.allowEmpty) {
+            if (!color && allowEmpty) {
                 isEmpty = true;
             } else {
                 isEmpty = false;
@@ -621,7 +622,7 @@
         function get(opts) {
             opts = opts || { };
             
-            if (isEmpty) {
+            if (allowEmpty && isEmpty) {
                 return null;
             }
 
@@ -669,13 +670,13 @@
             previewElement.removeClass("sp-clear-display");
             previewElement.css('background-color', 'transparent');
 
-            if (!realColor && opts.allowEmpty) {
+            if (!realColor && allowEmpty) {
                 // Update the replaced elements background with icon indicating no color selection
                 previewElement.addClass("sp-clear-display");
             } 
             else {
                var realHex = realColor.toHexString(),
-                realRgb = realColor.toRgbString();
+                    realRgb = realColor.toRgbString();
 
                 // Update the replaced elements background color (with actual selected color)
                 if (rgbaSupport || realColor.alpha === 1) {
@@ -724,7 +725,7 @@
             var s = currentSaturation;
             var v = currentValue;
 
-            if(opts.allowEmpty && isEmpty) {
+            if(allowEmpty && isEmpty) {
                 //if selected color is empty, hide the helpers
                 alphaSlideHelper.hide();
                 slideHelper.hide();

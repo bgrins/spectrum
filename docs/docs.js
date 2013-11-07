@@ -266,7 +266,9 @@ $(".override").spectrum({
     change: updateBorders
 });
 
-$(".startEmpty").spectrum({ allowEmpty:true});
+$(".startEmpty").spectrum({ 
+    allowEmpty:true, 
+    change: updateBorders});
 
 $("#beforeShow").spectrum({
     beforeShow: function() {
