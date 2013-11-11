@@ -435,6 +435,17 @@
                 return paletteTemplate(palette, currentColor, "sp-palette-row sp-palette-row-" + i);
             });
 
+            // Load from local storage
+            // When there are multiple color pickers,
+            // the saved custom colors can be synchronized without refreshing the page
+            if(localStorageKey && window.localStorage){
+                try{
+                    var oldPalette = window.localStorage[localStorageKey];
+                    selectionPalette = oldPalette.split(';');
+                }
+                catch(e){}
+            }
+
             if (selectionPalette) {
                 html.push(paletteTemplate(getUniqueSelectionPalette(), currentColor, "sp-palette-row sp-palette-row-selection"));
             }
