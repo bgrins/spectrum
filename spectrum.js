@@ -319,7 +319,7 @@
                     updateOriginalInput(true);
                 }
             });
-            
+
 
             chooseButton.text(opts.chooseText);
             chooseButton.bind("click.spectrum", function (e) {
@@ -371,7 +371,7 @@
                 if (setValue) {
                     currentValue = parseFloat((dragHeight - dragY) / dragHeight);
                 }
-                
+
                 isEmpty = false;
 
                 move();
@@ -621,7 +621,7 @@
 
         function get(opts) {
             opts = opts || { };
-            
+
             if (allowEmpty && isEmpty) {
                 return null;
             }
@@ -673,7 +673,7 @@
             if (!realColor && allowEmpty) {
                 // Update the replaced elements background with icon indicating no color selection
                 previewElement.addClass("sp-clear-display");
-            } 
+            }
             else {
                var realHex = realColor.toHexString(),
                     realRgb = realColor.toRgbString();
@@ -705,7 +705,6 @@
                 }
 
                 displayColor = realColor.toString(format);
-
             }
             // Update the text entry input as it changes happen
             if (opts.showInput) {
@@ -715,8 +714,6 @@
             if (opts.showPalette) {
                 drawPalette();
             }
-
-           
 
             drawInitial();
         }
@@ -732,12 +729,11 @@
                 dragHelper.hide();
             }
             else {
-
                 //make sure helpers are visible
                 alphaSlideHelper.show();
                 slideHelper.show();
                 dragHelper.show();
-                
+
                 // Where to show the little circle in that displays your current selected color
                 var dragX = s * dragWidth;
                 var dragY = dragHeight - (v * dragHeight);
@@ -783,7 +779,7 @@
             }
 
             colorOnShow = color;
-            
+
             if (fireCallback && hasChanged) {
                 callbacks.change(color);
                 boundElement.trigger('change', [ color ]);
