@@ -1,4 +1,4 @@
-// Spectrum Colorpicker v1.1.1
+// Spectrum Colorpicker v1.1.2
 // https://github.com/bgrins/spectrum
 // Author: Brian Grinstead
 // License: MIT
