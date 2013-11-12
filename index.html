@@ -154,16 +154,25 @@ $("#custom").spectrum({
 
 <pre class='prettyprint'>
 &lt;input type='text' id="flat" /&gt;
+&lt;br/&gt;
+&lt;input type='text' id="flat" /&gt;
 </pre>
 <pre class='prettyprint'>
 $("#flat").spectrum({
     flat: true,
     showInput: true
 });
+$("#flatClearable").spectrum({
+    flat: true,
+    showInput: true,
+    allowEmpty:true
+});
 </pre>
 
         <div class='example'>
             <input type='text' id='flat' value="limegreen" />
+            <br/>
+            <input type='text' id='flatClearable' value="limegreen" />
         </div>
 
 <!--
@@ -179,6 +188,7 @@ $("#picker").spectrum({
     flat: bool,
     showInput: bool,
     showInitial: bool,
+    allowEmpty: bool,
     showAlpha: bool,
     disabled: bool,
     localStorageKey: string,
@@ -215,6 +225,8 @@ $("#picker").spectrum({
 &lt;input type='text' class='basic' value='blue' /&gt;
 &lt;br /&gt;
 &lt;input type='text' class='override' /&gt;
+&lt;br /&gt;
+&lt;input type='text' class='startEmpty' value='' /&gt;
             </pre>
 
             <pre class='prettyprint'>
@@ -222,6 +234,9 @@ $("#picker").spectrum({
 $(".basic").spectrum();
 $(".override").spectrum({
     color: "yellow"
+});
+(".startEmpty").spectrum({
+    allowEmpty: true
 });
 &lt;/script&gt;
             </pre>
@@ -231,6 +246,8 @@ $(".override").spectrum({
                 <input type='text' class='basic' value='blue' />
                 <br />
                 <input type='text' class='override' />
+                <br/>
+                <input type='text' class='startEmpty' value='' />
             </div>
         </div>
 
@@ -243,9 +260,15 @@ $(".override").spectrum({
 $("#showInput").spectrum({
     showInput: true
 });
+$("#showInputWithClear").spectrum({
+    showInput: true,
+    allowEmpty:true
+});
             </pre>
             <div class='example'>
                 <input type='text' name='showInput' id='showInput' />
+                 <br/>
+                <input type='text' name='showInputWithClear' id='showInputWithClear' value='' />
             </div>
         </div>
 
@@ -421,6 +444,23 @@ $("#showInputAndInitial").spectrum({
                     <input type='text' name='showInputAndInitial' id='showInputAndInitial' value='goldenrod' />
             </div>
         </div>
+         <h3>Show Input, Initial, and Clear</h3>
+        <div class='option-content'>
+            <div class='description'>
+                <p>If you specify both the <code>showInput</code>, <code>showInitial</code>, and <code>allowEmpty</code> options, the CSS keeps things in order by wrapping the buttons to the bottom row, and shrinking the input.   <em>Note: this is all customizable via CSS.</em></p>
+            </div>
+            <pre class='prettyprint'>
+$("#showInputInitialClear").spectrum({
+    allowEmpty:true,
+    showInitial: true,
+    showInput: true
+});
+            </pre>
+            
+            <div class='example'>
+                    <input type='text' name='showInputInitialClear' id='showInputInitialClear' value='' />
+            </div>
+        </div>
         <h3 id="options-buttonText">Button Text</h3>
         <div class='option-content'>
             <div class='description'>
@@ -429,6 +469,7 @@ $("#showInputAndInitial").spectrum({
 
             <pre class='prettyprint'>
 $("#buttonText").spectrum({
+    allowEmpty:true,
     chooseText: "Alright",
     cancelText: "No way"
 });
