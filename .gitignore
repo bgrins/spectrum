@@ -1,2 +1,6 @@
 node_modules
 .DS_Store
+components
+build
+*~
+bower_components

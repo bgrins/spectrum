@@ -5,7 +5,9 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('component.json'),
 
     qunit: {
-      all: ['test/index.html']
+      normal: ['test/index.html'],
+      component: ['test/component.html'],
+      bower: ['test/bower.html']
     },
 
     jshint: {
