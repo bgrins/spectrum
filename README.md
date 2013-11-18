@@ -26,6 +26,25 @@ Head over to the [docs](http://bgrins.github.io/spectrum) for more information. 
 
 Spectrum is registered as a jQuery plugin on the jQuery plugin repository here: http://plugins.jquery.com/spectrum/
 
+### Integrate in web app as component
+
+Spectrum can be built as [component](https://github.com/component/component).
+
+    npm install -g component
+    component install
+    component build
+
+See `test/component.html` for example.
+
+### Manage dependency with bower
+
+The dependency on jQuery can be managed by [bower](http://bower.io).
+
+    npm install -g bower
+    bower install
+
+See 'test/bower.html' for example
+
 ### Continuous Integration
 
 [![Build Status](https://secure.travis-ci.org/bgrins/spectrum.png?branch=master)](http://travis-ci.org/bgrins/spectrum)
