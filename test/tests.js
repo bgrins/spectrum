@@ -6,6 +6,12 @@
 
 module("Initialization");
 
+// using spectrum and jquery as [component](https://github.com/component/component)
+if (typeof require === 'function') {
+  var $ = require('jquery');
+  require('spectrum');
+}
+
 test( "jQuery Plugin Can Be Created", function() {
   var el = $("<input id='spec' />").spectrum();
 
