@@ -3,6 +3,9 @@
 // Author: Brian Grinstead
 // License: MIT
 
+// To be used as component: https://github.com/component/component
+var jQuery = (typeof require === 'function' ? require('jquery') : jQuery);
+
 (function (window, $, undefined) {
     var defaultOpts = {
 

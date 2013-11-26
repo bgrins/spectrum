@@ -5,7 +5,9 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('component.json'),
 
     qunit: {
-      all: ['test/index.html']
+      normal: ['test/index.html'],
+      component: ['test/component.html'],
+      bower: ['test/bower.html']
     },
 
     jshint: {
@@ -47,7 +49,7 @@ module.exports = function(grunt) {
   grunt.registerTask('travis', 'test');
 
   // Default task.
-  grunt.registerTask('default', ['test']);
+  grunt.registerTask('default', ['jshint', 'qunit:normal']);
 
   //Build Task.
   grunt.registerTask('build', ['test', 'uglify']);
