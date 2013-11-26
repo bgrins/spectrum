@@ -2,7 +2,7 @@
     "name": "spectrum",
     "repo": "bgrins/spectrum",
     "description": "spectrum as component",
-    "version": "1.1.2",
+    "version": "1.2.0",
     "keywords": ["color", "colorpicker", "ui", "jquery-plugin"],
     "dependencies": {
 	"component/jquery": "*"
