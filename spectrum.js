@@ -49,6 +49,10 @@
         style.cssText = 'background-color:rgba(0,0,0,.5)';
         return contains(style.backgroundColor, 'rgba') || contains(style.backgroundColor, 'hsla');
     })(),
+    inputTypeColorSupport = (function() {
+        var colorInput = $("<input type='color' value='!' />")[0];
+        return colorInput.type === "color" && colorInput.value !== "!";
+    })(),
     replaceInput = [
         "<div class='sp-replacer'>",
             "<div class='sp-preview'><div class='sp-preview-inner'></div></div>",
@@ -192,6 +196,7 @@
             clearButton = container.find(".sp-clear"),
             chooseButton = container.find(".sp-choose"),
             isInput = boundElement.is("input"),
+            isInputTypeColor = isInput && inputTypeColorSupport && boundElement.attr("type") === "color",
             shouldReplace = isInput && !flat,
             replacer = (shouldReplace) ? $(replaceInput).addClass(theme).addClass(opts.className) : $([]),
             offsetElement = (shouldReplace) ? replacer : boundElement,
@@ -202,8 +207,7 @@
             currentPreferredFormat = preferredFormat,
             clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange,
             isEmpty = !initialColor,
-            allowEmpty = opts.allowEmpty;
-
+            allowEmpty = opts.allowEmpty && !isInputTypeColor;
 
         function applyOptions() {
 
@@ -214,7 +218,7 @@
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
-            container.toggleClass("sp-clear-enabled", opts.allowEmpty);
+            container.toggleClass("sp-clear-enabled", allowEmpty);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
             container.toggleClass("sp-palette-disabled", !opts.showPalette);
             container.toggleClass("sp-palette-only", opts.showPaletteOnly);
@@ -1076,10 +1080,7 @@
     $.spectrum.palettes = { };
 
     $.fn.spectrum.processNativeColorInputs = function () {
-        var colorInput = $("<input type='color' value='!' />")[0];
-        var supportsColor = colorInput.type === "color" && colorInput.value != "!";
-
-        if (!supportsColor) {
+        if (!inputTypeColorSupport) {
             $("input[type=color]").spectrum({
                 preferredFormat: "hex6"
             });
