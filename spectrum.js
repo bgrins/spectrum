@@ -349,6 +349,9 @@
             draggable(slider, function (dragX, dragY) {
                 currentHue = parseFloat(dragY / slideHeight);
                 isEmpty = false;
+                if (!opts.showAlpha) {
+                    currentAlpha = 1;
+                }
                 move();
             }, dragStart, dragStop);
 
@@ -377,6 +380,9 @@
                 }
 
                 isEmpty = false;
+                if (!opts.showAlpha) {
+                    currentAlpha = 1;
+                }
 
                 move();
 
@@ -661,7 +667,7 @@
 
             // Get a format that alpha will be included in (hex and names ignore alpha)
             var format = currentPreferredFormat;
-            if (currentAlpha < 1) {
+            if (currentAlpha < 1 && !(currentAlpha === 0 && format === "name")) {
                 if (format === "hex" || format === "hex3" || format === "hex6" || format === "name") {
                     format = "rgb";
                 }
