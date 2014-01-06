@@ -257,25 +257,7 @@
                 appendTo.append(container);
             }
 
-            if (localStorageKey && window.localStorage) {
-
-                // Migrate old palettes over to new format.  May want to remove this eventually.
-                try {
-                    var oldPalette = window.localStorage[localStorageKey].split(",#");
-                    if (oldPalette.length > 1) {
-                        delete window.localStorage[localStorageKey];
-                        $.each(oldPalette, function(i, c) {
-                             addColorToSelectionPalette(c);
-                        });
-                    }
-                }
-                catch(e) { }
-
-                try {
-                    selectionPalette = window.localStorage[localStorageKey].split(";");
-                }
-                catch (e) { }
-            }
+            updateSelectionPalette();
 
             offsetElement.bind("click.spectrum touchstart.spectrum", function (e) {
                 if (!disabled) {
@@ -420,6 +402,28 @@
             initialColorContainer.delegate(".sp-thumb-el:nth-child(1)", paletteEvent, { ignore: true }, palletElementClick);
         }
 
+        function updateSelectionPalette() {
+            if (localStorageKey && window.localStorage) {
+
+                // Migrate old palettes over to new format.  May want to remove this eventually.
+                try {
+                    var oldPalette = window.localStorage[localStorageKey].split(",#");
+                    if (oldPalette.length > 1) {
+                        delete window.localStorage[localStorageKey];
+                        $.each(oldPalette, function(i, c) {
+                             addColorToSelectionPalette(c);
+                        });
+                    }
+                }
+                catch(e) { }
+
+                try {
+                    selectionPalette = window.localStorage[localStorageKey].split(";");
+                }
+                catch (e) { }
+            }
+        }
+
         function addColorToSelectionPalette(color) {
             if (showSelectionPalette) {
                 var colorRgb = tinycolor(color).toRgbString();
@@ -440,6 +444,8 @@
         }
 
         function getUniqueSelectionPalette() {
+            updateSelectionPalette()
+
             var unique = [];
             var p = selectionPalette;
             var paletteLookup = {};
@@ -468,7 +474,6 @@
         }
 
         function drawPalette() {
-
             var currentColor = get();
 
             var html = $.map(paletteArray, function (palette, i) {
