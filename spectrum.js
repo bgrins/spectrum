@@ -215,6 +215,11 @@
                 opts.showPalette = true;
             }
 
+            if (opts.palette) {
+                palette = opts.palette.slice(0);
+                paletteArray = $.isArray(palette[0]) ? palette : [palette];
+            }
+
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
