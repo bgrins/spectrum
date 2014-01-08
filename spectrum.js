@@ -812,6 +812,8 @@
             if (opts.showPalette) {
                 drawPalette();
             }
+
+            boundElement.trigger('reflow.spectrum');
         }
 
         function destroy() {
