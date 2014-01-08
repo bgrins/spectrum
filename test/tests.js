@@ -145,7 +145,16 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
   equal ( singleOption, "changed", "Changing an option then fetching it is updated");
 
 
+  var numPaletteElements = spec.spectrum("container").find(".sp-palette-row:not(.sp-palette-row-selection) .sp-thumb-el").length;
+  equal (numPaletteElements, 2, "Two palette elements to start");
+  spec.spectrum("option", "palette", [['red'], ['green'], ['blue']]);
+  var optPalette = spec.spectrum("option", "palette");
+  deepEqual (optPalette, [['red'], ['green'], ['blue']], "Changing an option then fetching it is updated");
+  var numPaletteElements = spec.spectrum("container").find(".sp-palette-row:not(.sp-palette-row-selection) .sp-thumb-el").length;
+  equal (numPaletteElements, 3, "Three palette elements after updating");
+
   var appendToDefault = $("<input />").spectrum({
+
   });
 
   var container= $("<div id='c' />").appendTo("body");

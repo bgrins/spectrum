@@ -170,8 +170,8 @@
             currentSaturation = 0,
             currentValue = 0,
             currentAlpha = 1,
-            palette = opts.palette.slice(0),
-            paletteArray = $.isArray(palette[0]) ? palette : [palette],
+            palette = [],
+            paletteArray = [],
             selectionPalette = opts.selectionPalette.slice(0),
             maxSelectionSize = opts.maxSelectionSize,
             draggingClass = "sp-dragging",
@@ -556,9 +556,6 @@
             replacer.addClass("sp-active");
             container.removeClass("sp-hidden");
 
-            if (opts.showPalette) {
-                drawPalette();
-            }
             reflow();
             updateUI();
 
@@ -811,6 +808,10 @@
             }
 
             updateHelperLocations();
+
+            if (opts.showPalette) {
+                drawPalette();
+            }
         }
 
         function destroy() {
