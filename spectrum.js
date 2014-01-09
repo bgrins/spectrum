@@ -444,8 +444,6 @@
         }
 
         function getUniqueSelectionPalette() {
-            updateSelectionPalette()
-
             var unique = [];
             var p = selectionPalette;
             var paletteLookup = {};
@@ -538,6 +536,7 @@
             var event = $.Event('beforeShow.spectrum');
 
             if (visible) {
+                updateSelectionPalette();
                 reflow();
                 return;
             }
@@ -559,6 +558,7 @@
             if (opts.showPalette) {
                 drawPalette();
             }
+            updateSelectionPalette();
             reflow();
             updateUI();
 
