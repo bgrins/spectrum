@@ -23,6 +23,22 @@ test( "Per-element Options Are Read From Data Attributes", function() {
   equal ( el.spectrum("option", "showAlpha"), true, "Took showAlpha value from data attribute");
 
   el.spectrum("destroy");
+
+  var changeDefault = $("<input id='spec' data-show-alpha='false' />").spectrum({
+    showAlpha: true
+  });
+
+  equal ( changeDefault.spectrum("option", "showAlpha"), false, "Took showAlpha value from data attribute");
+
+  changeDefault.spectrum("destroy");
+
+  var noData = $("<input id='spec' />").spectrum({
+    showAlpha: true
+  });
+
+  equal ( noData.spectrum("option", "showAlpha"), true, "Kept showAlpha without data attribute");
+
+  noData.spectrum("destroy");
 });
 
 test( "Events Fire", function() {
