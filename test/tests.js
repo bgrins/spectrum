@@ -17,6 +17,14 @@ test( "jQuery Plugin Can Be Created", function() {
   el.spectrum("destroy");
 });
 
+test( "Per-element Options Are Read From Data Attributes", function() {
+  var el = $("<input id='spec' data-show-alpha='true' />").spectrum();
+
+  equal ( el.spectrum("option", "showAlpha"), true, "Took showAlpha value from data attribute");
+
+  el.spectrum("destroy");
+});
+
 test( "Events Fire", function() {
   var el = $("<input id='spec' />").spectrum();
   var count = 0;

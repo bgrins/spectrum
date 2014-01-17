@@ -1079,7 +1079,8 @@
 
         // Initializing a new instance of spectrum
         return this.spectrum("destroy").each(function () {
-            var spect = spectrum(this, opts);
+            var options = $.extend({}, opts, $(this).data());
+            var spect = spectrum(this, options);
             $(this).data(dataID, spect.id);
         });
     };
