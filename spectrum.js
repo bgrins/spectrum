@@ -507,10 +507,12 @@
             }
             container.addClass(draggingClass);
             shiftMovementDirection = null;
+            boundElement.trigger('dragstart.spectrum', [ get() ]);
         }
 
         function dragStop() {
             container.removeClass(draggingClass);
+            boundElement.trigger('dragstop.spectrum', [ get() ]);
         }
 
         function setFromTextInput() {

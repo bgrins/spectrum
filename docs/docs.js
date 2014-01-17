@@ -260,6 +260,37 @@ $("#changeOnMoveNo").spectrum({
     }
 });
 
+function prettyTime() {
+    var date = new Date();
+
+    return date.toLocaleTimeString();
+}
+
+$("#eventshow").spectrum({
+    show: function(c) {
+        var label = $("#eventshowLabel");
+        label.text("show called at " + prettyTime() + " (color is " + c.toHexString() + ")");
+    }
+});
+
+$("#eventhide").spectrum({
+    hide: function(c) {
+        var label = $("#eventhideLabel");
+        label.text("hide called at " + prettyTime() + " (color is " + c.toHexString() + ")");
+    }
+});
+
+$("#eventdragstart").spectrum().on("dragstart.spectrum", function(e, c) {
+    var label = $("#eventdragstartLabel");
+    label.text("dragstart called at " + prettyTime() + " (color is " + c.toHexString() + ")");
+});
+
+$("#eventdragstop").spectrum().on("dragstop.spectrum", function(e, c) {
+    var label = $("#eventdragstopLabel");
+    label.text("dragstop called at " + prettyTime() + " (color is " + c.toHexString() + ")");
+});
+
+
 $(".basic").spectrum({ change: updateBorders });
 $(".override").spectrum({
     color: "yellow",

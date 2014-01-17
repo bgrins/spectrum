@@ -641,10 +641,15 @@ move: function(color) {
             </div>
 
             <pre class='prettyprint'>
-            hide: function(color) {
-                color.toHexString(); // #ff0000
-            }
+hide: function(color) {
+    color.toHexString(); // #ff0000
+}
             </pre>
+
+            <div class='example'>
+                <input type='text' value='blanchedalmond' name='eventhide' id='eventhide' />
+                <em id='eventhideLabel'  class='em-label'></em>
+            </div>
         </div>
 
         <h3 id="events-show">show</h3>
@@ -659,10 +664,15 @@ move: function(color) {
             </div>
 
             <pre class='prettyprint'>
-            show: function(color) {
-                color.toHexString(); // #ff0000
-            }
+show: function(color) {
+    color.toHexString(); // #ff0000
+}
             </pre>
+
+            <div class='example'>
+                <input type='text' value='blanchedalmond' name='eventshow' id='eventshow' />
+                <em id='eventshowLabel'  class='em-label'></em>
+            </div>
         </div>
 
         <h3 id="events-beforeShow">beforeShow</h3>
@@ -685,6 +695,51 @@ beforeShow: function(color) {
                 <input type='text' value='blanchedalmond' name='beforeShow' id='beforeShow' />
             </div>
         </div>
+
+        <h3 id="events-dragstart">dragstart</h3>
+
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Called at the beginning of a drag event on either
+                hue slider, alpha slider, or main color picker areas
+                </p>
+            </div>
+
+            <pre class='prettyprint'>
+$(element).on("dragstart.spectrum"): function(e, color) {
+    color.toHexString(); // #ff0000
+}
+            </pre>
+
+            <div class='example'>
+                <input type='text' value='blanchedalmond' name='eventdragstart' id='eventdragstart' />
+                <em id='eventdragstartLabel'  class='em-label'></em>
+            </div>
+        </div>
+
+        <h3 id="events-dragstop">dragstop</h3>
+
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                Called at the end of a drag event on either
+                hue slider, alpha slider, or main color picker areas
+                </p>
+            </div>
+
+            <pre class='prettyprint'>
+$(element).on("dragstop.spectrum"): function(e, color) {
+    color.toHexString(); // #ff0000
+}
+            </pre>
+
+            <div class='example'>
+                <input type='text' value='blanchedalmond' name='eventdragstop' id='eventdragstop' />
+                <em id='eventdragstopLabel'  class='em-label'></em>
+            </div>
+        </div>
+
 
         <h2 id="methods">Methods</h2>
 <pre class='prettyprint'>
