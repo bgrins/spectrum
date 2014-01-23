@@ -1,0 +1,93 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Spectrum - The No Hassle jQuery Colorpicker</title>
+
+    <meta name="description" content="Spectrum is a JavaScript colorpicker plugin using the jQuery framework.  It is highly customizable, but can also be used as a simple input type=color polyfill">
+    <meta name="author" content="Brian Grinstead and Spectrum contributors">
+
+    <link rel="stylesheet" type="text/css" href="../spectrum.css">
+    <link rel="stylesheet" type="text/css" href="../docs/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../docs/docs.css">
+    <script type="text/javascript" src="../docs/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="../spectrum.js"></script>
+</head>
+<body>
+<div id='header'>
+    <h1><a href='http://bgrins.github.com/spectrum'>Spectrum</a></h1> <h2><em>The No Hassle jQuery Colorpicker</em></h2>
+    <div id='links'>
+        View the <a href='http://github.com/bgrins/spectrum'>Source code</a>.
+        Spectrum is a project by <a href='http://twitter.com/bgrins'>@bgrins</a>.
+    </div>
+    <br style='clear:both;' />
+</div>
+
+<div class="container">
+    <h2>Basic Test Case</h2>
+    <p>Also available as a <a href="http://jsfiddle.net/bgrins/ctkY3/">jsfiddle</a></p>
+
+<button id="update">Update palette</button>
+<h2>Full Example</h2>
+<input type='text' id="full"/>
+
+</div>
+
+<script type="text/javascript">
+
+$("#update").click (function() {
+    console.log($("#full").spectrum("option", "palette"));
+    $("#full").spectrum("option", "palette", [
+        ["red", "green", "blue"]    
+    ]);
+});
+
+$("#full").spectrum({
+    color: "#ECC",
+    flat: true,
+    showInput: true,
+    className: "full-spectrum",
+    showInitial: true,
+    showPalette: true,
+    showSelectionPalette: true,
+    maxPaletteSize: 10,
+    preferredFormat: "hex",
+    localStorageKey: "spectrum.demo",
+    move: function (color) {
+        
+    },
+    show: function () {
+    
+    },
+    beforeShow: function () {
+    
+    },
+    hide: function () {
+    
+    },
+    change: function() {
+        
+    },
+    palette: [
+        ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
+        "rgb(204, 204, 204)", "rgb(217, 217, 217)","rgb(255, 255, 255)"],
+        ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)",
+        "rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"], 
+        ["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)", 
+        "rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)", 
+        "rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)", 
+        "rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)", 
+        "rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)", 
+        "rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)",
+        "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+        "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)",
+        "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)", 
+        "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
+    ]
+});
+
+</script>
+</body>
+</html>
+
