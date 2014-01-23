@@ -315,20 +315,17 @@
                 hide("cancel");
             });
 
-
             clearButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-
-               isEmpty = true;
-
+                isEmpty = true;
                 move();
+
                 if(flat) {
                     //for the flat style, this is a change event
                     updateOriginalInput(true);
                 }
             });
-
 
             chooseButton.text(opts.chooseText);
             chooseButton.bind("click.spectrum", function (e) {
@@ -613,13 +610,13 @@
                 return;
             }
 
-            var newColor;
+            var newColor, newHsv;
             if (!color && allowEmpty) {
                 isEmpty = true;
             } else {
                 isEmpty = false;
                 newColor = tinycolor(color);
-                var newHsv = newColor.toHsv();
+                newHsv = newColor.toHsv();
 
                 currentHue = (newHsv.h % 360) / 360;
                 currentSaturation = newHsv.s;
@@ -689,7 +686,7 @@
                 previewElement.addClass("sp-clear-display");
             }
             else {
-               var realHex = realColor.toHexString(),
+                var realHex = realColor.toHexString(),
                     realRgb = realColor.toRgbString();
 
                 // Update the replaced elements background color (with actual selected color)
@@ -720,6 +717,7 @@
 
                 displayColor = realColor.toString(format);
             }
+
             // Update the text entry input as it changes happen
             if (opts.showInput) {
                 textInput.val(displayColor);
@@ -782,7 +780,7 @@
                 displayColor = '',
                 hasChanged = !tinycolor.equals(color, colorOnShow);
 
-            if(color) {
+            if (color) {
                 displayColor = color.toString(currentPreferredFormat);
                 // Update the selection palette with the current color
                 addColorToSelectionPalette(color);
@@ -987,6 +985,7 @@
                 onmove.apply(element, [dragX, dragY, e]);
             }
         }
+
         function start(e) {
             var rightclick = (e.which) ? (e.which == 3) : (e.button == 2);
             var touches = e.originalEvent.touches;
@@ -1009,6 +1008,7 @@
                 }
             }
         }
+
         function stop() {
             if (dragging) {
                 $(doc).unbind(duringDragEvents);
@@ -1034,7 +1034,6 @@
         };
     }
 
-
     function log(){/* jshint -W021 */if(window.console){if(Function.prototype.bind)log=Function.prototype.bind.call(console.log,console);else log=function(){Function.prototype.apply.call(console.log,console,arguments);};log.apply(this,arguments);}}
 
     /**
@@ -1051,7 +1050,6 @@
             this.each(function () {
                 var spect = spectrums[$(this).data(dataID)];
                 if (spect) {
-
                     var method = spect[opts];
                     if (!method) {
                         throw new Error( "Spectrum: no such method: '" + opts + "'" );
