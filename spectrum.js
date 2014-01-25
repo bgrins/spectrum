@@ -29,6 +29,7 @@
         maxSelectionSize: 7,
         cancelText: "cancel",
         chooseText: "choose",
+        clearText: "Clear Color Selection",
         preferredFormat: false,
         className: "",
         showAlpha: false,
@@ -86,7 +87,7 @@
                                     "</div>",
                                 "</div>",
                             "</div>",
-                            "<div class='sp-clear sp-clear-display' title='Clear Color Selection'>",
+                            "<div class='sp-clear sp-clear-display'>",
                             "</div>",
                             "<div class='sp-hue'>",
                                 "<div class='sp-slider'></div>",
@@ -315,6 +316,7 @@
                 hide("cancel");
             });
 
+            clearButton.attr("title", opts.clearText);
             clearButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
