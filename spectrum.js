@@ -760,19 +760,19 @@
                     Math.min(dragHeight - dragHelperHeight, dragY - dragHelperHeight)
                 );
                 dragHelper.css({
-                    "top": dragY,
-                    "left": dragX
+                    "top": dragY + "px",
+                    "left": dragX + "px"
                 });
 
                 var alphaX = currentAlpha * alphaWidth;
                 alphaSlideHelper.css({
-                    "left": alphaX - (alphaSlideHelperWidth / 2)
+                    "left": (alphaX - (alphaSlideHelperWidth / 2)) + "px"
                 });
 
                 // Where to show the bar that displays your current selected hue
                 var slideY = (currentHue) * slideHeight;
                 slideHelper.css({
-                    "top": slideY - slideHelperHeight
+                    "top": (slideY - slideHelperHeight) + "px"
                 });
             }
         }
