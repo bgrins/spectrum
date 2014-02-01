@@ -254,6 +254,7 @@ $("#changeOnMove").spectrum({
     }
 });
 $("#changeOnMoveNo").spectrum({
+    showInput: true,
     change: function(c) {
         var label = $("#changeOnMoveNoLabel");
         label.text("Change called: " + c.toHexString());

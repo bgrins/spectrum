@@ -520,11 +520,13 @@
 
             if ((value === null || value === "") && allowEmpty) {
                 set(null);
+                updateOriginalInput(true);
             }
             else {
                 var tiny = tinycolor(value);
                 if (tiny.ok) {
                     set(tiny);
+                    updateOriginalInput(true);
                 }
                 else {
                     textInput.addClass("sp-validation-error");

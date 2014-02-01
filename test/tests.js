@@ -44,7 +44,7 @@ test( "Per-element Options Are Read From Data Attributes", function() {
 test( "Events Fire", function() {
   var el = $("<input id='spec' />").spectrum();
   var count = 0;
-  expect(4);
+  expect(5);
 
   el.on("beforeShow.spectrum", function(e) {
 
@@ -86,6 +86,15 @@ test( "Events Fire", function() {
   el.spectrum("set", "red");
 
   el.spectrum("destroy");
+
+  var el2 = $("<input />").spectrum({
+    showInput: true
+  });
+  el2.on("change.spectrum", function(e, color) {
+    ok(true, "Change should fire input changing");
+  });
+  el2.spectrum("container").find(".sp-input").val("blue").trigger("change");
+
 });
 
 module("Defaults");
