@@ -525,6 +525,7 @@
             else {
                 var tiny = tinycolor(value);
                 if (tiny.ok) {
+                    textInput.removeClass("sp-validation-error");
                     set(tiny);
                     updateOriginalInput(true);
                 }
