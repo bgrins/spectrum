@@ -9,12 +9,21 @@ module("Initialization");
 test( "jQuery Plugin Can Be Created", function() {
   var el = $("<input id='spec' />").spectrum();
 
-  ok( el.attr("id") === "spec", "Element returned from plugin" );
+  ok(el.attr("id") === "spec", "Element returned from plugin" );
 
   el.spectrum("set", "red");
-  equal ( el.spectrum("get").toName(), "red", "Basic color setting");
+  equal(el.spectrum("get").toName(), "red", "Basic color setting");
+
+  equal(el.spectrum("option", "showInput"), false, "Undefined option is false.");
+
+  el.spectrum({showInput: true});
+
+  equal(el.spectrum("option", "showInput"), true, "Double initialized spectrum is destroyed before recreating.");
 
   el.spectrum("destroy");
+
+  equal(el.spectrum("container"), el, "After destroying spectrum, string function returns input.");
+
 });
 
 test( "Per-element Options Are Read From Data Attributes", function() {
