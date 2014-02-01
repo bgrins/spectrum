@@ -103,7 +103,7 @@ test( "Events Fire", function() {
     ok(true, "Change should fire input changing");
   });
   el2.spectrum("container").find(".sp-input").val("blue").trigger("change");
-
+  el2.spectrum("destroy");
 });
 
 module("Defaults");
@@ -238,6 +238,26 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
   appendToOther.spectrum("destroy");
   appendToOtherFlat.spectrum("destroy");
   appendToParent.spectrum("destroy").remove();
+});
+
+test ("Show Input works as expected", function() {
+  var el = $("<input />").spectrum({
+    showInput: true,
+    color: "red"
+  });
+  var input = el.spectrum("container").find(".sp-input");
+
+  equal(input.val(), "red", "Input is set to color by default");
+  input.val("").trigger("change");
+
+  ok(input.hasClass("sp-validation-error"), "Input has validation error class after being emptied.");
+
+  input.val("red").trigger("change");
+
+  ok(!input.hasClass("sp-validation-error"), "Input does not have validation error class after being reset to original color.");
+
+  equal (el.spectrum("get").toHexString(), "#ff0000", "Color is still red");
+  el.spectrum("destroy");
 });
 
 module("Methods");
