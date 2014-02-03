@@ -94,6 +94,16 @@ License: MIT
     border: solid 1px #333;
 }
 
+
+.sp-alpha-text {
+    position:relative;
+    top:30px;
+}
+
+.sp-alpha.sp-alpha-text-enabled {
+    top:40px;
+}
+
 .sp-clear {
     display: none;
 }
