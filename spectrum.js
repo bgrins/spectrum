@@ -263,25 +263,28 @@
                 appendTo.append(container);
             }
 
-            if (localStorageKey && window.localStorage) {
+             try //if cookies disabled will crash on window.localstorage
+            {
+                if (localStorageKey && window.localStorage) {
 
-                // Migrate old palettes over to new format.  May want to remove this eventually.
-                try {
-                    var oldPalette = window.localStorage[localStorageKey].split(",#");
-                    if (oldPalette.length > 1) {
-                        delete window.localStorage[localStorageKey];
-                        $.each(oldPalette, function(i, c) {
-                             addColorToSelectionPalette(c);
-                        });
+                    // Migrate old palettes over to new format.  May want to remove this eventually.
+                    try {
+                        var oldPalette = window.localStorage[localStorageKey].split(",#");
+                        if (oldPalette.length > 1) {
+                            delete window.localStorage[localStorageKey];
+                            $.each(oldPalette, function(i, c) {
+                                addColorToSelectionPalette(c);
+                            });
+                        }
                     }
-                }
-                catch(e) { }
+                    catch(e) { }
 
-                try {
-                    selectionPalette = window.localStorage[localStorageKey].split(";");
+                    try {
+                        selectionPalette = window.localStorage[localStorageKey].split(";");
+                    }
+                    catch (e) { }
                 }
-                catch (e) { }
-            }
+            } catch (e) { }
 
             offsetElement.bind("click.spectrum touchstart.spectrum", function (e) {
                 if (!disabled) {
@@ -440,12 +443,16 @@
                     }
                 }
 
-                if (localStorageKey && window.localStorage) {
-                    try {
+               try//Cookies disabled issues
+                {
+                    if (localStorageKey && window.localStorage)
+                    {
+
                         window.localStorage[localStorageKey] = selectionPalette.join(";");
                     }
-                    catch(e) { }
+
                 }
+                catch (e) { }
             }
         }
 
