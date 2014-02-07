@@ -348,7 +348,7 @@
                 }
 
                 move();
-            });
+            }, dragStart, dragStop);
 
             draggable(slider, function (dragX, dragY) {
                 currentHue = parseFloat(dragY / slideHeight);
