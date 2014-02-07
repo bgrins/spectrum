@@ -281,12 +281,16 @@ $("#eventhide").spectrum({
     }
 });
 
-$("#eventdragstart").spectrum().on("dragstart.spectrum", function(e, c) {
+$("#eventdragstart").spectrum({
+    showAlpha: true
+}).on("dragstart.spectrum", function(e, c) {
     var label = $("#eventdragstartLabel");
     label.text("dragstart called at " + prettyTime() + " (color is " + c.toHexString() + ")");
 });
 
-$("#eventdragstop").spectrum().on("dragstop.spectrum", function(e, c) {
+$("#eventdragstop").spectrum({
+    showAlpha: true
+}).on("dragstop.spectrum", function(e, c) {
     var label = $("#eventdragstopLabel");
     label.text("dragstop called at " + prettyTime() + " (color is " + c.toHexString() + ")");
 });
