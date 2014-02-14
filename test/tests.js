@@ -134,6 +134,32 @@ test( "Default Color Is Set By Input Value", function() {
 
 module("Palettes");
 
+test( "Palette Events Fire In Correct Order ", function() {
+  expect(2);
+  var el = $("<input id='spec' value='red' />").spectrum({
+    showPalette: true,
+    palette: [
+      ["red", "green", "blue"]
+    ],
+    move: function() {
+
+    },
+  });
+
+  var count = 0;
+  el.on("move.spectrum", function(e) {
+    ok(count === 0, "move fires before change");
+    count++;
+  });
+
+  el.on("change.spectrum", function(e) {
+    ok(count === 1, "change fires after move");
+  });
+
+  el.spectrum("container").find(".sp-thumb-el:last-child").click();
+  el.spectrum("destroy");
+});
+
 test( "Local Storage Is Limited ", function() {
 
   var el = $("<input id='spec' value='red' />").spectrum({

@@ -417,8 +417,8 @@
                 }
                 else {
                     set($(this).data("color"));
-                    updateOriginalInput(true);
                     move();
+                    updateOriginalInput(true);
                     hide();
                 }
 
