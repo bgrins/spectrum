@@ -3,6 +3,7 @@
 // Author: Brian Grinstead
 // License: MIT
 
+function init( window, jQuery, undefined ) {
 (function (window, $, undefined) {
     var defaultOpts = {
 
@@ -2030,3 +2031,10 @@
     });
 
 })(window, jQuery);
+}
+
+if( typeof define === 'function' && define.amd ) {
+    define([ "jquery" ], function( jQuery ) { init( window, jQuery ); } );
+} else {
+    init( window, jQuery || $ );
+}
