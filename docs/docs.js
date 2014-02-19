@@ -302,8 +302,8 @@ $(".override").spectrum({
     change: updateBorders
 });
 
-$(".startEmpty").spectrum({ 
-    allowEmpty:true, 
+$(".startEmpty").spectrum({
+    allowEmpty:true,
     change: updateBorders});
 
 $("#beforeShow").spectrum({
@@ -330,6 +330,12 @@ $("#showSelectionPalette").spectrum({
     palette: [ ]
 });
 $("#showSelectionPaletteStorage").spectrum({
+    showPalette: true,
+    localStorageKey: "spectrum.homepage", // Any picker with the same string will share selection
+    showSelectionPalette: true,
+    palette: [ ]
+});
+$("#showSelectionPaletteStorage2").spectrum({
     showPalette: true,
     localStorageKey: "spectrum.homepage", // Any picker with the same string will share selection
     showSelectionPalette: true,
@@ -371,7 +377,6 @@ $("#triggerSet").show();
 $("#btnEnterAColor").click(function() {
     $("#triggerSet").spectrum("set", $("#enterAColor").val());
 });
-
 
 $("#toggle").spectrum();
 $("#btn-toggle").click(function() {
