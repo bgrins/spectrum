@@ -1537,7 +1537,12 @@
     // Can be called with any tinycolor input
     tinycolor.equals = function (color1, color2) {
         if (!color1 || !color2) { return false; }
-        return tinycolor(color1).toRgbString() == tinycolor(color2).toRgbString();
+        var tcolor1 = tinycolor(color1);
+        var tcolor2 = tinycolor(color2);
+        if (typeof tcolor1.toRgbString !== 'function' || typeof tcolor2.toRgbString !== 'function') {
+            return false;
+        }
+        return tcolor1.toRgbString() == tcolor2.toRgbString();
     };
     tinycolor.random = function() {
         return tinycolor.fromRatio({
