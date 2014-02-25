@@ -33,6 +33,7 @@
         preferredFormat: false,
         className: "",
         showAlpha: false,
+        revertAlpha: true,
         theme: "sp-light",
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
         selectionPalette: [],
@@ -353,7 +354,7 @@
             draggable(slider, function (dragX, dragY) {
                 currentHue = parseFloat(dragY / slideHeight);
                 isEmpty = false;
-                if (!opts.showAlpha) {
+                if (!opts.showAlpha && opts.revertAlpha) {
                     currentAlpha = 1;
                 }
                 move();
@@ -384,7 +385,7 @@
                 }
 
                 isEmpty = false;
-                if (!opts.showAlpha) {
+                if (!opts.showAlpha && opts.revertAlpha) {
                     currentAlpha = 1;
                 }
 
