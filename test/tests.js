@@ -164,6 +164,7 @@ test( "Local Storage Is Limited ", function() {
 
   var el = $("<input id='spec' value='red' />").spectrum({
     localStorageKey: "spectrum.tests",
+    palette: [["#ff0", "#0ff"]],
     maxSelectionSize: 3
   });
 
@@ -180,6 +181,14 @@ test( "Local Storage Is Limited ", function() {
     "Local storage array has been limited"
   );
 
+  el.spectrum("set", "#ff0");
+  el.spectrum("set", "#0ff");
+
+  equal (
+    localStorage["spectrum.tests"],
+    "rgb(204, 0, 0);rgb(187, 0, 0);rgb(170, 0, 0)",
+    "Local storage array did not get changed by selecting palette items"
+  );
   el.spectrum("destroy");
 
 });
