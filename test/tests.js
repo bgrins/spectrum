@@ -264,6 +264,7 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
   appendToOther.spectrum("destroy");
   appendToOtherFlat.spectrum("destroy");
   appendToParent.spectrum("destroy").remove();
+  delete window.localStorage["spectrum.example"];
 });
 
 test ("Show Input works as expected", function() {
@@ -366,4 +367,60 @@ test( "Change events fire as described" , function() {
 
   input.spectrum("set", "orange");
 
+});
+
+test("The selectedPalette should be updated in each spectrum instance, when storageKeys are identical.", function () {
+
+  delete window.localStorage["spectrum.tests"];
+
+  var colorToChoose = "rgb(0, 244, 0)";
+  var firstEl = $("<input id='firstEl' value='red' />").spectrum({
+    showPalette: true,
+    localStorageKey: "spectrum.tests"
+  });
+    var secondEl = $("<input id='secondEl' value='blue' />").spectrum({
+    showPalette: true,
+    localStorageKey: "spectrum.tests"
+  });
+
+  firstEl.spectrum("set", colorToChoose);
+
+  secondEl.spectrum("toggle");
+
+  var selectedColor = secondEl.spectrum("container").find('span[data-color="' + colorToChoose + '"]');
+  ok(selectedColor.length > 0, "Selected color is also shown in the others instance's palette.");
+
+  delete window.localStorage["spectrum.tests"];
+
+  firstEl.spectrum("destroy");
+  secondEl.spectrum("destroy");
+});
+
+test("The selectedPalette should not be updated in spectrum instances that have different storageKeys.", function () {
+
+  delete window.localStorage["spectrum.test_1"];
+  delete window.localStorage["spectrum.test_2"];
+
+  var colorToChoose = "rgb(0, 244, 0)";
+  var firstEl = $("<input id='firstEl' value='red' />").spectrum({
+    showPalette: true,
+    localStorageKey: "spectrum.test_1"
+  });
+    var secondEl = $("<input id='secondEl' value='blue' />").spectrum({
+    showPalette: true,
+    localStorageKey: "spectrum.test_2"
+  });
+
+  firstEl.spectrum("set", colorToChoose);
+
+  secondEl.spectrum("toggle");
+
+  var selectedColor = secondEl.spectrum("container").find('span[data-color="' + colorToChoose + '"]');
+  ok(selectedColor.length === 0, "Selected color should not be available in instances with other storageKey.");
+
+  firstEl.spectrum("destroy");
+  secondEl.spectrum("destroy");
+
+  delete window.localStorage["spectrum.test_1"];
+  delete window.localStorage["spectrum.test_2"];
 });
