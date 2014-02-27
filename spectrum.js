@@ -39,7 +39,17 @@
         disabled: false
     },
     spectrums = [],
-    IE = !!/msie/i.exec( window.navigator.userAgent ),
+    userAgent = window.navigator.userAgent,
+    IE = !!/msie/i.exec( userAgent ),
+    isOldAndroid = (
+        (
+         userAgent.indexOf('Mozilla/5.0') > -1 &&
+         userAgent.indexOf('Android ') > -1 &&
+         userAgent.indexOf('AppleWebKit') > -1
+        ) &&
+        !(userAgent.indexOf('Chrome') > -1)
+    ),
+    touchClick = isOldAndroid ? "click.spectrum" : "click.spectrum touchstart.spectrum",
     rgbaSupport = (function() {
         function contains( str, substr ) {
             return !!~('' + str).indexOf(substr);
@@ -273,7 +283,7 @@
 
             updateSelectionPaletteFromStorage();
 
-            offsetElement.bind("click.spectrum touchstart.spectrum", function (e) {
+            offsetElement.bind(touchClick, function (e) {
                 if (!disabled) {
                     toggle();
                 }
@@ -835,7 +845,7 @@
 
         function destroy() {
             boundElement.show();
-            offsetElement.unbind("click.spectrum touchstart.spectrum");
+            offsetElement.unbind(touchClick);
             container.remove();
             replacer.remove();
             spectrums[spect.id] = null;
