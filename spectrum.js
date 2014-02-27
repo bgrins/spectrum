@@ -564,6 +564,9 @@
 
             $(doc).bind("click.spectrum", hide);
             $(window).bind("resize.spectrum", resize);
+            
+            //this bind is for the clickoutFiresChange if you click on iframe.
+            $("body iframe").contents().bind("click.spectrum", hide);
             replacer.addClass("sp-active");
             container.removeClass("sp-hidden");
 
