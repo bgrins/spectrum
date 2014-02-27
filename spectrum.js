@@ -273,7 +273,7 @@
 
             updateSelectionPaletteFromStorage();
 
-            offsetElement.bind("click.spectrum touchstart.spectrum", function (e) {
+            offsetElement.bind("click.spectrum", function (e) {
                 if (!disabled) {
                     toggle();
                 }
@@ -835,7 +835,7 @@
 
         function destroy() {
             boundElement.show();
-            offsetElement.unbind("click.spectrum touchstart.spectrum");
+            offsetElement.unbind("click.spectrum");
             container.remove();
             replacer.remove();
             spectrums[spect.id] = null;
