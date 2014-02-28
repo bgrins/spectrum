@@ -290,7 +290,7 @@
             }
 
             // Prevent clicks from bubbling up to document.  This would cause it to be hidden.
-            container.click(stopPropagation);
+            container.on("click touchend", stopPropagation);
 
             // Handle user typed input
             textInput.change(setFromTextInput);
