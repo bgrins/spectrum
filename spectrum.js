@@ -446,7 +446,7 @@
         function addColorToSelectionPalette(color) {
             if (showSelectionPalette) {
                 var rgb = tinycolor(color).toRgbString();
-                if (!paletteLookup[rgb] && selectionPalette.indexOf(rgb) === -1) {
+                if (!paletteLookup[rgb] && $.inArray(rgb, selectionPalette) === -1) {
                     selectionPalette.push(rgb);
                     while(selectionPalette.length > maxSelectionSize) {
                         selectionPalette.shift();
