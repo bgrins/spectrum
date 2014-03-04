@@ -328,6 +328,9 @@ test ("tooltipFormat works", function() {
   el.spectrum("option", "tooltipFormat", "hsv");
   equal (getTitlesString(), "hsv(0, 100%, 100%) hsva(0, 0%, 100%, 0.5) hsv(240, 100%, 100%)", "Titles are updated to hsv");
 
+  el.spectrum("option", "tooltipFormat", "hsl");
+  equal (getTitlesString(), "hsl(0, 100%, 50%) hsla(0, 0%, 100%, 0.5) hsl(240, 100%, 50%)", "Titles are updated to hsl");
+
   el.spectrum("option", "tooltipFormat", "rgb");
   equal (getTitlesString(), "rgb(255, 0, 0) rgba(255, 255, 255, 0.5) rgb(0, 0, 255)", "Titles are updated to rgb");
 
