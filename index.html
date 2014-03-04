@@ -201,6 +201,7 @@ $("#picker").spectrum({
     chooseText: string,
     className: string,
     preferredFormat: string,
+    tooltipFormat: string,
     maxSelectionSize: int,
     palette: [[string]],
     selectionPalette: [string]
@@ -537,7 +538,7 @@ $("#className").spectrum({
         <h3 id="options-preferredFormat">Preferred Format</h3>
         <div class='option-content'>
             <div class='description'>
-                <p>You can set the format that is displayed</p>
+                <p>You can set the format that is displayed in the text box.</p>
             </div>
 
             <pre class='prettyprint'>
@@ -545,8 +546,8 @@ $("#preferredHex").spectrum({
     preferredFormat: "hex",
     showInput: true
 });
-$("#preferredHex6").spectrum({
-    preferredFormat: "hex6",
+$("#preferredHex3").spectrum({
+    preferredFormat: "hex3",
     showInput: true
 });
 $("#preferredHsl").spectrum({
@@ -568,8 +569,8 @@ $("#preferredNone").spectrum({
             <div class='example'>
                     <div class='alert alert-info'>Hex</div>
                     <input type='text' name='preferredHex' id='preferredHex' value='orangered' />
-                    <div class='alert alert-info'>Hex (6 Characters Always)</div>
-                    <input type='text' name='preferredHex6' id='preferredHex6' value='orangered' />
+                    <div class='alert alert-info'>Hex (3 Characters If Possible)</div>
+                    <input type='text' name='preferredHex3' id='preferredHex3' value='orangered' />
                     <div class='alert alert-info'>Hsl</div>
                     <input type='text' name='preferredHsl' id='preferredHsl' value='orangered' />
                     <div class='alert alert-info'>Rgb</div>
@@ -578,6 +579,26 @@ $("#preferredNone").spectrum({
                     <input type='text' name='preferredName' id='preferredName' value='orangered' />
                     <div class='alert alert-info'>None (Depends on input - try changing formats with the text box)</div>
                     <input type='text' name='preferredNone' id='preferredNone' value='orangered' />
+            </div>
+        </div>
+
+
+        <h3 id="options-tooltipFormat">Tooltip Format</h3>
+        <div class='option-content'>
+            <div class='description'>
+                <p>You can set the format that is displayed in the titles from the palette swatches.</p>
+            </div>
+
+            <pre class='prettyprint'>
+$("#tooltipHSL").spectrum({
+    tooltipFormat: "hsl",
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
+});
+            </pre>
+            <div class='example'>
+                    <div class='alert alert-info'>HSL tooltips</div>
+                    <input type='text' name='tooltipHSL' id='tooltipHSL' value='orangered' />
             </div>
         </div>
 

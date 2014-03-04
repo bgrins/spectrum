@@ -347,8 +347,8 @@ $("#preferredHex").spectrum({
     preferredFormat: "hex",
     showInput: true
 });
-$("#preferredHex6").spectrum({
-    preferredFormat: "hex6",
+$("#preferredHex3").spectrum({
+    preferredFormat: "hex3",
     showInput: true
 });
 $("#preferredHsl").spectrum({
@@ -365,6 +365,12 @@ $("#preferredName").spectrum({
 });
 $("#preferredNone").spectrum({
     showInput: true
+});
+
+$("#tooltipHSL").spectrum({
+    tooltipFormat: "hsl",
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 
 $("#triggerSet").spectrum({
