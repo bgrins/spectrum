@@ -13,7 +13,7 @@ $("#full").spectrum({
     allowEmpty:true,
     color: "#ECC",
     showInput: true,
-    className: "full-spectrum",
+    containerClassName: "full-spectrum",
     showInitial: true,
     showPalette: true,
     showSelectionPalette: true,
@@ -199,6 +199,14 @@ $("#openWithLink").spectrum({
 
 $("#className").spectrum({
     className: 'awesome'
+});
+
+$("#replacerClassName").spectrum({
+    replacerClassName: 'awesome'
+});
+
+$("#containerClassName").spectrum({
+    containerClassName: 'awesome'
 });
 
 $("#showPalette").spectrum({

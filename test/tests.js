@@ -195,6 +195,22 @@ test( "Local Storage Is Limited ", function() {
 
 module("Options");
 
+test ("replacerClassName", function() {
+  var el = $("<input />").appendTo("body").spectrum({
+    replacerClassName: "test"
+  });
+  ok (el.next(".sp-replacer").hasClass("test"), "Replacer class has been applied");
+  el.spectrum("destroy").remove();
+});
+
+test ("containerClassName", function() {
+  var el = $("<input />").appendTo("body").spectrum({
+    containerClassName: "test"
+  });
+  ok (el.spectrum("container").hasClass("test"), "Container class has been applied");
+  el.spectrum("destroy").remove();
+});
+
 test( "Options Can Be Set and Gotten Programmatically", function() {
 
   var spec = $("<input id='spec' />").spectrum({

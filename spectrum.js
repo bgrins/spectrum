@@ -31,7 +31,9 @@
         chooseText: "choose",
         clearText: "Clear Color Selection",
         preferredFormat: false,
-        className: "",
+        className: "", // Deprecated - use containerClassName and replacerClassName instead.
+        containerClassName: "",
+        replacerClassName: "",
         showAlpha: false,
         theme: "sp-light",
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
@@ -201,7 +203,7 @@
             isInput = boundElement.is("input"),
             isInputTypeColor = isInput && inputTypeColorSupport && boundElement.attr("type") === "color",
             shouldReplace = isInput && !flat,
-            replacer = (shouldReplace) ? $(replaceInput).addClass(theme).addClass(opts.className) : $([]),
+            replacer = (shouldReplace) ? $(replaceInput).addClass(theme).addClass(opts.className).addClass(opts.replacerClassName) : $([]),
             offsetElement = (shouldReplace) ? replacer : boundElement,
             previewElement = replacer.find(".sp-preview-inner"),
             initialColor = opts.color || (isInput && boundElement.val()),
@@ -238,7 +240,7 @@
             container.toggleClass("sp-palette-disabled", !opts.showPalette);
             container.toggleClass("sp-palette-only", opts.showPaletteOnly);
             container.toggleClass("sp-initial-disabled", !opts.showInitial);
-            container.addClass(opts.className);
+            container.addClass(opts.className).addClass(opts.containerClassName);
 
             reflow();
         }
