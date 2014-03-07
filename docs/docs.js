@@ -201,6 +201,14 @@ $("#className").spectrum({
     className: 'awesome'
 });
 
+$("#replacerClassName").spectrum({
+    replacerClassName: 'awesome'
+});
+
+$("#containerClassName").spectrum({
+    containerClassName: 'awesome'
+});
+
 $("#showPalette").spectrum({
     showPalette: true,
     palette: [
