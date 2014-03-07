@@ -31,7 +31,6 @@
         chooseText: "choose",
         clearText: "Clear Color Selection",
         preferredFormat: false,
-        tooltipFormat: "rgb",
         className: "",
         showAlpha: false,
         theme: "sp-light",
@@ -119,7 +118,7 @@
                 var c = tiny.toHsl().l < 0.5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
                 c += (tinycolor.equals(color, current)) ? " sp-thumb-active" : "";
 
-                var formattedString = tiny.toString(tooltipFormat);
+                var formattedString = tiny.toString(tooltipFormat || "rgb");
                 var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
                 html.push('<span title="' + formattedString + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><span class="sp-thumb-inner" style="' + swatchStyle + ';" /></span>');
             } else {
@@ -484,13 +483,13 @@
             var currentColor = get();
 
             var html = $.map(paletteArray, function (palette, i) {
-                return paletteTemplate(palette, currentColor, "sp-palette-row sp-palette-row-" + i, opts.tooltipFormat);
+                return paletteTemplate(palette, currentColor, "sp-palette-row sp-palette-row-" + i, opts.preferredFormat);
             });
 
             updateSelectionPaletteFromStorage();
 
             if (selectionPalette) {
-                html.push(paletteTemplate(getUniqueSelectionPalette(), currentColor, "sp-palette-row sp-palette-row-selection", opts.tooltipFormat));
+                html.push(paletteTemplate(getUniqueSelectionPalette(), currentColor, "sp-palette-row sp-palette-row-selection", opts.preferredFormat));
             }
 
             paletteContainer.html(html.join(""));
@@ -500,7 +499,7 @@
             if (opts.showInitial) {
                 var initial = colorOnShow;
                 var current = get();
-                initialColorContainer.html(paletteTemplate([initial, current], current, "sp-palette-row-initial", opts.tooltipFormat));
+                initialColorContainer.html(paletteTemplate([initial, current], current, "sp-palette-row-initial", opts.preferredFormat));
             }
         }
 

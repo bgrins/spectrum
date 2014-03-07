@@ -201,7 +201,6 @@ $("#picker").spectrum({
     chooseText: string,
     className: string,
     preferredFormat: string,
-    tooltipFormat: string,
     maxSelectionSize: int,
     palette: [[string]],
     selectionPalette: [string]
@@ -391,25 +390,6 @@ $("#showSelectionPaletteStorage").spectrum({
             </div>
         </div>
 
-        <h3 id="options-tooltipFormat">Tooltip Format</h3>
-        <div class='option-content'>
-            <div class='description'>
-                <p>You can set the format that is displayed in the titles from the palette swatches.</p>
-            </div>
-
-            <pre class='prettyprint'>
-$("#tooltipHSL").spectrum({
-    tooltipFormat: "hsl",
-    showPalette: true,
-    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
-});
-            </pre>
-            <div class='example'>
-                    <div class='alert alert-info'>HSL tooltips</div>
-                    <input type='text' name='tooltipHSL' id='tooltipHSL' value='orangered' />
-            </div>
-        </div>
-
         <h3 id="options-clickoutFiresChange">Clickout Fires Change</h3>
         <div class='option-content'>
             <div class='description'>
@@ -558,31 +538,44 @@ $("#className").spectrum({
         <div class='option-content'>
             <div class='description'>
                 <p>You can set the format that is displayed in the text box.</p>
+                <p>This will also change the format that is displayed in the titles from the palette swatches.</p>
             </div>
 
             <pre class='prettyprint'>
 $("#preferredHex").spectrum({
     preferredFormat: "hex",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredHex3").spectrum({
     preferredFormat: "hex3",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredHsl").spectrum({
     preferredFormat: "hsl",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredRgb").spectrum({
     preferredFormat: "rgb",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredName").spectrum({
     preferredFormat: "name",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredNone").spectrum({
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
             </pre>
             <div class='example'>
