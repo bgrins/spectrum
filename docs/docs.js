@@ -13,7 +13,7 @@ $("#full").spectrum({
     allowEmpty:true,
     color: "#ECC",
     showInput: true,
-    className: "full-spectrum",
+    containerClassName: "full-spectrum",
     showInitial: true,
     showPalette: true,
     showSelectionPalette: true,

@@ -31,7 +31,7 @@
         chooseText: "choose",
         clearText: "Clear Color Selection",
         preferredFormat: false,
-        className: "",
+        className: "", // Deprecated - use containerClassName and replacerClassName instead.
         containerClassName: "",
         replacerClassName: "",
         showAlpha: false,
