@@ -60,7 +60,7 @@ box-shadow: 0 0 10px #ccc; border-radius: 0 0 5px 5px;
 .clearfix:after { clear: both; }
 .clearfix { *zoom: 1; }
 
-
+input[type="text"] { height: auto; }
 .label {
   padding: 1px 4px 2px;
   font-size: 10.998px;

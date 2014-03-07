@@ -312,6 +312,47 @@ test ("Show Input works as expected", function() {
   el.spectrum("destroy");
 });
 
+
+test ("Tooltip is formatted based on preferred format", function() {
+  var el = $("<input />").spectrum({
+    showInput: true,
+    color: "rgba(255, 255, 255, .5)",
+    showPalette: true,
+    palette: [["red", "rgba(255, 255, 255, .5)", "rgb(0, 0, 255)"]]
+  });
+
+  function getTitlesString() {
+    return el.spectrum("container").find(".sp-thumb-el").map(function() {
+      return this.getAttribute("title");
+    }).toArray().join(" ");
+  }
+
+  equal (getTitlesString(), "rgb(255, 0, 0) rgba(255, 255, 255, 0.5) rgb(0, 0, 255)", "Titles use rgb format by default");
+
+  el.spectrum("option", "preferredFormat", "hex");
+  equal (getTitlesString(), "#ff0000 #ffffff #0000ff", "Titles are updated to hex");
+
+  el.spectrum("option", "preferredFormat", "hex6");
+  equal (getTitlesString(), "#ff0000 #ffffff #0000ff", "Titles are updated to hex6");
+
+  el.spectrum("option", "preferredFormat", "hex3");
+  equal (getTitlesString(), "#f00 #fff #00f", "Titles are updated to hex3");
+
+  el.spectrum("option", "preferredFormat", "name");
+  equal (getTitlesString(), "red white blue", "Titles are updated to name");
+
+  el.spectrum("option", "preferredFormat", "hsv");
+  equal (getTitlesString(), "hsv(0, 100%, 100%) hsva(0, 0%, 100%, 0.5) hsv(240, 100%, 100%)", "Titles are updated to hsv");
+
+  el.spectrum("option", "preferredFormat", "hsl");
+  equal (getTitlesString(), "hsl(0, 100%, 50%) hsla(0, 0%, 100%, 0.5) hsl(240, 100%, 50%)", "Titles are updated to hsl");
+
+  el.spectrum("option", "preferredFormat", "rgb");
+  equal (getTitlesString(), "rgb(255, 0, 0) rgba(255, 255, 255, 0.5) rgb(0, 0, 255)", "Titles are updated to rgb");
+
+  el.spectrum("destroy");
+});
+
 module("Methods");
 
 test( "Methods work as described", function() {
