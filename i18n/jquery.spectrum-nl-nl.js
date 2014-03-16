@@ -6,7 +6,8 @@
 
     var localization = $.spectrum.localization["nl-nl"] = {
         cancelText: "Annuleer",
-        chooseText: "Kies"
+        chooseText: "Kies",
+        clearText: "Wis kleur selectie"
     };
 
     $.extend($.fn.spectrum.defaults, localization);
