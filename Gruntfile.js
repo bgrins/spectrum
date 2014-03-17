@@ -20,11 +20,25 @@ module.exports = function(grunt) {
       all: ['spectrum.js']
     },
 
+    sass: {
+      dist: {
+        //options: {
+        //  style: 'compressed',
+        //},
+
+        files: {
+          'themes/spectrum.css': 'themes/sass/spectrum.scss',
+          'themes/sp-dark.css': 'themes/sass/sp-dark.scss',
+          'themes/sp-knoq.css': 'themes/sass/sp-knoq.scss'
+        }
+      }
+    },
 
     uglify: {
       options: {
         mangle: false
       },
+
       dist: {
         files: {
           'build/spectrum-min.js': ['spectrum.js']
@@ -37,6 +51,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
+  grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
 
@@ -47,7 +62,7 @@ module.exports = function(grunt) {
   grunt.registerTask('travis', 'test');
 
   // Default task.
-  grunt.registerTask('default', ['test']);
+  grunt.registerTask('default', ['test', 'sass']);
 
   //Build Task.
   grunt.registerTask('build', ['test', 'uglify']);

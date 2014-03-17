@@ -1,0 +1,96 @@
+@import "partials/base";
+
+/* Container */
+.sp-dark {
+    background-color: #333;
+    border: solid 1px #555;
+
+    &.sp-container {
+        border: solid 1px #DFDFDF;
+        background-color: #333;
+        box-shadow: 0 0 4px #DFDFDF;
+    }
+
+    &.sp-replacer {
+        border: solid 1px #fff;
+        background: #333;
+        color: #eee;
+        vertical-align: middle;
+
+        &:hover, 
+        &.sp-active {
+            border-color: #F0C49B;
+            color: #111;
+        }
+
+        &.sp-disabled {
+            border-color: silver;
+            color: silver;
+        }
+    }
+
+    .sp-preview {
+        border: solid 1px #999;
+    }
+
+    .sp-cancel {
+        color: #f99f9f !important;
+    }
+
+    button {
+        border: 1px solid #F1F1F1;
+    }
+
+    .sp-input-container {}
+
+    .sp-initial-disabled {
+        .sp-input-container {}
+    }
+
+    .sp-input {
+        height: 30px;
+        border-radius: 2px;
+
+        &:focus  {}
+        &.sp-validation-error {}
+    }
+
+    .sp-picker-container , .sp-palette-container {
+        border-right: solid 1px #DEDEDE;
+    }
+
+    .sp-picker-container {}
+
+    /* Palettes */
+    .sp-palette-container {}
+
+    .sp-palette {
+        .sp-thumb-el {
+            &:hover {}
+            .sp-thumb-active {}
+        }
+    }
+
+    .sp-initial {
+        border: 1px solid #F1F1F1;
+
+        span {
+            height: 28px;
+        }
+    }
+
+    /* Buttons */
+    .sp-button-container {}
+
+    &.sp-replacer {}
+    &.sp-dd {}
+    &.sp-preview {}
+}
+
+.sp-color, .sp-hue {
+    border: 1px solid #F1F1F1;
+}
+
+.sp-slider {
+    border-color: #444;
+}
