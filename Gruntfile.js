@@ -22,9 +22,9 @@ module.exports = function(grunt) {
 
     sass: {
       dist: {
-        //options: {
-        //  style: 'compressed',
-        //},
+        options: {
+          style: 'expanded',
+        },
 
         files: {
           'themes/spectrum.css': 'themes/sass/spectrum.scss',
