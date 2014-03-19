@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         },
 
         files: {
-          'themes/spectrum.css': 'themes/sass/spectrum.scss',
+          'spectrum.css': 'themes/sass/spectrum.scss',
           'themes/sp-dark.css': 'themes/sass/sp-dark.scss',
           'themes/sp-knoq.css': 'themes/sass/sp-knoq.scss'
         }
