@@ -15,6 +15,7 @@
 
 
     <link rel="stylesheet" type="text/css" href="sp-dark.css">
+    <link rel="stylesheet" type="text/css" href="sp-knoq.css">
 
 </head>
 <body>
@@ -54,6 +55,30 @@
                 <input type='text' />
             </div>
         </div>
+
+        <div class="theme" id="sp-knoq">
+            <h4>sp-knoq</h4>
+            <p>Similar to sp-light, slightly lighter</p>
+
+            <div class='example'>
+                <input type='text' />
+            </div>
+        </div>
+
+        <h3>Extending and creating your own themes</h3>
+        <div class="theme extending">
+            <p>
+            Creation of theme is based on SASS, if you are familiar with CSS it is even easier
+            You will need to create you own THEME_FILE.scss, import base theme and override styles you need.
+            </p>
+
+            <strong>THEME_FILE.scss</strong>
+            <pre>
+@import "partials/base";
+// You theme</pre>
+
+            <p>For samples you can look over existing themes.</p>
+        </div>        
     </div>
 
     <div id="theme-instructions">
@@ -93,6 +118,9 @@
     });
     $("#sp-dark input").spectrum({
         theme: "sp-dark"
+    });
+    $("#sp-knoq input").spectrum({
+        theme: "sp-knoq"
     });
 </script>
 <script type="text/javascript" src="../docs/prettify.js"></script>
