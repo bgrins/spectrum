@@ -11,7 +11,7 @@
     } else {
         factory(jQuery);
     }
-}(function ($) {
+}(function ($, undefined) {
     var defaultOpts = {
 
         // Callbacks
