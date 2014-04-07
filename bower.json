@@ -7,5 +7,16 @@
   "demo": "http://jsfiddle.net/bgrins/ctkY3/",
   "dependencies": {
     "jquery": ">=1.7.2"
-  }
+  },
+  "ignore": [
+    ".gitignore",
+    ".travis.yml",
+    "build/",
+    "docs/",
+    "example/",
+    "Gruntfile.js",
+    "LICENSE",
+    "README.md",
+    "test/"
+  ]
 }
