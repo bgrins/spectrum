@@ -26,6 +26,12 @@ Head over to the [docs](http://bgrins.github.io/spectrum) for more information. 
 
 Spectrum is registered as a jQuery plugin on the jQuery plugin repository here: http://plugins.jquery.com/spectrum/
 
+### Bower
+
+Spectrum is registered as a package with [Bower](http://bower.io/), so it can be pulled down using:
+
+    bower install spectrum
+
 ### Continuous Integration
 
 [![Build Status](https://secure.travis-ci.org/bgrins/spectrum.png?branch=master)](http://travis-ci.org/bgrins/spectrum)
