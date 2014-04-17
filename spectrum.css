@@ -48,7 +48,10 @@ License: MIT
     bottom:0;
     right:20%;
 }
-.sp-hue {
+
+
+.sp-vertical
+{
     position: absolute;
     top:0;
     right:0;
@@ -57,9 +60,16 @@ License: MIT
     height: 100%;
 }
 
+.sp-hue {
+    position: absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left: 0;
+}
+
 .sp-clear-enabled .sp-hue {
-    top:33px;
-    height: 77.5%;
+    top: 33px;
 }
 
 .sp-fill {
@@ -112,11 +122,11 @@ License: MIT
 
 .sp-clear-enabled .sp-clear {
     display: block;
-    position:absolute;
-    top:0px;
-    right:0;
-    bottom:0;
-    left:84%;
+    position: absolute;
+    top: 0px;
+    right: 0;
+    bottom: 0;
+    left: 0;
     height: 28px;
 }
 
@@ -144,6 +154,57 @@ License: MIT
 .sp-initial-disabled .sp-initial {
     display: none;
 }
+
+
+/* Hue only mode */
+.sp-container.sp-color-disabled .sp-color {
+    display: none;
+}
+.sp-container.sp-color-disabled .sp-picker-container {
+    width: auto;
+    min-width: 40px;
+}
+.sp-container.sp-color-disabled .sp-vertical {
+    left: 0;
+}
+.sp-container.sp-color-disabled .sp-fill {
+    padding-top: 200%;
+}
+
+.sp-container.sp-color-disabled.sp-buttons-disabled .sp-fill {
+    padding-top: 400%;
+}
+.sp-container.sp-color-disabled.sp-buttons-disabled.sp-clear-enabled .sp-fill {
+    padding-top: 400%;
+}
+
+
+/* Color only mode */
+.sp-container.sp-hue-disabled .sp-hue {
+    display: none;
+}
+.sp-container.sp-hue-disabled .sp-fill {
+    padding-top: 100%;
+}
+.sp-container.sp-hue-disabled .sp-color {
+    right: 0;
+}
+.sp-container.sp-hue-disabled .sp-vertical {
+    display: none;
+}
+
+.sp-container.sp-clear-enabled .sp-vertical {
+    display: block;
+    display: auto;
+}
+.sp-container.sp-hue-disabled.sp-clear-enabled .sp-fill {
+    padding-top: 80%;
+}
+.sp-container.sp-clear-enabled .sp-color {
+    right: 20%;
+}
+
+
 
 
 /* Gradients for hue, saturation and value instead of images.  Not pretty... but it works */
