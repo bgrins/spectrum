@@ -1,0 +1,34 @@
+/* Container */
+.sp-soft.sp-container {
+    background-color: #efefef;
+    border: solid 1px #ccc;
+    box-shadow: 0 0 1px #aaa;
+}
+
+/* Replacer (the little preview div that shows up instead of the <input>) */
+.sp-soft.sp-replacer {
+    border: solid 1px #ccc;
+    background: #efefef;
+    color: #888;
+    vertical-align: middle;
+    padding: 4px;
+    border-radius: 4px;
+    box-shadow: 0 0 1px #aaa;
+}
+.sp-replacer:hover, .sp-replacer.sp-active {
+    color: #fff;
+    box-shadow: 0 0 2px #999;
+}
+.sp-replacer.sp-disabled {
+    color: silver;
+}
+.sp-soft .sp-preview {
+    border-radius: 2px;
+}
+.sp-soft .sp-cancel {
+    color: #e60000 !important;
+}
+.sp-soft.sp-replacer:hover, .sp-soft.sp-replacer.sp-active {
+    border-color: #bbb;
+    color: #111;
+}
