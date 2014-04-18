@@ -171,10 +171,11 @@ License: MIT
     padding-top: 200%;
 }
 
-.sp-container.sp-color-disabled.sp-buttons-disabled .sp-fill {
+
+.sp-container.sp-color-disabled.sp-buttons-disabled.sp-input-disabled .sp-fill {
     padding-top: 400%;
 }
-.sp-container.sp-color-disabled.sp-buttons-disabled.sp-clear-enabled .sp-fill {
+.sp-container.sp-color-disabled.sp-buttons-disabled.sp-input-disabled.sp-clear-enabled .sp-fill {
     padding-top: 400%;
 }
 
