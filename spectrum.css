@@ -178,6 +178,9 @@ License: MIT
 .sp-container.sp-color-disabled.sp-buttons-disabled.sp-input-disabled.sp-clear-enabled .sp-fill {
     padding-top: 300%;
 }
+.sp-container.sp-color-disabled.sp-buttons-disabled.sp-input-disabled.sp-clear-enabled.sp-initial-disabled .sp-fill {
+    padding-top: 400%;
+}
 
 
 /* Color only mode */
