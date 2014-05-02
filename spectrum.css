@@ -134,6 +134,9 @@ License: MIT
 .sp-container.sp-buttons-disabled .sp-button-container {
     display: none;
 }
+.sp-container.sp-palette-buttons-disabled .sp-palette-button-container {
+    display: none;
+}
 .sp-palette-only .sp-picker-container {
     display: none;
 }
@@ -319,6 +322,11 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     border-right: solid 1px #ccc;
 }
 
+.sp-palette-only .sp-palette-container
+{
+    border: 0;
+}
+
 .sp-palette .sp-thumb-el {
     display: block;
     position:relative;
@@ -357,6 +365,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 }
 
 /* Buttons */
+.sp-palette-button-container,
 .sp-button-container {
     float: right;
 }
