@@ -354,7 +354,7 @@
                     container.css('left', '-=' + (pickerContainer.outerWidth(true) + 5));
                 }
 
-                applyOptions()
+                applyOptions();
             });
 
             draggable(alphaSlider, function (dragX, dragY, e) {
