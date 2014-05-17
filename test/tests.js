@@ -339,7 +339,7 @@ test ("Tooltip is formatted based on preferred format", function() {
   equal (getTitlesString(), "#f00 #fff #00f", "Titles are updated to hex3");
 
   el.spectrum("option", "preferredFormat", "name");
-  equal (getTitlesString(), "red white blue", "Titles are updated to name");
+  equal (getTitlesString(), "red #ffffff blue", "Titles are updated to name");
 
   el.spectrum("option", "preferredFormat", "hsv");
   equal (getTitlesString(), "hsv(0, 100%, 100%) hsva(0, 0%, 100%, 0.5) hsv(240, 100%, 100%)", "Titles are updated to hsv");
