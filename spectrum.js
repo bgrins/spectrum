@@ -899,8 +899,8 @@
     function getOffset(picker, input) {
         var extraY = 0;
         var dpWidth = picker.outerWidth();
-        var dpHeight = picker.outerHeight();
-        var inputHeight = input.outerHeight();
+        var dpHeight = picker.outerHeight(true);
+        var inputHeight = input.outerHeight(true);
         var doc = picker[0].ownerDocument;
         var docElem = doc.documentElement;
         var viewWidth = docElem.clientWidth + $(doc).scrollLeft();
