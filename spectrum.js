@@ -8,7 +8,7 @@
         define('root', [], function() { return root; });
         define(['root', 'jquery'], factory);
     } else if (typeof exports === 'object') {
-        factory(require('jquery'), root);
+        factory(root, require('jquery'));
     } else {
         factory(root, jQuery);
     }
