@@ -3,7 +3,16 @@
 // Author: Brian Grinstead
 // License: MIT
 
-(function (window, $, undefined) {
+(function (factory, root) {
+    if (typeof define === 'function' && define.amd) {
+        define('root', [], function() { return root; });
+        define(['root', 'jquery'], factory);
+    } else if (typeof exports === 'object') {
+        factory(root, require('jquery'));
+    } else {
+        factory(root, jQuery);
+    }
+}(function (window, $, undefined) {
     var defaultOpts = {
 
         // Callbacks
@@ -2099,5 +2108,4 @@
             $.fn.spectrum.processNativeColorInputs();
         }
     });
-
-})(window, jQuery);
+}, window));
