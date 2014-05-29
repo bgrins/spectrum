@@ -467,7 +467,7 @@
         function getUniqueSelectionPalette() {
             var unique = [];
             if (opts.showPalette) {
-                for (i = 0; i < selectionPalette.length; i++) {
+                for (var i = 0; i < selectionPalette.length; i++) {
                     var rgb = tinycolor(selectionPalette[i]).toRgbString();
 
                     if (!paletteLookup[rgb]) {
