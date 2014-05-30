@@ -32,7 +32,7 @@
         cancelText: "cancel",
         chooseText: "choose",
         clearText: "Clear Color Selection",
-		  noColorSelectedText: "No Color Selected",
+        noColorSelectedText: "No Color Selected",
         preferredFormat: false,
         className: "", // Deprecated - use containerClassName and replacerClassName instead.
         containerClassName: "",
@@ -128,11 +128,11 @@
             } else {
                 var cls = 'sp-clear-display';
                 html.push($('<div />')
-						.append($('<span data-color="" style="background-color:transparent;" class="' + cls + '"></span>')
-							.attr('title', opts.noColorSelectedText)
-						)
-						.html()
-					);
+                    .append($('<span data-color="" style="background-color:transparent;" class="' + cls + '"></span>')
+                        .attr('title', opts.noColorSelectedText)
+                    )
+                    .html()
+                );
             }
         }
         return "<div class='sp-cf " + className + "'>" + html.join('') + "</div>";
