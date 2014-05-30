@@ -10,9 +10,9 @@ module.exports = function(grunt) {
 
     jshint: {
       options: {
-        browser: true,
         sub: true,
-
+        strict: true,
+        newcap: false,
         globals: {
           jQuery: true
         }

@@ -4,6 +4,8 @@
 // License: MIT
 
 (function (window, $, undefined) {
+    "use strict";
+
     var defaultOpts = {
 
         // Callbacks
@@ -404,11 +406,11 @@
 
             function palletElementClick(e) {
                 if (e.data && e.data.ignore) {
-                    set($(this).data("color"));
+                    set($(e.target).data("color"));
                     move();
                 }
                 else {
-                    set($(this).data("color"));
+                    set($(e.target).data("color"));
                     move();
                     updateOriginalInput(true);
                     hide();
@@ -1046,8 +1048,6 @@
             if (debounce || !timeout) timeout = setTimeout(throttler, wait);
         };
     }
-
-    function log(){/* jshint -W021 */if(window.console){if(Function.prototype.bind)log=Function.prototype.bind.call(console.log,console);else log=function(){Function.prototype.apply.call(console.log,console,arguments);};log.apply(this,arguments);}}
 
     /**
     * Define a jQuery plugin
