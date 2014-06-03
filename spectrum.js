@@ -898,7 +898,7 @@
     */
     function getOffset(picker, input) {
         var extraY = 0;
-        var dpWidth = picker.outerWidth();
+        var dpWidth = picker.outerWidth(true);
         var dpHeight = picker.outerHeight(true);
         var inputHeight = input.outerHeight(true);
         var doc = picker[0].ownerDocument;
