@@ -160,6 +160,27 @@ test( "Palette Events Fire In Correct Order ", function() {
   el.spectrum("destroy");
 });
 
+test( "Palette click events work ", function() {
+  var el = $("<input id='spec' value='red' />").spectrum({
+    showPalette: true,
+    palette: [
+      ["red", "green", "blue"]
+    ],
+    move: function() {
+
+    },
+  });
+
+  el.spectrum("container").find(".sp-thumb-el:nth-child(3)").click();
+  equal (el.spectrum("get").toName(), "blue", "First click worked");
+  el.spectrum("container").find(".sp-thumb-el:nth-child(2) .sp-thumb-inner").click();
+  equal (el.spectrum("get").toName(), "green", "Second click worked (on child element)");
+  el.spectrum("container").find(".sp-thumb-el:nth-child(1) .sp-thumb-inner").click();
+  equal (el.spectrum("get").toName(), "red", "Third click worked (on child element)");
+  el.spectrum("destroy");
+
+});
+
 test( "Local Storage Is Limited ", function() {
 
   var el = $("<input id='spec' value='red' />").spectrum({

@@ -410,13 +410,13 @@
                 show();
             }
 
-            function palletElementClick(e) {
+            function paletteElementClick(e) {
                 if (e.data && e.data.ignore) {
-                    set($(e.target).data("color"));
+                    set($(e.target).closest(".sp-thumb-el").data("color"));
                     move();
                 }
                 else {
-                    set($(e.target).data("color"));
+                    set($(e.target).closest(".sp-thumb-el").data("color"));
                     move();
                     updateOriginalInput(true);
                     hide();
@@ -426,8 +426,8 @@
             }
 
             var paletteEvent = IE ? "mousedown.spectrum" : "click.spectrum touchstart.spectrum";
-            paletteContainer.delegate(".sp-thumb-el", paletteEvent, palletElementClick);
-            initialColorContainer.delegate(".sp-thumb-el:nth-child(1)", paletteEvent, { ignore: true }, palletElementClick);
+            paletteContainer.delegate(".sp-thumb-el", paletteEvent, paletteElementClick);
+            initialColorContainer.delegate(".sp-thumb-el:nth-child(1)", paletteEvent, { ignore: true }, paletteElementClick);
         }
 
         function updateSelectionPaletteFromStorage() {
