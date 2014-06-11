@@ -66,7 +66,7 @@ License: MIT
 }
 
 .sp-alpha-enabled .sp-top {
-    margin-bottom: 18px;
+    margin-bottom: 5px;
 }
 .sp-alpha-enabled .sp-alpha {
     display: block;
@@ -84,24 +84,35 @@ License: MIT
 }
 .sp-alpha {
     display: none;
-    position: absolute;
-    bottom: -14px;
+    position: relative;
+    bottom: 0;
     right: 0;
     left: 0;
-    height: 8px;
+    height: 15px;
+    
+}
+.sp-alpha-inner-bg {
+    height: 10px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==);
 }
 .sp-alpha-inner {
     border: solid 1px #333;
 }
 
-
 .sp-alpha-text {
     position:relative;
-    top:30px;
+    display:block;
 }
 
 .sp-alpha.sp-alpha-text-enabled {
-    top:40px;
+    height:30px;
+}
+.sp-alpha-inner
+{
+    display:block;
+    position:relative;
+    height:8px;
+    top:0;left:0;bottom:0;right:0;
 }
 
 .sp-clear {
@@ -486,12 +497,12 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     border-color: #000;
 }
 
-.sp-preview, .sp-alpha, .sp-thumb-el
+.sp-preview, .sp-thumb-el
 {
     position:relative;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==);
 }
-.sp-preview-inner, .sp-alpha-inner, .sp-thumb-inner
+.sp-preview-inner, .sp-thumb-inner
 {
     display:block;
     position:absolute;
