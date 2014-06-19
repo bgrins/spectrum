@@ -32,12 +32,14 @@
         cancelText: "cancel",
         chooseText: "choose",
         clearText: "Clear Color Selection",
+        alphaText: "Alpha:",
         noColorSelectedText: "No Color Selected",
         preferredFormat: false,
         className: "", // Deprecated - use containerClassName and replacerClassName instead.
         containerClassName: "",
         replacerClassName: "",
         showAlpha: false,
+        showAlphaText: false,
         theme: "sp-light",
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
         selectionPalette: [],
@@ -99,7 +101,14 @@
                                 gradientFix,
                             "</div>",
                         "</div>",
-                        "<div class='sp-alpha'><div class='sp-alpha-inner'><div class='sp-alpha-handle'></div></div></div>",
+                    "</div>",
+                    "<div class='sp-alpha'>",
+                        "<div class='sp-alpha-text'></div>",
+                        "<div class='sp-alpha-inner-bg'>",
+                            "<div class='sp-alpha-inner'>",
+                                "<div class='sp-alpha-handle'></div>",
+                            "</div>",
+                        "</div>",
                     "</div>",
                     "<div class='sp-input-container sp-cf'>",
                         "<input class='sp-input' type='text' spellcheck='false'  />",
@@ -202,6 +211,7 @@
             alphaSlider = container.find(".sp-alpha"),
             alphaSlideHelper = container.find(".sp-alpha-handle"),
             textInput = container.find(".sp-input"),
+            alphaText = container.find(".sp-alpha-text"),
             paletteContainer = container.find(".sp-palette"),
             initialColorContainer = container.find(".sp-initial"),
             cancelButton = container.find(".sp-cancel"),
@@ -242,6 +252,7 @@
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
+            container.toggleClass("sp-alpha-text-enabled", opts.showAlphaText);
             container.toggleClass("sp-clear-enabled", allowEmpty);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
             container.toggleClass("sp-palette-disabled", !opts.showPalette);
@@ -339,7 +350,11 @@
                     hide();
                 }
             });
-
+            
+            if (opts.showAlpha && opts.showAlphaText) {
+                alphaText.html(opts.alphaText);
+            }
+            
             draggable(alphaSlider, function (dragX, dragY, e) {
                 currentAlpha = (dragX / alphaWidth);
                 isEmpty = false;
@@ -734,6 +749,10 @@
                         alphaSliderInner.css("background",
                             "linear-gradient(to right, " + realAlpha + ", " + realHex + ")");
                     }
+                }
+
+                if (opts.showAlpha && opts.showAlphaText) {
+                    alphaSlider.addClass("sp-alpha-text-enabled");
                 }
 
                 displayColor = realColor.toString(format);
