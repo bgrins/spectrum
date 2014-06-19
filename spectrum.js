@@ -32,11 +32,8 @@
         cancelText: "cancel",
         chooseText: "choose",
         clearText: "Clear Color Selection",
-<<<<<<< HEAD
         alphaText: "Alpha:",
-=======
         noColorSelectedText: "No Color Selected",
->>>>>>> master
         preferredFormat: false,
         className: "", // Deprecated - use containerClassName and replacerClassName instead.
         containerClassName: "",
