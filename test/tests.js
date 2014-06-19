@@ -134,10 +134,58 @@ test( "Default Color Is Set By Input Value", function() {
 
 module("Palettes");
 
+test( "Palette Events Fire In Correct Order ", function() {
+  expect(2);
+  var el = $("<input id='spec' value='red' />").spectrum({
+    showPalette: true,
+    palette: [
+      ["red", "green", "blue"]
+    ],
+    move: function() {
+
+    },
+  });
+
+  var count = 0;
+  el.on("move.spectrum", function(e) {
+    ok(count === 0, "move fires before change");
+    count++;
+  });
+
+  el.on("change.spectrum", function(e) {
+    ok(count === 1, "change fires after move");
+  });
+
+  el.spectrum("container").find(".sp-thumb-el:last-child").click();
+  el.spectrum("destroy");
+});
+
+test( "Palette click events work ", function() {
+  var el = $("<input id='spec' value='red' />").spectrum({
+    showPalette: true,
+    palette: [
+      ["red", "green", "blue"]
+    ],
+    move: function() {
+
+    },
+  });
+
+  el.spectrum("container").find(".sp-thumb-el:nth-child(3)").click();
+  equal (el.spectrum("get").toName(), "blue", "First click worked");
+  el.spectrum("container").find(".sp-thumb-el:nth-child(2) .sp-thumb-inner").click();
+  equal (el.spectrum("get").toName(), "green", "Second click worked (on child element)");
+  el.spectrum("container").find(".sp-thumb-el:nth-child(1) .sp-thumb-inner").click();
+  equal (el.spectrum("get").toName(), "red", "Third click worked (on child element)");
+  el.spectrum("destroy");
+
+});
+
 test( "Local Storage Is Limited ", function() {
 
   var el = $("<input id='spec' value='red' />").spectrum({
     localStorageKey: "spectrum.tests",
+    palette: [["#ff0", "#0ff"]],
     maxSelectionSize: 3
   });
 
@@ -154,11 +202,35 @@ test( "Local Storage Is Limited ", function() {
     "Local storage array has been limited"
   );
 
+  el.spectrum("set", "#ff0");
+  el.spectrum("set", "#0ff");
+
+  equal (
+    localStorage["spectrum.tests"],
+    "rgb(204, 0, 0);rgb(187, 0, 0);rgb(170, 0, 0)",
+    "Local storage array did not get changed by selecting palette items"
+  );
   el.spectrum("destroy");
 
 });
 
 module("Options");
+
+test ("replacerClassName", function() {
+  var el = $("<input />").appendTo("body").spectrum({
+    replacerClassName: "test"
+  });
+  ok (el.next(".sp-replacer").hasClass("test"), "Replacer class has been applied");
+  el.spectrum("destroy").remove();
+});
+
+test ("containerClassName", function() {
+  var el = $("<input />").appendTo("body").spectrum({
+    containerClassName: "test"
+  });
+  ok (el.spectrum("container").hasClass("test"), "Container class has been applied");
+  el.spectrum("destroy").remove();
+});
 
 test( "Options Can Be Set and Gotten Programmatically", function() {
 
@@ -238,6 +310,7 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
   appendToOther.spectrum("destroy");
   appendToOtherFlat.spectrum("destroy");
   appendToParent.spectrum("destroy").remove();
+  delete window.localStorage["spectrum.example"];
 });
 
 test ("Show Input works as expected", function() {
@@ -257,6 +330,47 @@ test ("Show Input works as expected", function() {
   ok(!input.hasClass("sp-validation-error"), "Input does not have validation error class after being reset to original color.");
 
   equal (el.spectrum("get").toHexString(), "#ff0000", "Color is still red");
+  el.spectrum("destroy");
+});
+
+
+test ("Tooltip is formatted based on preferred format", function() {
+  var el = $("<input />").spectrum({
+    showInput: true,
+    color: "rgba(255, 255, 255, .5)",
+    showPalette: true,
+    palette: [["red", "rgba(255, 255, 255, .5)", "rgb(0, 0, 255)"]]
+  });
+
+  function getTitlesString() {
+    return el.spectrum("container").find(".sp-thumb-el").map(function() {
+      return this.getAttribute("title");
+    }).toArray().join(" ");
+  }
+
+  equal (getTitlesString(), "rgb(255, 0, 0) rgba(255, 255, 255, 0.5) rgb(0, 0, 255)", "Titles use rgb format by default");
+
+  el.spectrum("option", "preferredFormat", "hex");
+  equal (getTitlesString(), "#ff0000 #ffffff #0000ff", "Titles are updated to hex");
+
+  el.spectrum("option", "preferredFormat", "hex6");
+  equal (getTitlesString(), "#ff0000 #ffffff #0000ff", "Titles are updated to hex6");
+
+  el.spectrum("option", "preferredFormat", "hex3");
+  equal (getTitlesString(), "#f00 #fff #00f", "Titles are updated to hex3");
+
+  el.spectrum("option", "preferredFormat", "name");
+  equal (getTitlesString(), "red #ffffff blue", "Titles are updated to name");
+
+  el.spectrum("option", "preferredFormat", "hsv");
+  equal (getTitlesString(), "hsv(0, 100%, 100%) hsva(0, 0%, 100%, 0.5) hsv(240, 100%, 100%)", "Titles are updated to hsv");
+
+  el.spectrum("option", "preferredFormat", "hsl");
+  equal (getTitlesString(), "hsl(0, 100%, 50%) hsla(0, 0%, 100%, 0.5) hsl(240, 100%, 50%)", "Titles are updated to hsl");
+
+  el.spectrum("option", "preferredFormat", "rgb");
+  equal (getTitlesString(), "rgb(255, 0, 0) rgba(255, 255, 255, 0.5) rgb(0, 0, 255)", "Titles are updated to rgb");
+
   el.spectrum("destroy");
 });
 
@@ -340,4 +454,60 @@ test( "Change events fire as described" , function() {
 
   input.spectrum("set", "orange");
 
+});
+
+test("The selectedPalette should be updated in each spectrum instance, when storageKeys are identical.", function () {
+
+  delete window.localStorage["spectrum.tests"];
+
+  var colorToChoose = "rgb(0, 244, 0)";
+  var firstEl = $("<input id='firstEl' value='red' />").spectrum({
+    showPalette: true,
+    localStorageKey: "spectrum.tests"
+  });
+    var secondEl = $("<input id='secondEl' value='blue' />").spectrum({
+    showPalette: true,
+    localStorageKey: "spectrum.tests"
+  });
+
+  firstEl.spectrum("set", colorToChoose);
+
+  secondEl.spectrum("toggle");
+
+  var selectedColor = secondEl.spectrum("container").find('span[data-color="' + colorToChoose + '"]');
+  ok(selectedColor.length > 0, "Selected color is also shown in the others instance's palette.");
+
+  delete window.localStorage["spectrum.tests"];
+
+  firstEl.spectrum("destroy");
+  secondEl.spectrum("destroy");
+});
+
+test("The selectedPalette should not be updated in spectrum instances that have different storageKeys.", function () {
+
+  delete window.localStorage["spectrum.test_1"];
+  delete window.localStorage["spectrum.test_2"];
+
+  var colorToChoose = "rgb(0, 244, 0)";
+  var firstEl = $("<input id='firstEl' value='red' />").spectrum({
+    showPalette: true,
+    localStorageKey: "spectrum.test_1"
+  });
+    var secondEl = $("<input id='secondEl' value='blue' />").spectrum({
+    showPalette: true,
+    localStorageKey: "spectrum.test_2"
+  });
+
+  firstEl.spectrum("set", colorToChoose);
+
+  secondEl.spectrum("toggle");
+
+  var selectedColor = secondEl.spectrum("container").find('span[data-color="' + colorToChoose + '"]');
+  ok(selectedColor.length === 0, "Selected color should not be available in instances with other storageKey.");
+
+  firstEl.spectrum("destroy");
+  secondEl.spectrum("destroy");
+
+  delete window.localStorage["spectrum.test_1"];
+  delete window.localStorage["spectrum.test_2"];
 });

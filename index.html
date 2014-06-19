@@ -19,7 +19,7 @@
 <div id='header'>
     <h1><a href='http://bgrins.github.com/spectrum'>Spectrum</a></h1> <h2><em>The No Hassle jQuery Colorpicker</em></h2>
     <div id='links'>
-        <a href='http://github.com/bgrins/spectrum/zipball/1.3.0' class="btn btn-primary">Download Zip</a>
+        <a href='http://github.com/bgrins/spectrum/zipball/1.3.4' class="btn btn-primary">Download Zip</a>
         View the <a href='http://github.com/bgrins/spectrum'>Source code</a>.
         Spectrum is a project by <a href='http://twitter.com/bgrins'>@bgrins</a>.
     </div>
@@ -84,7 +84,7 @@
         <h3 id="why-devtools" class='point'>Devtools</h3>
 
         <p>
-            Believe it or not, <strong>this colorpicker lives inside of Chrome and Safari devtools</strong> to make picking colors easier for web developers and designers.
+            Believe it or not, <strong>this colorpicker lives inside of Chrome, Firefox, and Safari devtools</strong> to make picking colors easier for web developers and designers.
         </p>
 
         <p>
@@ -92,7 +92,7 @@
         </p>
 
         <p>
-            From there, I opened a development case, entitled <a href="https://bugs.webkit.org/show_bug.cgi?id=71262">Web Inspector: Add colorpicker functionality to color swatches in Styles Sidebar</a>.  50+ comments and 10 patches later, the case <a href="http://www.webkit.org/blog/1804/last-week-in-webkit-calculated-css-values-and-the-translate-attribute/">landed in WebKit</a>. Thanks to all the WebKit developers who helped me along the way with getting the code and UI ready for committing.
+            From there, I opened a <a href="https://bugs.webkit.org/show_bug.cgi?id=71262">bug</a> to start working on it Web Inspector.  50+ comments and 10 patches later, the case <a href="http://www.webkit.org/blog/1804/last-week-in-webkit-calculated-css-values-and-the-translate-attribute/">landed in WebKit</a>. Here is the <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=911702'>Firefox bug</a> where it was added.
         </p>
 
 
@@ -199,7 +199,8 @@ $("#picker").spectrum({
     clickoutFiresChange: bool,
     cancelText: string,
     chooseText: string,
-    className: string,
+    containerClassName: string,
+    replacerClassName: string,
     preferredFormat: string,
     maxSelectionSize: int,
     palette: [[string]],
@@ -384,8 +385,9 @@ $("#showSelectionPaletteStorage").spectrum({
             <div class='example'>
                     <span class='label label-info'>This colorpicker will store what you pick:</span><br /><br />
                     <input type='text' name='showSelectionPalette' id='showSelectionPalette' value='lightblue' /><br /><br />
-                    <span class='label label-info'>Try reloading your page, it will still be here on this one:</span><br /><br />
+                    <span class='label label-info'>Try switching between the two colorpickers or reloading your page, the chosen colors are always available:</span><br /><br />
                     <input type='text' name='showSelectionPaletteStorage' id='showSelectionPaletteStorage' value='lightblue' />
+                    <input type='text' name='showSelectionPaletteStorage2' id='showSelectionPaletteStorage2' value='pink' />
             </div>
         </div>
 
@@ -460,7 +462,7 @@ $("#showInputInitialClear").spectrum({
     showInput: true
 });
             </pre>
-            
+
             <div class='example'>
                     <input type='text' name='showInputInitialClear' id='showInputInitialClear' value='' />
             </div>
@@ -504,17 +506,17 @@ $("#hideButtons").spectrum({
             </div>
         </div>
 
-        <h3 id="options-className">className</h3>
+        <h3 id="options-containerClassName">Container Class Name</h3>
         <div class='option-content'>
             <div class='description'>
                 <p>
-                You can add an additional class name to the replacer and container element using the <code>className</code> property.
+                You can add an additional class name to the just the container element using the <code>containerClassName</code> property.
                 </p>
             </div>
 
             <pre class='prettyprint'>
-$("#className").spectrum({
-    className: 'awesome'
+$("#containerClassName").spectrum({
+    containerClassName: 'awesome'
 });
             </pre>
             <pre class='prettyprint'>
@@ -529,46 +531,88 @@ $("#className").spectrum({
             </style>
 
             <div class='example'>
-                    <input type='text' name='className' id='className' value='orangered' />
+                    <input type='text' name='containerClassName' id='containerClassName' value='orangered' />
+            </div>
+        </div>
+
+        <h3 id="options-replacerClassName">Replacer Class Name</h3>
+        <div class='option-content'>
+            <div class='description'>
+                <p>
+                You can add an additional class name to just the replacer element using the <code>replacerClassName</code> property.
+                </p>
+            </div>
+
+            <pre class='prettyprint'>
+$("#replacerClassName").spectrum({
+    replacerClassName: 'awesome'
+});
+            </pre>
+            <pre class='prettyprint'>
+.awesome {
+    background: purple;
+}
+            </pre>
+            <style type='text/css'>
+.awesome {
+    background: purple;
+}
+            </style>
+
+            <div class='example'>
+                    <input type='text' name='replacerClassName' id='replacerClassName' value='orangered' />
             </div>
         </div>
 
         <h3 id="options-preferredFormat">Preferred Format</h3>
         <div class='option-content'>
             <div class='description'>
-                <p>You can set the format that is displayed</p>
+                <p>You can set the format that is displayed in the text box.</p>
+                <p>This will also change the format that is displayed in the titles from the palette swatches.</p>
             </div>
 
             <pre class='prettyprint'>
 $("#preferredHex").spectrum({
     preferredFormat: "hex",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
-$("#preferredHex6").spectrum({
-    preferredFormat: "hex6",
-    showInput: true
+$("#preferredHex3").spectrum({
+    preferredFormat: "hex3",
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredHsl").spectrum({
     preferredFormat: "hsl",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredRgb").spectrum({
     preferredFormat: "rgb",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredName").spectrum({
     preferredFormat: "name",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredNone").spectrum({
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
             </pre>
             <div class='example'>
                     <div class='alert alert-info'>Hex</div>
                     <input type='text' name='preferredHex' id='preferredHex' value='orangered' />
-                    <div class='alert alert-info'>Hex (6 Characters Always)</div>
-                    <input type='text' name='preferredHex6' id='preferredHex6' value='orangered' />
+                    <div class='alert alert-info'>Hex (3 Characters If Possible)</div>
+                    <input type='text' name='preferredHex3' id='preferredHex3' value='orangered' />
                     <div class='alert alert-info'>Hsl</div>
                     <input type='text' name='preferredHsl' id='preferredHsl' value='orangered' />
                     <div class='alert alert-info'>Rgb</div>
@@ -864,7 +908,7 @@ $("#btnEnterAColor").click(function() {
         <div class='option-content'>
             <div class='description'>
                 <p>
-                Resets the positioning of the container element.  This could be used if the colorpicker is inside of a moving area.
+                Resets the positioning of the container element.  This could be used was hidden when initialized, or if the colorpicker is inside of a moving area.
                 </p>
             </div>
         </div>

@@ -13,7 +13,7 @@ $("#full").spectrum({
     allowEmpty:true,
     color: "#ECC",
     showInput: true,
-    className: "full-spectrum",
+    containerClassName: "full-spectrum",
     showInitial: true,
     showPalette: true,
     showSelectionPalette: true,
@@ -202,6 +202,14 @@ $("#className").spectrum({
     className: 'awesome'
 });
 
+$("#replacerClassName").spectrum({
+    replacerClassName: 'awesome'
+});
+
+$("#containerClassName").spectrum({
+    containerClassName: 'awesome'
+});
+
 $("#showPalette").spectrum({
     showPalette: true,
     palette: [
@@ -282,12 +290,16 @@ $("#eventhide").spectrum({
     }
 });
 
-$("#eventdragstart").spectrum().on("dragstart.spectrum", function(e, c) {
+$("#eventdragstart").spectrum({
+    showAlpha: true
+}).on("dragstart.spectrum", function(e, c) {
     var label = $("#eventdragstartLabel");
     label.text("dragstart called at " + prettyTime() + " (color is " + c.toHexString() + ")");
 });
 
-$("#eventdragstop").spectrum().on("dragstop.spectrum", function(e, c) {
+$("#eventdragstop").spectrum({
+    showAlpha: true
+}).on("dragstop.spectrum", function(e, c) {
     var label = $("#eventdragstopLabel");
     label.text("dragstop called at " + prettyTime() + " (color is " + c.toHexString() + ")");
 });
@@ -299,8 +311,8 @@ $(".override").spectrum({
     change: updateBorders
 });
 
-$(".startEmpty").spectrum({ 
-    allowEmpty:true, 
+$(".startEmpty").spectrum({
+    allowEmpty:true,
     change: updateBorders});
 
 $("#beforeShow").spectrum({
@@ -332,30 +344,48 @@ $("#showSelectionPaletteStorage").spectrum({
     showSelectionPalette: true,
     palette: [ ]
 });
+$("#showSelectionPaletteStorage2").spectrum({
+    showPalette: true,
+    localStorageKey: "spectrum.homepage", // Any picker with the same string will share selection
+    showSelectionPalette: true,
+    palette: [ ]
+});
 
 
 $("#preferredHex").spectrum({
     preferredFormat: "hex",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
-$("#preferredHex6").spectrum({
-    preferredFormat: "hex6",
-    showInput: true
+$("#preferredHex3").spectrum({
+    preferredFormat: "hex3",
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredHsl").spectrum({
     preferredFormat: "hsl",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredRgb").spectrum({
     preferredFormat: "rgb",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredName").spectrum({
     preferredFormat: "name",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredNone").spectrum({
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 
 $("#triggerSet").spectrum({
@@ -368,7 +398,6 @@ $("#triggerSet").show();
 $("#btnEnterAColor").click(function() {
     $("#triggerSet").spectrum("set", $("#enterAColor").val());
 });
-
 
 $("#toggle").spectrum();
 $("#btn-toggle").click(function() {

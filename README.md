@@ -26,6 +26,12 @@ Head over to the [docs](http://bgrins.github.io/spectrum) for more information. 
 
 Spectrum is registered as a jQuery plugin on the jQuery plugin repository here: http://plugins.jquery.com/spectrum/
 
+### Bower
+
+Spectrum is registered as a package with [Bower](http://bower.io/), so it can be pulled down using:
+
+    bower install spectrum
+
 ### Continuous Integration
 
 [![Build Status](https://secure.travis-ci.org/bgrins/spectrum.png?branch=master)](http://travis-ci.org/bgrins/spectrum)
@@ -50,3 +56,5 @@ If you'd like to run the development version, spectrum uses Grunt to automate th
 ### Internationalization
 
 If you are able to translate the text in the UI to another language, please do!  You can do so by either [filing a pull request](https://github.com/bgrins/spectrum/pulls) or [opening an issue]( https://github.com/bgrins/spectrum/issues) with the translation.  The existing languages are listed at: https://github.com/bgrins/spectrum/tree/master/i18n.
+
+For an example, see the [Dutch translation](i18n/jquery.spectrum-nl.js).
