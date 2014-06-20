@@ -23,7 +23,7 @@
         showInitial: false,
         showPalette: false,
         showPaletteOnly: false,
-        showPaletteOnlyToggle: false,
+        togglePaletteOnly: false,
         showSelectionPalette: true,
         localStorageKey: false,
         appendTo: "body",
@@ -228,7 +228,7 @@
                 opts.showPalette = true;
             }
 
-            toggleButton.text((!opts.showPaletteOnly && typeof opts.toggleLessText == 'string') ? opts.toggleLessText : opts.toggleText);
+            toggleButton.text(opts.showPaletteOnly ? opts.toggleText : opts.toggleLessText);
 
             if (opts.palette) {
                 palette = opts.palette.slice(0);
@@ -247,7 +247,7 @@
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
             container.toggleClass("sp-clear-enabled", allowEmpty);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
-            container.toggleClass("sp-palette-buttons-disabled", !opts.showPaletteOnlyToggle);
+            container.toggleClass("sp-palette-buttons-disabled", !opts.togglePaletteOnly);
             container.toggleClass("sp-palette-disabled", !opts.showPalette);
             container.toggleClass("sp-palette-only", opts.showPaletteOnly);
             container.toggleClass("sp-initial-disabled", !opts.showInitial);
@@ -344,7 +344,7 @@
                 }
             });
 
-            toggleButton.text((!opts.showPaletteOnly && typeof opts.toggleLessText == 'string') ? opts.toggleLessText : opts.toggleText);
+            toggleButton.text(opts.showPaletteOnly ? opts.toggleText : opts.toggleLessText);
             toggleButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
