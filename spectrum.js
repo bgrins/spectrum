@@ -45,6 +45,7 @@
         disabled: false
     },
     spectrums = [],
+    replaceInput,
     IE = !!/msie/i.exec( window.navigator.userAgent ),
     rgbaSupport = (function() {
         function contains( str, substr ) {
