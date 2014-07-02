@@ -370,15 +370,18 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     display:inline-block;
     *zoom: 1;
     *display: inline;
-    border: solid 1px #91765d;
-    background: #eee;
-    color: #333;
+    border: solid 1px #ccc; /* Donna */
+    border-radius: 4px; /* Donna */
+    background: #fff; /* Donna */
+    color: #000;  /* Donna */
     vertical-align: middle;
 }
-.sp-replacer:hover, .sp-replacer.sp-active {
+/* Donna Start */
+/* .sp-replacer:hover, .sp-replacer.sp-active {
     border-color: #F0C49B;
     color: #111;
-}
+} */
+/* Donna End */
 .sp-replacer.sp-disabled {
     cursor:default;
     border-color: silver;
@@ -402,6 +405,38 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     z-index: 0;
 }
 
+/* Donna Start */
+.sp-preview-char
+{
+    font-size: 14px;
+    font-weight: normal;
+    bottom: 2px;
+    position: relative;
+}
+
+.text-color-picker .sp-preview
+{
+    float: left;
+    height: 20px;
+    width: 22px;
+    bottom: 1px;
+    text-align: center;
+    border: 0;
+    border-bottom: 4px solid #000;
+    background-image: none;
+}
+
+.highlight-color-picker .sp-preview {
+  border: 0;
+  background-image: none;
+}
+
+.highlight-color-picker img {
+  height: 20px;
+  width: 22px;
+}
+/* Donna End */
+
 .sp-palette
 {
     *width: 220px;
@@ -422,7 +457,9 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 
 
 /* Buttons: http://hellohappy.org/css3-buttons/ */
-.sp-container button {
+.sp-container button,
+.sp-cancel /* Donna */
+{
   background-color: #eeeeee;
   background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
   background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
@@ -461,22 +498,17 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     -o-box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
     box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
 }
+/* Donna Start */
 .sp-cancel
 {
-    font-size: 11px;
-    color: #d93f3f !important;
-    margin:0;
-    padding:2px;
-    margin-right: 5px;
-    vertical-align: middle;
-    text-decoration:none;
-
+  margin-left: 5px;
 }
-.sp-cancel:hover
+/* .sp-cancel:hover
 {
     color: #d93f3f !important;
     text-decoration: underline;
-}
+} */
+/* Donna End */
 
 
 .sp-palette span:hover, .sp-palette span.sp-thumb-active
