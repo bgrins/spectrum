@@ -200,8 +200,8 @@ $("#picker").spectrum({
     clickoutFiresChange: bool,
     cancelText: string,
     chooseText: string,
-    toggleText: string,
-    toggleLessText: string,
+    togglePaletteMoreText: string,
+    togglePaletteLessText: string,
     containerClassName: string,
     replacerClassName: string,
     preferredFormat: string,
@@ -369,15 +369,15 @@ $("#showPaletteOnly").spectrum({
             <div class='description'>
             <p>Spectrum can show a button to toggle the colorpicker next to the palette. This way, the user can choose from a limited number of colors in the palette, but still be able to pick a color that's not in the palette.<br />
                 The default value for <code>togglePaletteOnly</code> is FALSE. Set it to TRUE to enable the Toggle button.<br /><br />
-                You can also change the text on the Toggle Button with the options <code>toggleText</code> (default is "more") and <code>toggleLessText</code> (default is "less").</p>
+                You can also change the text on the Toggle Button with the options <code>togglePaletteMoreText</code> (default is "more") and <code>togglePaletteLessText</code> (default is "less").</p>
             </div>
 
             <pre class='prettyprint'>
 $("#togglePaletteOnly").spectrum({
     showPaletteOnly: true,
     togglePaletteOnly: true,
-    toggleText: 'more',
-    toggleLessText: 'less',
+    togglePaletteMoreText: 'more',
+    togglePaletteLessText: 'less',
     color: 'blanchedalmond',
     palette: [
         ["#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"],

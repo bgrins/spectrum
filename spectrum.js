@@ -30,8 +30,8 @@
         maxSelectionSize: 7,
         cancelText: "cancel",
         chooseText: "choose",
-        toggleText: "more",
-        toggleLessText: "less",
+        togglePaletteMoreText: "more",
+        togglePaletteLessText: "less",
         clearText: "Clear Color Selection",
         preferredFormat: false,
         className: "", // Deprecated - use containerClassName and replacerClassName instead.
@@ -228,7 +228,7 @@
                 opts.showPalette = true;
             }
 
-            toggleButton.text(opts.showPaletteOnly ? opts.toggleText : opts.toggleLessText);
+            toggleButton.text(opts.showPaletteOnly ? opts.togglePaletteMoreText : opts.togglePaletteLessText);
 
             if (opts.palette) {
                 palette = opts.palette.slice(0);
@@ -344,18 +344,18 @@
                 }
             });
 
-            toggleButton.text(opts.showPaletteOnly ? opts.toggleText : opts.toggleLessText);
+            toggleButton.text(opts.showPaletteOnly ? opts.togglePaletteMoreText : opts.togglePaletteLessText);
             toggleButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
 
                 opts.showPaletteOnly = !opts.showPaletteOnly;
-				
-				// To make sure the Picker area is drawn on the right, next to the
-				// Palette area (and not below the palette), first move the Palette
-				// to the left to make space for the picker, plus 5px extra.
-				// The 'applyOptions' function puts the whole container back into place
-				// and takes care of the button-text and the sp-palette-only CSS class.
+
+                // To make sure the Picker area is drawn on the right, next to the
+                // Palette area (and not below the palette), first move the Palette
+                // to the left to make space for the picker, plus 5px extra.
+                // The 'applyOptions' function puts the whole container back into place
+                // and takes care of the button-text and the sp-palette-only CSS class.
                 if (!opts.showPaletteOnly && !flat) {
                     container.css('left', '-=' + (pickerContainer.outerWidth(true) + 5));
                 }
