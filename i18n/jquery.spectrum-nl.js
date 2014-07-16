@@ -8,6 +8,8 @@
         cancelText: "Annuleer",
         chooseText: "Kies",
         clearText: "Wis kleur selectie"
+        togglePaletteMoreText: 'Meer',
+        togglePaletteLessText: 'Minder'
     };
 
     $.extend($.fn.spectrum.defaults, localization);

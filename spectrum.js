@@ -25,12 +25,15 @@
         showInitial: false,
         showPalette: false,
         showPaletteOnly: false,
+        togglePaletteOnly: false,
         showSelectionPalette: true,
         localStorageKey: false,
         appendTo: "body",
         maxSelectionSize: 7,
         cancelText: "cancel",
         chooseText: "choose",
+        togglePaletteMoreText: "more",
+        togglePaletteLessText: "less",
         clearText: "Clear Color Selection",
         noColorSelectedText: "No Color Selected",
         preferredFormat: false,
@@ -80,6 +83,9 @@
             "<div class='sp-container sp-hidden'>",
                 "<div class='sp-palette-container'>",
                     "<div class='sp-palette sp-thumb sp-cf'></div>",
+                    "<div class='sp-palette-button-container sp-cf'>",
+                        "<button type='button' class='sp-palette-toggle'></button>",
+                    "</div>",
                 "</div>",
                 "<div class='sp-picker-container'>",
                     "<div class='sp-top sp-cf'>",
@@ -194,6 +200,7 @@
             boundElement = $(element),
             disabled = false,
             container = $(markup, doc).addClass(theme),
+            pickerContainer = container.find(".sp-picker-container"),
             dragger = container.find(".sp-color"),
             dragHelper = container.find(".sp-dragger"),
             slider = container.find(".sp-hue"),
@@ -207,6 +214,7 @@
             cancelButton = container.find(".sp-cancel"),
             clearButton = container.find(".sp-clear"),
             chooseButton = container.find(".sp-choose"),
+            toggleButton = container.find(".sp-palette-toggle"),
             isInput = boundElement.is("input"),
             isInputTypeColor = isInput && inputTypeColorSupport && boundElement.attr("type") === "color",
             shouldReplace = isInput && !flat,
@@ -227,6 +235,8 @@
                 opts.showPalette = true;
             }
 
+            toggleButton.text(opts.showPaletteOnly ? opts.togglePaletteMoreText : opts.togglePaletteLessText);
+
             if (opts.palette) {
                 palette = opts.palette.slice(0);
                 paletteArray = $.isArray(palette[0]) ? palette : [palette];
@@ -244,6 +254,7 @@
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
             container.toggleClass("sp-clear-enabled", allowEmpty);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
+            container.toggleClass("sp-palette-buttons-disabled", !opts.togglePaletteOnly);
             container.toggleClass("sp-palette-disabled", !opts.showPalette);
             container.toggleClass("sp-palette-only", opts.showPaletteOnly);
             container.toggleClass("sp-initial-disabled", !opts.showInitial);
@@ -338,6 +349,24 @@
                     updateOriginalInput(true);
                     hide();
                 }
+            });
+
+            toggleButton.text(opts.showPaletteOnly ? opts.togglePaletteMoreText : opts.togglePaletteLessText);
+            toggleButton.bind("click.spectrum", function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+
+                opts.showPaletteOnly = !opts.showPaletteOnly;
+
+                // To make sure the Picker area is drawn on the right, next to the
+                // Palette area (and not below the palette), first move the Palette
+                // to the left to make space for the picker, plus 5px extra.
+                // The 'applyOptions' function puts the whole container back into place
+                // and takes care of the button-text and the sp-palette-only CSS class.
+                if (!opts.showPaletteOnly && !flat) {
+                    container.css('left', '-=' + (pickerContainer.outerWidth(true) + 5));
+                }
+                applyOptions();
             });
 
             draggable(alphaSlider, function (dragX, dragY, e) {
