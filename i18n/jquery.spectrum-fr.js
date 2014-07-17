@@ -6,7 +6,8 @@
 
     var localization = $.spectrum.localization["fr"] = {
         cancelText: "Annuler",
-        chooseText: "Valider"
+        chooseText: "Valider",
+        
     };
 
     $.extend($.fn.spectrum.defaults, localization);
