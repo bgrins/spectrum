@@ -143,7 +143,7 @@ test( "Palette Events Fire In Correct Order ", function() {
     ],
     move: function() {
 
-    },
+    }
   });
 
   var count = 0;
@@ -168,7 +168,7 @@ test( "Palette click events work ", function() {
     ],
     move: function() {
 
-    },
+    }
   });
 
   el.spectrum("container").find(".sp-thumb-el:nth-child(3)").click();
@@ -264,7 +264,7 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
   spec.spectrum("option", "palette", [['red'], ['green'], ['blue']]);
   var optPalette = spec.spectrum("option", "palette");
   deepEqual (optPalette, [['red'], ['green'], ['blue']], "Changing an option then fetching it is updated");
-  var numPaletteElements = spec.spectrum("container").find(".sp-palette-row:not(.sp-palette-row-selection) .sp-thumb-el").length;
+  numPaletteElements = spec.spectrum("container").find(".sp-palette-row:not(.sp-palette-row-selection) .sp-thumb-el").length;
   equal (numPaletteElements, 3, "Three palette elements after updating");
 
   var appendToDefault = $("<input />").spectrum({
