@@ -181,6 +181,21 @@ test( "Palette click events work ", function() {
 
 });
 
+test( "Palette stays open after color select", function() {
+  var el = $("<input id='spec' value='red' />").spectrum({
+    showPalette: true,
+    hidePaletteAfterSelect: false,
+    palette: [
+      ["red", "green", "blue"]
+    ]
+  });
+
+  el.spectrum("show");
+  el.spectrum("container").find(".sp-thumb-el:nth-child(1)").click();
+
+  ok(!el.spectrum("container").hasClass('sp-hidden'), "palette is still visible after color selection");
+});
+
 test( "Local Storage Is Limited ", function() {
 
   var el = $("<input id='spec' value='red' />").spectrum({
