@@ -25,7 +25,7 @@
         showInitial: false,
         showPalette: false,
         showPaletteOnly: false,
-        hidePaletteAfterSelect: true,
+        hideAfterPaletteSelect: false,
         togglePaletteOnly: false,
         showSelectionPalette: true,
         localStorageKey: false,
@@ -449,7 +449,7 @@
                     set($(e.target).closest(".sp-thumb-el").data("color"));
                     move();
                     updateOriginalInput(true);
-                    if (opts.hidePaletteAfterSelect) {
+                    if (opts.hideAfterPaletteSelect) {
                       hide();
                     }
                 }

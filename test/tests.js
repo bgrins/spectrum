@@ -184,7 +184,7 @@ test( "Palette click events work ", function() {
 test( "Palette stays open after color select", function() {
   var el = $("<input id='spec' value='red' />").spectrum({
     showPalette: true,
-    hidePaletteAfterSelect: false,
+    hideAfterPaletteSelect: false,
     palette: [
       ["red", "green", "blue"]
     ]
