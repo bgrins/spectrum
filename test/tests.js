@@ -181,7 +181,7 @@ test( "Palette click events work ", function() {
 
 });
 
-test( "Palette stays open after color select", function() {
+test( "hideAfterPaletteSelect: Palette stays open after color select", function() {
   var el = $("<input id='spec' value='red' />").spectrum({
     showPalette: true,
     hideAfterPaletteSelect: false,
@@ -194,6 +194,23 @@ test( "Palette stays open after color select", function() {
   el.spectrum("container").find(".sp-thumb-el:nth-child(1)").click();
 
   ok(!el.spectrum("container").hasClass('sp-hidden'), "palette is still visible after color selection");
+  el.spectrum("destroy");
+});
+
+test( "hideAfterPaletteSelect: Palette closes after color select", function() {
+  var el = $("<input id='spec' value='red' />").spectrum({
+    showPalette: true,
+    hideAfterPaletteSelect: true,
+    palette: [
+      ["red", "green", "blue"]
+    ]
+  });
+
+  el.spectrum("show");
+  el.spectrum("container").find(".sp-thumb-el:nth-child(1)").click();
+
+  ok(el.spectrum("container").hasClass('sp-hidden'), "palette is still hidden after color selection");
+  el.spectrum("destroy");
 });
 
 test( "Local Storage Is Limited ", function() {
