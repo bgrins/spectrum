@@ -527,6 +527,27 @@ test( "Change events fire as described" , function() {
 
 });
 
+test( "Change events fire if option was set" , function() {
+
+  expect(2);
+  var input = $("<input />");
+
+  input.on("change", function() {
+    ok(true, "Change should be fired");
+  });
+
+  input.spectrum({
+    color: "red",
+    alwaysFireChange: true,
+    change: function() {
+      ok (true, "Change should be fired inside of spectrum callback");
+    }
+  });
+
+  input.spectrum("set", "orange");
+
+});
+
 test("The selectedPalette should be updated in each spectrum instance, when storageKeys are identical.", function () {
 
   delete window.localStorage["spectrum.tests"];
