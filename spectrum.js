@@ -44,7 +44,8 @@
         theme: "sp-light",
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
         selectionPalette: [],
-        disabled: false
+        disabled: false,
+        alwaysFireChange: false
     },
     spectrums = [],
     IE = !!/msie/i.exec( window.navigator.userAgent ),
@@ -842,7 +843,7 @@
 
             colorOnShow = color;
 
-            if (fireCallback && hasChanged) {
+            if ((fireCallback && hasChanged) || opts.alwaysFireChange) {
                 callbacks.change(color);
                 boundElement.trigger('change', [ color ]);
             }
