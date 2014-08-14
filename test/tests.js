@@ -106,6 +106,23 @@ test( "Events Fire", function() {
   el2.spectrum("destroy");
 });
 
+test( "Dragging", function() {
+  var el = $("<input id='spec' />").spectrum();
+  var hueSlider = el.spectrum("container").find(".sp-hue");
+
+  ok (hueSlider.length, "There is a hue slider");
+
+  hueSlider.trigger("mousedown");
+
+  ok ($("body").hasClass("sp-dragging"), "The body has dragging class");
+
+  hueSlider.trigger("mouseup");
+
+  ok (!$("body").hasClass("sp-dragging"), "The body does not have a dragging class");
+
+  el.spectrum("destroy");
+});
+
 module("Defaults");
 
 test( "Default Color Is Set By Input Value", function() {
