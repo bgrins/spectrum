@@ -617,6 +617,14 @@
             drawInitial();
             callbacks.show(colorOnShow);
             boundElement.trigger('show.spectrum', [ colorOnShow ]);
+
+            // listen for enter key events
+            $(doc).bind("keydown", function (e) {
+                if(e.which == 13) {
+                    updateOriginalInput(true);
+                    hide();
+                }
+            });
         }
 
         function hide(e) {
@@ -628,6 +636,7 @@
             if (!visible || flat) { return; }
             visible = false;
 
+            $(doc).unbind("keydown");
             $(doc).unbind("click.spectrum", hide);
             $(window).unbind("resize.spectrum", resize);
 
