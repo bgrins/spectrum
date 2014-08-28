@@ -31,6 +31,8 @@ $("#full").spectrum({
 
     },
     hide: function (color) {
+        console.log("HIde called", color.toHex());
+        console.trace();
         updateBorders(color);
     },
 

@@ -226,7 +226,6 @@
             colorOnShow = false,
             preferredFormat = opts.preferredFormat,
             currentPreferredFormat = preferredFormat,
-            clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange,
             isEmpty = !initialColor,
             allowEmpty = opts.allowEmpty && !isInputTypeColor;
 
@@ -564,13 +563,11 @@
 
             if ((value === null || value === "") && allowEmpty) {
                 set(null);
-                updateOriginalInput(true);
             }
             else {
                 var tiny = tinycolor(value);
                 if (tiny.isValid()) {
                     set(tiny);
-                    updateOriginalInput(true);
                 }
                 else {
                     textInput.addClass("sp-validation-error");
@@ -635,12 +632,16 @@
             container.addClass("sp-hidden");
 
             var colorHasChanged = !tinycolor.equals(get(), colorOnShow);
+            console.log("Has color changed?", get().toHexString(), colorOnShow.toHexString());
 
             if (colorHasChanged) {
+                var clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange;
+                console.log(clickoutFiresChange, e);
                 if (clickoutFiresChange && e !== "cancel") {
                     updateOriginalInput(true);
                 }
                 else {
+                    console.log("Reverting");
                     revert();
                 }
             }
@@ -654,6 +655,8 @@
         }
 
         function set(color, ignoreFormatChange) {
+            console.log("set is called", tinycolor(color).toHex());
+            console.trace();
             if (tinycolor.equals(color, get())) {
                 // Update UI just in case a validation error needs
                 // to be cleared.
@@ -1021,7 +1024,7 @@
                     return stop();
                 }
 
-                var touches = e.originalEvent.touches;
+                var touches = e.originalEvent && e.originalEvent.touches;
                 var pageX = touches ? touches[0].pageX : e.pageX;
                 var pageY = touches ? touches[0].pageY : e.pageY;
 
