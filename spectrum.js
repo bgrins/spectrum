@@ -325,7 +325,8 @@
             cancelButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-                hide("cancel");
+                revert();
+                hide();
             });
 
             clearButton.attr("title", opts.clearText);
@@ -604,7 +605,7 @@
             hideAll();
             visible = true;
 
-            $(doc).bind("click.spectrum", hide);
+            $(doc).bind("click.spectrum", clickout);
             $(window).bind("resize.spectrum", resize);
             replacer.addClass("sp-active");
             container.removeClass("sp-hidden");
@@ -619,31 +620,26 @@
             boundElement.trigger('show.spectrum', [ colorOnShow ]);
         }
 
-        function hide(e) {
+        function clickout(e) {
+            if (clickoutFiresChange) {
+                updateOriginalInput(true);
+            }
+            else {
+                revert();
+            }
+            hide();
+        }
 
-            // Return on right click
-            if (e && e.type == "click" && e.button == 2) { return; }
-
+        function hide() {
             // Return if hiding is unnecessary
             if (!visible || flat) { return; }
             visible = false;
 
-            $(doc).unbind("click.spectrum", hide);
+            $(doc).unbind("click.spectrum", clickout);
             $(window).unbind("resize.spectrum", resize);
 
             replacer.removeClass("sp-active");
             container.addClass("sp-hidden");
-
-            var colorHasChanged = !tinycolor.equals(get(), colorOnShow);
-
-            if (colorHasChanged) {
-                if (clickoutFiresChange && e !== "cancel") {
-                    updateOriginalInput(true);
-                }
-                else {
-                    revert();
-                }
-            }
 
             callbacks.hide(get());
             boundElement.trigger('hide.spectrum', [ get() ]);

@@ -610,3 +610,14 @@ test( "Cancelling reverts color", function() {
   equal ( el.spectrum("get").toName(), "red", "Color is reverted after clicking 'cancel'");
   el.spectrum("destroy");
 });
+
+test( "Choosing updates the color", function() {
+  var el = $("<input value='red' />").spectrum();
+  el.spectrum("show");
+  equal ( el.spectrum("get").toName(), "red", "Color is initialized");
+  el.spectrum("set", "orange");
+  equal ( el.spectrum("get").toName(), "orange", "Color is set");
+  el.spectrum("container").find(".sp-choose").click();
+  equal ( el.spectrum("get").toName(), "orange", "Color is kept after clicking 'choose'");
+  el.spectrum("destroy");
+});
