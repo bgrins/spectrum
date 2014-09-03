@@ -634,7 +634,7 @@
 
         function clickout(e) {
             // Return on right click.
-            if (e && e.type == "click" && e.button == 2) { return; }
+            if (e.button == 2) { return; }
 
             if (clickoutFiresChange) {
                 updateOriginalInput(true);
