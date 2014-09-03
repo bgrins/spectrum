@@ -5,17 +5,17 @@
 
 (function (factory) {
     "use strict";
-    if ( typeof define === 'function' && define.amd ) {
-        // AMD. Register as an anonymous module.
+
+    if (typeof define === 'function' && define.amd) { // AMD
         define(['jquery'], factory);
-    } else if (typeof exports === 'object') {
-        // Node/CommonJS style for Browserify
+    }
+    else if (typeof exports == "object" && typeof module == "object") { // CommonJS
         module.exports = factory;
-    } else {
-        // Browser globals
+    }
+    else { // Browser
         factory(jQuery);
     }
-}(function ($, undefined) {
+})(function($, undefined) {
     "use strict";
 
     var defaultOpts = {
@@ -2264,4 +2264,4 @@
         }
     });
 
-}));
+});
