@@ -97,32 +97,6 @@
 
 
         <h2 id="modes">Modes</h2>
-        <h3 id="modes-input" class='point'>input[type=color]</h3>
-
-    <p>
-    If you just want to provide a polyfill for the native color input,
-    the easiest way is to create an input with the type of color.
-    Once a user's browser supports a native color control, it will opt to use their native control instead.
-    </p>
-    <p><strong>Unlike the other modes, your value must be a 6 character hex value starting with a '#'.</strong>  Why?  Because the spec <a href='http://dev.w3.org/html5/markup/input.color.html#input.color.attrs.value'>says so</a>, that's why.
-    </p>
-
-<pre class='prettyprint' id='code-subheading'>
-&lt;input type='color' name='color' /&gt;
-&lt;input type='color' name='color2' value='#3355cc' /&gt;
-</pre>
-    <div class='example'>
-<form method="get">
-    <input type='color' name='color' />
-    <input type='color' name='color2' value='#3355cc' />
-    <input type='color' name='color3' value='#000000' />
-    <input type="submit" />
-</form>
-    </div>
-    <p><strong>That's it!</strong>
-    The field will degrade to a text input if the user does not have JavaScript enabled,
-    so that they will still be able to manually enter a color.  You don't need to add a single line of code.
-    </p>
 
         <h3 id="modes-custom" class='point'>Custom</h3>
     <p>If you want to get more into the functionality, just create a normal input and initialize it as a normal jQuery plugin.
@@ -175,6 +149,33 @@ $("#flatClearable").spectrum({
             <br/>
             <input type='text' id='flatClearable' value="limegreen" />
         </div>
+
+        <h3 id="modes-input" class='point'>input[type=color]</h3>
+
+    <p>
+    If you just want to provide a polyfill for the native color input,
+    the easiest way is to create an input with the type of color.
+    Once a user's browser supports a native color control, it will opt to use their native control instead.
+    </p>
+    <p><strong>Unlike the other modes, your value must be a 6 character hex value starting with a '#'.</strong>  Why?  Because the spec <a href='http://dev.w3.org/html5/markup/input.color.html#input.color.attrs.value'>says so</a>, that's why.
+    </p>
+
+<pre class='prettyprint' id='code-subheading'>
+&lt;input type='color' name='color' /&gt;
+&lt;input type='color' name='color2' value='#3355cc' /&gt;
+</pre>
+    <div class='example'>
+<form method="get">
+    <input type='color' name='color' />
+    <input type='color' name='color2' value='#3355cc' />
+    <input type='color' name='color3' value='#000000' />
+    <input type="submit" />
+</form>
+    </div>
+    <p><strong>That's it!</strong>
+    The field will degrade to a text input if the user does not have JavaScript enabled,
+    so that they will still be able to manually enter a color.  You don't need to add a single line of code.
+    </p>
 
 <!--
 <div class="alert">
