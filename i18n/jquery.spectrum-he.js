@@ -5,12 +5,12 @@
 (function ( $ ) {
 
     var localization = $.spectrum.localization["he"] = {
-        cancelText: "בטל",
-        chooseText: "בחר",
+        cancelText: "בטל בחירה",
+        chooseText: "בחר צבע",
         clearText: "אפס בחירה",
         noColorSelectedText: "לא נבחר צבע",
-        togglePaletteMoreText: "יותר",
-        togglePaletteLessText: "פחות"
+        togglePaletteMoreText: "עוד צבעים",
+        togglePaletteLessText: "פחות צבעים"
     };
 
     $.extend($.fn.spectrum.defaults, localization);
