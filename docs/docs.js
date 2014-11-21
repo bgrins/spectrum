@@ -379,6 +379,20 @@ $("#showSelectionPaletteStorage2").spectrum({
     palette: [ ]
 });
 
+$("#selectionPalette").spectrum({
+    showPalette: true,
+    palette: [ ],
+    showSelectionPalette: true, // true by default
+    selectionPalette: ["red", "green", "blue"]
+});
+
+$("#maxSelectionSize").spectrum({
+    showPalette: true,
+    palette: [ ],
+    showSelectionPalette: true, // true by default
+    selectionPalette: ["red", "green", "blue"],
+    maxSelectionSize: 2
+});
 
 $("#preferredHex").spectrum({
     preferredFormat: "hex",

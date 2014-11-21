@@ -430,7 +430,49 @@ $("#showSelectionPaletteStorage").spectrum({
             </div>
         </div>
 
+        <h3 id="options-selectionPalette">Selection Palette</h3>
+        <div class='option-content'>
+            <div class='description'>
+                <p>The default values inside of the selection palette.  Make sure that <a href="#options-showSelectionPalette">showSelectionPalette</a> and <a href="#options-showPalette">showPalette</a> are both enabled.</p>
+            </div>
 
+            <pre class='prettyprint'>
+$("#selectionPalette").spectrum({
+    showPalette: true,
+    palette: [ ],
+    showSelectionPalette: true, // true by default
+    selectionPalette: ["red", "green", "blue"]
+});
+            </pre>
+
+            <div class='example'>
+                    <span class='label label-info'>This colorpicker has default values in the selection palette:</span><br /><br />
+                    <input type='text' name='selectionPalette' id='selectionPalette' value='orange' />
+            </div>
+        </div>
+
+        <h3 id="options-maxSelectionSize">Max Selection Size</h3>
+        <div class='option-content'>
+            <div class='description'>
+                <p>This is how many elements are allowed in the <a href="#options-selectionPalette">selectionPallete</a> at once.</p>
+                <p>Elements will be removed from the palette in first in - first out order if this limit is reached.</p>
+            </div>
+
+            <pre class='prettyprint'>
+$("#maxSelectionSize").spectrum({
+    showPalette: true,
+    palette: [ ],
+    showSelectionPalette: true, // true by default
+    selectionPalette: ["red", "green", "blue"],
+    maxSelectionSize: 2
+});
+            </pre>
+
+            <div class='example'>
+                    <span class='label label-info'>This colorpicker starts removing selection palette colors older than 2:</span><br /><br />
+                    <input type='text' name='maxSelectionSize' id='maxSelectionSize' value='red' />
+            </div>
+        </div>
 
         <h3 id="options-hideAfterPaletteSelect">Hide After Palette Select</h3>
         <div class='option-content'>
