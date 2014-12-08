@@ -1172,7 +1172,7 @@
         }
     };
 
-    // TinyColor v1.0.0
+    // TinyColor v1.1.1
     // https://github.com/bgrins/TinyColor
     // Brian Grinstead, MIT License
 
@@ -1202,6 +1202,7 @@
         }
 
         var rgb = inputToRGB(color);
+        this._originalInput = color,
         this._r = rgb.r,
         this._g = rgb.g,
         this._b = rgb.b,
@@ -1231,6 +1232,9 @@
         },
         isValid: function() {
             return this._ok;
+        },
+        getOriginalInput: function() {
+          return this._originalInput;
         },
         getFormat: function() {
             return this._format;
@@ -2048,6 +2052,7 @@
         plum: "dda0dd",
         powderblue: "b0e0e6",
         purple: "800080",
+        rebeccapurple: "663399",
         red: "f00",
         rosybrown: "bc8f8f",
         royalblue: "4169e1",
@@ -2195,6 +2200,7 @@
             hsl: new RegExp("hsl" + PERMISSIVE_MATCH3),
             hsla: new RegExp("hsla" + PERMISSIVE_MATCH4),
             hsv: new RegExp("hsv" + PERMISSIVE_MATCH3),
+            hsva: new RegExp("hsva" + PERMISSIVE_MATCH4),
             hex3: /^([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
             hex6: /^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/,
             hex8: /^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/
@@ -2235,6 +2241,9 @@
         }
         if ((match = matchers.hsv.exec(color))) {
             return { h: match[1], s: match[2], v: match[3] };
+        }
+        if ((match = matchers.hsva.exec(color))) {
+            return { h: match[1], s: match[2], v: match[3], a: match[4] };
         }
         if ((match = matchers.hex8.exec(color))) {
             return {
