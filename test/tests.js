@@ -320,7 +320,7 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
 
   });
 
-  var container= $("<div id='c' />").appendTo("body");
+  var container = $("<div id='c' />").appendTo("body");
   var appendToOther = $("<input />").spectrum({
     appendTo: container
   });
@@ -360,6 +360,7 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
   appendToOtherFlat.spectrum("destroy");
   appendToParent.spectrum("destroy").remove();
   delete window.localStorage["spectrum.example"];
+  container.remove();
 });
 
 test ("Show Input works as expected", function() {
