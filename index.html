@@ -746,12 +746,19 @@ $("#preferredNone").spectrum({
         <h2 id="events">Events</h2>
 
 <pre class='prettyprint'>
+// Events can be bound in the intialization process as options:
 $("#picker").spectrum({
     move: function(tinycolor) { },
     show: function(tinycolor) { },
     hide: function(tinycolor) { },
     beforeShow: function(tinycolor) { },
 });
+
+// Alternatively, they can be added as an event listener:
+$("#picker").on('move.spectrum', function(e, tinycolor) { });
+$("#picker").on('show.spectrum', function(e, tinycolor) { });
+$("#picker").on('hide.spectrum', function(e, tinycolor) { });
+$("#picker").on('beforeShow.spectrum', function(e, tinycolor) { });
 </pre>
 
         <h3 id="events-change">change</h3>
