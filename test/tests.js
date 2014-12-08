@@ -621,3 +621,26 @@ test( "Choosing updates the color", function() {
   equal ( el.spectrum("get").toName(), "orange", "Color is kept after clicking 'choose'");
   el.spectrum("destroy");
 });
+
+test( "Custom offset", function() {
+  var el = $("<input value='red' />").spectrum();
+  el.spectrum("show");
+  deepEqual (el.spectrum("container").offset(), {top: 0, left: 0});
+  el.spectrum("hide");
+  el.spectrum("offset", {top: 10, left: 10});
+  el.spectrum("show");
+  deepEqual (el.spectrum("container").offset(), {top: 10, left: 10});
+  el.spectrum("hide");
+  el.spectrum("offset", null);
+  el.spectrum("show");
+  deepEqual (el.spectrum("container").offset(), {top: 0, left: 0});
+  el.spectrum("hide");
+  el.spectrum("destroy");
+
+  var el2 = $("<input value='red' />").spectrum({
+    offset: { top: 100, left: 100 }
+  });
+  el2.spectrum("show");
+  deepEqual (el2.spectrum("container").offset(), {top: 100, left: 100});
+  el2.spectrum("hide");
+});

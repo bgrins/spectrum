@@ -57,7 +57,8 @@
         theme: "sp-light",
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
         selectionPalette: [],
-        disabled: false
+        disabled: false,
+        offset: null
     },
     spectrums = [],
     IE = !!/msie/i.exec( window.navigator.userAgent ),
@@ -872,8 +873,8 @@
 
             if (!flat) {
                 container.css("position", "absolute");
-                if( typeof opts.position === 'object' ) {
-                    container.offset(opts.position);
+                if (opts.offset) {
+                    container.offset(opts.offset);
                 } else {
                     container.offset(getOffset(container, offsetElement));
                 }
@@ -921,8 +922,8 @@
             offsetElement.addClass("sp-disabled");
         }
 
-        function position(coord) {
-            opts.position = coord;
+        function setOffset(coord) {
+            opts.offset = coord;
             reflow();
         }
 
@@ -936,7 +937,7 @@
             option: option,
             enable: enable,
             disable: disable,
-            position: position,
+            offset: setOffset,
             set: function (c) {
                 set(c);
                 updateOriginalInput();
