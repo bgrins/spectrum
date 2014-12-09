@@ -645,3 +645,37 @@ test( "Custom offset", function() {
   deepEqual (el2.spectrum("container").offset(), {top: 100, left: 100});
   el2.spectrum("hide");
 });
+
+test("Flat picker reselect initial (Issue #264)", function() {
+
+  expect(3);
+  var count = 0;
+  var el = $("<input />").spectrum({
+    flat: true,
+    showPalette: true,
+    showPaletteOnly: true,
+    preferredFormat: 'rgb',
+    color: "rgb(255,0,0)",
+    allowEmpty: true,
+    showButtons: false,
+    togglePaletteOnly: false,
+    palette: [
+      "rgb(255,0,0)",
+      "rgb(0,255,0)",
+      "rgb(0,0,255)"
+    ]
+  });
+
+  var expectedColor = "rgb(0,255,0)";
+  el.on("change.spectrum", function(e, color) {
+    ok (tinycolor.equals(expectedColor, color),
+      "The change event fired with the proper color");
+  });
+
+  el.spectrum("container").find(".sp-thumb-el:nth-child(2)").trigger("click");
+  expectedColor = "rgb(0,0,255)";
+  el.spectrum("container").find(".sp-thumb-el:nth-child(3)").trigger("click");
+  expectedColor = "rgb(255,0,0)";
+  el.spectrum("container").find(".sp-thumb-el:nth-child(1)").trigger("click");
+
+});
