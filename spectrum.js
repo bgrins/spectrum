@@ -473,21 +473,7 @@
         }
 
         function updateSelectionPaletteFromStorage() {
-
             if (localStorageKey && window.localStorage) {
-
-                // Migrate old palettes over to new format.  May want to remove this eventually.
-                try {
-                    var oldPalette = window.localStorage[localStorageKey].split(",#");
-                    if (oldPalette.length > 1) {
-                        delete window.localStorage[localStorageKey];
-                        $.each(oldPalette, function(i, c) {
-                             addColorToSelectionPalette(c);
-                        });
-                    }
-                }
-                catch(e) { }
-
                 try {
                     selectionPalette = window.localStorage[localStorageKey].split(";");
                 }
