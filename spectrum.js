@@ -360,6 +360,10 @@
                 e.stopPropagation();
                 e.preventDefault();
 
+                if (IE && textInput.is(":focus")) {
+                    textInput.trigger('change');
+                }
+
                 if (isValid()) {
                     updateOriginalInput(true);
                     hide();
