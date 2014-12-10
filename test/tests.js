@@ -23,7 +23,6 @@ test( "jQuery Plugin Can Be Created", function() {
   el.spectrum("destroy");
 
   equal(el.spectrum("container"), el, "After destroying spectrum, string function returns input.");
-
 });
 
 test( "Per-element Options Are Read From Data Attributes", function() {
@@ -138,6 +137,9 @@ test( "Default Color Is Set By Input Value", function() {
   var noColor = $("<input id='spec' value='not a color' />").spectrum();
   equal ( noColor.spectrum("get").toHex(), "000000", "Defaults to black with an invalid color");
 
+  var blackColor = $("<input id='spec' value='black' />").spectrum();
+  equal ( blackColor.spectrum("get").toHex(), "000000", "Defaults to black when set on input");
+
   var noValue = $("<input id='spec' />").spectrum();
   equal ( noValue.spectrum("get").toHex(), "000000", "Defaults to black with no value set");
 
@@ -147,11 +149,11 @@ test( "Default Color Is Set By Input Value", function() {
   equal ( noValueHex3.spectrum("get").toHex(true), "000", "Defaults to 3 char hex with no value set");
   equal ( noValueHex3.spectrum("get").toString(), "#000", "Defaults to 3 char hex with no value set");
 
-
   red.spectrum("destroy");
   noColor.spectrum("destroy");
   noValue.spectrum("destroy");
   noValueHex3.spectrum("destroy");
+  blackColor.spectrum("destroy");
 });
 
 module("Palettes");
@@ -302,6 +304,64 @@ test ("containerClassName", function() {
     containerClassName: "test"
   });
   ok (el.spectrum("container").hasClass("test"), "Container class has been applied");
+  el.spectrum("destroy").remove();
+});
+
+test("clickoutFiresChange=false", function() {
+  expect(3);
+  var el = $("<input />").appendTo("body").spectrum({
+    color: "red"
+  });
+
+  el.on("move.spectrum", function(e, color) {
+    ok (tinycolor.equals(expectedColor, color),
+      "The move event fired with the proper color");
+  });
+
+  el.on("change.spectrum", function(e, color) {
+    ok (false,
+      "The change event should not fire");
+  });
+
+  el.spectrum("show");
+
+  var expectedColor = "blue";
+  el.spectrum("set", "blue");
+
+  // Clickout to revert
+  expectedColor = "red";
+  $(document).trigger("click");
+
+  equal(el.spectrum("get").toName(), "red");
+  el.spectrum("destroy").remove();
+});
+
+test("clickoutFiresChange=true", function() {
+  expect(3);
+  var el = $("<input />").appendTo("body").spectrum({
+    color: "red",
+    clickoutFiresChange: true
+  });
+
+  el.on("move.spectrum", function(e, color) {
+    ok (tinycolor.equals(expectedColor, color),
+      "The move event fired with the proper color");
+  });
+
+  el.on("change.spectrum", function(e, color) {
+    ok (tinycolor.equals(expectedColor, color),
+      "The change event fired with the proper color");
+  });
+
+  el.spectrum("show");
+
+  var expectedColor = "blue";
+  el.spectrum("set", "blue");
+
+  // Clickout to commit
+  $(document).trigger("click");
+
+  equal(el.spectrum("get").toName(), "blue");
   el.spectrum("destroy").remove();
 });
 
@@ -691,17 +751,12 @@ test( "Custom offset", function() {
 });
 
 test("Flat picker reselect initial (Issue #264)", function() {
-
-  expect(3);
+  expect(8);
   var el = $("<input />").spectrum({
     flat: true,
     showPalette: true,
     showPaletteOnly: true,
-    preferredFormat: 'rgb',
     color: "rgb(255,0,0)",
-    allowEmpty: true,
-    showButtons: false,
-    togglePaletteOnly: false,
     palette: [
       "rgb(255,0,0)",
       "rgb(0,255,0)",
@@ -709,16 +764,68 @@ test("Flat picker reselect initial (Issue #264)", function() {
     ]
   });
 
-  var expectedColor = "rgb(0,255,0)";
+  el.on("move.spectrum", function(e, color) {
+    ok (tinycolor.equals(expectedColor, color),
+      "The move event fired with the proper color");
+  });
+
   el.on("change.spectrum", function(e, color) {
     ok (tinycolor.equals(expectedColor, color),
       "The change event fired with the proper color");
   });
 
+  el.spectrum("show");
+
+  var expectedColor = "rgb(0,255,0)";
   el.spectrum("container").find(".sp-thumb-el:nth-child(2)").trigger("click");
   expectedColor = "rgb(0,0,255)";
   el.spectrum("container").find(".sp-thumb-el:nth-child(3)").trigger("click");
   expectedColor = "rgb(255,0,0)";
   el.spectrum("container").find(".sp-thumb-el:nth-child(1)").trigger("click");
+  expectedColor = "rgb(0,255,0)";
+  el.spectrum("container").find(".sp-thumb-el:nth-child(2)").trigger("click");
 
+  el.spectrum("destroy");
+});
+
+test("Normal picker reselect initial (Issue #264)", function() {
+  expect(6);
+  var el = $("<input />").appendTo("body").spectrum({
+    showPalette: true,
+    showPaletteOnly: true,
+    color: "rgb(255,0,0)",
+    palette: [
+      "rgb(255,0,0)",
+      "rgb(0,255,0)",
+      "rgb(0,0,255)"
+    ]
+  });
+
+  el.on("move.spectrum", function(e, color) {
+    ok (tinycolor.equals(expectedColor, color),
+      "The move event fired with the proper color");
+  });
+
+  el.on("change.spectrum", function(e, color) {
+    ok (false,
+      "The change event should not fire");
+  });
+
+  el.spectrum("show");
+
+  var expectedColor = "rgb(0,255,0)";
+  el.spectrum("container").find(".sp-thumb-el:nth-child(2)").trigger("click");
+  expectedColor = "rgb(0,0,255)";
+  el.spectrum("container").find(".sp-thumb-el:nth-child(3)").trigger("click");
+  expectedColor = "rgb(255,0,0)";
+  el.spectrum("container").find(".sp-thumb-el:nth-child(1)").trigger("click");
+  expectedColor = "rgb(0,255,0)";
+  el.spectrum("container").find(".sp-thumb-el:nth-child(2)").trigger("click");
+
+  // Clickout to revert
+  expectedColor = "rgb(255,0,0)";
+  $(document).trigger("click");
+
+  equal(el.spectrum("get").toString(), "rgb(255, 0, 0)");
+  el.spectrum("destroy").remove();
 });

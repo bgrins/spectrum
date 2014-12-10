@@ -453,11 +453,9 @@
             function paletteElementClick(e) {
                 if (e.data && e.data.ignore) {
                     set($(e.target).closest(".sp-thumb-el").data("color"));
-                    updateOriginalInput();
                 }
                 else {
                     set($(e.target).closest(".sp-thumb-el").data("color"));
-                    updateOriginalInput();
                     if (opts.hideAfterPaletteSelect) {
                       hide();
                     }
@@ -573,13 +571,11 @@
 
             if ((value === null || value === "") && allowEmpty) {
                 set(null);
-                updateOriginalInput();
             }
             else {
                 var tiny = tinycolor(value);
                 if (tiny.isValid()) {
                     set(tiny);
-                    updateOriginalInput();
                 }
                 else {
                     textInput.addClass("sp-validation-error");
@@ -681,11 +677,13 @@
                 currentValue = newHsv.v;
                 currentAlpha = newHsv.a;
             }
-            updateUI();
 
             if (newColor && newColor.isValid() && !ignoreFormatChange) {
                 currentPreferredFormat = preferredFormat || newColor.getFormat();
             }
+
+            updateUI();
+            updateOriginalInput();
         }
 
         function get(opts) {
@@ -843,9 +841,9 @@
 
             // Fire the "input" event (aka 'move')
             if (!tinycolor.equals(color, lastKnownColor)) {
+                lastKnownColor = color;
                 callbacks.move(get());
                 boundElement.trigger('move.spectrum', [ get() ]);
-                lastKnownColor = color;
             }
 
             // Flat colorpickers fire "change" event on any input
@@ -938,10 +936,7 @@
             enable: enable,
             disable: disable,
             offset: setOffset,
-            set: function (c) {
-                set(c);
-                updateOriginalInput();
-            },
+            set: set,
             get: get,
             destroy: destroy,
             container: container
