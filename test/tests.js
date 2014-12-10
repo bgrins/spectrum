@@ -49,67 +49,6 @@ test( "Per-element Options Are Read From Data Attributes", function() {
   noData.spectrum("destroy");
 });
 
-test( "Events Fire", function() {
-  var el = $("<input id='spec' />").spectrum();
-  var count = 0;
-  expect(5);
-
-  el.on("beforeShow.spectrum", function(e) {
-
-    // Cancel the event the first time
-    if (count === 0) {
-      ok(true, "Cancel beforeShow");
-      count++;
-      return false;
-    }
-
-    ok (count === 1, "Allow beforeShow");
-    count++;
-  });
-
-
-  el.on("show.spectrum", function(e) {
-    ok(count === 2, "Show");
-    count++;
-  });
-
-  el.on("hide.spectrum", function(e) {
-    ok(count === 3, "Hide");
-
-    count++;
-  });
-
-  el.on("move.spectrum", function(e) {
-    ok(count === 4, "Move");
-
-    count++;
-  });
-
-  el.on("change", function(e, color) {
-    ok(false, "Change should not fire from `set` call");
-  });
-
-  el.spectrum("show");
-  el.spectrum("show");
-  el.spectrum("hide");
-
-  el.spectrum("set", "red");
-
-  el.spectrum("destroy");
-
-});
-
-test( "Changing input", function() {
-  var el2 = $("<input />").spectrum({
-    showInput: true
-  });
-  el2.on("move.spectrum", function(e, color) {
-    ok(true, "Changing textarea should fire input move event");
-  });
-  el2.spectrum("container").find(".sp-input").val("blue").trigger("change");
-  el2.spectrum("destroy");
-});
-
 test( "Dragging", function() {
   var el = $("<input id='spec' />").spectrum();
   var hueSlider = el.spectrum("container").find(".sp-hue");
@@ -547,6 +486,114 @@ test ("Tooltip is formatted based on preferred format", function() {
   el.spectrum("destroy");
 });
 
+module("Events");
+
+test( "Events Fire", function() {
+  var el = $("<input id='spec' />").spectrum();
+  var count = 0;
+  expect(5);
+
+  el.on("beforeShow.spectrum", function(e) {
+
+    // Cancel the event the first time
+    if (count === 0) {
+      ok(true, "Cancel beforeShow");
+      count++;
+      return false;
+    }
+
+    ok (count === 1, "Allow beforeShow");
+    count++;
+  });
+
+  el.on("show.spectrum", function(e) {
+    ok(count === 2, "Show");
+    count++;
+  });
+
+  el.on("hide.spectrum", function(e) {
+    ok(count === 3, "Hide");
+
+    count++;
+  });
+
+  el.on("move.spectrum", function(e) {
+    ok(count === 4, "Move");
+
+    count++;
+  });
+
+  el.on("change", function(e, color) {
+    ok(false, "Change should not fire from `set` call");
+  });
+
+  el.spectrum("show");
+  el.spectrum("show");
+  el.spectrum("hide");
+
+  el.spectrum("set", "red");
+
+  el.spectrum("destroy");
+
+});
+
+test( "Changing input", function() {
+  expect(1);
+  var el = $("<input />");
+
+  el.on("move.spectrum", function(e, color) {
+    ok(true, "Changing textarea should fire input move event");
+  });
+
+  el.spectrum({
+    showInput: true
+  }).spectrum("show");
+
+  el.spectrum("container").find(".sp-input").val("blue").trigger("change");
+  el.spectrum("destroy");
+});
+
+test( "Change event (normal)" , function() {
+  expect(1);
+  var el = $("<input />");
+  var readyForEvent = false;
+
+  el.on("change.spectrum", function(e, color) {
+    if (readyForEvent) {
+      equal(color.toName(), "orange", "Change should be fired on set()");
+    } else {
+      ok (false, "Shouldn't have receieved the event yet");
+    }
+  });
+
+  el.spectrum({
+    color: "red"
+  }).spectrum("show");
+
+  el.spectrum("set", "orange");
+  readyForEvent = true;
+  el.spectrum("container").find(".sp-choose").trigger("click");
+  console.log(el.spectrum("container").find(".sp-choose"));
+  el.spectrum("destroy");
+});
+
+test( "Change event (flat)" , function() {
+  expect(1);
+  var el = $("<input />");
+
+  el.on("change.spectrum", function(e, color) {
+    equal(color.toName(), "orange", "Change should be fired on set()");
+  });
+
+  el.spectrum({
+    color: "red",
+    flat: "true"
+  }).spectrum("show");
+
+  el.spectrum("set", "orange");
+  el.spectrum("destroy");
+});
+
 module("Methods");
 
 test( "Methods work as described", function() {
@@ -629,7 +676,7 @@ asyncTest( "Reflows on window resize", function() {
 });
 
 // https://github.com/bgrins/spectrum/issues/97
-test( "Change events fire as described" , function() {
+test( "Change events don't fire on original input" , function() {
 
   expect(0);
   var input = $("<input />");
@@ -646,7 +693,6 @@ test( "Change events fire as described" , function() {
   });
 
   input.spectrum("set", "orange");
-
 });
 
 test("The selectedPalette should be updated in each spectrum instance, when storageKeys are identical.", function () {
@@ -752,17 +798,7 @@ test( "Custom offset", function() {
 
 test("Flat picker reselect initial (Issue #264)", function() {
   expect(8);
-  var el = $("<input />").spectrum({
-    flat: true,
-    showPalette: true,
-    showPaletteOnly: true,
-    color: "rgb(255,0,0)",
-    palette: [
-      "rgb(255,0,0)",
-      "rgb(0,255,0)",
-      "rgb(0,0,255)"
-    ]
-  });
+  var el = $("<input />").appendTo("body");
 
   el.on("move.spectrum", function(e, color) {
     ok (tinycolor.equals(expectedColor, color),
@@ -774,7 +810,17 @@ test("Flat picker reselect initial (Issue #264)", function() {
       "The change event fired with the proper color");
   });
 
-  el.spectrum("show");
+  el.spectrum({
+    flat: true,
+    showPalette: true,
+    showPaletteOnly: true,
+    color: "rgb(255,0,0)",
+    palette: [
+      "rgb(255,0,0)",
+      "rgb(0,255,0)",
+      "rgb(0,0,255)"
+    ]
+  }).spectrum("show");
 
   var expectedColor = "rgb(0,255,0)";
   el.spectrum("container").find(".sp-thumb-el:nth-child(2)").trigger("click");
@@ -785,21 +831,12 @@ test("Flat picker reselect initial (Issue #264)", function() {
   expectedColor = "rgb(0,255,0)";
   el.spectrum("container").find(".sp-thumb-el:nth-child(2)").trigger("click");
 
-  el.spectrum("destroy");
+  el.spectrum("destroy").remove();
 });
 
 test("Normal picker reselect initial (Issue #264)", function() {
   expect(6);
-  var el = $("<input />").appendTo("body").spectrum({
-    showPalette: true,
-    showPaletteOnly: true,
-    color: "rgb(255,0,0)",
-    palette: [
-      "rgb(255,0,0)",
-      "rgb(0,255,0)",
-      "rgb(0,0,255)"
-    ]
-  });
+  var el = $("<input />").appendTo("body");
 
   el.on("move.spectrum", function(e, color) {
     ok (tinycolor.equals(expectedColor, color),
@@ -811,7 +848,16 @@ test("Normal picker reselect initial (Issue #264)", function() {
       "The change event should not fire");
   });
 
-  el.spectrum("show");
+  el.spectrum({
+    showPalette: true,
+    showPaletteOnly: true,
+    color: "rgb(255,0,0)",
+    palette: [
+      "rgb(255,0,0)",
+      "rgb(0,255,0)",
+      "rgb(0,0,255)"
+    ]
+  }).spectrum("show");
 
   var expectedColor = "rgb(0,255,0)";
   el.spectrum("container").find(".sp-thumb-el:nth-child(2)").trigger("click");
@@ -826,6 +872,7 @@ test("Normal picker reselect initial (Issue #264)", function() {
   expectedColor = "rgb(255,0,0)";
   $(document).trigger("click");
 
-  equal(el.spectrum("get").toString(), "rgb(255, 0, 0)");
+  equal(el.spectrum("get").toString(), "rgb(255, 0, 0)",
+    "The color was reverted from a clickout");
   el.spectrum("destroy").remove();
 });

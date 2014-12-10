@@ -358,7 +358,7 @@
                 e.preventDefault();
 
                 if (isValid()) {
-                    updateOriginalInput();
+                    updateOriginalInput(true);
                     hide();
                 }
             });
@@ -388,6 +388,7 @@
                     currentAlpha = Math.round(currentAlpha * 10) / 10;
                 }
 
+                updateUI();
                 updateOriginalInput();
             }, dragStart, dragStop);
 
@@ -397,6 +398,7 @@
                 if (!opts.showAlpha) {
                     currentAlpha = 1;
                 }
+                updateUI();
                 updateOriginalInput();
             }, dragStart, dragStop);
 
@@ -428,12 +430,13 @@
                 if (!opts.showAlpha) {
                     currentAlpha = 1;
                 }
+                updateUI();
                 updateOriginalInput();
 
             }, dragStart, dragStop);
 
             if (!!initialColor) {
-                set(initialColor);
+                set(initialColor, false, true);
 
                 // In case color was black - update the preview UI and set the format
                 // since the set function will not run (default color is black).
@@ -656,7 +659,7 @@
             set(colorOnShow, true);
         }
 
-        function set(color, ignoreFormatChange) {
+        function set(color, ignoreFormatChange, ignoreInputChange) {
             if (tinycolor.equals(color, get())) {
                 // Update UI just in case a validation error needs
                 // to be cleared.
@@ -683,7 +686,9 @@
             }
 
             updateUI();
-            updateOriginalInput();
+            if (!ignoreInputChange) {
+                updateOriginalInput();
+            }
         }
 
         function get(opts) {
@@ -888,6 +893,7 @@
         }
 
         function destroy() {
+            hide();
             boundElement.show();
             offsetElement.unbind("click.spectrum touchstart.spectrum");
             container.remove();
