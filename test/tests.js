@@ -81,7 +81,9 @@ test( "Events Fire", function() {
   });
 
   el.on("move.spectrum", function(e) {
+    ok(count === 4, "Move");
 
+    count++;
   });
 
   el.on("change", function(e, color) {
@@ -96,11 +98,14 @@ test( "Events Fire", function() {
 
   el.spectrum("destroy");
 
+});
+
+test( "Changing input", function() {
   var el2 = $("<input />").spectrum({
     showInput: true
   });
-  el2.on("change.spectrum", function(e, color) {
-    ok(true, "Change should fire input changing");
+  el2.on("move.spectrum", function(e, color) {
+    ok(true, "Changing textarea should fire input move event");
   });
   el2.spectrum("container").find(".sp-input").val("blue").trigger("change");
   el2.spectrum("destroy");
@@ -151,16 +156,35 @@ test( "Default Color Is Set By Input Value", function() {
 
 module("Palettes");
 
-test( "Palette Events Fire In Correct Order ", function() {
-  expect(2);
+test( "Palette Events Fire In Correct Order for normal picker", function() {
+  expect(1);
   var el = $("<input id='spec' value='red' />").spectrum({
     showPalette: true,
     palette: [
       ["red", "green", "blue"]
-    ],
-    move: function() {
+    ]
+  });
 
-    }
+  el.on("move.spectrum", function(e) {
+    ok(true, "Move fires");
+  });
+
+  el.on("change.spectrum", function(e) {
+    ok(false, "Change shouldn't have fired");
+  });
+
+  el.spectrum("container").find(".sp-thumb-el:last-child").click();
+  el.spectrum("destroy");
+});
+
+test( "Palette Events Fire In Correct Order for flat picker", function() {
+  expect(2);
+  var el = $("<input id='spec' value='red' />").spectrum({
+    flat: true,
+    showPalette: true,
+    palette: [
+      ["red", "green", "blue"]
+    ]
   });
 
   var count = 0;
@@ -524,6 +548,26 @@ test( "Methods work as described", function() {
   el.spectrum("destroy");
 });
 
+asyncTest( "Reflows on window resize", function() {
+  var container = $("<div style='display:none;position: absolute;left: 100px;' />").appendTo("body");
+  var el = $("<input />").appendTo(container).spectrum();
+
+  // Check to make sure the positioning
+  el.spectrum("show");
+  equal (el.spectrum("container").offset().left, 0);
+  container.show();
+  $(window).trigger("resize");
+
+  // Check to make sure the throttled reflow happened.
+  setTimeout(function() {
+    equal (el.spectrum("container").offset().left, 100);
+    el.spectrum("destroy");
+    container.remove();
+    QUnit.start();
+  }, 50);
+
+});
+
 // https://github.com/bgrins/spectrum/issues/97
 test( "Change events fire as described" , function() {
 
@@ -649,7 +693,6 @@ test( "Custom offset", function() {
 test("Flat picker reselect initial (Issue #264)", function() {
 
   expect(3);
-  var count = 0;
   var el = $("<input />").spectrum({
     flat: true,
     showPalette: true,

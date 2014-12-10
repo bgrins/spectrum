@@ -237,6 +237,7 @@
             previewElement = replacer.find(".sp-preview-inner"),
             initialColor = opts.color || (isInput && boundElement.val()),
             colorOnShow = false,
+            lastKnownColor = false,
             preferredFormat = opts.preferredFormat,
             currentPreferredFormat = preferredFormat,
             clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange,
@@ -347,12 +348,8 @@
                 e.stopPropagation();
                 e.preventDefault();
                 isEmpty = true;
-                move();
 
-                if(flat) {
-                    //for the flat style, this is a change event
-                    updateOriginalInput(true);
-                }
+                updateOriginalInput();
             });
 
             chooseButton.text(opts.chooseText);
@@ -361,7 +358,7 @@
                 e.preventDefault();
 
                 if (isValid()) {
-                    updateOriginalInput(true);
+                    updateOriginalInput();
                     hide();
                 }
             });
@@ -391,7 +388,7 @@
                     currentAlpha = Math.round(currentAlpha * 10) / 10;
                 }
 
-                move();
+                updateOriginalInput();
             }, dragStart, dragStop);
 
             draggable(slider, function (dragX, dragY) {
@@ -400,7 +397,7 @@
                 if (!opts.showAlpha) {
                     currentAlpha = 1;
                 }
-                move();
+                updateOriginalInput();
             }, dragStart, dragStop);
 
             draggable(dragger, function (dragX, dragY, e) {
@@ -431,8 +428,7 @@
                 if (!opts.showAlpha) {
                     currentAlpha = 1;
                 }
-
-                move();
+                updateOriginalInput();
 
             }, dragStart, dragStop);
 
@@ -457,12 +453,11 @@
             function paletteElementClick(e) {
                 if (e.data && e.data.ignore) {
                     set($(e.target).closest(".sp-thumb-el").data("color"));
-                    move();
+                    updateOriginalInput();
                 }
                 else {
                     set($(e.target).closest(".sp-thumb-el").data("color"));
-                    move();
-                    updateOriginalInput(true);
+                    updateOriginalInput();
                     if (opts.hideAfterPaletteSelect) {
                       hide();
                     }
@@ -472,8 +467,8 @@
             }
 
             var paletteEvent = IE ? "mousedown.spectrum" : "click.spectrum touchstart.spectrum";
-            paletteContainer.delegate(".sp-thumb-el", paletteEvent, paletteElementClick);
-            initialColorContainer.delegate(".sp-thumb-el:nth-child(1)", paletteEvent, { ignore: true }, paletteElementClick);
+            paletteContainer.on(paletteEvent, ".sp-thumb-el", paletteElementClick);
+            initialColorContainer.on(paletteEvent, ".sp-thumb-el:nth-child(1)", { ignore: true }, paletteElementClick);
         }
 
         function updateSelectionPaletteFromStorage() {
@@ -578,13 +573,13 @@
 
             if ((value === null || value === "") && allowEmpty) {
                 set(null);
-                updateOriginalInput(true);
+                updateOriginalInput();
             }
             else {
                 var tiny = tinycolor(value);
                 if (tiny.isValid()) {
                     set(tiny);
-                    updateOriginalInput(true);
+                    updateOriginalInput();
                 }
                 else {
                     textInput.addClass("sp-validation-error");
@@ -712,13 +707,6 @@
             return !textInput.hasClass("sp-validation-error");
         }
 
-        function move() {
-            updateUI();
-
-            callbacks.move(get());
-            boundElement.trigger('move.spectrum', [ get() ]);
-        }
-
         function updateUI() {
 
             textInput.removeClass("sp-validation-error");
@@ -842,20 +830,32 @@
 
         function updateOriginalInput(fireCallback) {
             var color = get(),
-                displayColor = '',
-                hasChanged = !tinycolor.equals(color, colorOnShow);
+                displayColor = '';
 
             if (color) {
-                displayColor = color.toString(currentPreferredFormat);
                 // Update the selection palette with the current color
                 addColorToSelectionPalette(color);
+
+                if (isInput) {
+                    boundElement.val(color.toString(currentPreferredFormat));
+                }
             }
 
-            if (isInput) {
-                boundElement.val(displayColor);
+            // Fire the "input" event (aka 'move')
+            if (!tinycolor.equals(color, lastKnownColor)) {
+                callbacks.move(get());
+                boundElement.trigger('move.spectrum', [ get() ]);
+                lastKnownColor = color;
             }
 
-            if (fireCallback && hasChanged) {
+            // Flat colorpickers fire "change" event on any input
+            // since they don't have a way to revert.
+            // Normal colorpickers wait until the picker is closed
+            // to fire one (if necessary).
+            var careAboutChanges = flat || fireCallback;
+            var hasChanged = !tinycolor.equals(color, colorOnShow);
+            if (careAboutChanges && hasChanged) {
+                colorOnShow = color;
                 callbacks.change(color);
                 boundElement.trigger('change', [ color ]);
             }
@@ -1093,7 +1093,10 @@
         $(element).bind("touchstart mousedown", start);
     }
 
-    function throttle(func, wait, debounce) {
+    /**
+    * Only call a function at a max of once per N milliseconds
+    */
+    function throttle(func, wait) {
         var timeout;
         return function () {
             var context = this, args = arguments;
@@ -1101,8 +1104,7 @@
                 timeout = null;
                 func.apply(context, args);
             };
-            if (debounce) clearTimeout(timeout);
-            if (debounce || !timeout) timeout = setTimeout(throttler, wait);
+            if (!timeout) timeout = setTimeout(throttler, wait);
         };
     }
 
