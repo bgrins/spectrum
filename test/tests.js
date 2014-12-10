@@ -776,7 +776,8 @@ test( "Choosing updates the color", function() {
 test( "Custom offset", function() {
   var el = $("<input value='red' />").spectrum();
   el.spectrum("show");
-  deepEqual (el.spectrum("container").offset(), {top: 0, left: 0});
+  // Not checking offset top b/c it varies across browsers
+  equal (el.spectrum("container").offset().left, 0, "Container has correct offset left");
   el.spectrum("hide");
   el.spectrum("offset", {top: 10, left: 10});
   el.spectrum("show");
@@ -784,7 +785,7 @@ test( "Custom offset", function() {
   el.spectrum("hide");
   el.spectrum("offset", null);
   el.spectrum("show");
-  deepEqual (el.spectrum("container").offset(), {top: 0, left: 0});
+  equal (el.spectrum("container").offset().left, 0, "Container has correct offset left");
   el.spectrum("hide");
   el.spectrum("destroy");
 
