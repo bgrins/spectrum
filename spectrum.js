@@ -1034,8 +1034,8 @@
                 var pageX = touches ? touches[0].pageX : e.pageX;
                 var pageY = touches ? touches[0].pageY : e.pageY;
 
-                var dragX = Math.max(0, Math.min(pageX - offset.left, maxWidth));
-                var dragY = Math.max(0, Math.min(pageY - offset.top, maxHeight));
+                var dragX = Math.max(0, Math.min(pageX - offset.left, maxWidth)) || 0;
+                var dragY = Math.max(0, Math.min(pageY - offset.top, maxHeight)) || 0;
 
                 if (hasTouch) {
                     // Stop scrolling in iOS

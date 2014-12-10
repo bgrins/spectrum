@@ -49,21 +49,114 @@ test( "Per-element Options Are Read From Data Attributes", function() {
   noData.spectrum("destroy");
 });
 
-test( "Dragging", function() {
-  var el = $("<input id='spec' />").spectrum();
-  var hueSlider = el.spectrum("container").find(".sp-hue");
 
-  ok (hueSlider.length, "There is a hue slider");
+module("Dragging");
+
+test( "Dragging color area", function() {
+  var el = $("<input id='spec' />").appendTo("body").spectrum().spectrum("show");
+  var colorDragArea = el.spectrum("container").find(".sp-color");
+  var body = $("body");
+
+  equal (colorDragArea.length, 1, "There is a color drag area");
+
+  var offset = colorDragArea.offset();
+  var height = colorDragArea.height();
+  var width = colorDragArea.width();
+
+  colorDragArea.trigger("mousedown");
+  ok (body.hasClass("sp-dragging"), "The body has dragging class when mousedown triggered");
+
+  // top left
+  colorDragArea.trigger({
+    type:"mousemove",
+    pageX: offset.left,
+    pageY: offset.top
+  });
+  equal (el.spectrum("get").toHex(), "ffffff", "top left");
+
+  // top right
+  colorDragArea.trigger({
+    type:"mousemove",
+    pageX: offset.left + width,
+    pageY: offset.top
+  });
+  equal (el.spectrum("get").toHex(), "ff0000", "top right");
+
+  // bottom left
+  colorDragArea.trigger({
+    type:"mousemove",
+    pageX: offset.left,
+    pageY: offset.top + width
+  });
+  equal (el.spectrum("get").toHex(), "000000", "bottom left");
+
+  // bottom right
+  colorDragArea.trigger({
+    type:"mousemove",
+    pageX: offset.left + width,
+    pageY: offset.top + height
+  });
+  equal (el.spectrum("get").toHex(), "000000", "bottom right");
+
+  $(document).trigger("mouseup");
+  ok (!body.hasClass("sp-dragging"), "The body does not have a dragging class when mouseup triggered on document");
+
+
+  colorDragArea.trigger("mousedown");
+  ok (body.hasClass("sp-dragging"), "The body has dragging class when mousedown triggered");
+  colorDragArea.trigger("mouseup");
+  ok (!body.hasClass("sp-dragging"), "The body does not have a dragging class when mouseup triggered on element");
+  ok (el.spectrum("container").is(":visible"), "Container is still visible");
+
+  el.spectrum("destroy").remove();
+});
+
+test( "Dragging hue area", function() {
+  var el = $("<input id='spec' value='red' />").appendTo("body").spectrum().spectrum("show");
+  var hueSlider = el.spectrum("container").find(".sp-hue");
+  var body = $("body");
+
+  equal (hueSlider.length, 1, "There is a hue slider");
+
+  var offset = hueSlider.offset();
+  var height = hueSlider.height();
 
   hueSlider.trigger("mousedown");
+  ok (body.hasClass("sp-dragging"), "The body has dragging class when mousedown triggered");
 
-  ok ($("body").hasClass("sp-dragging"), "The body has dragging class");
+  // top
+  hueSlider.trigger({
+    type:"mousemove",
+    pageX: offset.left,
+    pageY: offset.top
+  });
+  equal (el.spectrum("get").toHex(), "ff0000", "top");
 
+  // middle
+  hueSlider.trigger({
+    type:"mousemove",
+    pageY: offset.top + (height/2)
+  });
+  equal (el.spectrum("get").toHex(), "00ffff", "middle");
+
+  // bottom
+  hueSlider.trigger({
+    type:"mousemove",
+    pageY: offset.top + height
+  });
+  equal (el.spectrum("get").toHex(), "ff0000", "bottom");
+
+  $(document).trigger("mouseup");
+  ok (!body.hasClass("sp-dragging"), "The body does not have a dragging class when mouseup triggered on document");
+  ok (el.spectrum("container").is(":visible"), "Container is still visible");
+
+  hueSlider.trigger("mousedown");
+  ok (body.hasClass("sp-dragging"), "The body has dragging class when mousedown triggered");
   hueSlider.trigger("mouseup");
+  ok (!body.hasClass("sp-dragging"), "The body does not have a dragging class when mouseup triggered on element");
+  ok (el.spectrum("container").is(":visible"), "Container is still visible");
 
-  ok (!$("body").hasClass("sp-dragging"), "The body does not have a dragging class");
-
-  el.spectrum("destroy");
+  el.spectrum("destroy").remove();
 });
 
 module("Defaults");
