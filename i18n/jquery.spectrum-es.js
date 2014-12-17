@@ -8,8 +8,8 @@
         cancelText: "Cancelar",
         chooseText: "Elegir",
         clearText: "Borrar color seleccionado",
-        noColorSelectedText: "Ningún color seleccionado",
-        togglePaletteMoreText: "Más",
+        noColorSelectedText: "NingÃºn color seleccionado",
+        togglePaletteMoreText: "MÃ¡s",
         togglePaletteLessText: "Menos"
     };
 
