@@ -21,6 +21,14 @@ Head over to the [docs](http://bgrins.github.io/spectrum) for more information. 
         color: "#f00"
     });
     </script>
+    
+### Using spectrum with a CDN
+
+CDN provided by [cdnjs](https://cdnjs.com/libraries/spectrum)
+```
+<script src="//cdnjs.cloudflare.com/ajax/libs/spectrum/1.6.0/spectrum.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/spectrum/1.6.0/spectrum.min.css">
+```
 
 ### jQuery Plugin Repository
 
