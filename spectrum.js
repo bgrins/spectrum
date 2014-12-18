@@ -622,7 +622,7 @@
             hideAll();
             visible = true;
 
-            $(doc).bind("click.spectrum", clickout);
+            $(doc).bind("mouseup.spectrum", clickout);
             $(window).bind("resize.spectrum", resize);
             replacer.addClass("sp-active");
             container.removeClass("sp-hidden");
@@ -655,7 +655,7 @@
             if (!visible || flat) { return; }
             visible = false;
 
-            $(doc).unbind("click.spectrum", clickout);
+            $(doc).unbind("mouseup.spectrum", clickout);
             $(window).unbind("resize.spectrum", resize);
 
             replacer.removeClass("sp-active");
@@ -1073,7 +1073,7 @@
                     maxWidth = $(element).width();
                     offset = $(element).offset();
 
-                    $(doc).bind(duringDragEvents);
+                    $(doc.documentElement).bind(duringDragEvents);
                     $(doc.body).addClass("sp-dragging");
 
                     if (!hasTouch) {
@@ -1085,10 +1085,11 @@
             }
         }
 
-        function stop() {
+        function stop(e) {
             if (dragging) {
-                $(doc).unbind(duringDragEvents);
+                $(doc.documentElement).unbind(duringDragEvents);
                 $(doc.body).removeClass("sp-dragging");
+                prevent(e);
                 onstop.apply(element, arguments);
             }
             dragging = false;
