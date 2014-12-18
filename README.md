@@ -21,14 +21,6 @@ Head over to the [docs](http://bgrins.github.io/spectrum) for more information. 
         color: "#f00"
     });
     </script>
-    
-### Using spectrum with a CDN
-
-CDN provided by [cdnjs](https://cdnjs.com/libraries/spectrum)
-```
-<script src="//cdnjs.cloudflare.com/ajax/libs/spectrum/1.6.0/spectrum.min.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/spectrum/1.6.0/spectrum.min.css">
-```
 
 ### jQuery Plugin Repository
 
@@ -39,6 +31,12 @@ Spectrum is registered as a jQuery plugin on the jQuery plugin repository here: 
 Spectrum is registered as a package with [Bower](http://bower.io/), so it can be pulled down using:
 
     bower install spectrum
+
+### Using spectrum with a CDN
+
+CDN provided by [cdnjs](https://cdnjs.com/libraries/spectrum)
+    <script src="//cdnjs.cloudflare.com/ajax/libs/spectrum/1.6.0/spectrum.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/spectrum/1.6.0/spectrum.min.css">
 
 ### Continuous Integration
 
