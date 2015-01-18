@@ -1191,7 +1191,7 @@
         mathMax = math.max,
         mathRandom = math.random;
 
-    var tinycolor = function tinycolor (color, opts) {
+    var tinycolor = function (color, opts) {
 
         color = (color) ? color : '';
         opts = opts || { };
