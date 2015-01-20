@@ -24,7 +24,7 @@ module.exports = function(grunt) {
         },
         files: {
           src: ['i18n/*.js', 'test/tests.js']
-        }
+        },
       },
 
       all: ['spectrum.js']
@@ -33,6 +33,7 @@ module.exports = function(grunt) {
 
     uglify: {
       options: {
+        mangle: false
       },
       dist: {
         files: {
