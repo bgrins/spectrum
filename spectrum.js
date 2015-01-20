@@ -1176,7 +1176,7 @@
         }
     };
 
-    // TinyColor v1.1.1
+    // TinyColor v1.1.2
     // https://github.com/bgrins/TinyColor
     // Brian Grinstead, MIT License
 
@@ -1191,7 +1191,7 @@
         mathMax = math.max,
         mathRandom = math.random;
 
-    var tinycolor = function tinycolor (color, opts) {
+    function tinycolor (color, opts) {
 
         color = (color) ? color : '';
         opts = opts || { };
@@ -1225,7 +1225,7 @@
 
         this._ok = rgb.ok;
         this._tc_id = tinyCounter++;
-    };
+    }
 
     tinycolor.prototype = {
         isDark: function() {
@@ -2280,7 +2280,6 @@
 
     window.tinycolor = tinycolor;
     })();
-
 
     $(function () {
         if ($.fn.spectrum.load) {
