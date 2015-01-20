@@ -1191,7 +1191,7 @@
         mathMax = math.max,
         mathRandom = math.random;
 
-    function tinycolor (color, opts) {
+    var tinycolor = function(color, opts) {
 
         color = (color) ? color : '';
         opts = opts || { };
@@ -1225,7 +1225,7 @@
 
         this._ok = rgb.ok;
         this._tc_id = tinyCounter++;
-    }
+    };
 
     tinycolor.prototype = {
         isDark: function() {
