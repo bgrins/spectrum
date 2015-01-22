@@ -134,14 +134,19 @@
         ].join("");
     })();
 
-    function paletteTemplate (p, color, className, opts) {
+    function paletteTemplate (p, color, className, opts, activeColorIsLocked /* optional */) {
         var html = [];
         for (var i = 0; i < p.length; i++) {
             var current = p[i];
             if(current) {
                 var tiny = tinycolor(current);
                 var c = tiny.toHsl().l < 0.5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
-                c += (tinycolor.equals(color, current)) ? " sp-thumb-active" : "";
+                if (tinycolor.equals(color, current)) {
+                  c += " sp-thumb-active";
+                  if (activeColorIsLocked) {
+                    c += " sp-thumb-locked";
+                  }
+                }
                 var formattedString = tiny.toString(opts.preferredFormat || "rgb");
                 var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
                 html.push('<span title="' + formattedString + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><span class="sp-thumb-inner" style="' + swatchStyle + ';" /></span>');
@@ -201,6 +206,8 @@
             currentSaturation = 0,
             currentValue = 0,
             currentAlpha = 1,
+            currentColorIsLocked = false,
+            hideTimeout = null,
             palette = [],
             paletteArray = [],
             paletteLookup = {},
@@ -459,16 +466,24 @@
             }
 
             function paletteElementClick(e) {
-                if (e.data && e.data.ignore) {
-                    set($(e.target).closest(".sp-thumb-el").data("color"));
-                    move();
-                }
-                else {
-                    set($(e.target).closest(".sp-thumb-el").data("color"));
-                    move();
+                set($(e.target).closest(".sp-thumb-el").data("color"),
+                        false /* ignoreFormatChange */, true /* lockIfSame */);
+                move();
+
+                if (!(e.data && e.data.ignore)) {
                     updateOriginalInput(true);
                     if (opts.hideAfterPaletteSelect) {
-                      hide();
+                      if (opts.allowLockingColor) {
+                        // Hide after a short delay to allow the user to double-click to lock.
+                        if (!hideTimeout) {
+                          hideTimeout = setTimeout(function() {
+                            hideTimeout = null;
+                            hide();
+                          }, 800);
+                        }
+                      } else {
+                        hide();
+                      }
                     }
                 }
 
@@ -542,13 +557,13 @@
             var currentColor = get();
 
             var html = $.map(paletteArray, function (palette, i) {
-                return paletteTemplate(palette, currentColor, "sp-palette-row sp-palette-row-" + i, opts);
+                return paletteTemplate(palette, currentColor, "sp-palette-row sp-palette-row-" + i, opts, currentColorIsLocked);
             });
 
             updateSelectionPaletteFromStorage();
 
             if (selectionPalette) {
-                html.push(paletteTemplate(getUniqueSelectionPalette(), currentColor, "sp-palette-row sp-palette-row-selection", opts));
+                html.push(paletteTemplate(getUniqueSelectionPalette(), currentColor, "sp-palette-row sp-palette-row-selection", opts, currentColorIsLocked));
             }
 
             paletteContainer.html(html.join(""));
@@ -669,12 +684,18 @@
             set(colorOnShow, true);
         }
 
-        function set(color, ignoreFormatChange) {
+        // Default _lockIfSame_ to false so that the client doesn't accidentally lock by repeatedly
+        // calling `set`.
+        function set(color, ignoreFormatChange, lockIfSame) {
             if (tinycolor.equals(color, get())) {
-                // Update UI just in case a validation error needs
-                // to be cleared.
+                if (opts.allowLockingColor && lockIfSame) {
+                  currentColorIsLocked = !currentColorIsLocked;
+                }
+                // Update UI to toggle locking and to clear potential validation errors.
                 updateUI();
                 return;
+            } else {
+                currentColorIsLocked = false;
             }
 
             var newColor, newHsv;
@@ -710,6 +731,10 @@
                 v: currentValue,
                 a: Math.round(currentAlpha * 100) / 100
             }, { format: opts.format || currentPreferredFormat });
+        }
+
+        function isLocked() {
+            return currentColorIsLocked;
         }
 
         function isValid() {
@@ -947,6 +972,7 @@
                 updateOriginalInput();
             },
             get: get,
+            isLocked: isLocked,
             destroy: destroy,
             container: container
         };
@@ -1131,6 +1157,9 @@
 
                     if (opts == "get") {
                         returnValue = spect.get();
+                    }
+                    else if (opts == "isLocked") {
+                        returnValue = spect.isLocked();
                     }
                     else if (opts == "container") {
                         returnValue = spect.container;
