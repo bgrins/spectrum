@@ -1,7 +1,7 @@
 {
     "name": "spectrum-colorpicker",
     "description": "Spectrum: the no hassle jQuery colorpicker",
-    "version": "1.6.0",
+    "version": "1.6.1",
     "keywords": ["jquery-plugin", "ecosystem:jquery", "color", "colorpicker", "ui"],
     "homepage": "http://bgrins.github.com/spectrum",
     "repository": {
