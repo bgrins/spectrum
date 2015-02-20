@@ -1,5 +1,5 @@
 {
-    "name": "spectrum",
+    "name": "spectrum-colorpicker",
     "description": "Spectrum: the no hassle jQuery colorpicker",
     "version": "1.6.0",
     "keywords": ["jquery-plugin", "ecosystem:jquery", "color", "colorpicker", "ui"],
