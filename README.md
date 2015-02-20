@@ -22,9 +22,11 @@ Head over to the [docs](http://bgrins.github.io/spectrum) for more information. 
     });
     </script>
 
-### jQuery Plugin Repository
+### npm
 
-Spectrum is registered as a jQuery plugin on the jQuery plugin repository here: http://plugins.jquery.com/spectrum/
+Spectrum is registered as package with npm.  It can be installed with:
+
+    npm install spectrum-colorpicker
 
 ### Bower
 
