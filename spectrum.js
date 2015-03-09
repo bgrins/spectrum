@@ -73,8 +73,8 @@
         return contains(style.backgroundColor, 'rgba') || contains(style.backgroundColor, 'hsla');
     })(),
     inputTypeColorSupport = (function() {
-        var colorInput = $("<input type='color' value='!' />")[0];
-        return colorInput.type === "color" && colorInput.value !== "!";
+        var colorInput = $("<input type='color' value='#ffffff' />")[0]; // change "!" to "#ffffff" as default color/value
+        return colorInput.type === "color" && colorInput.value !== "#ffffff";
     })(),
     replaceInput = [
         "<div class='sp-replacer'>",
