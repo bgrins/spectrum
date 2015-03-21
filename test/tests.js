@@ -3,6 +3,8 @@
 // Author: Brian Grinstead
 // License: MIT
 
+// Pretend like the color inputs aren't supported for initial load.
+$.fn.spectrum.inputTypeColorSupport = function() { return false; };
 
 module("Initialization");
 
@@ -24,6 +26,22 @@ test( "jQuery Plugin Can Be Created", function() {
 
   equal(el.spectrum("container"), el, "After destroying spectrum, string function returns input.");
 
+});
+
+test ("Polyfill", function() {
+  var el = $("#type-color-on-page");
+  ok (el.spectrum("get").toHex, "The input[type=color] has been initialized on load");
+  el.spectrum("destroy");
+
+  // Pretend like the color inputs are supported.
+  $.fn.spectrum.inputTypeColorSupport = function() { return true; };
+
+  el = $("<input type='color' value='red' />").spectrum({
+    allowEmpty: true
+  });
+  el.spectrum("set", null);
+  ok(el.spectrum("get"), "input[type] color does not allow null values");
+  el.spectrum("destroy");
 });
 
 test( "Per-element Options Are Read From Data Attributes", function() {
@@ -264,6 +282,20 @@ test( "Local Storage Is Limited ", function() {
 });
 
 module("Options");
+
+test ("allowEmpty", function() {
+  var el = $("<input value='red' />").spectrum({
+    allowEmpty: true
+  });
+  el.spectrum("set", null);
+  ok(!el.spectrum("get"), "input[type] color does not allow null values");
+  el.spectrum("destroy");
+
+  el = $("<input value='red' />").spectrum();
+  el.spectrum("set", null);
+  ok(el.spectrum("get"), "input[type] color does not allow null values");
+  el.spectrum("destroy");
+});
 
 test ("replacerClassName", function() {
   var el = $("<input />").appendTo("body").spectrum({
