@@ -330,6 +330,9 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     cursor: pointer;
     border:solid 2px transparent;
 }
+.sp-palette .sp-thumb-el.sp-thumb-focus {
+    outline: 1px solid red;
+}
 .sp-palette .sp-thumb-el:hover, .sp-palette .sp-thumb-el.sp-thumb-active {
     border-color: orange;
 }
