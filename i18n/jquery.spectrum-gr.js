@@ -8,7 +8,7 @@
         cancelText: "Ακύρωση",
         chooseText: "Επιλογή",
         clearText: "Καθαρισμός επιλεγμένου χρώματος",
-        noColorSelectedText: "Δεν έχει επιλεγεί κανένα χρώμα",
+        noColorSelectedText: "Δεν έχει επιλεχθεί κάποιο χρώμα",
         togglePaletteMoreText: "Περισσότερα",
         togglePaletteLessText: "Λιγότερα"
     };
