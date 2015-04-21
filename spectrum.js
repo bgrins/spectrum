@@ -2,7 +2,7 @@
 // https://github.com/bgrins/spectrum
 // Author: Brian Grinstead
 // License: MIT
-// fork test lalala
+
 (function (factory) {
     "use strict";
 
