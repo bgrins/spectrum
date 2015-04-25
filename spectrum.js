@@ -331,6 +331,10 @@
               var focusedColor = $(this).find(".sp-thumb-focus");
               var paletteIndex = allThumbs.index(focusedColor);
 
+              if (!focusedColor) {
+                return;
+              }
+
               // Arrow key
               if ($.inArray(e.keyCode, [37, 38, 39, 40]) >= 0) {
 
@@ -344,9 +348,22 @@
                 }
                 else if (e.keyCode == 38 || e.keyCode == 40) {
                   // up or down
-                  var row = e.keyCode == 38 ? focusedColor.parent().prev() : focusedColor.parent().next();
-                  if (row.length > 0) {
-                    newFocusedColor = row.children().eq(focusedColor.index());
+                  if (doc.elementFromPoint) {
+                    var coords = focusedColor.offset();
+                    coords.left += 1;
+                    if (e.keyCode == 38) {
+                        coords.top -= focusedColor.height();
+                    } else {
+                        coords.top += focusedColor.height() * 2;
+                    }
+                    newFocusedColor = $(doc.elementFromPoint(coords.left, coords.top)).closest(".sp-thumb-el");
+                  }
+
+                  if (!newFocusedColor || !newFocusedColor.length || newFocusedColor[0] === focusedColor[0]) {
+                    var row = e.keyCode == 38 ? focusedColor.parent().prev() : focusedColor.parent().next();
+                    if (row.length > 0) {
+                      newFocusedColor = row.children().eq(focusedColor.index());
+                    }
                   }
                 }
 
