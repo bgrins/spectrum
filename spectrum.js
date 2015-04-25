@@ -326,19 +326,21 @@
             // Handle arrow keys and Enter -- for keyboard navigation
             paletteContainer.keydown(function(e) {
 
-              var focusedColor;
+              // Currently-focused color
+              var allThumbs = $(this).find(".sp-thumb-el");
+              var focusedColor = $(this).find(".sp-thumb-focus");
+              var paletteIndex = allThumbs.index(focusedColor);
 
               // Arrow key
               if ($.inArray(e.keyCode, [37, 38, 39, 40]) >= 0) {
 
-                // Currently-focused color
-                focusedColor = $(this).find(".sp-thumb-focus");
 
                 // Find the color above/below/before/after the focused color
                 var newFocusedColor;
                 if (e.keyCode == 37 || e.keyCode == 39) {
                   // left or right
-                  newFocusedColor = e.keyCode == 37 ? focusedColor.prev() : focusedColor.next();
+                  var newIndex = e.keyCode == 37 ? paletteIndex - 1 : paletteIndex + 1;
+                  newFocusedColor = allThumbs.eq(newIndex);
                 }
                 else if (e.keyCode == 38 || e.keyCode == 40) {
                   // up or down
@@ -347,9 +349,8 @@
                     newFocusedColor = row.children().eq(focusedColor.index());
                   }
                 }
- 
-                if (newFocusedColor && newFocusedColor.length > 0)
-                {
+
+                if (newFocusedColor && newFocusedColor.length > 0) {
                   newFocusedColor.focus();
 
                   focusedColor.attr("tabindex", -1);
@@ -601,7 +602,6 @@
         function drawPalette() {
 
             var currentColor = get();
-
             var html = $.map(paletteArray, function (palette, i) {
                 return paletteTemplate(palette, currentColor, "sp-palette-row sp-palette-row-" + i, opts);
             });
