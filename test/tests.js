@@ -495,6 +495,44 @@ test ("Tooltip is formatted based on preferred format", function() {
   el.spectrum("destroy");
 });
 
+test ("addInitialToSelectionPalette", function() {
+  var initialColor = "rgb(0, 244, 0)";
+
+  // Test when option value is true.
+  var el = $("<input/>").spectrum({
+    addInitialToSelectionPalette: true,
+    showPalette: true,
+    color: initialColor
+  });
+
+  // Open the Colorpicker
+  el.spectrum("show");
+
+  var selectionPalette = el.spectrum("container").find('.sp-palette-row-selection');
+  var selectedColor = selectionPalette.find('span[data-color="' + initialColor + '"]');
+
+  ok(selectedColor.length > 0, "Initial color is shown in the selection palette.");
+
+  el.spectrum("destroy");
+
+  // Test when option value is false.
+  el = $("<input/>").spectrum({
+    addInitialToSelectionPalette: false,
+    showPalette: true,
+    color: initialColor
+  });
+
+  // Open the Colorpicker
+  el.spectrum("show");
+
+  selectionPalette = el.spectrum("container").find('.sp-palette-row-selection');
+  selectedColor = selectionPalette.find('span[data-color="' + initialColor + '"]');
+
+  ok(selectedColor.length === 0, "Initial color is not shown in the selection palette.");
+
+  el.spectrum("destroy");
+});
+
 module("Methods");
 
 test( "Methods work as described", function() {
