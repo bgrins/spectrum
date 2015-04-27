@@ -317,6 +317,29 @@ test ("allowEmpty", function() {
   el.spectrum("destroy");
 });
 
+test ("clickoutFiresChange", function() {
+  var el = $("<input value='red' />").spectrum({
+    clickoutFiresChange: false
+  });
+  el.spectrum("show");
+  equal ( el.spectrum("get").toName(), "red", "Color is initialized");
+  el.spectrum("set", "orange");
+  equal ( el.spectrum("get").toName(), "orange", "Color is set");
+  $(document).click();
+  equal ( el.spectrum("get").toName(), "red", "Color is reverted after clicking 'cancel'");
+  el.spectrum("destroy");
+
+  // Try again with default behavior (clickoutFiresChange = true)
+  el = $("<input value='red' />").spectrum();
+  el.spectrum("show");
+  equal ( el.spectrum("get").toName(), "red", "Color is initialized");
+  el.spectrum("set", "orange");
+  equal ( el.spectrum("get").toName(), "orange", "Color is set");
+  $(document).click();
+  equal ( el.spectrum("get").toName(), "orange", "Color is changed after clicking out");
+  el.spectrum("destroy");
+});
+
 test ("replacerClassName", function() {
   var el = $("<input />").appendTo("body").spectrum({
     replacerClassName: "test"
