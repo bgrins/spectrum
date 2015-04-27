@@ -261,12 +261,12 @@ $("#togglePaletteOnly").spectrum({
 });
 
 $("#clickoutFiresChange").spectrum({
-    clickoutFiresChange: true,
     change: updateBorders
 });
 
 $("#clickoutDoesntFireChange").spectrum({
-    change: updateBorders
+    change: updateBorders,
+    clickoutFiresChange: false
 });
 
 $("#showInitial").spectrum({
