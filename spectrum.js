@@ -618,6 +618,7 @@
             hideAll();
             visible = true;
 
+            $(doc).bind("keydown.spectrum", onkeydown);
             $(doc).bind("click.spectrum", clickout);
             $(window).bind("resize.spectrum", resize);
             replacer.addClass("sp-active");
@@ -631,6 +632,13 @@
             drawInitial();
             callbacks.show(colorOnShow);
             boundElement.trigger('show.spectrum', [ colorOnShow ]);
+        }
+
+        function onkeydown(e) {
+            // Close on ESC
+            if (e.keyCode === 27) {
+                hide();
+            }
         }
 
         function clickout(e) {
@@ -651,6 +659,7 @@
             if (!visible || flat) { return; }
             visible = false;
 
+            $(doc).unbind("keydown.spectrum", onkeydown);
             $(doc).unbind("click.spectrum", clickout);
             $(window).unbind("resize.spectrum", resize);
 

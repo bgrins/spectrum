@@ -124,6 +124,26 @@ test( "Events Fire", function() {
   el2.spectrum("destroy");
 });
 
+test( "Escape hides the colorpicker", function() {
+  expect(1);
+  var el = $("<input id='spec' />").spectrum();
+  el.on("hide.spectrum", function(e) {
+    ok(true, "Hide event should fire");
+  });
+
+  // Simulate an escape before showing -- should do nothing
+  var e = jQuery.Event("keydown");
+  e.keyCode = 27;
+  $(document).trigger(e);
+
+  el.spectrum("show");
+
+  // Simulate an escape after showing -- should call the hide handler
+  $(document).trigger(e);
+
+  el.spectrum("destroy");
+});
+
 test( "Dragging", function() {
   var el = $("<input id='spec' />").spectrum();
   var hueSlider = el.spectrum("container").find(".sp-hue");
