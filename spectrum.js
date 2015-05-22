@@ -24,7 +24,7 @@
         beforeShow: noop,
         move: noop,
         change: noop,
-        validationerr: noop,
+        validationErr: noop,
         show: noop,
         hide: noop,
 
@@ -168,7 +168,7 @@
         opts.callbacks = {
             'move': bind(opts.move, callbackContext),
             'change': bind(opts.change, callbackContext),
-            'validationerr': bind(opts.validationerr, callbackContext),
+            'validationErr': bind(opts.validationErr, callbackContext),
             'show': bind(opts.show, callbackContext),
             'hide': bind(opts.hide, callbackContext),
             'beforeShow': bind(opts.beforeShow, callbackContext)
@@ -593,7 +593,7 @@
                 }
                 else {
                     textInput.addClass("sp-validation-error");
-                    callbacks.validationerr();
+                    callbacks.validationErr(value);
                 }
             }
         }
