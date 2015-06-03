@@ -982,17 +982,27 @@
         var viewWidth = docElem.clientWidth + $(doc).scrollLeft();
         var viewHeight = docElem.clientHeight + $(doc).scrollTop();
         var offset = input.offset();
-        offset.top += inputHeight;
+        var offset_left = offset.left;
+        var offset_top = offset.top;
 
-        offset.left -=
-            Math.min(offset.left, (offset.left + dpWidth > viewWidth && viewWidth > dpWidth) ?
-            Math.abs(offset.left + dpWidth - viewWidth) : 0);
+        offset_top += inputHeight;
 
-        offset.top -=
-            Math.min(offset.top, ((offset.top + dpHeight > viewHeight && viewHeight > dpHeight) ?
+        offset_left -=
+            Math.min(offset_left, (offset_left + dpWidth > viewWidth && viewWidth > dpWidth) ?
+            Math.abs(offset_left + dpWidth - viewWidth) : 0);
+
+        offset_top -=
+            Math.min(offset_top, ((offset_top + dpHeight > viewHeight && viewHeight > dpHeight) ?
             Math.abs(dpHeight + inputHeight - extraY) : extraY));
 
-        return offset;
+        return {
+            top: offset_top,
+            bottom: offset.bottom,
+            left: offset_left,
+            right: offset.right,
+            width: offset.width,
+            height: offset.height
+        };
     }
 
     /**
