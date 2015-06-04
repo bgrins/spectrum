@@ -916,6 +916,11 @@
             spectrums[spect.id] = null;
         }
 
+        function changeInitialColor(initColor) {
+            colorOnShow = initColor;
+            drawInitial();
+        }
+
         function option(optionName, optionValue) {
             if (optionName === undefined) {
                 return $.extend({}, opts);
@@ -963,6 +968,7 @@
             },
             get: get,
             destroy: destroy,
+            changeInitialColor: changeInitialColor,
             container: container
         };
 
