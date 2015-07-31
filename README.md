@@ -38,8 +38,8 @@ Spectrum is registered as a package with [Bower](http://bower.io/), so it can be
 
 CDN provided by [cdnjs](https://cdnjs.com/libraries/spectrum)
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.7.0/spectrum.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.6.1/spectrum.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.7.1/spectrum.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.7.1/spectrum.min.css">
 
 ### Continuous Integration
 
