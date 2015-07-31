@@ -7,6 +7,10 @@ I wanted a colorpicker that didn't require images, and that had an API that made
 
 I started using canvas, then switched to CSS gradients, since it turned out to be easier to manage, and provided better cross browser support.
 
+### Changes in this fork
+
+I updated the styles of the buttons to be more aesthetically pleasing.
+
 ### Basic Usage
 
 Head over to the [docs](http://bgrins.github.io/spectrum) for more information.  There is a visual demo of the different options hosted at: http://bgrins.github.io/spectrum.
