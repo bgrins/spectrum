@@ -19,7 +19,7 @@
 <div id='header'>
     <h1><a href='http://bgrins.github.com/spectrum'>Spectrum</a></h1> <h2><em>The No Hassle jQuery Colorpicker</em></h2>
     <div id='links'>
-        <a href='http://github.com/bgrins/spectrum/zipball/1.6.1' class="btn btn-primary">Download Zip</a>
+        <a href='http://github.com/bgrins/spectrum/zipball/1.7.1' class="btn btn-primary">Download Zip</a>
         View the <a href='http://github.com/bgrins/spectrum'>Source code</a>.
         Spectrum is a project by <a href='http://twitter.com/bgrins'>@bgrins</a>.
     </div>
@@ -506,7 +506,7 @@ $("#hideAfterPaletteSelect").spectrum({
         <div class='option-content'>
             <div class='description'>
                 <p>
-                When clicking outside of the colorpicker, you can force it to fire a <code>change</code> event rather than having it revert the change.
+                When clicking outside of the colorpicker, you can force it to fire a <code>change</code> event rather than having it revert the change.  This is <code>true</code> by default.
                 </p>
             </div>
 
@@ -515,7 +515,7 @@ $("#clickoutFiresChange").spectrum({
     clickoutFiresChange: true
 });
 $("#clickoutDoesntChange").spectrum({
-
+    clickoutFiresChange: false
 });
             </pre>
 

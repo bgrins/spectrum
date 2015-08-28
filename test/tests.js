@@ -124,6 +124,26 @@ test( "Events Fire", function() {
   el2.spectrum("destroy");
 });
 
+test( "Escape hides the colorpicker", function() {
+  expect(1);
+  var el = $("<input id='spec' />").spectrum();
+  el.on("hide.spectrum", function(e) {
+    ok(true, "Hide event should fire");
+  });
+
+  // Simulate an escape before showing -- should do nothing
+  var e = jQuery.Event("keydown");
+  e.keyCode = 27;
+  $(document).trigger(e);
+
+  el.spectrum("show");
+
+  // Simulate an escape after showing -- should call the hide handler
+  $(document).trigger(e);
+
+  el.spectrum("destroy");
+});
+
 test( "Dragging", function() {
   var el = $("<input id='spec' />").spectrum();
   var hueSlider = el.spectrum("container").find(".sp-hue");
@@ -294,6 +314,29 @@ test ("allowEmpty", function() {
   el = $("<input value='red' />").spectrum();
   el.spectrum("set", null);
   ok(el.spectrum("get"), "input[type] color does not allow null values");
+  el.spectrum("destroy");
+});
+
+test ("clickoutFiresChange", function() {
+  var el = $("<input value='red' />").spectrum({
+    clickoutFiresChange: false
+  });
+  el.spectrum("show");
+  equal ( el.spectrum("get").toName(), "red", "Color is initialized");
+  el.spectrum("set", "orange");
+  equal ( el.spectrum("get").toName(), "orange", "Color is set");
+  $(document).click();
+  equal ( el.spectrum("get").toName(), "red", "Color is reverted after clicking 'cancel'");
+  el.spectrum("destroy");
+
+  // Try again with default behavior (clickoutFiresChange = true)
+  el = $("<input value='red' />").spectrum();
+  el.spectrum("show");
+  equal ( el.spectrum("get").toName(), "red", "Color is initialized");
+  el.spectrum("set", "orange");
+  equal ( el.spectrum("get").toName(), "orange", "Color is set");
+  $(document).click();
+  equal ( el.spectrum("get").toName(), "orange", "Color is changed after clicking out");
   el.spectrum("destroy");
 });
 

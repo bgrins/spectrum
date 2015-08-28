@@ -1,4 +1,4 @@
-// Spectrum Colorpicker v1.6.1
+// Spectrum Colorpicker v1.7.1
 // https://github.com/bgrins/spectrum
 // Author: Brian Grinstead
 // License: MIT
@@ -33,7 +33,7 @@
         showInput: false,
         allowEmpty: false,
         showButtons: true,
-        clickoutFiresChange: false,
+        clickoutFiresChange: true,
         showInitial: false,
         showPalette: false,
         showPaletteOnly: false,
@@ -185,6 +185,7 @@
             callbacks = opts.callbacks,
             resize = throttle(reflow, 10),
             visible = false,
+            isDragging = false,
             dragWidth = 0,
             dragHeight = 0,
             dragHelperHeight = 0,
@@ -627,12 +628,14 @@
             if (dragHeight <= 0 || dragWidth <= 0 || slideHeight <= 0) {
                 reflow();
             }
+            isDragging = true;
             container.addClass(draggingClass);
             shiftMovementDirection = null;
             boundElement.trigger('dragstart.spectrum', [ get() ]);
         }
 
         function dragStop() {
+            isDragging = false;
             container.removeClass(draggingClass);
             boundElement.trigger('dragstop.spectrum', [ get() ]);
         }
@@ -683,6 +686,7 @@
             hideAll();
             visible = true;
 
+            $(doc).bind("keydown.spectrum", onkeydown);
             $(doc).bind("click.spectrum", clickout);
             $(window).bind("resize.spectrum", resize);
             replacer.addClass("sp-active");
@@ -704,9 +708,20 @@
             }
         }
 
+        function onkeydown(e) {
+            // Close on ESC
+            if (e.keyCode === 27) {
+                hide();
+            }
+        }
+
         function clickout(e) {
             // Return on right click.
             if (e.button == 2) { return; }
+
+            // If a drag event was happening during the mouseup, don't hide
+            // on click.
+            if (isDragging) { return; }
 
             if (clickoutFiresChange) {
                 updateOriginalInput(true);
@@ -722,6 +737,7 @@
             if (!visible || flat) { return; }
             visible = false;
 
+            $(doc).unbind("keydown.spectrum", onkeydown);
             $(doc).unbind("click.spectrum", clickout);
             $(window).unbind("resize.spectrum", resize);
 
@@ -1143,9 +1159,7 @@
                     $(doc).bind(duringDragEvents);
                     $(doc.body).addClass("sp-dragging");
 
-                    if (!hasTouch) {
-                        move(e);
-                    }
+                    move(e);
 
                     prevent(e);
                 }
@@ -1156,7 +1170,12 @@
             if (dragging) {
                 $(doc).unbind(duringDragEvents);
                 $(doc.body).removeClass("sp-dragging");
-                onstop.apply(element, arguments);
+
+                // Wait a tick before notifying observers to allow the click event
+                // to fire in Chrome.
+                setTimeout(function() {
+                    onstop.apply(element, arguments);
+                }, 0);
             }
             dragging = false;
         }
@@ -1236,8 +1255,8 @@
     $.fn.spectrum.defaults = defaultOpts;
     $.fn.spectrum.inputTypeColorSupport = function inputTypeColorSupport() {
         if (typeof inputTypeColorSupport._cachedResult === "undefined") {
-            var colorInput = $("<input type='color' value='!' />")[0];
-            inputTypeColorSupport._cachedResult = colorInput.type === "color" && colorInput.value !== "!";
+            var colorInput = $("<input type='color'/>")[0]; // if color element is supported, value will default to not null
+            inputTypeColorSupport._cachedResult = colorInput.type === "color" && colorInput.value !== "";
         }
         return inputTypeColorSupport._cachedResult;
     };
