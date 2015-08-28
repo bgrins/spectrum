@@ -259,7 +259,6 @@
                     }
                 }
             }
-            
 
             isInputTypeColor = isInput && boundElement.attr("type") === "color" && inputTypeColorSupport();
             allowEmpty = opts.allowEmpty && !isInputTypeColor;
