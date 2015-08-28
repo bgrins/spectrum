@@ -259,6 +259,8 @@
                     }
                 }
             }
+            
+            allowEmpty = opts.allowEmpty && !doc.isInputTypeColor;
 
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
@@ -284,10 +286,6 @@
 
             if (shouldReplace) {
                 boundElement.after(replacer).hide();
-            }
-
-            if (!allowEmpty) {
-                clearButton.hide();
             }
 
             if (flat) {
