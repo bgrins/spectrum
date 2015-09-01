@@ -43,6 +43,9 @@
         localStorageKey: false,
         appendTo: "body",
         maxSelectionSize: 7,
+        inputText: "Enter a color",
+        initialText: "Initial color",
+        currentText: "Current color",
         cancelText: "cancel",
         chooseText: "choose",
         togglePaletteMoreText: "more",
@@ -621,6 +624,13 @@
                 var initial = colorOnShow;
                 var current = get();
                 initialColorContainer.html(paletteTemplate([initial, current], current, "sp-palette-row-initial", opts));
+
+				// Accessibility for initial color
+				var thumbs = initialColorContainer.find('.sp-thumb-el');
+				if (thumbs.length === 2) {
+					$(thumbs[0]).attr("aria-label", opts.initialText);
+					$(thumbs[1]).attr("aria-label", opts.currentText);
+            	}
             }
         }
 
@@ -873,6 +883,8 @@
             // Update the text entry input as it changes happen
             if (opts.showInput) {
                 textInput.val(displayColor);
+                textInput.attr("aria-label", opts.inputText);
+				
             }
 
             if (opts.showPalette) {
