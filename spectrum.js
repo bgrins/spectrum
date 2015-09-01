@@ -625,12 +625,12 @@
                 var current = get();
                 initialColorContainer.html(paletteTemplate([initial, current], current, "sp-palette-row-initial", opts));
 
-				// Accessibility for initial color
-				var thumbs = initialColorContainer.find('.sp-thumb-el');
-				if (thumbs.length === 2) {
-					$(thumbs[0]).attr("aria-label", opts.initialText);
-					$(thumbs[1]).attr("aria-label", opts.currentText);
-            	}
+                // Accessibility for initial color
+                var thumbs = initialColorContainer.find('.sp-thumb-el');
+                if (thumbs.length === 2) {
+                    $(thumbs[0]).attr("aria-label", opts.initialText);
+                    $(thumbs[1]).attr("aria-label", opts.currentText);
+                }
             }
         }
 
@@ -884,7 +884,6 @@
             if (opts.showInput) {
                 textInput.val(displayColor);
                 textInput.attr("aria-label", opts.inputText);
-				
             }
 
             if (opts.showPalette) {
