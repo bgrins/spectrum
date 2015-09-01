@@ -43,9 +43,9 @@
         localStorageKey: false,
         appendTo: "body",
         maxSelectionSize: 7,
-        inputText: "Enter a color",
-        initialText: "Initial color",
-        currentText: "Current color",
+        inputAriaLabel: "Enter a color",
+        initialSwatchAriaLabel: "Initial color",
+        currentSwatchAriaLabel: "Current color",
         cancelText: "cancel",
         chooseText: "choose",
         togglePaletteMoreText: "more",
@@ -360,14 +360,10 @@
                     }
  
                     // Give focus to the new focused color
-                    if (newFocusedColor && newFocusedColor.length > 0)
-                    {
+                    if (newFocusedColor && newFocusedColor.length > 0) {
                         newFocusedColor.focus();
 
-                        // focusedColor.attr("tabindex", -1);
                         focusedColor.removeClass("sp-thumb-focus");
-
-                        // newFocusedColor.attr("tabindex", 0);
                         newFocusedColor.addClass("sp-thumb-focus");
                     }
 
@@ -390,14 +386,6 @@
 
                     return false;
                 }
-
-                // Escape (TODO)
-                else if (e.keyCode == 27) {
-
-                    // TODO: close()
-
-                }
-
             });
 
             // Handle user typed input
@@ -637,9 +625,9 @@
                 var thumbs = initialColorContainer.find('.sp-thumb-el');
                 if (thumbs.length === 2) {
                     $(thumbs[0]).attr("tabindex", 0);
-                    $(thumbs[0]).attr("aria-label", opts.initialText);
+                    $(thumbs[0]).attr("aria-label", opts.initialSwatchAriaLabel);
                     $(thumbs[1]).attr("tabindex", 0);
-                    $(thumbs[1]).attr("aria-label", opts.currentText);
+                    $(thumbs[1]).attr("aria-label", opts.currentSwatchAriaLabel);
 
                     // Clicking Enter on the Initial color selects it
                     $(thumbs[0]).keydown(function(e) {
@@ -901,7 +889,7 @@
             // Update the text entry input as it changes happen
             if (opts.showInput) {
                 textInput.val(displayColor);
-                textInput.attr("aria-label", opts.inputText);
+                textInput.attr("aria-label", opts.inputAriaLabel);
             }
 
             if (opts.showPalette) {
