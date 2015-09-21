@@ -44,6 +44,7 @@
         appendTo: "body",
         maxSelectionSize: 7,
         inputAriaLabel: "Enter a color",
+        paletteAriaLabel: "Color palette",
         initialSwatchAriaLabel: "Initial color",
         currentSwatchAriaLabel: "Current color",
         cancelText: "cancel",
@@ -613,6 +614,8 @@
             }
 
             paletteContainer.html(html.join(""));
+
+            paletteContainer.attr("aria-label", opts.paletteAriaLabel);
         }
 
         function drawInitial() {
