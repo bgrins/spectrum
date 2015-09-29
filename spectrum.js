@@ -24,6 +24,7 @@
         beforeShow: noop,
         move: noop,
         change: noop,
+        validationErr: noop,
         show: noop,
         hide: noop,
 
@@ -33,7 +34,7 @@
         showInput: false,
         allowEmpty: false,
         showButtons: true,
-        clickoutFiresChange: true,
+        clickoutFiresChange: false,
         showInitial: false,
         showPalette: false,
         showPaletteOnly: false,
@@ -167,6 +168,7 @@
         opts.callbacks = {
             'move': bind(opts.move, callbackContext),
             'change': bind(opts.change, callbackContext),
+            'validationErr': bind(opts.validationErr, callbackContext),
             'show': bind(opts.show, callbackContext),
             'hide': bind(opts.hide, callbackContext),
             'beforeShow': bind(opts.beforeShow, callbackContext)
@@ -236,7 +238,7 @@
             colorOnShow = false,
             preferredFormat = opts.preferredFormat,
             currentPreferredFormat = preferredFormat,
-            clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange,
+            clickoutFiresChange = (!opts.showButtons && opts.clickoutFiresChange) ? true : opts.clickoutFiresChange,
             isEmpty = !initialColor,
             allowEmpty = opts.allowEmpty && !isInputTypeColor;
 
@@ -402,7 +404,7 @@
                     currentAlpha = 1;
                 }
                 move();
-            }, dragStart, dragStop);
+            });
 
             draggable(dragger, function (dragX, dragY, e) {
 
@@ -591,6 +593,7 @@
                 }
                 else {
                     textInput.addClass("sp-validation-error");
+                    callbacks.validationErr(value);
                 }
             }
         }
@@ -913,6 +916,11 @@
             spectrums[spect.id] = null;
         }
 
+        function changeInitialColor(initColor) {
+            colorOnShow = initColor;
+            drawInitial();
+        }
+
         function option(optionName, optionValue) {
             if (optionName === undefined) {
                 return $.extend({}, opts);
@@ -960,6 +968,7 @@
             },
             get: get,
             destroy: destroy,
+            changeInitialColor: changeInitialColor,
             container: container
         };
 
