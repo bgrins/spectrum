@@ -34,7 +34,7 @@
         showInput: false,
         allowEmpty: false,
         showButtons: true,
-        clickoutFiresChange: true,
+        clickoutFiresChange: false,
         showInitial: false,
         showPalette: false,
         showPaletteOnly: false,
@@ -238,7 +238,7 @@
             colorOnShow = false,
             preferredFormat = opts.preferredFormat,
             currentPreferredFormat = preferredFormat,
-            clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange,
+            clickoutFiresChange = (!opts.showButtons && opts.clickoutFiresChange) ? true : opts.clickoutFiresChange,
             isEmpty = !initialColor,
             allowEmpty = opts.allowEmpty && !isInputTypeColor;
 
