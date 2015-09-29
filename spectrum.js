@@ -404,7 +404,7 @@
                     currentAlpha = 1;
                 }
                 move();
-            }, dragStart, dragStop);
+            });
 
             draggable(dragger, function (dragX, dragY, e) {
 
