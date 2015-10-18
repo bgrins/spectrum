@@ -861,7 +861,11 @@
         function updateOriginalInput(fireCallback) {
             var color = get(),
                 displayColor = '',
+                hasChanged = false;
+
+            if (currentColorOnShow) {
                 hasChanged = !tinycolor.equals(color, currentColorOnShow);
+            }
 
 			currentColorOnShow = color;
 
