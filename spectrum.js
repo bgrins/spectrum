@@ -58,7 +58,8 @@
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
         selectionPalette: [],
         disabled: false,
-        offset: null
+        offset: null,
+        customColorNames: {}
     },
     spectrums = [],
     IE = !!/msie/i.exec( window.navigator.userAgent ),
@@ -270,6 +271,8 @@
             container.toggleClass("sp-palette-only", opts.showPaletteOnly);
             container.toggleClass("sp-initial-disabled", !opts.showInitial);
             container.addClass(opts.className).addClass(opts.containerClassName);
+
+			$.extend(tinycolor.hexNames, opts.customColorNames);
 
             reflow();
         }
