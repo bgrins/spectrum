@@ -234,7 +234,6 @@
             previewElement = replacer.find(".sp-preview-inner"),
             initialColor = opts.color || (isInput && boundElement.val()),
             colorOnShow = false,
-            currentColorOnShow = false,
             preferredFormat = opts.preferredFormat,
             currentPreferredFormat = preferredFormat,
             clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange,
@@ -554,7 +553,7 @@
 
         function drawInitial() {
             if (opts.showInitial) {
-                var initial = currentColorOnShow = colorOnShow;
+                var initial = colorOnShow;
                 var current = get();
                 initialColorContainer.html(paletteTemplate([initial, current], current, "sp-palette-row-initial", opts));
             }
@@ -859,13 +858,8 @@
 
         function updateOriginalInput(fireCallback) {
             var color = get(),
-                displayColor = '';
-
-            if (currentColorOnShow) {
-                var hasChanged = !tinycolor.equals(color, currentColorOnShow);
-            }
-
-			currentColorOnShow = color;
+                displayColor = '',
+                hasChanged = !tinycolor.equals(color, colorOnShow);
 
             if (color) {
                 displayColor = color.toString(currentPreferredFormat);
