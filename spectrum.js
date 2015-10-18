@@ -554,7 +554,8 @@
 
         function drawInitial() {
             if (opts.showInitial) {
-                var initial = currentColorOnShow = colorOnShow;
+                var initial = colorOnShow;
+                currentColorOnShow = colorOnShow;
                 var current = get();
                 initialColorContainer.html(paletteTemplate([initial, current], current, "sp-palette-row-initial", opts));
             }
@@ -859,10 +860,11 @@
 
         function updateOriginalInput(fireCallback) {
             var color = get(),
-                displayColor = '';
+                displayColor = '',
+                hasChanged = false;
 
             if (currentColorOnShow) {
-                var hasChanged = !tinycolor.equals(color, currentColorOnShow);
+                hasChanged = !tinycolor.equals(color, currentColorOnShow);
             }
 
 			currentColorOnShow = color;
