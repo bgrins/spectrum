@@ -857,12 +857,19 @@
         }
 
         function updateOriginalInput(fireCallback) {
-            var color = get(),
+            var format = currentPreferredFormat;
+            if (currentAlpha < 1 && !(currentAlpha === 0 && format === "name")) {
+                if (format === "hex" || format === "hex3" || format === "hex6" || format === "name") {
+                    format = "rgb";
+                }
+            }
+
+            var color = get({ format: format }),
                 displayColor = '',
                 hasChanged = !tinycolor.equals(color, colorOnShow);
 
             if (color) {
-                displayColor = color.toString(currentPreferredFormat);
+                displayColor = color.toString(format);
                 // Update the selection palette with the current color
                 addColorToSelectionPalette(color);
             }
