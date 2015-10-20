@@ -501,7 +501,7 @@ test ("Toggle Picker Area button works as expected", function() {
 test ("Tooltip is formatted based on preferred format", function() {
   var el = $("<input />").spectrum({
     showInput: true,
-    color: "rgba(255, 255, 255, .5)",
+    color: "red",
     showPalette: true,
     palette: [["red", "rgba(255, 255, 255, .5)", "rgb(0, 0, 255)"]]
   });
@@ -516,24 +516,31 @@ test ("Tooltip is formatted based on preferred format", function() {
 
   el.spectrum("option", "preferredFormat", "hex");
   equal (getTitlesString(), "#ff0000 #ffffff #0000ff", "Titles are updated to hex");
+  equal (el.spectrum("get").toString(), "#ff0000", "Value's format is updated");
 
   el.spectrum("option", "preferredFormat", "hex6");
   equal (getTitlesString(), "#ff0000 #ffffff #0000ff", "Titles are updated to hex6");
+  equal (el.spectrum("get").toString(), "#ff0000", "Value's format is updated");
 
   el.spectrum("option", "preferredFormat", "hex3");
   equal (getTitlesString(), "#f00 #fff #00f", "Titles are updated to hex3");
+  equal (el.spectrum("get").toString(), "#f00", "Value's format is updated");
 
   el.spectrum("option", "preferredFormat", "name");
   equal (getTitlesString(), "red #ffffff blue", "Titles are updated to name");
+  equal (el.spectrum("get").toString(), "red", "Value's format is updated");
 
   el.spectrum("option", "preferredFormat", "hsv");
   equal (getTitlesString(), "hsv(0, 100%, 100%) hsva(0, 0%, 100%, 0.5) hsv(240, 100%, 100%)", "Titles are updated to hsv");
+  equal (el.spectrum("get").toString(), "hsv(0, 100%, 100%)", "Value's format is updated");
 
   el.spectrum("option", "preferredFormat", "hsl");
   equal (getTitlesString(), "hsl(0, 100%, 50%) hsla(0, 0%, 100%, 0.5) hsl(240, 100%, 50%)", "Titles are updated to hsl");
+  equal (el.spectrum("get").toString(), "hsl(0, 100%, 50%)", "Value's format is updated");
 
   el.spectrum("option", "preferredFormat", "rgb");
   equal (getTitlesString(), "rgb(255, 0, 0) rgba(255, 255, 255, 0.5) rgb(0, 0, 255)", "Titles are updated to rgb");
+  equal (el.spectrum("get").toString(), "rgb(255, 0, 0)", "Value's format is updated");
 
   el.spectrum("destroy");
 });
