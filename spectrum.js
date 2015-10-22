@@ -58,7 +58,8 @@
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
         selectionPalette: [],
         disabled: false,
-        offset: null
+        offset: null,
+        realTimeChange: false
     },
     spectrums = [],
     IE = !!/msie/i.exec( window.navigator.userAgent ),
@@ -237,7 +238,8 @@
             currentPreferredFormat = opts.preferredFormat,
             clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange,
             isEmpty = !initialColor,
-            allowEmpty = opts.allowEmpty && !isInputTypeColor;
+            allowEmpty = opts.allowEmpty && !isInputTypeColor,
+            realTimeChange = opts.realTimeChange;
 
         function applyOptions() {
 
@@ -732,6 +734,10 @@
 
             callbacks.move(get());
             boundElement.trigger('move.spectrum', [ get() ]);
+
+            if (realTimeChange) {
+                updateOriginalInput(true);
+            }
         }
 
         function updateUI() {
