@@ -533,6 +533,18 @@
             return unique.reverse().slice(0, opts.maxSelectionSize);
         }
 
+        function readDatalistPalette() {
+            var listID = $(element).attr('list');
+            if(listID) {
+                option("showPalette", true);
+                option("palette", $("datalist#" + listID).find("option").filter(function() {
+                    return !$(this).is(":disabled") && $.trim(this.value) !== "";
+                }).map(function() {
+                    return this.value;
+                }).toArray());
+            }
+        }
+
         function drawPalette() {
 
             var currentColor = get();
@@ -616,6 +628,8 @@
             if (callbacks.beforeShow(get()) === false || event.isDefaultPrevented()) {
                 return;
             }
+
+            readDatalistPalette();
 
             hideAll();
             visible = true;
