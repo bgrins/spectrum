@@ -31,6 +31,7 @@
         color: false,
         flat: false,
         showInput: false,
+        showRgbInput: false,
         allowEmpty: false,
         showButtons: true,
         clickoutFiresChange: true,
@@ -119,6 +120,11 @@
                     "</div>",
                     "<div class='sp-input-container sp-cf'>",
                         "<input class='sp-input' type='text' spellcheck='false'  />",
+                    "</div>",
+                    "<div class='sp-input-rgb-container sp-cf'>",
+                        "R: <input class='sp-input-rgb-r' type='text' spellcheck='false'  />",
+                        "G: <input class='sp-input-rgb-g' type='text' spellcheck='false'  />",
+                        "B: <input class='sp-input-rgb-b' type='text' spellcheck='false'  />",
                     "</div>",
                     "<div class='sp-initial sp-thumb sp-cf'></div>",
                     "<div class='sp-button-container sp-cf'>",
@@ -220,6 +226,9 @@
             alphaSlider = container.find(".sp-alpha"),
             alphaSlideHelper = container.find(".sp-alpha-handle"),
             textInput = container.find(".sp-input"),
+            rgbRedInput = container.find(".sp-input-rgb-r"),
+            rgbGreenInput = container.find(".sp-input-rgb-g"),
+            rgbBlueInput = container.find(".sp-input-rgb-b"),
             paletteContainer = container.find(".sp-palette"),
             initialColorContainer = container.find(".sp-initial"),
             cancelButton = container.find(".sp-cancel"),
@@ -261,6 +270,7 @@
 
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
+            container.toggleClass("sp-input-rgb-disabled", !opts.showRgbInput);
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
             container.toggleClass("sp-clear-enabled", allowEmpty);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
@@ -330,6 +340,14 @@
             });
             textInput.keydown(function (e) { if (e.keyCode == 13) { setFromTextInput(); } });
 
+            $.each([rgbRedInput, rgbGreenInput, rgbBlueInput], function(idx, item){
+                item.change(setFromRgbInput);
+                item.bind("paste", function () {
+                    setTimeout(setFromRgbInput, 1);
+                });
+                item.keydown(function (e) { if (e.keyCode == 13) { setFromRgbInput(); } });
+            });
+
             cancelButton.text(opts.cancelText);
             cancelButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
@@ -356,9 +374,11 @@
                 e.stopPropagation();
                 e.preventDefault();
 
-                if (IE && textInput.is(":focus")) {
-                    textInput.trigger('change');
-                }
+                $.each([textInput, rgbRedInput, rgbGreenInput, rgbBlueInput], function(idx, item){
+                    if (IE && item.is(":focus")) {
+                        item.trigger('change');
+                    }
+                });
 
                 if (isValid()) {
                     updateOriginalInput(true);
@@ -594,6 +614,33 @@
             }
         }
 
+        function setFromRgbInput() {
+
+            var r = rgbRedInput.val();
+            var g = rgbGreenInput.val();
+            var b = rgbBlueInput.val();
+
+            if (((r === null || r === "") ||
+                 (g === null || g === "") ||
+                 (b === null || b === "")) && allowEmpty) {
+
+                set(null);
+                updateOriginalInput(true);
+            }
+            else {
+                var tiny = tinycolor.fromRatio({r: r, g: g, b: b});
+                if (tiny.isValid()) {
+                    set(tiny);
+                    updateOriginalInput(true);
+                }
+                else {
+                    rgbRedInput.addClass("sp-validation-error");
+                    rgbGreenInput.addClass("sp-validation-error");
+                    rgbBlueInput.addClass("sp-validation-error");
+                }
+            }
+        }
+
         function toggle() {
             if (visible) {
                 hide();
@@ -724,7 +771,10 @@
         }
 
         function isValid() {
-            return !textInput.hasClass("sp-validation-error");
+            return !textInput.hasClass("sp-validation-error") &&
+             !rgbRedInput.hasClass('sp-validation-error') &&
+             !rgbGreenInput.hasClass('sp-validation-error') &&
+             !rgbBlueInput.hasClass('sp-validation-error');
         }
 
         function move() {
@@ -736,8 +786,10 @@
 
         function updateUI() {
 
-            textInput.removeClass("sp-validation-error");
-
+            $.each([textInput, rgbRedInput, rgbGreenInput, rgbBlueInput], function(idx, item){
+                item.removeClass("sp-validation-error");    
+            });
+            
             updateHelperLocations();
 
             // Update dragger background color (gradients take care of saturation and value).
@@ -801,6 +853,15 @@
             // Update the text entry input as it changes happen
             if (opts.showInput) {
                 textInput.val(displayColor);
+            }
+
+            if (opts.showRgbInput) {
+                if (realColor){
+                    var rgb = realColor.toRgb();
+                    rgbRedInput.val(rgb.r);
+                    rgbGreenInput.val(rgb.g);
+                    rgbBlueInput.val(rgb.b);
+                }
             }
 
             if (opts.showPalette) {
