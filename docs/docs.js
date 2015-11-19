@@ -415,6 +415,7 @@ $("#preferredHsl").spectrum({
 $("#preferredRgb").spectrum({
     preferredFormat: "rgb",
     showInput: true,
+    showRgbInput: true,
     showPalette: true,
     palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
