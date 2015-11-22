@@ -458,6 +458,58 @@ test ("Show Input works as expected", function() {
   el.spectrum("destroy");
 });
 
+test ("Show RGB Input works as expected", function() {
+  var el = $("<input />").spectrum({
+    showRgbInput: true,
+    color: "#ffffff"
+  });
+  var inputRed = el.spectrum("container").find(".sp-rgb-input-r");
+  var inputGreen = el.spectrum("container").find(".sp-rgb-input-g");
+  var inputBlue = el.spectrum("container").find(".sp-rgb-input-b");
+
+  //red component
+  equal(inputRed.val(), "255", "Input is set to color by default");
+  inputRed.val("").trigger("change");
+
+  equal(inputRed.val(), 0, "Input set to zero color component by default.");
+  equal(el.spectrum("get").toHexString(), "#00ffff", "Red component changed");
+
+  inputRed.val("255").trigger("change");
+  equal(el.spectrum("get").toHexString(), "#ffffff", "Red component changed back");
+
+  ok(!inputRed.hasClass("sp-validation-error"), "Input does not have validation error class after being reset to original color.");
+  equal(inputRed.val(), "255", "input has red color component.");
+
+  // green component
+  equal(inputGreen.val(), "255", "Input is set to color by default");
+  inputGreen.val("").trigger("change");
+
+  equal(inputGreen.val(), 0, "Input set to zero color component by default.");
+  equal(el.spectrum("get").toHexString(), "#ff00ff", "Green component changed");
+
+  inputGreen.val("255").trigger("change");
+  equal(el.spectrum("get").toHexString(), "#ffffff", "Green component changed back");
+
+  ok(!inputGreen.hasClass("sp-validation-error"), "Input does not have validation error class after being reset to original color.");
+  equal(inputGreen.val(), "255", "input has green color component.");
+
+  // blue component
+  equal(inputBlue.val(), "255", "Input is set to color by default");
+  inputBlue.val("").trigger("change");
+
+  equal(inputBlue.val(), 0, "Input set to zero color component by default.");
+  equal(el.spectrum("get").toHexString(), "#ffff00", "Blue component changed");
+
+  inputBlue.val("255").trigger("change");
+  equal(el.spectrum("get").toHexString(), "#ffffff", "Blue component changed back");
+
+  ok(!inputBlue.hasClass("sp-validation-error"), "Input does not have validation error class after being reset to original color.");
+  equal(inputBlue.val(), "255", "input has blue color component.");
+
+  equal(el.spectrum("get").toHexString(), "#ffffff", "default color found");
+  el.spectrum("destroy");
+});
+
 test ("Toggle Picker Area button works as expected", function() {
   var div = $("<div style='position:absolute; right:0; height:20px; width:150px'>").appendTo('body').show(),
       el = $("<input />").appendTo(div);
