@@ -824,6 +824,8 @@
 
             var realColor = get({ format: format }),
                 displayColor = '';
+            
+            var rgb = realColor ? realColor.toRgb() : null;
 
              //reset background info for preview element
             previewElement.removeClass("sp-clear-display");
@@ -847,7 +849,6 @@
                 }
 
                 if (opts.showAlpha) {
-                    var rgb = realColor.toRgb();
                     rgb.a = 0;
                     var realAlpha = tinycolor(rgb).toRgbString();
                     var gradient = "linear-gradient(left, " + realAlpha + ", " + realHex + ")";
@@ -874,8 +875,7 @@
             }
 
             if (opts.showRgbInput) {
-                if (realColor){
-                    var rgb = realColor.toRgb();
+                if (rgb){
                     rgbRedInput.val(rgb.r);
                     rgbGreenInput.val(rgb.g);
                     rgbBlueInput.val(rgb.b);
