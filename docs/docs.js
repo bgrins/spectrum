@@ -431,6 +431,12 @@ $("#preferredNone").spectrum({
     palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 
+$("#showRgbInput").spectrum({
+    showRgbInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
+});
+
 $("#triggerSet").spectrum({
     change: updateBorders
 });
