@@ -480,6 +480,11 @@ test ("Show RGB Input works as expected", function() {
   ok(!inputRed.hasClass("sp-validation-error"), "Input does not have validation error class after being reset to original color.");
   equal(inputRed.val(), "255", "input has red color component.");
 
+  inputRed.val("not a number").trigger("change");
+  ok(inputRed.hasClass("sp-validation-error"), "Input have validation error class after adding not-a-number value.");
+  inputRed.val("255").trigger("change");
+  ok(!inputRed.hasClass("sp-validation-error"), "Input does not have validation error class after being reset to original color.");
+
   // green component
   equal(inputGreen.val(), "255", "Input is set to color by default");
   inputGreen.val("").trigger("change");
@@ -493,6 +498,11 @@ test ("Show RGB Input works as expected", function() {
   ok(!inputGreen.hasClass("sp-validation-error"), "Input does not have validation error class after being reset to original color.");
   equal(inputGreen.val(), "255", "input has green color component.");
 
+  inputGreen.val("not a number").trigger("change");
+  ok(inputGreen.hasClass("sp-validation-error"), "Input have validation error class after adding not-a-number value.");
+  inputGreen.val("255").trigger("change");
+  ok(!inputGreen.hasClass("sp-validation-error"), "Input does not have validation error class after being reset to original color.");
+
   // blue component
   equal(inputBlue.val(), "255", "Input is set to color by default");
   inputBlue.val("").trigger("change");
@@ -505,6 +515,11 @@ test ("Show RGB Input works as expected", function() {
 
   ok(!inputBlue.hasClass("sp-validation-error"), "Input does not have validation error class after being reset to original color.");
   equal(inputBlue.val(), "255", "input has blue color component.");
+
+  inputBlue.val("not a number").trigger("change");
+  ok(inputBlue.hasClass("sp-validation-error"), "Input have validation error class after adding not-a-number value.");
+  inputBlue.val("255").trigger("change");
+  ok(!inputBlue.hasClass("sp-validation-error"), "Input does not have validation error class after being reset to original color.");
 
   equal(el.spectrum("get").toHexString(), "#ffffff", "default color found");
   el.spectrum("destroy");
