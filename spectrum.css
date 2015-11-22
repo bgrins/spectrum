@@ -277,13 +277,13 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 }
 
 /*RGB Input*/
-.sp-input-rgb-container {
+.sp-rgb-container {
     width: 100%;
 }
 
-.sp-input-rgb-r,
-.sp-input-rgb-g,
-.sp-input-rgb-b {
+.sp-rgb-input-r,
+.sp-rgb-input-g,
+.sp-rgb-input-b {
     font-size: 12px !important;
     border: 1px inset;
     margin-bottom: 0px;
@@ -298,9 +298,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     width: 75%;
 }
 
-.sp-input-rgb-r-container,
-.sp-input-rgb-g-container,
-.sp-input-rgb-b-container {
+.sp-rgb-input-container {
     display: table;
     width: 100%;
     height: 30px;
@@ -309,7 +307,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     width: 33%
 }
 
-.sp-input-rgb-b-label{
+.sp-rgb-input-label {
     display: table-cell;
     vertical-align: middle;
 }
