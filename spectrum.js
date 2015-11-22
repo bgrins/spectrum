@@ -636,6 +636,15 @@
                 set(null);
                 updateOriginalInput(true);
             }
+            else if (isNaN(r)) {
+                rgbRedInput.addClass("sp-validation-error");
+            }
+            else if (isNaN(g)){
+                rgbGreenInput.addClass("sp-validation-error");
+            }
+            else if (isNaN(b)){
+                rgbBlueInput.addClass("sp-validation-error");
+            }
             else {
                 var tiny = tinycolor.fromRatio({r: r, g: g, b: b});
                 if (tiny.isValid()) {

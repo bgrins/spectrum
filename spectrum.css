@@ -288,25 +288,33 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     display: inline-block;
 }
 
-.sp-rgb-input-r,
-.sp-rgb-input-g,
-.sp-rgb-input-b {
+input[type='text'].sp-rgb-input-r,
+input[type='text'].sp-rgb-input-g,
+input[type='text'].sp-rgb-input-b {
     font-size: 12px !important;
     border: 1px inset;
     margin-bottom: 0px;
-    background:transparent;
     border-radius: 3px;
     color: #222;
     vertical-align: middle;
     text-align: left;
     width: 75%;
+    margin-bottom: 0px;
     display: inline-block;
+}
+
+.sp-rgb-input-r.sp-validation-error,
+.sp-rgb-input-g.sp-validation-error,
+.sp-rgb-input-b.sp-validation-error {
+    border: 1px solid red;
+    background: #fdd;
 }
 
 .sp-rgb-input-label {
     vertical-align: middle;
     text-align: center;
     display: inline-block;
+    margin-bottom: 0px;
     width: 25%;
 }
 
@@ -318,13 +326,12 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 .sp-initial-disabled  .sp-input-container {
     width: 100%;
 }
-.sp-input {
+input[type='text'].sp-input {
    font-size: 12px !important;
    border: 1px inset;
    padding: 4px 5px;
    margin: 0;
    width: 100%;
-   background:transparent;
    border-radius: 3px;
    color: #222;
 }
