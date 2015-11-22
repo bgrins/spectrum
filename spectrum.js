@@ -118,22 +118,22 @@
                         "</div>",
                         "<div class='sp-alpha'><div class='sp-alpha-inner'><div class='sp-alpha-handle'></div></div></div>",
                     "</div>",
+                    "<div class='sp-input-container sp-cf'>",
+                        "<input class='sp-input' type='text' spellcheck='false'  />",
+                    "</div>",
                     "<div class='sp-rgb-container sp-cf'>",
                         "<div class='sp-rgb-input-container'>",
-                            "<span class='sp-rgb-input-label'>R:</span>",
+                            "<div class='sp-rgb-input-label'>R:</div>",
                             "<input class='sp-rgb-input-r' type='text' spellcheck='false' />",
                         "</div>",
                         "<div class='sp-rgb-input-container'>",
-                            "<span class='sp-rgb-input-label'>G:</span>",
+                            "<div class='sp-rgb-input-label'>G:</div>",
                             "<input class='sp-rgb-input-g' type='text' spellcheck='false' />",
                         "</div>",
                         "<div class='sp-rgb-input-container'>",
-                            "<span class='sp-rgb-input-label'>B:</span>",
+                            "<div class='sp-rgb-input-label'>B:</div>",
                             "<input class='sp-rgb-input-b' type='text' spellcheck='false' />",
                         "</div>",
-                    "</div>",
-                    "<div class='sp-input-container sp-cf'>",
-                        "<input class='sp-input' type='text' spellcheck='false'  />",
                     "</div>",
                     "<div class='sp-initial sp-thumb sp-cf'></div>",
                     "<div class='sp-button-container sp-cf'>",
@@ -279,7 +279,7 @@
 
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
-            container.toggleClass("sp-input-rgb-disabled", !opts.showRgbInput);
+            container.toggleClass("sp-rgb-disabled", !opts.showRgbInput);
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
             container.toggleClass("sp-clear-enabled", allowEmpty);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);

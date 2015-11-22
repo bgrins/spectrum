@@ -131,7 +131,7 @@ License: MIT
 .sp-container.sp-input-disabled .sp-input-container {
     display: none;
 }
-.sp-container.sp-input-rgb-disabled .sp-input-rgb-container {
+.sp-container.sp-rgb-disabled .sp-rgb-container {
     display: none;
 }
 .sp-container.sp-buttons-disabled .sp-button-container {
@@ -285,7 +285,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 .sp-rgb-input-container {
     height: 30px;
     width: 33.3333%;
-    white-space: nowrap;
     display: inline-block;
 }
 
@@ -300,7 +299,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     color: #222;
     vertical-align: middle;
     text-align: left;
-    height: auto;
     width: 75%;
     display: inline-block;
 }
@@ -314,7 +312,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 
 /* Input */
 .sp-input-container {
-    float:right;
     width: 100px;
     margin-bottom: 4px;
 }
