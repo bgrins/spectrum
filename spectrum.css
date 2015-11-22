@@ -292,12 +292,13 @@ input[type='text'].sp-rgb-input-r,
 input[type='text'].sp-rgb-input-g,
 input[type='text'].sp-rgb-input-b {
     font-size: 12px !important;
-    border: 1px inset;
     margin-bottom: 0px;
     border-radius: 3px;
     color: #222;
+
     vertical-align: middle;
     text-align: left;
+
     width: 75%;
     margin-bottom: 0px;
     display: inline-block;
@@ -327,13 +328,12 @@ input[type='text'].sp-rgb-input-b {
     width: 100%;
 }
 input[type='text'].sp-input {
-   font-size: 12px !important;
-   border: 1px inset;
-   padding: 4px 5px;
-   margin: 0;
-   width: 100%;
-   border-radius: 3px;
-   color: #222;
+    font-size: 12px !important;
+    padding: 4px 5px;
+    margin: 0;
+    width: 100%;
+    border-radius: 3px;
+    color: #222;
 }
 .sp-input:focus  {
     border: 1px solid orange;
