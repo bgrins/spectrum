@@ -279,6 +279,14 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 /*RGB Input*/
 .sp-rgb-container {
     width: 100%;
+    margin-bottom: 4px;
+}
+
+.sp-rgb-input-container {
+    height: 30px;
+    width: 33.3333%;
+    white-space: nowrap;
+    display: inline-block;
 }
 
 .sp-rgb-input-r,
@@ -290,26 +298,18 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     background:transparent;
     border-radius: 3px;
     color: #222;
-    width: 22%;
-    display: table-cell;
     vertical-align: middle;
     text-align: left;
     height: auto;
     width: 75%;
-}
-
-.sp-rgb-input-container {
-    display: table;
-    width: 100%;
-    height: 30px;
-    text-align: left;
-    float: left;
-    width: 33%
+    display: inline-block;
 }
 
 .sp-rgb-input-label {
-    display: table-cell;
     vertical-align: middle;
+    text-align: center;
+    display: inline-block;
+    width: 25%;
 }
 
 /* Input */
