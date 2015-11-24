@@ -505,6 +505,7 @@ test ("Tooltip is formatted based on preferred format", function() {
     showPalette: true,
     palette: [["red", "rgba(255, 255, 255, .5)", "rgb(0, 0, 255)"]]
   });
+  el.spectrum("show");
 
   function getTitlesString() {
     return el.spectrum("container").find(".sp-thumb-el").map(function() {
