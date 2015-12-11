@@ -9,8 +9,17 @@
     if (typeof define === 'function' && define.amd) { // AMD
         define(['jquery'], factory);
     }
-    else if (typeof exports == "object" && typeof module == "object") { // CommonJS
-        module.exports = factory;
+    else if (typeof exports == 'object' && typeof module == 'object') { // CommonJS
+        var jquery = (typeof window !== 'undefined') ? (window.$ || window.jQuery) : undefined;
+        if (!jquery) {
+            try {
+                jquery = require('jquery');
+                if (!jquery.fn) jquery.fn = {}; //isomorphic issue
+            } catch(e) {
+                if (!jquery) throw new Error('jQuery dependency not found');
+            }
+        }
+        module.exports = factory(jquery);
     }
     else { // Browser
         factory(jQuery);
