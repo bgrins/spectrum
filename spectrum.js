@@ -4,18 +4,17 @@
 // License: MIT
 
 (function (factory) {
-    "use strict";
-
-    if (typeof define === 'function' && define.amd) { // AMD
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
         define(['jquery'], factory);
-    }
-    else if (typeof exports == "object" && typeof module == "object") { // CommonJS
-        module.exports = factory;
-    }
-    else { // Browser
+    } else if (typeof exports === 'object') {
+        // Node/CommonJS
+        module.exports = factory(require('jquery'));
+    } else {
+        // Browser globals
         factory(jQuery);
     }
-})(function($, undefined) {
+}(function($, undefined) {
     "use strict";
 
     var defaultOpts = {
