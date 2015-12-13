@@ -4,6 +4,7 @@
 // License: MIT
 
 (function (factory) {
+    "use strict";
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(['jquery'], factory);
@@ -14,7 +15,7 @@
         // Browser globals
         factory(jQuery);
     }
-}(function($, undefined) {
+})(function($, undefined) {
     "use strict";
 
     var defaultOpts = {
