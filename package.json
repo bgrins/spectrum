@@ -1,7 +1,7 @@
 {
     "name": "spectrum-colorpicker",
     "description": "Spectrum: the no hassle jQuery colorpicker",
-    "version": "1.7.1",
+    "version": "1.8.0",
     "main": "spectrum.js",
     "license": "MIT",
     "keywords": ["jquery-plugin", "ecosystem:jquery", "color", "colorpicker", "ui"],
