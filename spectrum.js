@@ -175,6 +175,12 @@
         return opts;
     }
 
+    var Colorpicker = React.createClass({displayName: 'Hello',
+        render: function() {
+            return React.createElement("div", null, "Hello ", this.props.name);
+        }
+    });
+
     function spectrum(element, o) {
 
         var opts = instanceOptions(o, element),
@@ -274,6 +280,10 @@
         }
 
         function initialize() {
+            // ReactDOM.render(
+            //     React.createElement(Colorpicker, {name: "World"}),
+            //     boundElement[0]
+            // );
 
             if (IE) {
                 container.find("*:not(input)").attr("unselectable", "on");
