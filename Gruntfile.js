@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     qunit: {
-      all: ['test/index.html', 'test/loaders.html']
+      all: ['test/index.html', 'test/loaders.html', 'test/commonjs.html']
     },
 
     jshint: {
@@ -59,6 +59,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['test']);
 
   //Build Task.
-  grunt.registerTask('build', ['test', 'uglify']);
+  grunt.registerTask('build', ['browserify', 'test', 'uglify']);
 
 };
