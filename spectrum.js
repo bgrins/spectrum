@@ -175,10 +175,73 @@
         return opts;
     }
 
-    var Colorpicker = React.createClass({displayName: 'Hello',
+    var ColorpickerPopup = React.createFactory(React.createClass({
+        generateRandomColor: function() {
+            this.props.setColor(tinycolor.random().toString())
+        },
         render: function() {
-            return React.createElement("div", null, "Hello ", this.props.name);
+            if (this.props.isVisible) {
+                return React.createElement("div", {
+                    onClick: this.generateRandomColor
+                }, "Popup");
+            }
+            return React.createElement("div");
         }
+    }));
+
+    var Replacer = React.createFactory(React.createClass({
+        render: function() {
+            return React.createElement("div", {
+                onClick: this.props.toggle,
+                className: 'sp-replacer',
+                title: this.props.name
+            },
+                React.createElement("div", {
+                    className: 'sp-preview'
+                },
+                    React.createElement("div", {
+                        className: 'sp-preview-inner',
+                        style: {
+                            backgroundColor: this.props.color
+                        }
+                    })),
+                React.createElement("div", {
+                    className: 'sp-dd'
+                }, "▼")
+            )
+        }
+    }));
+
+    var Colorpicker = React.createClass({
+        setColor: function(color) {
+            this.setState({ color: color });
+        },
+        toggle: function() {
+            this.setState({
+                isVisible: !this.state.isVisible
+            });
+        },
+        getInitialState: function() {
+            return {
+                isVisible: false,
+                color: "orange"
+            };
+        },
+
+        render: function() {
+            return React.createElement("div", null,
+                Replacer({
+                    toggle: this.toggle,
+                    color: this.state.color
+                }),
+                ColorpickerPopup({
+                    isVisible: this.state.isVisible,
+                    color: this.state.color,
+                    setColor: this.setColor
+                })
+            );
+        }
+
     });
 
     function spectrum(element, o) {
@@ -280,11 +343,6 @@
         }
 
         function initialize() {
-            // ReactDOM.render(
-            //     React.createElement(Colorpicker, {name: "World"}),
-            //     boundElement[0]
-            // );
-
             if (IE) {
                 container.find("*:not(input)").attr("unselectable", "on");
             }
@@ -294,6 +352,12 @@
             if (shouldReplace) {
                 boundElement.after(replacer).hide();
             }
+
+            ReactDOM.render(
+                React.createElement(Colorpicker, {name: "World"}),
+                replacer[0]
+            );
+return;
 
             if (!allowEmpty) {
                 clearButton.hide();
