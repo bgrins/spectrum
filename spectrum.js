@@ -1,3 +1,4 @@
+
 // Spectrum Colorpicker v1.8.0
 // https://github.com/bgrins/spectrum
 // Author: Brian Grinstead
@@ -54,6 +55,7 @@
         containerClassName: "",
         replacerClassName: "",
         showAlpha: false,
+        alphaVertical: false,
         theme: "sp-light",
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
         selectionPalette: [],
@@ -99,23 +101,25 @@
                 "</div>",
                 "<div class='sp-picker-container'>",
                     "<div class='sp-top sp-cf'>",
-                        "<div class='sp-fill'></div>",
-                        "<div class='sp-top-inner'>",
-                            "<div class='sp-color'>",
-                                "<div class='sp-sat'>",
-                                    "<div class='sp-val'>",
-                                        "<div class='sp-dragger'></div>",
+                        "<div class='sp-ctrls'>",
+                            "<div class='sp-fill'></div>",
+                            "<div class='sp-top-inner'>",
+                                "<div class='sp-color'>",
+                                    "<div class='sp-sat'>",
+                                        "<div class='sp-val'>",
+                                            "<div class='sp-dragger'></div>",
+                                        "</div>",
                                     "</div>",
                                 "</div>",
+                                "<div class='sp-clear sp-clear-display'>",
+                                "</div>",
+                                "<div class='sp-hue'>",
+                                    "<div class='sp-slider'></div>",
+                                    gradientFix,
+                                "</div>",
                             "</div>",
-                            "<div class='sp-clear sp-clear-display'>",
-                            "</div>",
-                            "<div class='sp-hue'>",
-                                "<div class='sp-slider'></div>",
-                                gradientFix,
-                            "</div>",
+                            "<div class='sp-alpha'><div class='sp-alpha-inner'><div class='sp-alpha-handle'></div></div></div>",
                         "</div>",
-                        "<div class='sp-alpha'><div class='sp-alpha-inner'><div class='sp-alpha-handle'></div></div></div>",
                     "</div>",
                     "<div class='sp-input-container sp-cf'>",
                         "<input class='sp-input' type='text' spellcheck='false'  />",
@@ -193,6 +197,8 @@
             slideWidth = 0,
             alphaWidth = 0,
             alphaSlideHelperWidth = 0,
+            alphaSlideHelperHeight = 0,
+            alphaSliderInnerHeight = 0,
             slideHelperHeight = 0,
             currentHue = 0,
             currentSaturation = 0,
@@ -219,6 +225,7 @@
             alphaSliderInner = container.find(".sp-alpha-inner"),
             alphaSlider = container.find(".sp-alpha"),
             alphaSlideHelper = container.find(".sp-alpha-handle"),
+            colorControls = container.find(".sp-ctrls"),
             textInput = container.find(".sp-input"),
             paletteContainer = container.find(".sp-palette"),
             initialColorContainer = container.find(".sp-initial"),
@@ -243,6 +250,10 @@
 
             if (opts.showPaletteOnly) {
                 opts.showPalette = true;
+            }
+            
+            if (opts.alphaVertical) {
+                colorControls.addClass("sp-vertical-alpha");
             }
 
             toggleButton.text(opts.showPaletteOnly ? opts.togglePaletteMoreText : opts.togglePaletteLessText);
@@ -386,6 +397,10 @@
 
             draggable(alphaSlider, function (dragX, dragY, e) {
                 currentAlpha = (dragX / alphaWidth);
+                
+                if (opts.alphaVertical)
+                    currentAlpha = (dragY / alphaSliderInnerHeight);
+                    
                 isEmpty = false;
                 if (e.shiftKey) {
                     currentAlpha = Math.round(currentAlpha * 10) / 10;
@@ -792,6 +807,10 @@
                         // Use current syntax gradient on unprefixed property.
                         alphaSliderInner.css("background",
                             "linear-gradient(to right, " + realAlpha + ", " + realHex + ")");
+                        if (opts.alphaVertical) {
+                            alphaSliderInner.css("background",
+                            "linear-gradient(to bottom, " + realAlpha + ", " + realHex + ")");
+                        }
                     }
                 }
 
@@ -843,9 +862,19 @@
                 });
 
                 var alphaX = currentAlpha * alphaWidth;
+                
                 alphaSlideHelper.css({
                     "left": (alphaX - (alphaSlideHelperWidth / 2)) + "px"
                 });
+                
+                if (opts.alphaVertical) {
+                    var alphaY = alphaSliderInnerHeight * (alphaX / 10);
+                    if (alphaY > alphaSliderInnerHeight) alphaY = alphaSliderInnerHeight;
+                    alphaSlideHelper.css({
+                        "top" : (alphaY - 3) + "px",
+                        "left" : -2
+                    });
+                }
 
                 // Where to show the bar that displays your current selected hue
                 var slideY = (currentHue) * slideHeight;
@@ -888,6 +917,12 @@
             slideHelperHeight = slideHelper.height();
             alphaWidth = alphaSlider.width();
             alphaSlideHelperWidth = alphaSlideHelper.width();
+            alphaSlideHelperHeight = alphaSlideHelper.height();
+            alphaSliderInnerHeight = alphaSliderInner.height();
+            
+            if (opts.alphaVertical) {
+                colorControls.addClass("sp-vertical-alpha");
+            }
 
             if (!flat) {
                 container.css("position", "absolute");

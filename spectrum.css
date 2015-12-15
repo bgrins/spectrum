@@ -4,7 +4,6 @@ https://github.com/bgrins/spectrum
 Author: Brian Grinstead
 License: MIT
 ***/
-
 .sp-container {
     position:absolute;
     top:0;
@@ -57,6 +56,11 @@ License: MIT
     height: 100%;
 }
 
+.sp-vertical-alpha .sp-hue {
+    right: 15px;
+}
+
+
 .sp-clear-enabled .sp-hue {
     top:33px;
     height: 77.5%;
@@ -90,6 +94,14 @@ License: MIT
     background: white;
     opacity: .8;
 }
+
+.sp-vertical-alpha .sp-alpha-handle {
+    left: -2;
+    height: 3px;
+    bottom: auto;
+    width: 10px;
+}
+
 .sp-alpha {
     display: none;
     position: absolute;
@@ -98,6 +110,16 @@ License: MIT
     left: 0;
     height: 8px;
 }
+
+.sp-vertical-alpha .sp-alpha {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 10px;
+    left: auto;
+    height: 100%;
+}
+
 .sp-alpha-inner {
     border: solid 1px #333;
 }
@@ -363,7 +385,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 
 /* Replacer (the little preview div that shows up instead of the <input>) */
 .sp-replacer {
-    margin:0;
+    margin:0px;
     overflow:hidden;
     cursor:pointer;
     padding: 4px;
