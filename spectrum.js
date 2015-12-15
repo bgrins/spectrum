@@ -801,35 +801,42 @@
                     var rgb = realColor.toRgb();
                     rgb.a = 0;
                     var realAlpha = tinycolor(rgb).toRgbString();
-                    var gradient = "linear-gradient(left, " + realAlpha + ", " + realHex + ")";
 
                     if (IE) {
                         alphaSliderInner.css("filter", tinycolor(realAlpha).toFilter({ gradientType: 1 }, realHex));
                     }
                     else {
-                        alphaSliderInner.css("background", "-webkit-" + gradient);
-                        alphaSliderInner.css("background", "-moz-" + gradient);
-                        alphaSliderInner.css("background", "-ms-" + gradient);
+                        var gradient = "linear-gradient(left, " + realAlpha + ", " + realHex + ")";
                         // Use current syntax gradient on unprefixed property.
                             
                         if (!opts.alphaVertical) {
-                            if (opts.flipAlpha)
+                            if (opts.flipAlpha) {
                                 alphaSliderInner.css("background",
                                     "linear-gradient(to left, " + realAlpha + ", " + realHex + ")");
-                            else
+                                gradient = "linear-gradient(left, " + realAlpha + ", " + realHex + ")";
+                            }
+                            else {
                                 alphaSliderInner.css("background",
                                     "linear-gradient(to right, " + realAlpha + ", " + realHex + ")");
+                                gradient = "linear-gradient(right, " + realAlpha + ", " + realHex + ")";
+                            }
                         }
                         else {
                             if (!opts.flipAlpha) {
                                 alphaSliderInner.css("background",
                                 "linear-gradient(to bottom, " + realAlpha + ", " + realHex + ")");
+                                gradient = "linear-gradient(bottom, " + realAlpha + ", " + realHex + ")";
                             }
                             else {
                                 alphaSliderInner.css("background",
                                 "linear-gradient(to top, " + realAlpha + ", " + realHex + ")");
+                                gradient = "linear-gradient(top, " + realAlpha + ", " + realHex + ")";
                             }
                         }
+                        
+                        alphaSliderInner.css("background", "-webkit-" + gradient);
+                        alphaSliderInner.css("background", "-moz-" + gradient);
+                        alphaSliderInner.css("background", "-ms-" + gradient);
                     }
                 }
 
