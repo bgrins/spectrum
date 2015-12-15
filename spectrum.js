@@ -55,6 +55,7 @@
         containerClassName: "",
         replacerClassName: "",
         showAlpha: false,
+        flipAlpha: false,
         alphaVertical: false,
         theme: "sp-light",
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
@@ -398,9 +399,14 @@
             draggable(alphaSlider, function (dragX, dragY, e) {
                 currentAlpha = (dragX / alphaWidth);
                 
+                        
                 if (opts.alphaVertical)
                     currentAlpha = (dragY / alphaSliderInnerHeight);
                     
+                if (opts.flipAlpha) {
+                    currentAlpha = 1 - currentAlpha;
+                }
+                
                 isEmpty = false;
                 if (e.shiftKey) {
                     currentAlpha = Math.round(currentAlpha * 10) / 10;
@@ -805,11 +811,24 @@
                         alphaSliderInner.css("background", "-moz-" + gradient);
                         alphaSliderInner.css("background", "-ms-" + gradient);
                         // Use current syntax gradient on unprefixed property.
-                        alphaSliderInner.css("background",
-                            "linear-gradient(to right, " + realAlpha + ", " + realHex + ")");
-                        if (opts.alphaVertical) {
-                            alphaSliderInner.css("background",
-                            "linear-gradient(to bottom, " + realAlpha + ", " + realHex + ")");
+                            
+                        if (!opts.alphaVertical) {
+                            if (opts.flipAlpha)
+                                alphaSliderInner.css("background",
+                                    "linear-gradient(to left, " + realAlpha + ", " + realHex + ")");
+                            else
+                                alphaSliderInner.css("background",
+                                    "linear-gradient(to right, " + realAlpha + ", " + realHex + ")");
+                        }
+                        else {
+                            if (!opts.flipAlpha) {
+                                alphaSliderInner.css("background",
+                                "linear-gradient(to bottom, " + realAlpha + ", " + realHex + ")");
+                            }
+                            else {
+                                alphaSliderInner.css("background",
+                                "linear-gradient(to top, " + realAlpha + ", " + realHex + ")");
+                            }
                         }
                     }
                 }
@@ -861,19 +880,36 @@
                     "left": dragX + "px"
                 });
 
-                var alphaX = currentAlpha * alphaWidth;
                 
-                alphaSlideHelper.css({
-                    "left": (alphaX - (alphaSlideHelperWidth / 2)) + "px"
-                });
-                
-                if (opts.alphaVertical) {
-                    var alphaY = alphaSliderInnerHeight * (alphaX / 10);
+                if (!opts.alphaVertical) {
+                    var alphaX = currentAlpha * alphaWidth;
+                    if (opts.flipAlpha) {
+                        alphaSlideHelper.css({
+                            "left": (alphaWidth - alphaX - (alphaSlideHelperWidth / 2)) + "px"
+                        });
+                    }
+                    else {
+                        alphaSlideHelper.css({
+                            "left": (alphaX - (alphaSlideHelperWidth / 2)) + "px"
+                        });
+                    }
+                }
+                else {
+                    var alphaY = alphaSliderInnerHeight * ((currentAlpha * alphaWidth) / 10);
                     if (alphaY > alphaSliderInnerHeight) alphaY = alphaSliderInnerHeight;
-                    alphaSlideHelper.css({
-                        "top" : (alphaY - 3) + "px",
-                        "left" : -2
-                    });
+                    
+                    if (!opts.flipAlpha) {
+                        alphaSlideHelper.css({
+                            "top" : (alphaY - 3) + "px",
+                            "left" : -2
+                        });
+                    }
+                    else {
+                        alphaSlideHelper.css({
+                            "top" : (alphaSliderInnerHeight - alphaY - 3) + "px",
+                            "left" : -2
+                        });
+                    }
                 }
 
                 // Where to show the bar that displays your current selected hue
