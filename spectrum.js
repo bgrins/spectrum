@@ -988,6 +988,17 @@
         var viewWidth = docElem.clientWidth + $(doc).scrollLeft();
         var viewHeight = docElem.clientHeight + $(doc).scrollTop();
         var offset = input.offset();
+
+        // Note: ClientRect object does not allow its properties to be written to therefore a new object has to be created.
+        offset = {
+            top: offset.top,
+            left: offset.left,
+            bottom: offset.bottom,
+            right: offset.right,
+            height: offset.height,
+            width: offset.width
+        };
+
         offset.top += inputHeight;
 
         offset.left -=
