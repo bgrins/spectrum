@@ -120,6 +120,11 @@ License: MIT
     height: 100%;
 }
 
+.sp-clear-enabled .sp-vertical-alpha .sp-alpha {
+    top: 33px;
+    height: 77.5%;
+}
+
 .sp-alpha-inner {
     border: solid 1px #333;
 }
@@ -385,7 +390,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 
 /* Replacer (the little preview div that shows up instead of the <input>) */
 .sp-replacer {
-    margin:0px;
+    margin:10px;
     overflow:hidden;
     cursor:pointer;
     padding: 4px;
