@@ -177,21 +177,66 @@
 
     var ColorpickerPopup = React.createFactory(React.createClass({
         generateRandomColor: function() {
-            this.props.setColor(tinycolor.random().toString())
+            this.props.setColor(tinycolor.random());
+            this.setState(this.getInitialState());
         },
         componentDidMount: function() {
             console.log("componentDidMount");
         },
+        getInitialState: function() {
+            var hsv = this.props.color.toHsv();
+            return {
+                currentLeft: ((hsv.v * 100)) + "%",
+                currentTop: (100 - (hsv.s * 100)) + "%",
+                currentSlideTop: (hsv.h / 3.6) + "%"
+            };
+        },
+        startSliding: function(e) {
+            draggable(this.slider, function (dragX, dragY, e) {
+                var currentHue = parseFloat(dragY / this.slideHeight);
+                var currentColor = this.props.color.toHsv();
+
+                this.setState({
+                    currentSlideTop: dragY + "px",
+                });
+
+                this.props.setColor(tinycolor.fromRatio({
+                    h: currentHue,
+                    s: currentColor.s,
+                    v: currentColor.v,
+                    a: Math.round(currentColor.a * 100) / 100
+                }));
+            }.bind(this), this.dragStart, this.dragStop, e);
+        },
+        startDragging: function(e) {
+            draggable(this.dragger, function (dragX, dragY, e) {
+                this.setState({
+                    currentLeft: dragX + "px",
+                    currentTop: dragY + "px",
+                });
+
+                var currentColor = this.props.color.toHsv();
+                var currentSaturation = parseFloat(dragX / this.dragWidth);
+                var currentValue = parseFloat((this.dragHeight - dragY) / this.dragHeight);
+                this.props.setColor(tinycolor.fromRatio({
+                    h: currentColor.h,
+                    s: currentSaturation,
+                    v: currentValue,
+                    a: Math.round(currentColor.a * 100) / 100
+                }));
+            }.bind(this), this.dragStart, this.dragStop, e);
+        },
         dragStart: function() {
-            console.log("dragStart");
         },
         dragStop: function() {
-            console.log("dragStop");
         },
         render: function() {
             if (this.props.isVisible) {
+                var hsv = this.props.color.toHsv();
+                var flatColor = tinycolor.fromRatio({ h: hsv.h, s: 1, v: 1 });
+
                 return React.createElement("div", {
-                    // onClick: this.generateRandomColor,
+                    onClick: this.generateRandomColor,
                     className: "sp-container",
                 }, React.createElement("div", {
                     className: "sp-palette-container"
@@ -217,12 +262,25 @@
                     className: "sp-top-inner",
                 }, React.createElement("div", {
                     className: "sp-color",
+                    style: {
+                        backgroundColor: flatColor.toHexString()
+                    },
+                    onMouseDown: this.startDragging,
+                    ref: function(dragger) {
+                        this.dragger = dragger;
+                        this.dragWidth = $(dragger).width();
+                        this.dragHeight = $(dragger).height();
+                    }.bind(this)
                 }, React.createElement("div", {
                     className: "sp-sat",
                 }, React.createElement("div", {
                     className: "sp-val",
                 }, React.createElement("div", {
                     className: "sp-dragger",
+                    style: {
+                        top:  this.state.currentTop,
+                        left: this.state.currentLeft
+                    }
                 })))),
 
                 React.createElement("div", {
@@ -230,8 +288,16 @@
                 }),
                 React.createElement("div", {
                     className: "sp-hue",
+                    onMouseDown: this.startSliding,
+                    ref: function(slider) {
+                        this.slider = slider;
+                        this.slideHeight = $(slider).height();
+                    }.bind(this)
                 }, React.createElement("div", {
                     className: "sp-slider",
+                    style: {
+                        top: this.state.currentSlideTop
+                    }
                 })),
                 React.createElement("div", {
                     className: "sp-alpha",
@@ -276,7 +342,7 @@
                     React.createElement("div", {
                         className: 'sp-preview-inner',
                         style: {
-                            backgroundColor: this.props.color
+                            backgroundColor: this.props.color.toRgbString()
                         }
                     })),
                 React.createElement("div", {
@@ -298,7 +364,7 @@
         getInitialState: function() {
             return {
                 isVisible: false,
-                color: "orange"
+                color: tinycolor("orange")
             };
         },
 
@@ -1179,7 +1245,7 @@ return;
     * Lightweight drag helper.  Handles containment within the element, so that
     * when dragging, the x is within [0,element.width] and y is within [0,element.height]
     */
-    function draggable(element, onmove, onstart, onstop) {
+    function draggable(element, onmove, onstart, onstop, autostart_hack) {
         onmove = onmove || function () { };
         onstart = onstart || function () { };
         onstop = onstop || function () { };
@@ -1263,7 +1329,11 @@ return;
             dragging = false;
         }
 
-        $(element).bind("touchstart mousedown", start);
+        if (autostart_hack) {
+            start(autostart_hack);
+        } else {
+            $(element).bind("touchstart mousedown", start);
+        }
     }
 
     function throttle(func, wait, debounce) {
