@@ -94,7 +94,9 @@ License: MIT
     background: white;
     opacity: .8;
 }
-
+.sp-vertical-alpha .sp-top {
+    margin-bottom: 3px;
+}
 .sp-vertical-alpha .sp-alpha-handle {
     left: -2;
     height: 3px;
@@ -120,7 +122,7 @@ License: MIT
     height: 100%;
 }
 
-.sp-clear-enabled .sp-vertical-alpha .sp-alpha {
+.sp-clear-enabled.sp-vertical-alpha .sp-alpha {
     top: 33px;
     height: 77.5%;
 }

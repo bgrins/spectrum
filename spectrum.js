@@ -55,7 +55,6 @@
         containerClassName: "",
         replacerClassName: "",
         showAlpha: false,
-        flipAlpha: false,
         alphaVertical: false,
         theme: "sp-light",
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
@@ -102,25 +101,23 @@
                 "</div>",
                 "<div class='sp-picker-container'>",
                     "<div class='sp-top sp-cf'>",
-                        "<div class='sp-ctrls'>",
-                            "<div class='sp-fill'></div>",
-                            "<div class='sp-top-inner'>",
-                                "<div class='sp-color'>",
-                                    "<div class='sp-sat'>",
-                                        "<div class='sp-val'>",
-                                            "<div class='sp-dragger'></div>",
-                                        "</div>",
+                        "<div class='sp-fill'></div>",
+                        "<div class='sp-top-inner'>",
+                            "<div class='sp-color'>",
+                                "<div class='sp-sat'>",
+                                    "<div class='sp-val'>",
+                                        "<div class='sp-dragger'></div>",
                                     "</div>",
                                 "</div>",
-                                "<div class='sp-clear sp-clear-display'>",
-                                "</div>",
-                                "<div class='sp-hue'>",
-                                    "<div class='sp-slider'></div>",
-                                    gradientFix,
-                                "</div>",
                             "</div>",
-                            "<div class='sp-alpha'><div class='sp-alpha-inner'><div class='sp-alpha-handle'></div></div></div>",
+                            "<div class='sp-clear sp-clear-display'>",
+                            "</div>",
+                            "<div class='sp-hue'>",
+                                "<div class='sp-slider'></div>",
+                                gradientFix,
+                            "</div>",
                         "</div>",
+                        "<div class='sp-alpha'><div class='sp-alpha-inner'><div class='sp-alpha-handle'></div></div></div>",
                     "</div>",
                     "<div class='sp-input-container sp-cf'>",
                         "<input class='sp-input' type='text' spellcheck='false'  />",
@@ -226,7 +223,6 @@
             alphaSliderInner = container.find(".sp-alpha-inner"),
             alphaSlider = container.find(".sp-alpha"),
             alphaSlideHelper = container.find(".sp-alpha-handle"),
-            colorControls = container.find(".sp-ctrls"),
             textInput = container.find(".sp-input"),
             paletteContainer = container.find(".sp-palette"),
             initialColorContainer = container.find(".sp-initial"),
@@ -252,10 +248,6 @@
             if (opts.showPaletteOnly) {
                 opts.showPalette = true;
             }
-            
-            if (opts.alphaVertical) {
-                colorControls.addClass("sp-vertical-alpha");
-            }
 
             toggleButton.text(opts.showPaletteOnly ? opts.togglePaletteMoreText : opts.togglePaletteLessText);
 
@@ -274,6 +266,7 @@
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
+            container.toggleClass("sp-vertical-alpha", opts.alphaVertical);
             container.toggleClass("sp-clear-enabled", allowEmpty);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
             container.toggleClass("sp-palette-buttons-disabled", !opts.togglePaletteOnly);
@@ -400,12 +393,8 @@
                 currentAlpha = (dragX / alphaWidth);
                 
                         
-                if (opts.alphaVertical)
+                if (opts.alphaVertical && opts.showAlpha)
                     currentAlpha = (dragY / alphaSliderInnerHeight);
-                    
-                if (opts.flipAlpha) {
-                    currentAlpha = 1 - currentAlpha;
-                }
                 
                 isEmpty = false;
                 if (e.shiftKey) {
@@ -810,28 +799,14 @@
                         // Use current syntax gradient on unprefixed property.
                             
                         if (!opts.alphaVertical) {
-                            if (opts.flipAlpha) {
-                                alphaSliderInner.css("background",
-                                    "linear-gradient(to left, " + realAlpha + ", " + realHex + ")");
-                                gradient = "linear-gradient(left, " + realAlpha + ", " + realHex + ")";
-                            }
-                            else {
-                                alphaSliderInner.css("background",
-                                    "linear-gradient(to right, " + realAlpha + ", " + realHex + ")");
-                                gradient = "linear-gradient(right, " + realAlpha + ", " + realHex + ")";
-                            }
+                            alphaSliderInner.css("background",
+                                "linear-gradient(to right, " + realAlpha + ", " + realHex + ")");
+                            gradient = "linear-gradient(right, " + realAlpha + ", " + realHex + ")";
                         }
                         else {
-                            if (!opts.flipAlpha) {
-                                alphaSliderInner.css("background",
-                                "linear-gradient(to bottom, " + realAlpha + ", " + realHex + ")");
-                                gradient = "linear-gradient(bottom, " + realAlpha + ", " + realHex + ")";
-                            }
-                            else {
-                                alphaSliderInner.css("background",
-                                "linear-gradient(to top, " + realAlpha + ", " + realHex + ")");
-                                gradient = "linear-gradient(top, " + realAlpha + ", " + realHex + ")";
-                            }
+                            alphaSliderInner.css("background",
+                            "linear-gradient(to bottom, " + realAlpha + ", " + realHex + ")");
+                            gradient = "linear-gradient(bottom, " + realAlpha + ", " + realHex + ")";
                         }
                         
                         alphaSliderInner.css("background", "-webkit-" + gradient);
@@ -890,33 +865,18 @@
                 
                 if (!opts.alphaVertical) {
                     var alphaX = currentAlpha * alphaWidth;
-                    if (opts.flipAlpha) {
-                        alphaSlideHelper.css({
-                            "left": (alphaWidth - alphaX - (alphaSlideHelperWidth / 2)) + "px"
-                        });
-                    }
-                    else {
-                        alphaSlideHelper.css({
-                            "left": (alphaX - (alphaSlideHelperWidth / 2)) + "px"
-                        });
-                    }
+                    alphaSlideHelper.css({
+                        "left": (alphaX - (alphaSlideHelperWidth / 2)) + "px"
+                    });
                 }
                 else {
                     var alphaY = alphaSliderInnerHeight * ((currentAlpha * alphaWidth) / 10);
                     if (alphaY > alphaSliderInnerHeight) alphaY = alphaSliderInnerHeight;
                     
-                    if (!opts.flipAlpha) {
-                        alphaSlideHelper.css({
-                            "top" : (alphaY - 3) + "px",
-                            "left" : -2
-                        });
-                    }
-                    else {
-                        alphaSlideHelper.css({
-                            "top" : (alphaSliderInnerHeight - alphaY - 3) + "px",
-                            "left" : -2
-                        });
-                    }
+                    alphaSlideHelper.css({
+                        "top" : (alphaY - 3) + "px",
+                        "left" : -2
+                    });
                 }
 
                 // Where to show the bar that displays your current selected hue
@@ -962,10 +922,6 @@
             alphaSlideHelperWidth = alphaSlideHelper.width();
             alphaSlideHelperHeight = alphaSlideHelper.height();
             alphaSliderInnerHeight = alphaSliderInner.height();
-            
-            if (opts.alphaVertical) {
-                colorControls.addClass("sp-vertical-alpha");
-            }
 
             if (!flat) {
                 container.css("position", "absolute");
