@@ -990,13 +990,23 @@
         var offset = input.offset();
         offset.top += inputHeight;
 
+        var leftOffset = offset.left + dpWidth > viewWidth && viewWidth > dpWidth;
         offset.left -=
-            Math.min(offset.left, (offset.left + dpWidth > viewWidth && viewWidth > dpWidth) ?
+            Math.min(offset.left, leftOffset ?
             Math.abs(offset.left + dpWidth - viewWidth) : 0);
 
+        var above = offset.top + dpHeight > viewHeight && viewHeight > dpHeight;
         offset.top -=
-            Math.min(offset.top, ((offset.top + dpHeight > viewHeight && viewHeight > dpHeight) ?
+            Math.min(offset.top, ( above ?
             Math.abs(dpHeight + inputHeight - extraY) : extraY));
+
+        if(above){
+            picker.removeClass('sp-below');
+            picker.addClass('sp-above');
+        } else{
+            picker.removeClass('sp-above');
+            picker.addClass('sp-below');
+        }
 
         return offset;
     }
