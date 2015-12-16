@@ -179,11 +179,85 @@
         generateRandomColor: function() {
             this.props.setColor(tinycolor.random().toString())
         },
+        componentDidMount: function() {
+            console.log("componentDidMount");
+        },
+        dragStart: function() {
+            console.log("dragStart");
+        },
+        dragStop: function() {
+            console.log("dragStop");
+        },
         render: function() {
             if (this.props.isVisible) {
                 return React.createElement("div", {
-                    onClick: this.generateRandomColor
-                }, "Popup");
+                    // onClick: this.generateRandomColor,
+                    className: "sp-container",
+                }, React.createElement("div", {
+                    className: "sp-palette-container"
+                }, React.createElement("div", {
+                    className: "sp-palette sp-thumb sp-cf",
+                }), React.createElement("div", {
+                    className: "sp-palette-button-container sp-cf",
+                }, React.createElement("button", {
+                    type: 'button',
+                    className: 'sp-palette-toggle'
+                }, "hi"))),
+
+                React.createElement("div", {
+                    className: "sp-picker-container",
+
+                }, React.createElement("div", {
+                    className: "sp-top sp-cf",
+                },
+                React.createElement("div", {
+                    className: "sp-fill",
+                }),
+                React.createElement("div", {
+                    className: "sp-top-inner",
+                }, React.createElement("div", {
+                    className: "sp-color",
+                }, React.createElement("div", {
+                    className: "sp-sat",
+                }, React.createElement("div", {
+                    className: "sp-val",
+                }, React.createElement("div", {
+                    className: "sp-dragger",
+                })))),
+
+                React.createElement("div", {
+                    className: "sp-clear sp-clear-display",
+                }),
+                React.createElement("div", {
+                    className: "sp-hue",
+                }, React.createElement("div", {
+                    className: "sp-slider",
+                })),
+                React.createElement("div", {
+                    className: "sp-alpha",
+                }))),
+
+                React.createElement("div", {
+                    className: "sp-input-container sp-cf",
+                }, React.createElement("input", {
+                    className: "sp-input",
+                    type: "text",
+                    spellCheck: false,
+                })),
+
+                React.createElement("div", {
+                    className: "sp-initial sp-thumb sp-cf",
+                }),
+                React.createElement("div", {
+                    className: "sp-button-container sp-cf",
+                }, React.createElement("a", {
+                    className: "sp-cancel",
+                    href: "#",
+                }, React.createElement("button", {
+                    className: "sp-choose",
+                    type: "button",
+                }))))
+                );
             }
             return React.createElement("div");
         }
