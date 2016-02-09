@@ -878,9 +878,9 @@ beforeShow: function(color) {
             </div>
 
             <pre class='prettyprint'>
-$(element).on("dragstart.spectrum"): function(e, color) {
+$(element).on("dragstart.spectrum", function(e, color) {
     color.toHexString(); // #ff0000
-}
+});
             </pre>
 
             <div class='example'>
@@ -900,9 +900,9 @@ $(element).on("dragstart.spectrum"): function(e, color) {
             </div>
 
             <pre class='prettyprint'>
-$(element).on("dragstop.spectrum"): function(e, color) {
+$(element).on("dragstop.spectrum", function(e, color) {
     color.toHexString(); // #ff0000
-}
+});
             </pre>
 
             <div class='example'>
