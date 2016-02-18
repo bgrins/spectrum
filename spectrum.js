@@ -719,7 +719,7 @@
                 h: currentHue,
                 s: currentSaturation,
                 v: currentValue,
-                a: Math.round(currentAlpha * 100) / 100
+                a: Math.round(currentAlpha * 1000) / 1000
             }, { format: opts.format || currentPreferredFormat });
         }
 
@@ -1254,7 +1254,7 @@
         this._g = rgb.g,
         this._b = rgb.b,
         this._a = rgb.a,
-        this._roundA = mathRound(100*this._a) / 100,
+        this._roundA = mathRound(1000 * this._a) / 1000,
         this._format = opts.format || rgb.format;
         this._gradientType = opts.gradientType;
 
@@ -1295,7 +1295,7 @@
         },
         setAlpha: function(value) {
             this._a = boundAlpha(value);
-            this._roundA = mathRound(100*this._a) / 100;
+            this._roundA = mathRound(1000 * this._a) / 1000;
             return this;
         },
         toHsv: function() {
