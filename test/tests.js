@@ -575,6 +575,22 @@ test( "Methods work as described", function() {
   ok (color.toHsvString() == "hsv(39, 100%, 100%)", "Color has been set and gotten as hsv");
   ok (color.toRgbString() == "rgb(255, 165, 0)", "Color has been set and gotten as rgb");
   ok (color.toHslString() == "hsl(39, 100%, 50%)", "Color has been set and gotten as hsl");
+  ok (
+    (function() {
+      var i, argb, a;
+      for (i = 0; i < 16; i++) {
+        argb = ('0' + i.toString(16) + '000000');
+        a = Math.round(
+          el.spectrum('set', argb).spectrum('get').getAlpha() * 255
+        );
+        if (a != i) {
+          return false;
+        }
+      }
+      return true;
+    })(),
+    'Set and get has preserved alpha resolution'
+  );
 
   // Method - container
   ok (el.spectrum("container").hasClass("sp-container"), "Container can be retrieved");
