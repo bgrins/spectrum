@@ -579,13 +579,13 @@ test( "Methods work as described", function() {
     (function() {
       var i, argb, a;
       for (i = 0; i < 16; i++) {
-        argb = ('0' + i.toString(16) + '000000').slice(-8);
+        argb = ('0' + i.toString(16) + '000000');
         a = Math.round(
           el.spectrum('set', argb).spectrum('get').getAlpha() * 255
         );
         if (a != i) {
           return false;
-        };
+        }
       }
       return true;
     })(),
