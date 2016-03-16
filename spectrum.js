@@ -26,6 +26,7 @@
         change: noop,
         show: noop,
         hide: noop,
+        init: noop,
 
         // Options
         color: false,
@@ -170,7 +171,8 @@
             'change': bind(opts.change, callbackContext),
             'show': bind(opts.show, callbackContext),
             'hide': bind(opts.hide, callbackContext),
-            'beforeShow': bind(opts.beforeShow, callbackContext)
+            'beforeShow': bind(opts.beforeShow, callbackContext),
+            'init': bind(opts.init, callbackContext)
         };
 
         return opts;
@@ -475,6 +477,9 @@
             var paletteEvent = IE ? "mousedown.spectrum" : "click.spectrum touchstart.spectrum";
             paletteContainer.delegate(".sp-thumb-el", paletteEvent, paletteElementClick);
             initialColorContainer.delegate(".sp-thumb-el:nth-child(1)", paletteEvent, { ignore: true }, paletteElementClick);
+
+            boundElement.trigger($.Event('init.spectrum'), [ container ]);
+            callbacks.init(container);
         }
 
         function updateSelectionPaletteFromStorage() {
@@ -859,7 +864,7 @@
         function updateOriginalInput(fireCallback) {
             var color = get(),
                 displayColor = '',
-                hasChanged = !tinycolor.equals(color, colorOnShow);
+                hasChanged = opts.forceChangeEvent || !tinycolor.equals(color, colorOnShow);
 
             if (color) {
                 displayColor = color.toString(currentPreferredFormat);
@@ -871,7 +876,7 @@
                 boundElement.val(displayColor);
             }
 
-            if (fireCallback && (hasChanged || opts.forceChangeEvent) ) {
+            if (fireCallback && hasChanged ) {
                 callbacks.change(color);
                 boundElement.trigger('change', [ color ]);
             }
