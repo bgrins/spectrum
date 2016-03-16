@@ -478,8 +478,8 @@
             paletteContainer.delegate(".sp-thumb-el", paletteEvent, paletteElementClick);
             initialColorContainer.delegate(".sp-thumb-el:nth-child(1)", paletteEvent, { ignore: true }, paletteElementClick);
 
-            boundElement.trigger($.Event('init.spectrum'), [ container ]);
-            callbacks.init(container);
+            boundElement.trigger($.Event('init.spectrum'), [ boundElement, container ]);
+            callbacks.init(boundElement, container);
         }
 
         function updateSelectionPaletteFromStorage() {
