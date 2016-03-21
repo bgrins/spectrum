@@ -202,7 +202,7 @@ test( "Default Color Is Set By Input Value", function() {
 module("Palettes");
 
 test( "Palette Events Fire In Correct Order ", function() {
-  expect(2);
+  expect(4);
   var el = $("<input id='spec' value='red' />").spectrum({
     showPalette: true,
     palette: [
@@ -215,15 +215,21 @@ test( "Palette Events Fire In Correct Order ", function() {
 
   var count = 0;
   el.on("move.spectrum", function(e) {
-    ok(count === 0, "move fires before change");
+    equal(count, 0, "move fires before change");
     count++;
   });
 
   el.on("change.spectrum", function(e) {
-    ok(count === 1, "change fires after move");
+    equal(count, 1, "change fires after move");
+    count++;
   });
 
   el.spectrum("container").find(".sp-thumb-el:last-child").click();
+  equal(count, 1, "Change event hasn't fired after palette click");
+
+  el.spectrum("container").find(".sp-choose").click();
+  equal(count, 2, "Change event has fired after choose button click");
+
   el.spectrum("destroy");
 });
 
