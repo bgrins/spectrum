@@ -254,8 +254,8 @@ test( "Palette click events work ", function() {
 
 });
 
-test( "hideAfterPaletteSelect: Palette stays open after color select", function() {
-  var el = $("<input id='spec' value='red' />").spectrum({
+test( "hideAfterPaletteSelect: Palette stays open after color select when false", function() {
+  var el = $("<input id='spec' value='orange' />").spectrum({
     showPalette: true,
     hideAfterPaletteSelect: false,
     palette: [
@@ -270,10 +270,14 @@ test( "hideAfterPaletteSelect: Palette stays open after color select", function(
   el.spectrum("destroy");
 });
 
-test( "hideAfterPaletteSelect: Palette closes after color select", function() {
-  var el = $("<input id='spec' value='red' />").spectrum({
+test( "hideAfterPaletteSelect: Palette closes after color select when true", function() {
+  expect(2);
+  var el = $("<input id='spec' value='orange' />").spectrum({
     showPalette: true,
     hideAfterPaletteSelect: true,
+    change: function(c) {
+      equal(c.toName(), "red", "change fires");
+    },
     palette: [
       ["red", "green", "blue"]
     ]

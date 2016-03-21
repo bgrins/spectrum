@@ -228,7 +228,15 @@ $("#showPaletteOnly").spectrum({
         ['black', 'white', 'blanchedalmond',
         'rgb(255, 128, 0);', 'hsv 100 70 50'],
         ['red', 'yellow', 'green', 'blue', 'violet']
-    ]
+    ],
+    change: function(c) {
+        var label = $("[data-label-for=" + this.id + "]");
+        label.text("Change called: " + c.toHexString());
+    },
+    move: function(c) {
+        var label = $("[data-label-for=" + this.id + "]");
+        label.text("Move called: " + c.toHexString());
+    },
 });
 
 $("#hideAfterPaletteSelect").spectrum({
@@ -240,7 +248,15 @@ $("#hideAfterPaletteSelect").spectrum({
         ['black', 'white', 'blanchedalmond',
         'rgb(255, 128, 0);', 'hsv 100 70 50'],
         ['red', 'yellow', 'green', 'blue', 'violet']
-    ]
+    ],
+    change: function(c) {
+        var label = $("[data-label-for=" + this.id + "]");
+        label.text("Change called: " + c.toHexString());
+    },
+    move: function(c) {
+        var label = $("[data-label-for=" + this.id + "]");
+        label.text("Move called: " + c.toHexString());
+    },
 });
 
 $("#togglePaletteOnly").spectrum({
@@ -286,14 +302,14 @@ $("#showInputInitialClear").spectrum({
 
 $("#changeOnMove").spectrum({
     move: function(c) {
-        var label = $("#changeOnMoveLabel");
+        var label = $("[data-label-for=" + this.id + "]");
         label.text("Move called: " + c.toHexString());
     }
 });
 $("#changeOnMoveNo").spectrum({
     showInput: true,
     change: function(c) {
-        var label = $("#changeOnMoveNoLabel");
+        var label = $("[data-label-for=" + this.id + "]");
         label.text("Change called: " + c.toHexString());
     }
 });
