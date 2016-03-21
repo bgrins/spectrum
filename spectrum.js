@@ -332,7 +332,6 @@
 
             cancelButton.text(opts.cancelText);
             cancelButton.bind("click.spectrum", function (e) {
-                e.stopPropagation();
                 e.preventDefault();
                 revert();
                 hide();
@@ -353,7 +352,6 @@
 
             chooseButton.text(opts.chooseText);
             chooseButton.bind("click.spectrum", function (e) {
-                e.stopPropagation();
                 e.preventDefault();
 
                 if (IE && textInput.is(":focus")) {
