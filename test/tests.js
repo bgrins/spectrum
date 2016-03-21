@@ -233,25 +233,71 @@ test( "Palette Events Fire In Correct Order ", function() {
   el.spectrum("destroy");
 });
 
-test( "Palette click events work ", function() {
-  var el = $("<input id='spec' value='red' />").spectrum({
+test( "Palette click events work", function() {
+  expect(7);
+
+  var moveCount = 0;
+  var moves = ["blue", "green", "red"];
+  var changeCount = 0;
+
+  var el = $("<input id='spec' value='orange' />").spectrum({
     showPalette: true,
+    preferredFormat: "name",
     palette: [
       ["red", "green", "blue"]
     ],
-    move: function() {
-
+    show: function(c) {
+      equal(c.toName(), "orange", "correct shown color");
+    },
+    move: function(c) {
+      equal(c.toName(), moves[moveCount], "Move # " + moveCount + " is correct");
+      moveCount++;
+    },
+    change: function(c) {
+      equal(changeCount, 0, "Only one change happens");
+      equal(c.toName(), "red");
+      changeCount++;
     }
-  });
+  }).spectrum("show");
 
   el.spectrum("container").find(".sp-thumb-el:nth-child(3)").click();
-  equal (el.spectrum("get").toName(), "blue", "First click worked");
   el.spectrum("container").find(".sp-thumb-el:nth-child(2) .sp-thumb-inner").click();
-  equal (el.spectrum("get").toName(), "green", "Second click worked (on child element)");
   el.spectrum("container").find(".sp-thumb-el:nth-child(1) .sp-thumb-inner").click();
-  equal (el.spectrum("get").toName(), "red", "Third click worked (on child element)");
-  el.spectrum("destroy");
+  el.spectrum("container").find(".sp-choose").click();
 
+  equal(el.val(), "red", "Element's value is set");
+  el.spectrum("destroy");
+});
+
+test( "Palette doesn't changes don't stick if cancelled", function() {
+  expect(4);
+
+  var moveCount = 0;
+  var moves = ["blue", "green", "red", "orange"];
+  var changeCount = 0;
+
+  var el = $("<input id='spec' value='orange' />").spectrum({
+    showPalette: true,
+    preferredFormat: "name",
+    palette: [
+      ["red", "green", "blue"]
+    ],
+    move: function(c) {
+      equal(c.toName(), moves[moveCount], "Move # " + moveCount + " is correct");
+      moveCount++;
+    },
+    change: function(c) {
+      ok(false, "No change fires");
+    }
+  }).spectrum("show");
+
+  el.spectrum("container").find(".sp-thumb-el:nth-child(3)").click();
+  el.spectrum("container").find(".sp-thumb-el:nth-child(2)").click();
+  el.spectrum("container").find(".sp-thumb-el:nth-child(1)").click();
+  el.spectrum("container").find(".sp-cancel").click();
+
+  equal(el.val(), "orange", "Element's value is the same");
+  el.spectrum("destroy");
 });
 
 test( "hideAfterPaletteSelect: Palette stays open after color select when false", function() {
