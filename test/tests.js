@@ -69,12 +69,11 @@ test( "Per-element Options Are Read From Data Attributes", function() {
 });
 
 test( "Events Fire", function() {
-  var el = $("<input id='spec' />").spectrum();
+  expect(4);
   var count = 0;
-  expect(5);
+  var el = $("<input id='spec' />").spectrum();
 
   el.on("beforeShow.spectrum", function(e) {
-
     // Cancel the event the first time
     if (count === 0) {
       ok(true, "Cancel beforeShow");
@@ -82,24 +81,23 @@ test( "Events Fire", function() {
       return false;
     }
 
-    ok (count === 1, "Allow beforeShow");
+    equal(count, 1, "Allow beforeShow");
     count++;
   });
 
 
   el.on("show.spectrum", function(e) {
-    ok(count === 2, "Show");
+    equal(count, 2, "Show");
     count++;
   });
 
   el.on("hide.spectrum", function(e) {
-    ok(count === 3, "Hide");
-
+    equal(count, 3, "Hide");
     count++;
   });
 
   el.on("move.spectrum", function(e) {
-
+    ok(false, "Change should not fire from `move` call");
   });
 
   el.on("change", function(e, color) {
@@ -111,17 +109,31 @@ test( "Events Fire", function() {
   el.spectrum("hide");
 
   el.spectrum("set", "red");
-
   el.spectrum("destroy");
+});
 
-  var el2 = $("<input />").spectrum({
+test( "Events Fire (text input change)", function() {
+  expect(3);
+  var count = 0;
+  var el = $("<input id='spec' />").spectrum({
     showInput: true
   });
-  el2.on("change.spectrum", function(e, color) {
-    ok(true, "Change should fire input changing");
+  el.on("move.spectrum", function(e, color) {
+    equal(count, 0, "Move fires when input changes");
+    count++;
   });
-  el2.spectrum("container").find(".sp-input").val("blue").trigger("change");
-  el2.spectrum("destroy");
+
+  el.on("change.spectrum", function(e, color) {
+    equal(count, 2, "Change should not fire when input changes, only when chosen");
+    count++;
+  });
+
+  el.spectrum("container").find(".sp-input").val("blue").trigger("change");
+  count++;
+  el.spectrum("container").find(".sp-choose").click();
+  el.spectrum("destroy");
+
+  equal(count, 3, "All events fired");
 });
 
 test( "Escape hides the colorpicker", function() {
