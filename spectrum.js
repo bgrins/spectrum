@@ -480,6 +480,12 @@
 
             boundElement.trigger($.Event('init.spectrum'), [ boundElement, container ]);
             callbacks.init(boundElement, container);
+
+            boundElement.on('click', function(){
+                offsetElement.trigger('click.spectrum');
+
+                return false;
+            });
         }
 
         function updateSelectionPaletteFromStorage() {
