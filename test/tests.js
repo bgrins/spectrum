@@ -205,6 +205,7 @@ test( "Palette Events Fire In Correct Order ", function() {
   expect(2);
   var el = $("<input id='spec' value='red' />").spectrum({
     showPalette: true,
+    hideAfterPaletteSelect : true, 
     palette: [
       ["red", "green", "blue"]
     ],

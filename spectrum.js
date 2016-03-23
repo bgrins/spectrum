@@ -462,8 +462,8 @@
                 else {
                     set($(e.target).closest(".sp-thumb-el").data("color"));
                     move();
-                    updateOriginalInput(true);
                     if (opts.hideAfterPaletteSelect) {
+                      updateOriginalInput(true);
                       hide();
                     }
                 }
