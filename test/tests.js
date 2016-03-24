@@ -248,6 +248,22 @@ test( "Palette click events work ", function() {
 
 });
 
+test( "Palette defined in html datalist is read", function() {
+  var container = $("<input id='spec' value='red' list='testlist' /><datalist id='testlist'>" +
+      "<option>#00FF00</option><option>#FF00FF</option></datalist>").appendTo("body");
+  var el = $("#spec").spectrum({
+    palette: [
+      ["red", "green", "blue"]
+    ]
+  });
+
+  el.spectrum("show");
+  deepEqual (
+    el.spectrum("option", "palette"), ["#00FF00", "#FF00FF"],
+    "datalist should replace default palette"
+  );
+});
+
 test( "hideAfterPaletteSelect: Palette stays open after color select", function() {
   var el = $("<input id='spec' value='red' />").spectrum({
     showPalette: true,
