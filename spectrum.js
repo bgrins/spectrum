@@ -26,6 +26,7 @@
         change: noop,
         show: noop,
         hide: noop,
+        init: noop,
 
         // Options
         color: false,
@@ -58,7 +59,8 @@
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
         selectionPalette: [],
         disabled: false,
-        offset: null
+        offset: null,
+        forceChangeEvent: false
     },
     spectrums = [],
     IE = !!/msie/i.exec( window.navigator.userAgent ),
@@ -136,7 +138,7 @@
             var current = p[i];
             if(current) {
                 var tiny = tinycolor(current);
-                var c = tiny.toHsl().l < 0.5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
+                var c = tiny.toHsl().l <= 0.5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
                 c += (tinycolor.equals(color, current)) ? " sp-thumb-active" : "";
                 var formattedString = tiny.toString(opts.preferredFormat || "rgb");
                 var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
@@ -169,7 +171,8 @@
             'change': bind(opts.change, callbackContext),
             'show': bind(opts.show, callbackContext),
             'hide': bind(opts.hide, callbackContext),
-            'beforeShow': bind(opts.beforeShow, callbackContext)
+            'beforeShow': bind(opts.beforeShow, callbackContext),
+            'init': bind(opts.init, callbackContext)
         };
 
         return opts;
@@ -479,6 +482,15 @@
             var paletteEvent = IE ? "mousedown.spectrum" : "click.spectrum touchstart.spectrum";
             paletteContainer.delegate(".sp-thumb-el", paletteEvent, paletteElementClick);
             initialColorContainer.delegate(".sp-thumb-el:nth-child(1)", paletteEvent, { ignore: true }, paletteElementClick);
+
+            boundElement.trigger($.Event('init.spectrum'), [ boundElement, container ]);
+            callbacks.init(boundElement, container);
+
+            boundElement.on('click', function(){
+                offsetElement.trigger('click.spectrum');
+
+                return false;
+            });
         }
 
         function updateSelectionPaletteFromStorage() {
@@ -866,7 +878,7 @@
         function updateOriginalInput(fireCallback) {
             var color = get(),
                 displayColor = '',
-                hasChanged = !tinycolor.equals(color, colorOnShow);
+                hasChanged = opts.forceChangeEvent || !tinycolor.equals(color, colorOnShow);
 
             if (color) {
                 displayColor = color.toString(currentPreferredFormat);
@@ -878,7 +890,7 @@
                 boundElement.val(displayColor);
             }
 
-            if (fireCallback && hasChanged) {
+            if (fireCallback && hasChanged ) {
                 callbacks.change(color);
                 boundElement.trigger('change', [ color ]);
             }
