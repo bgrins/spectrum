@@ -55,7 +55,7 @@ test( "Per-element Options Are Read From Data Attributes", function() {
     showAlpha: true
   });
 
-  equal ( changeDefault.spectrum("option", "showAlpha"), false, "Took showAlpha value from data attribute");
+  equal ( changeDefault.spectrum("option", "showAlpha"), true, "Took showAlpha value from options arg");
 
   changeDefault.spectrum("destroy");
 
