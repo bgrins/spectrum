@@ -304,7 +304,7 @@
 
             updateSelectionPaletteFromStorage();
 
-            offsetElement.bind("click.spectrum touchstart.spectrum", function (e) {
+            offsetElement.on("click.spectrum touchstart.spectrum", function (e) {
                 if (!disabled) {
                     toggle();
                 }
@@ -325,13 +325,13 @@
 
             // Handle user typed input
             textInput.change(setFromTextInput);
-            textInput.bind("paste", function () {
+            textInput.on("paste", function () {
                 setTimeout(setFromTextInput, 1);
             });
             textInput.keydown(function (e) { if (e.keyCode == 13) { setFromTextInput(); } });
 
             cancelButton.text(opts.cancelText);
-            cancelButton.bind("click.spectrum", function (e) {
+            cancelButton.on("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
                 revert();
@@ -339,7 +339,7 @@
             });
 
             clearButton.attr("title", opts.clearText);
-            clearButton.bind("click.spectrum", function (e) {
+            clearButton.on("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
                 isEmpty = true;
@@ -352,7 +352,7 @@
             });
 
             chooseButton.text(opts.chooseText);
-            chooseButton.bind("click.spectrum", function (e) {
+            chooseButton.on("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
 
@@ -367,7 +367,7 @@
             });
 
             toggleButton.text(opts.showPaletteOnly ? opts.togglePaletteMoreText : opts.togglePaletteLessText);
-            toggleButton.bind("click.spectrum", function (e) {
+            toggleButton.on("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
 
@@ -477,8 +477,8 @@
             }
 
             var paletteEvent = IE ? "mousedown.spectrum" : "click.spectrum touchstart.spectrum";
-            paletteContainer.delegate(".sp-thumb-el", paletteEvent, paletteElementClick);
-            initialColorContainer.delegate(".sp-thumb-el:nth-child(1)", paletteEvent, { ignore: true }, paletteElementClick);
+            paletteContainer.on(paletteEvent, ".sp-thumb-el", paletteElementClick);
+            initialColorContainer.on(paletteEvent, ".sp-thumb-el:nth-child(1)", { ignore: true }, paletteElementClick);
         }
 
         function updateSelectionPaletteFromStorage() {
@@ -627,9 +627,9 @@
             hideAll();
             visible = true;
 
-            $(doc).bind("keydown.spectrum", onkeydown);
-            $(doc).bind("click.spectrum", clickout);
-            $(window).bind("resize.spectrum", resize);
+            $(doc).on("keydown.spectrum", onkeydown);
+            $(doc).on("click.spectrum", clickout);
+            $(window).on("resize.spectrum", resize);
             replacer.addClass("sp-active");
             container.removeClass("sp-hidden");
 
@@ -672,9 +672,9 @@
             if (!visible || flat) { return; }
             visible = false;
 
-            $(doc).unbind("keydown.spectrum", onkeydown);
-            $(doc).unbind("click.spectrum", clickout);
-            $(window).unbind("resize.spectrum", resize);
+            $(doc).off("keydown.spectrum", onkeydown);
+            $(doc).off("click.spectrum", clickout);
+            $(window).off("resize.spectrum", resize);
 
             replacer.removeClass("sp-active");
             container.addClass("sp-hidden");
@@ -917,7 +917,7 @@
 
         function destroy() {
             boundElement.show();
-            offsetElement.unbind("click.spectrum touchstart.spectrum");
+            offsetElement.off("click.spectrum touchstart.spectrum");
             container.remove();
             replacer.remove();
             spectrums[spect.id] = null;
@@ -1109,7 +1109,7 @@
                     maxWidth = $(element).width();
                     offset = $(element).offset();
 
-                    $(doc).bind(duringDragEvents);
+                    $(doc).on(duringDragEvents);
                     $(doc.body).addClass("sp-dragging");
 
                     move(e);
@@ -1121,7 +1121,7 @@
 
         function stop() {
             if (dragging) {
-                $(doc).unbind(duringDragEvents);
+                $(doc).off(duringDragEvents);
                 $(doc.body).removeClass("sp-dragging");
 
                 // Wait a tick before notifying observers to allow the click event
@@ -1133,7 +1133,7 @@
             dragging = false;
         }
 
-        $(element).bind("touchstart mousedown", start);
+        $(element).on("touchstart mousedown", start);
     }
 
     function throttle(func, wait, debounce) {
