@@ -1109,7 +1109,7 @@
                     maxWidth = $(element).width();
                     offset = $(element).offset();
 
-                    $(doc).bind(duringDragEvents);
+                    $(doc.body).bind(duringDragEvents);
                     $(doc.body).addClass("sp-dragging");
 
                     move(e);
