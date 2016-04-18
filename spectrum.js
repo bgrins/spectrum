@@ -324,7 +324,7 @@
             container.click(stopPropagation);
 
             // Handle user typed input
-            textInput.on("change", setFromTextInput);
+            textInput.change(setFromTextInput);
             textInput.on("paste", function () {
                 setTimeout(setFromTextInput, 1);
             });
