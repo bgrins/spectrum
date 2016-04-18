@@ -324,11 +324,19 @@
             container.click(stopPropagation);
 
             // Handle user typed input
-            textInput.change(setFromTextInput);
+            textInput.on("change", setFromTextInput);
             textInput.on("paste", function () {
                 setTimeout(setFromTextInput, 1);
             });
             textInput.keydown(function (e) { if (e.keyCode == 13) { setFromTextInput(); } });
+            textInput.on("input", function() {
+               if($(this).val() === "") {
+                   textInput.blur();
+                   setTimeout(function() {
+                       textInput.focus();
+                   }, 1);
+               }
+            });
 
             cancelButton.text(opts.cancelText);
             cancelButton.on("click.spectrum", function (e) {
