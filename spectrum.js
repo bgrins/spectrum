@@ -58,7 +58,8 @@
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
         selectionPalette: [],
         disabled: false,
-        offset: null
+        offset: null,
+        extendedOffset: null
     },
     spectrums = [],
     IE = !!/msie/i.exec( window.navigator.userAgent ),
@@ -901,6 +902,12 @@
                 container.css("position", "absolute");
                 if (opts.offset) {
                     container.offset(opts.offset);
+                } else if (opts.extendedOffset) {
+                    var calculatedOffset = getOffset(container, offsetElement);
+                    for (var prop in calculatedOffset) {
+                        calculatedOffset[prop] += opts.extendedOffset[prop] || 0;
+                    }
+                    container.offset(calculatedOffset);
                 } else {
                     container.offset(getOffset(container, offsetElement));
                 }
@@ -957,6 +964,11 @@
             reflow();
         }
 
+        function setExtendedOffset(coord) {
+            opts.extendedOffset = coord;
+            reflow();
+        }
+
         initialize();
 
         var spect = {
@@ -968,6 +980,7 @@
             enable: enable,
             disable: disable,
             offset: setOffset,
+            extendedOffset: setExtendedOffset,
             set: function (c) {
                 set(c);
                 updateOriginalInput();
