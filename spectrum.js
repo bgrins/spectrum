@@ -899,7 +899,7 @@
 
             if (!flat) {
                 container.css("position", "absolute");
-                var coords = getOffset(container, offsetElement)
+                var coords = getOffset(container, offsetElement);
                 if (opts.offset) {
                     if (opts.offset.hasOwnProperty('top')) {
                         coords.top += opts.offset.top;
