@@ -902,10 +902,10 @@
                 var coords = getOffset(container, offsetElement)
                 if (opts.offset) {
                     if (opts.offset.hasOwnProperty('top')) {
-                        coords.top += opts.offset.top
+                        coords.top += opts.offset.top;
                     }
                     if (opts.offset.hasOwnProperty('left')) {
-                        coords.left += opts.offset.left
+                        coords.left += opts.offset.left;
                     }
                 }
                 container.offset(coords);
