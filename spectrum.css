@@ -487,6 +487,10 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     top:0;left:0;bottom:0;right:0;
 }
 
+.sp-preview-inner {
+    -webkit-print-color-adjust: exact;
+}
+
 .sp-palette .sp-thumb-inner {
     background-position: 50% 50%;
     background-repeat: no-repeat;
