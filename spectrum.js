@@ -22,6 +22,7 @@
 
         // Callbacks
         beforeShow: noop,
+        beforeHide:noop,
         move: noop,
         change: noop,
         show: noop,
@@ -169,7 +170,8 @@
             'change': bind(opts.change, callbackContext),
             'show': bind(opts.show, callbackContext),
             'hide': bind(opts.hide, callbackContext),
-            'beforeShow': bind(opts.beforeShow, callbackContext)
+            'beforeShow': bind(opts.beforeShow, callbackContext),
+            'beforeHide': bind(opts.beforeHide, callbackContext)
         };
 
         return opts;
@@ -668,6 +670,12 @@
         }
 
         function hide() {
+            var event = $.Event('beforeHide.spectrum');
+
+            if (callbacks.beforeHide(get()) === false || event.isDefaultPrevented()) {
+                return;
+            }
+
             // Return if hiding is unnecessary
             if (!visible || flat) { return; }
             visible = false;
