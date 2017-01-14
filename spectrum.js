@@ -1,3 +1,4 @@
+
 // Spectrum Colorpicker v1.8.0
 // https://github.com/bgrins/spectrum
 // Author: Brian Grinstead
@@ -54,6 +55,7 @@
         containerClassName: "",
         replacerClassName: "",
         showAlpha: false,
+        alphaVertical: false,
         theme: "sp-light",
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
         selectionPalette: [],
@@ -193,6 +195,8 @@
             slideWidth = 0,
             alphaWidth = 0,
             alphaSlideHelperWidth = 0,
+            alphaSlideHelperHeight = 0,
+            alphaSliderInnerHeight = 0,
             slideHelperHeight = 0,
             currentHue = 0,
             currentSaturation = 0,
@@ -262,6 +266,7 @@
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
+            container.toggleClass("sp-vertical-alpha", opts.alphaVertical);
             container.toggleClass("sp-clear-enabled", allowEmpty);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
             container.toggleClass("sp-palette-buttons-disabled", !opts.togglePaletteOnly);
@@ -386,6 +391,11 @@
 
             draggable(alphaSlider, function (dragX, dragY, e) {
                 currentAlpha = (dragX / alphaWidth);
+                
+                        
+                if (opts.alphaVertical && opts.showAlpha)
+                    currentAlpha = (dragY / alphaSliderInnerHeight);
+                
                 isEmpty = false;
                 if (e.shiftKey) {
                     currentAlpha = Math.round(currentAlpha * 10) / 10;
@@ -788,18 +798,28 @@
                     var rgb = realColor.toRgb();
                     rgb.a = 0;
                     var realAlpha = tinycolor(rgb).toRgbString();
-                    var gradient = "linear-gradient(left, " + realAlpha + ", " + realHex + ")";
 
                     if (IE) {
                         alphaSliderInner.css("filter", tinycolor(realAlpha).toFilter({ gradientType: 1 }, realHex));
                     }
                     else {
+                        var gradient = "linear-gradient(left, " + realAlpha + ", " + realHex + ")";
+                        // Use current syntax gradient on unprefixed property.
+                            
+                        if (!opts.alphaVertical) {
+                            alphaSliderInner.css("background",
+                                "linear-gradient(to right, " + realAlpha + ", " + realHex + ")");
+                            gradient = "linear-gradient(right, " + realAlpha + ", " + realHex + ")";
+                        }
+                        else {
+                            alphaSliderInner.css("background",
+                            "linear-gradient(to bottom, " + realAlpha + ", " + realHex + ")");
+                            gradient = "linear-gradient(bottom, " + realAlpha + ", " + realHex + ")";
+                        }
+                        
                         alphaSliderInner.css("background", "-webkit-" + gradient);
                         alphaSliderInner.css("background", "-moz-" + gradient);
                         alphaSliderInner.css("background", "-ms-" + gradient);
-                        // Use current syntax gradient on unprefixed property.
-                        alphaSliderInner.css("background",
-                            "linear-gradient(to right, " + realAlpha + ", " + realHex + ")");
                     }
                 }
 
@@ -850,10 +870,22 @@
                     "left": dragX + "px"
                 });
 
-                var alphaX = currentAlpha * alphaWidth;
-                alphaSlideHelper.css({
-                    "left": (alphaX - (alphaSlideHelperWidth / 2)) + "px"
-                });
+                
+                if (!opts.alphaVertical) {
+                    var alphaX = currentAlpha * alphaWidth;
+                    alphaSlideHelper.css({
+                        "left": (alphaX - (alphaSlideHelperWidth / 2)) + "px"
+                    });
+                }
+                else {
+                    var alphaY = alphaSliderInnerHeight * ((currentAlpha * alphaWidth) / 10);
+                    if (alphaY > alphaSliderInnerHeight) alphaY = alphaSliderInnerHeight;
+                    
+                    alphaSlideHelper.css({
+                        "top" : (alphaY - 3) + "px",
+                        "left" : -2
+                    });
+                }
 
                 // Where to show the bar that displays your current selected hue
                 var slideY = (currentHue) * slideHeight;
@@ -896,6 +928,8 @@
             slideHelperHeight = slideHelper.height();
             alphaWidth = alphaSlider.width();
             alphaSlideHelperWidth = alphaSlideHelper.width();
+            alphaSlideHelperHeight = alphaSlideHelper.height();
+            alphaSliderInnerHeight = alphaSliderInner.height();
 
             if (!flat) {
                 container.css("position", "absolute");
