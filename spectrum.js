@@ -40,6 +40,7 @@
         hideAfterPaletteSelect: false,
         togglePaletteOnly: false,
         showSelectionPalette: true,
+        addInitialToSelectionPalette: true,
         localStorageKey: false,
         appendTo: "body",
         maxSelectionSize: 7,
@@ -180,6 +181,7 @@
         var opts = instanceOptions(o, element),
             flat = opts.flat,
             showSelectionPalette = opts.showSelectionPalette,
+            addInitialToSelectionPalette = opts.addInitialToSelectionPalette,
             localStorageKey = opts.localStorageKey,
             theme = opts.theme,
             callbacks = opts.callbacks,
@@ -444,7 +446,9 @@
                 updateUI();
                 currentPreferredFormat = opts.preferredFormat || tinycolor(initialColor).format;
 
-                addColorToSelectionPalette(initialColor);
+                if (addInitialToSelectionPalette) {
+                    addColorToSelectionPalette(initialColor);
+                }
             }
             else {
                 updateUI();
