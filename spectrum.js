@@ -900,9 +900,9 @@
             if (!flat) {
                 container.css("position", "absolute");
                 if (opts.offset) {
-                    container.offset(opts.offset);
+                    container.css(opts.offset);
                 } else {
-                    container.offset(getOffset(container, offsetElement));
+                    container.css(getOffset(container, offsetElement));
                 }
             }
 
