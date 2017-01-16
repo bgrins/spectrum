@@ -882,6 +882,8 @@
                 callbacks.change(color);
                 boundElement.trigger('change', [ color ]);
             }
+            // Since the color in the box has changed, this changes what we think the color is now.
+            colorOnShow = get();
         }
 
         function reflow() {
