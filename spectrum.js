@@ -259,6 +259,9 @@
                 }
             }
 
+            isInputTypeColor = isInput && boundElement.attr("type") === "color" && inputTypeColorSupport();
+            allowEmpty = opts.allowEmpty && !isInputTypeColor;
+
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
@@ -283,10 +286,6 @@
 
             if (shouldReplace) {
                 boundElement.after(replacer).hide();
-            }
-
-            if (!allowEmpty) {
-                clearButton.hide();
             }
 
             if (flat) {
