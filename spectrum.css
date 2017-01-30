@@ -131,6 +131,9 @@ License: MIT
 .sp-container.sp-input-disabled .sp-input-container {
     display: none;
 }
+.sp-container.sp-rgb-disabled .sp-rgb-container {
+    display: none;
+}
 .sp-container.sp-buttons-disabled .sp-button-container {
     display: none;
 }
@@ -273,24 +276,64 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     border: solid 1px #666;
 }
 
+/*RGB Input*/
+.sp-rgb-container {
+    width: 100%;
+    margin-bottom: 4px;
+}
+
+.sp-rgb-input-container {
+    height: 30px;
+    width: 33.3333%;
+    display: inline-block;
+}
+
+input[type='text'].sp-rgb-input-r,
+input[type='text'].sp-rgb-input-g,
+input[type='text'].sp-rgb-input-b {
+    font-size: 12px !important;
+    margin-bottom: 0px;
+    border-radius: 3px;
+    color: #222;
+
+    vertical-align: middle;
+    text-align: left;
+
+    width: 75%;
+    margin-bottom: 0px;
+    display: inline-block;
+}
+
+.sp-rgb-input-r.sp-validation-error,
+.sp-rgb-input-g.sp-validation-error,
+.sp-rgb-input-b.sp-validation-error {
+    border: 1px solid red;
+    background: #fdd;
+}
+
+.sp-rgb-input-label {
+    vertical-align: middle;
+    text-align: center;
+    display: inline-block;
+    margin-bottom: 0px;
+    width: 25%;
+}
+
 /* Input */
 .sp-input-container {
-    float:right;
     width: 100px;
     margin-bottom: 4px;
 }
 .sp-initial-disabled  .sp-input-container {
     width: 100%;
 }
-.sp-input {
-   font-size: 12px !important;
-   border: 1px inset;
-   padding: 4px 5px;
-   margin: 0;
-   width: 100%;
-   background:transparent;
-   border-radius: 3px;
-   color: #222;
+input[type='text'].sp-input {
+    font-size: 12px !important;
+    padding: 4px 5px;
+    margin: 0;
+    width: 100%;
+    border-radius: 3px;
+    color: #222;
 }
 .sp-input:focus  {
     border: 1px solid orange;

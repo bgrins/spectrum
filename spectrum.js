@@ -31,6 +31,7 @@
         color: false,
         flat: false,
         showInput: false,
+        showRgbInput: false,
         allowEmpty: false,
         showButtons: true,
         clickoutFiresChange: true,
@@ -119,6 +120,20 @@
                     "</div>",
                     "<div class='sp-input-container sp-cf'>",
                         "<input class='sp-input' type='text' spellcheck='false'  />",
+                    "</div>",
+                    "<div class='sp-rgb-container sp-cf'>",
+                        "<div class='sp-rgb-input-container'>",
+                            "<div class='sp-rgb-input-label'>R:</div>",
+                            "<input class='sp-rgb-input-r' type='text' spellcheck='false' />",
+                        "</div>",
+                        "<div class='sp-rgb-input-container'>",
+                            "<div class='sp-rgb-input-label'>G:</div>",
+                            "<input class='sp-rgb-input-g' type='text' spellcheck='false' />",
+                        "</div>",
+                        "<div class='sp-rgb-input-container'>",
+                            "<div class='sp-rgb-input-label'>B:</div>",
+                            "<input class='sp-rgb-input-b' type='text' spellcheck='false' />",
+                        "</div>",
                     "</div>",
                     "<div class='sp-initial sp-thumb sp-cf'></div>",
                     "<div class='sp-button-container sp-cf'>",
@@ -220,6 +235,9 @@
             alphaSlider = container.find(".sp-alpha"),
             alphaSlideHelper = container.find(".sp-alpha-handle"),
             textInput = container.find(".sp-input"),
+            rgbRedInput = container.find(".sp-rgb-input-r"),
+            rgbGreenInput = container.find(".sp-rgb-input-g"),
+            rgbBlueInput = container.find(".sp-rgb-input-b"),
             paletteContainer = container.find(".sp-palette"),
             initialColorContainer = container.find(".sp-initial"),
             cancelButton = container.find(".sp-cancel"),
@@ -261,6 +279,7 @@
 
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
+            container.toggleClass("sp-rgb-disabled", !opts.showRgbInput);
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
             container.toggleClass("sp-clear-enabled", allowEmpty);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
@@ -269,6 +288,10 @@
             container.toggleClass("sp-palette-only", opts.showPaletteOnly);
             container.toggleClass("sp-initial-disabled", !opts.showInitial);
             container.addClass(opts.className).addClass(opts.containerClassName);
+
+            if (opts.showRgbInput){
+                updateUI();
+            }
 
             reflow();
         }
@@ -330,6 +353,14 @@
             });
             textInput.keydown(function (e) { if (e.keyCode == 13) { setFromTextInput(); } });
 
+            $.each([rgbRedInput, rgbGreenInput, rgbBlueInput], function(idx, item){
+                item.change(setFromRgbInput);
+                item.bind("paste", function () {
+                    setTimeout(setFromRgbInput, 1);
+                });
+                item.keydown(function (e) { if (e.keyCode == 13) { setFromRgbInput(); } });
+            });
+
             cancelButton.text(opts.cancelText);
             cancelButton.on("click.spectrum", function (e) {
                 e.stopPropagation();
@@ -356,9 +387,11 @@
                 e.stopPropagation();
                 e.preventDefault();
 
-                if (IE && textInput.is(":focus")) {
-                    textInput.trigger('change');
-                }
+                $.each([textInput, rgbRedInput, rgbGreenInput, rgbBlueInput], function(idx, item){
+                    if (IE && item.is(":focus")) {
+                        item.trigger('change');
+                    }
+                });
 
                 if (isValid()) {
                     updateOriginalInput(true);
@@ -601,6 +634,42 @@
             }
         }
 
+        function setFromRgbInput() {
+
+            var r = rgbRedInput.val();
+            var g = rgbGreenInput.val();
+            var b = rgbBlueInput.val();
+
+            if (((r === null || r === "") ||
+                 (g === null || g === "") ||
+                 (b === null || b === "")) && allowEmpty) {
+
+                set(null);
+                updateOriginalInput(true);
+            }
+            else if (isNaN(r)) {
+                rgbRedInput.addClass("sp-validation-error");
+            }
+            else if (isNaN(g)){
+                rgbGreenInput.addClass("sp-validation-error");
+            }
+            else if (isNaN(b)){
+                rgbBlueInput.addClass("sp-validation-error");
+            }
+            else {
+                var tiny = tinycolor.fromRatio({r: r, g: g, b: b});
+                if (tiny.isValid()) {
+                    set(tiny);
+                    updateOriginalInput(true);
+                }
+                else {
+                    rgbRedInput.addClass("sp-validation-error");
+                    rgbGreenInput.addClass("sp-validation-error");
+                    rgbBlueInput.addClass("sp-validation-error");
+                }
+            }
+        }
+
         function toggle() {
             if (visible) {
                 hide();
@@ -732,7 +801,10 @@
         }
 
         function isValid() {
-            return !textInput.hasClass("sp-validation-error");
+            return !textInput.hasClass("sp-validation-error") &&
+             !rgbRedInput.hasClass('sp-validation-error') &&
+             !rgbGreenInput.hasClass('sp-validation-error') &&
+             !rgbBlueInput.hasClass('sp-validation-error');
         }
 
         function move() {
@@ -744,8 +816,10 @@
 
         function updateUI() {
 
-            textInput.removeClass("sp-validation-error");
-
+            $.each([textInput, rgbRedInput, rgbGreenInput, rgbBlueInput], function(idx, item){
+                item.removeClass("sp-validation-error");    
+            });
+            
             updateHelperLocations();
 
             // Update dragger background color (gradients take care of saturation and value).
@@ -762,6 +836,8 @@
 
             var realColor = get({ format: format }),
                 displayColor = '';
+            
+            var rgb = realColor ? realColor.toRgb() : null;
 
              //reset background info for preview element
             previewElement.removeClass("sp-clear-display");
@@ -785,7 +861,6 @@
                 }
 
                 if (opts.showAlpha) {
-                    var rgb = realColor.toRgb();
                     rgb.a = 0;
                     var realAlpha = tinycolor(rgb).toRgbString();
                     var gradient = "linear-gradient(left, " + realAlpha + ", " + realHex + ")";
@@ -809,6 +884,14 @@
             // Update the text entry input as it changes happen
             if (opts.showInput) {
                 textInput.val(displayColor);
+            }
+
+            if (opts.showRgbInput) {
+                if (rgb){
+                    rgbRedInput.val(rgb.r);
+                    rgbGreenInput.val(rgb.g);
+                    rgbBlueInput.val(rgb.b);
+                }
             }
 
             if (opts.showPalette) {

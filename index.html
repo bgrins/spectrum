@@ -708,6 +708,7 @@ $("#preferredHsl").spectrum({
 $("#preferredRgb").spectrum({
     preferredFormat: "rgb",
     showInput: true,
+    showRgbInput: true,
     showPalette: true,
     palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
@@ -736,6 +737,26 @@ $("#preferredNone").spectrum({
                     <input type='text' name='preferredName' id='preferredName' value='orangered' />
                     <div class='alert alert-info'>None (Depends on input - try changing formats with the text box)</div>
                     <input type='text' name='preferredNone' id='preferredNone' value='orangered' />
+            </div>
+        </div>
+
+        <h3 id="options-show-rgb-input">RGB input</h3>
+        <div class='option-content'>
+            <div class='description'>
+                <p>You can use input for selecting color by setting separate RGB components in dedicated inputs.</p>
+                <p>It will cause update of whole colorpicker.</p>
+            </div>
+
+            <pre class='prettyprint'>
+$("#showRgbInput").spectrum({
+    showRgbInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
+});
+            </pre>
+            <div class='example'>
+                    <div class='alert alert-info'>Change components of color</div>
+                    <input type='text' name='showRgbInput' id='showRgbInput' value='orangered' />
             </div>
         </div>
 
