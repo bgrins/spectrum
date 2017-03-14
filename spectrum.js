@@ -96,6 +96,7 @@
                     "<div class='sp-palette-button-container sp-cf'>",
                         "<button type='button' class='sp-palette-toggle'></button>",
                     "</div>",
+                    "<div class='sp-clear sp-clear-display sp-clear-palette-only'></div>",
                 "</div>",
                 "<div class='sp-picker-container'>",
                     "<div class='sp-top sp-cf'>",
