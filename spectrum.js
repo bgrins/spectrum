@@ -239,6 +239,19 @@
             isEmpty = !initialColor,
             allowEmpty = opts.allowEmpty && !isInputTypeColor;
 
+        //If there is a label for this element, when clicked on, show the colour picker
+        var thisId = boundElement.attr('id');
+        if(thisId !== undefined && thisId.length > 0) {
+            var label = $('label[for="'+thisId+'"]');
+            if(label.length) {
+                label.on('click', function(e){
+                    e.preventDefault();
+                    boundElement.spectrum('show');
+                    return false;
+                });
+            }
+        }
+        
         function applyOptions() {
 
             if (opts.showPaletteOnly) {
