@@ -668,13 +668,13 @@
         }
 
         function hide() {
-            // Return if hiding is unnecessary
-            if (!visible || flat) { return; }
-            visible = false;
-
             $(doc).off("keydown.spectrum", onkeydown);
             $(doc).off("click.spectrum", clickout);
             $(window).off("resize.spectrum", resize);
+            
+            // Return if hiding is unnecessary
+            if (!visible || flat) { return; }
+            visible = false;
 
             replacer.removeClass("sp-active");
             container.addClass("sp-hidden");
