@@ -741,7 +741,7 @@ var diff = currentR;
                     currentAlpha = 1;
             currentAP = opts.aPickerScale;
                 }
-if (currentRGBMode != 0) {
+if (currentRGBMode !== 0) {
     diff = currentR - diff;
     if (currentRGBMode == 1) { // linked
         currentG = (currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
@@ -769,7 +769,7 @@ var diff = currentG;
                     currentAlpha = 1;
             currentAP = opts.aPickerScale;
                 }
-if (currentRGBMode != 0) {
+if (currentRGBMode !== 0) {
     diff = currentG - diff;
     if (currentRGBMode == 1) { // linked
         currentR = (currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
@@ -797,7 +797,7 @@ var diff = currentB;
                     currentAlpha = 1;
             currentAP = opts.aPickerScale;
                 }
-if (currentRGBMode != 0) {
+if (currentRGBMode !== 0) {
     diff = currentB - diff;
     if (currentRGBMode == 1) { // linked
         currentR = (currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
@@ -975,7 +975,7 @@ updateRGBbyDrag();
                         for (var i = 0; i < selectionPalette.length; ++i) {
                             var current_color = tinycolor(selectionPalette[i]);
                             if (! current_color.inRange(lowerbound, upperbound)) {
-                                selectionPalette.splice(i, 1)
+                                selectionPalette.splice(i, 1);
                                 break;
                             }
                         }
@@ -1095,7 +1095,7 @@ updateRGBbyDrag();
 
 function setFromPickerInput(pickerInput, old, mv) {
     if (mv === undefined) mv = 255;
-        // (I need to do this because click on pickers number input arrows doesn't immediately make contraints lose focus more about this on updateUI() )
+    // (I need to do this because click on pickers number input arrows doesn't immediately make contraints lose focus more about this on updateUI() )
         if ($( document.activeElement ).prop("id").indexOf("_constraint") >= 0) $(document.activeElement).blur();
 
         var value = pickerInput.val();
@@ -1103,7 +1103,7 @@ function setFromPickerInput(pickerInput, old, mv) {
     if (value < 0) value = 0;
     else if (value > mv) value = mv;
 
-    if (currentRGBMode != 0 && $.isNumeric(value)) {
+    if (currentRGBMode !== 0 && $.isNumeric(value)) {
         var c_id = pickerInput.prop('id').charAt(0);
         var diff = value;
         if (c_id == 'r') {
@@ -1307,8 +1307,7 @@ function setFromPickerInput(pickerInput, old, mv) {
             textInput.removeClass("sp-validation-error");
 
 // need to manually trigger contraints update if I moved from one contraints input to a dragger or arrows of a picker number input (because constraint input doesn't lose its focus)
-            if ($( document.activeElement ).prop("id") !== undefined && ($( document.activeElement ).prop("id").indexOf("_constraint") >= 0
-             || $( document.activeElement ).prop("id").indexOf("_picker") >= 0 ) $(document.activeElement).blur(); //second line for picker updating when passing to rgb sliders without hitting enter
+            if ($( document.activeElement ).prop("id") !== undefined && ($( document.activeElement ).prop("id").indexOf("_constraint") >= 0 || $( document.activeElement ).prop("id").indexOf("_picker") >= 0 ) $(document.activeElement).blur(); //second line for picker updating when passing to rgb sliders without hitting enter
 
             updateHelperLocations();
 
@@ -1357,15 +1356,16 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
                     updateRGBSlidersGradients(realHex);
                 }
 
-                if (opts.showRGBApickers) { 
+            if (opts.showRGBApickers || opts.showAlpha) {
                     var rgb = realColor.toRgb();
+
+                if (opts.showRGBApickers) {
                     rPickerInput.val(rgb.r);
                     gPickerInput.val(rgb.g);
                     bPickerInput.val(rgb.b);
                 }
 
                 if (opts.showAlpha) {
-                    var rgb = realColor.toRgb();
 
                     if (opts.showRGBApickers) aPickerInput.val(Math.round(rgb.a * opts.aPickerScale));
 
@@ -1385,6 +1385,7 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
                             "linear-gradient(to right, " + realAlpha + ", " + realHex + ")");
                     }
                 }
+            }
 
                 displayColor = realColor.toString(format);
             }
@@ -1624,8 +1625,8 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
         }
 
         function clearPalette(target, exposeCurrent) { // target color(s) to remove : 0 = current only, 1 = unfiltered (may or not preserve current), 2 = all (may or not preserve current)
-            if (showSelectionPalette && ((target == 0 && exposeCurrent === true) || (target == 1 && paletteFilteringStatus) || (target == 2))) {
-                if (! exposeCurrent || target == 0) var color = get();
+            if (showSelectionPalette && ((target === 0 && exposeCurrent === true) || (target == 1 && paletteFilteringStatus) || (target == 2))) {
+                if (! exposeCurrent || target === 0) var color = get();
                 switch (target) {
                     case 0: // I know exposeCurrent is always true in this case
                         let i = selectionPalette.indexOf(tinycolor(color).toRgbString());
