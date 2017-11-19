@@ -61,4 +61,4 @@ Also I didn't test this on IE < 11 versions (tbh I'm not even interested doing i
 
 ### OK... Now let's see it!
 
-**FULL EXAMPLE** (showing all the described new features) ___[here](my_testcase.html)___
+**FULL EXAMPLE** (showing all the described new features) ___[here](https://danicotra.github.io/spectrum/my_testcase.html)___
