@@ -1,6 +1,7 @@
-// Spectrum Colorpicker v1.8.0
+// Spectrum Colorpicker v1.9.0 ??
 // https://github.com/bgrins/spectrum
 // Author: Brian Grinstead
+// ++ with more features added by danicotra
 // License: MIT
 
 (function (factory) {
@@ -43,6 +44,9 @@
         localStorageKey: false,
         appendTo: "body",
         maxSelectionSize: 7,
+
+        maxPaletteRowElements: 6,
+
         cancelText: "cancel",
         chooseText: "choose",
         togglePaletteMoreText: "more",
@@ -53,10 +57,23 @@
         className: "", // Deprecated - use containerClassName and replacerClassName instead.
         containerClassName: "",
         replacerClassName: "",
+
+        clearFilteredPaletteText: "clear unfiltered",
+
+        showRGBsliders: false,
+        showRGBApickers: false,
+        aPickerScale: 100,
+
         showAlpha: false,
+
+        showRGBmodes: false,
+
         theme: "sp-light",
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
         selectionPalette: [],
+
+        paletteRGBAfiltering: false,
+
         disabled: false,
         offset: null
     },
@@ -96,6 +113,23 @@
                     "<div class='sp-palette-button-container sp-cf'>",
                         "<button type='button' class='sp-palette-toggle'></button>",
                     "</div>",
+"<fieldset class='sp-palette_filtering_set'><legend class='sp-palette_filtering-legend'>palette filtering: </legend>",
+"<input name='sp-palette_filtering' value='1' type='radio' class='sp-palette_filter_selector'><label>on</label>",
+"<input name='sp-palette_filtering' value='0' type='radio' class='sp-palette_filter_selector' checked='checked'><label>off</label>",
+"<div class='sp-palette-filters'>",
+"<label class='sp-palette_filter_label head'>min</label><label class='sp-palette_filter_label head'>max</label>",
+"<br style='clear: both;'>",
+"<label class='sp-palette_filter_label r row'>R</label><input id='r_filter1' min='0' max='255' value='0' data-highlight='true' class='sp-x_picker sp-r_filter1' data-type='range' type='number' disabled='disabled'><input id='r_filter2' min='0' max='255' value='255' data-highlight='true' class='sp-x_picker sp-r_filter2' data-type='range' type='number' disabled='disabled'>",
+"<br style='clear: both;'>",
+"<label class='sp-palette_filter_label g row'>G</label><input id='g_filter1' min='0' max='255' value='0' data-highlight='true' class='sp-x_picker sp-g_filter1' data-type='range' type='number' disabled='disabled'><input id='g_filter2' min='0' max='255' value='255' data-highlight='true' class='sp-x_picker sp-g_filter2' data-type='range' type='number' disabled='disabled'>",
+"<br style='clear: both;'>",
+"<label class='sp-palette_filter_label b row'>B</label><input id='b_filter1' min='0' max='255' value='0' data-highlight='true' class='sp-x_picker sp-b_filter1' data-type='range' type='number' disabled='disabled'><input id='b_filter2' min='0' max='255' value='255' data-highlight='true' class='sp-x_picker sp-b_filter2' data-type='range' type='number' disabled='disabled'>",
+"<br style='clear: both;'>",
+"<label class='sp-palette_filter_label a row'>A</label><input id='a_filter1' min='0' max='100' value='0' data-highlight='true' class='sp-x_picker sp-a_filter1' data-type='range' type='number' disabled='disabled'><input id='a_filter2' min='0' max='100' value='100' data-highlight='true' class='sp-x_picker sp-a_filter2' data-type='range' type='number' disabled='disabled'>",
+"<br style='clear: both;'>",
+"<button type='button' class='sp-palette_filter-clear'></button>",
+"</div>",
+"</fieldset>",
                 "</div>",
                 "<div class='sp-picker-container'>",
                     "<div class='sp-top sp-cf'>",
@@ -115,7 +149,38 @@
                                 gradientFix,
                             "</div>",
                         "</div>",
+
+                        "<div class='sp-rgb_sliders'>",
+//"<input class='sp-r_slider' type='range' id='test-range' min='0' max='255' />",
+                        "<div class='sp-r_slider'><div class='sp-r_slider-inner'><div class='sp-r_slider-constraint1'></div><div class='sp-r_slider-constraint2'></div><div class='sp-r_slider-handle'></div></div></div>",
+                        "<div class='sp-g_slider'><div class='sp-g_slider-inner'><div class='sp-g_slider-constraint1'></div><div class='sp-g_slider-constraint2'></div><div class='sp-g_slider-handle'></div></div></div>",
+                        "<div class='sp-b_slider'><div class='sp-b_slider-inner'><div class='sp-b_slider-constraint1'></div><div class='sp-b_slider-constraint2'></div><div class='sp-b_slider-handle'></div></div></div>",
+                        "</div>",
+
+                        "<div class='sp-pickers'>",
+"<input id='r_picker' min='0' max='255' value='0' data-highlight='true' class='sp-x_picker sp-r_picker' data-type='range' type='number'>",
+"<input id='g_picker' min='0' max='255' value='0' data-highlight='true' class='sp-x_picker sp-g_picker' data-type='range' type='number'>",
+"<input id='b_picker' min='0' max='255' value='0' data-highlight='true' class='sp-x_picker sp-b_picker' data-type='range' type='number'>",
+"<input id='a_picker' min='0' max='100' value='100' data-highlight='true' class='sp-x_picker sp-a_picker' data-type='range' type='number' disabled='disabled'>",
+                        "</div>",
+
                         "<div class='sp-alpha'><div class='sp-alpha-inner'><div class='sp-alpha-handle'></div></div></div>",
+
+"<fieldset class='sp-rgb_modes_set'><legend class='sp-rgb_modes-legend'>RGB mode: <span class='sp-legend-small'>(do not affects hue/saturation controllers)</span></legend>",
+"<input name='sp-rgb_mode' value='0' type='radio' class='sp-rgb_mode_selector' checked='checked'><label>normal</label>",
+"<input name='sp-rgb_mode' value='1' type='radio' class='sp-rgb_mode_selector'><label>linked</label><br>",
+"<input name='sp-rgb_mode' value='2' type='radio' class='sp-rgb_mode_selector'><label>proportional with constraints</label>",
+"<div class='sp-rgb_constraints'>",
+"<label class='sp-rgb_constraint_label r'>R1</label><input id='r_constraint1' min='0' max='255' value='0' data-highlight='true' class='sp-x_picker sp-r_constraint1' data-type='range' type='number' disabled='disabled'>",
+"<label class='sp-rgb_constraint_label g'>G1</label><input id='g_constraint1' min='0' max='255' value='0' data-highlight='true' class='sp-x_picker sp-g_constraint1' data-type='range' type='number' disabled='disabled'>",
+"<label class='sp-rgb_constraint_label b'>B1</label><input id='b_constraint1' min='0' max='255' value='0' data-highlight='true' class='sp-x_picker sp-b_constraint1' data-type='range' type='number' disabled='disabled'>",
+"<br style='clear: both;'>",
+"<label class='sp-rgb_constraint_label r'>R2</label><input id='r_constraint2' min='0' max='255' value='255' data-highlight='true' class='sp-x_picker sp-r_constraint2' data-type='range' type='number' disabled='disabled'>",
+"<label class='sp-rgb_constraint_label g'>G2</label><input id='g_constraint2' min='0' max='255' value='255' data-highlight='true' class='sp-x_picker sp-g_constraint2' data-type='range' type='number' disabled='disabled'>",
+"<label class='sp-rgb_constraint_label b'>B2</label><input id='b_constraint2' min='0' max='255' value='255' data-highlight='true' class='sp-x_picker sp-b_constraint2' data-type='range' type='number' disabled='disabled'>",
+"</div>",
+"</fieldset>",
+
                     "</div>",
                     "<div class='sp-input-container sp-cf'>",
                         "<input class='sp-input' type='text' spellcheck='false'  />",
@@ -130,14 +195,17 @@
         ].join("");
     })();
 
-    function paletteTemplate (p, color, className, opts) {
+    function paletteTemplate(p, color, className, opts, filter) {
         var html = [];
         for (var i = 0; i < p.length; i++) {
             var current = p[i];
             if(current) {
                 var tiny = tinycolor(current);
                 var c = tiny.toHsl().l < 0.5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
-                c += (tinycolor.equals(color, current)) ? " sp-thumb-active" : "";
+
+                if (tinycolor.equals(color, current)) c += " sp-thumb-active";
+                else if (filter !== undefined && filter !== null && filter.isOn && ! tiny.inRange(filter.lowerbound, filter.upperbound)) c += " sp-thumb-inactive";
+
                 var formattedString = tiny.toString(opts.preferredFormat || "rgb");
                 var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
                 html.push('<span title="' + formattedString + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><span class="sp-thumb-inner" style="' + swatchStyle + ';" /></span>');
@@ -191,18 +259,56 @@
             dragHelperHeight = 0,
             slideHeight = 0,
             slideWidth = 0,
+
+            rsWidth = 0,
+            rSlideHelperWidth = 0,
+            gsWidth = 0,
+            gSlideHelperWidth = 0,
+            bsWidth = 0,
+            bSlideHelperWidth = 0,
+
             alphaWidth = 0,
             alphaSlideHelperWidth = 0,
             slideHelperHeight = 0,
             currentHue = 0,
             currentSaturation = 0,
             currentValue = 0,
+
+            currentR = 0,
+            currentG = 0,
+            currentB = 0,
+            currentAP = 100,
+
             currentAlpha = 1,
+
+            currentRGBMode = 0,
+            currentRC1 = 0,
+            currentGC1 = 0,
+            currentBC1 = 0,
+            currentRC2 = 255,
+            currentGC2 = 255,
+            currentBC2 = 255,
+
+            paletteFilteringStatus = 0,
+            currentRF1 = 0,
+            currentGF1 = 0,
+            currentBF1 = 0,
+            currentAF1 = 0,
+            currentRF2 = 255,
+            currentGF2 = 255,
+            currentBF2 = 255,
+            currentAF2 = 100,
+
+ draggerHueUpdateOnBW = false,
+
             palette = [],
             paletteArray = [],
             paletteLookup = {},
             selectionPalette = opts.selectionPalette.slice(0),
             maxSelectionSize = opts.maxSelectionSize,
+
+            maxPaletteRowElements = (opts.maxPaletteRowElements > 10 ? 10 : opts.maxPaletteRowElements),
+
             draggingClass = "sp-dragging",
             shiftMovementDirection = null;
 
@@ -216,9 +322,43 @@
             dragHelper = container.find(".sp-dragger"),
             slider = container.find(".sp-hue"),
             slideHelper = container.find(".sp-slider"),
+
+            rSliderInner = container.find(".sp-r_slider-inner"),
+            rSlider = container.find(".sp-r_slider"),
+            rSlideHelper = container.find(".sp-r_slider-handle"),
+            gSliderInner = container.find(".sp-g_slider-inner"),
+            gSlider = container.find(".sp-g_slider"),
+            gSlideHelper = container.find(".sp-g_slider-handle"),
+            bSliderInner = container.find(".sp-b_slider-inner"),
+            bSlider = container.find(".sp-b_slider"),
+            bSlideHelper = container.find(".sp-b_slider-handle"),
+            rPickerInput = container.find(".sp-r_picker"),
+            gPickerInput = container.find(".sp-g_picker"),
+            bPickerInput = container.find(".sp-b_picker"),
+            aPickerInput = container.find(".sp-a_picker"),
+
             alphaSliderInner = container.find(".sp-alpha-inner"),
             alphaSlider = container.find(".sp-alpha"),
             alphaSlideHelper = container.find(".sp-alpha-handle"),
+
+            rgbModes = container.find("input[name=sp-rgb_mode]"),
+            rC1Input = container.find(".sp-r_constraint1"),
+            rC2Input = container.find(".sp-r_constraint2"),
+            gC1Input = container.find(".sp-g_constraint1"),
+            gC2Input = container.find(".sp-g_constraint2"),
+            bC1Input = container.find(".sp-b_constraint1"),
+            bC2Input = container.find(".sp-b_constraint2"),
+
+            paletteFilters = container.find("input[name=sp-palette_filtering]"),
+            rF1Input = container.find(".sp-r_filter1"),
+            rF2Input = container.find(".sp-r_filter2"),
+            gF1Input = container.find(".sp-g_filter1"),
+            gF2Input = container.find(".sp-g_filter2"),
+            bF1Input = container.find(".sp-b_filter1"),
+            bF2Input = container.find(".sp-b_filter2"),
+            aF1Input = container.find(".sp-a_filter1"),
+            aF2Input = container.find(".sp-a_filter2"),
+
             textInput = container.find(".sp-input"),
             paletteContainer = container.find(".sp-palette"),
             initialColorContainer = container.find(".sp-initial"),
@@ -226,6 +366,9 @@
             clearButton = container.find(".sp-clear"),
             chooseButton = container.find(".sp-choose"),
             toggleButton = container.find(".sp-palette-toggle"),
+
+            clearFilteredPaletteButton = container.find(".sp-palette_filter-clear"),
+
             isInput = boundElement.is("input"),
             isInputTypeColor = isInput && boundElement.attr("type") === "color" && inputTypeColorSupport(),
             shouldReplace = isInput && !flat,
@@ -261,7 +404,14 @@
 
             container.toggleClass("sp-flat", flat);
             container.toggleClass("sp-input-disabled", !opts.showInput);
+
+            container.toggleClass("sp-rgb_sliders-enabled", opts.showRGBsliders);
+            container.toggleClass("sp-pickers-enabled", opts.showRGBApickers);
+
             container.toggleClass("sp-alpha-enabled", opts.showAlpha);
+
+            container.toggleClass("sp-rgb_modes-enabled", opts.showRGBmodes);
+
             container.toggleClass("sp-clear-enabled", allowEmpty);
             container.toggleClass("sp-buttons-disabled", !opts.showButtons);
             container.toggleClass("sp-palette-buttons-disabled", !opts.togglePaletteOnly);
@@ -269,6 +419,8 @@
             container.toggleClass("sp-palette-only", opts.showPaletteOnly);
             container.toggleClass("sp-initial-disabled", !opts.showInitial);
             container.addClass(opts.className).addClass(opts.containerClassName);
+
+            container.toggleClass("sp-palette-filtering-enabled", opts.paletteRGBAfiltering);
 
             reflow();
         }
@@ -280,6 +432,19 @@
             }
 
             applyOptions();
+
+            if (opts.aPickerScale != 100) {
+              opts.aPickerScale = 255;
+              currentAP = opts.aPickerScale;
+              aPickerInput.val(currentAP);
+              aPickerInput.prop("max", currentAP);
+
+              currentAF2 = opts.aPickerScale;
+              aF1Input.prop("max", currentAF2);
+              aF2Input.val(currentAF2);
+              aF2Input.prop("max", currentAF2);
+            }
+            aPickerInput.prop('disabled', !opts.showAlpha);
 
             if (shouldReplace) {
                 boundElement.after(replacer).hide();
@@ -302,9 +467,16 @@
                 appendTo.append(container);
             }
 
+
+            if (opts.showPalette && opts.maxPaletteRowElements > 0) { // resize palette container
+                    paletteContainer.css("*width", 20*maxPaletteRowElements+"px");
+                    paletteContainer.css("max-width", 20*maxPaletteRowElements+"px");
+            }
+
+
             updateSelectionPaletteFromStorage();
 
-            offsetElement.on("click.spectrum touchstart.spectrum", function (e) {
+            offsetElement.bind("click.spectrum touchstart.spectrum", function (e) {
                 if (!disabled) {
                     toggle();
                 }
@@ -323,15 +495,179 @@
             // Prevent clicks from bubbling up to document.  This would cause it to be hidden.
             container.click(stopPropagation);
 
+
+            // Handle user typed input on RGBA pickers
+            rPickerInput.change(function () { setFromPickerInput(rPickerInput, currentR); });
+            rPickerInput.bind("paste", function () {
+                setTimeout(setFromPickerInput(rPickerInput, currentR), 1);
+            });
+            rPickerInput.keydown(function (e) { if (e.keyCode == 13) { setFromPickerInput(rPickerInput, currentR); } });
+            gPickerInput.change(function () { setFromPickerInput(gPickerInput, currentG); });
+            gPickerInput.bind("paste", function () {
+                setTimeout(setFromPickerInput(gPickerInput, currentG), 1);
+            });
+            gPickerInput.keydown(function (e) { if (e.keyCode == 13) { setFromPickerInput(gPickerInput, currentG); } });
+            bPickerInput.change(function () { setFromPickerInput(bPickerInput, currentB); });
+            bPickerInput.bind("paste", function () {
+                setTimeout(setFromPickerInput(bPickerInput, currentB), 1);
+            });
+            bPickerInput.keydown(function (e) { if (e.keyCode == 13) { setFromPickerInput(bPickerInput, currentB); } });
+            aPickerInput.change(function () { setFromPickerInput(aPickerInput, currentAP, opts.aPickerScale); });
+            aPickerInput.bind("paste", function () {
+                setTimeout(setFromPickerInput(aPickerInput, currentAP, opts.aPickerScale), 1);
+            });
+            aPickerInput.keydown(function (e) { if (e.keyCode == 13) { setFromPickerInput(aPickerInput, currentAP, opts.aPickerScale); } });
+
+        rgbModes.on('change', function() {
+                if (this.value == '2') { //proportional
+                    currentRGBMode = 2;
+            }
+            else if (this.value == '1') { //linked
+                    currentRGBMode = 1;
+            }
+                else { //normal
+                    currentRGBMode = 0;
+                }
+            //(CSS) classtoggle = handles color + enable/disable+show/hide contraints BUT nothing more (constraints don't have to move here nor handles have to)
+                container.toggleClass("sp-rgb_linked", (currentRGBMode == 1));
+                container.toggleClass("sp-rgb_prop", (currentRGBMode == 2));
+                container.find("[id*=_constraint]").prop('disabled', (currentRGBMode != 2));
+                if (opts.showRGBsliders) updateRGBSlidersGradients();
+            });
+
+            // Handle user typed input on RGB constraints
+        container.find("[id*=_constraint1]").each(function () {
+        var cp_id = $(this).prop('id');
+                var cHelper = container.find(".sp-" + cp_id.charAt(0) + "_slider-constraint1");
+        if (cp_id.charAt(0) == "r") {
+                    $(this).change(function () { if ($(this).val() != currentRC1) updateConstraintLocation($(this), cHelper, rsWidth, +300 + (+currentRC2), "r1"); });
+                    $(this).bind("paste", function () {
+                    setTimeout(updateConstraintLocation($(this), cHelper, rsWidth, +300 + (+currentRC2), "r1"), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, rsWidth, +300 + (+currentRC2), "r1"); } });
+        } else if (cp_id.charAt(0) == "g") {
+                    $(this).change(function () { if ($(this).val() != currentGC1) updateConstraintLocation($(this), cHelper, gsWidth, +300 + (+currentGC2), "g1"); });
+                    $(this).bind("paste", function () {
+                    setTimeout(updateConstraintLocation($(this), cHelper, gsWidth, +300 + (+currentGC2), "g1"), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, gsWidth, +300 + (+currentGC2), "g1"); } });
+        } else {
+                    $(this).change(function () { if ($(this).val() != currentBC1) updateConstraintLocation($(this), cHelper, bsWidth, +300 + (+currentBC2), "b1"); });
+                    $(this).bind("paste", function () {
+                    setTimeout(updateConstraintLocation($(this), cHelper, bsWidth, +300 + (+currentBC2), "b1"), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, bsWidth, +300 + (+currentBC2), "b1"); } });
+        }
+        });
+        container.find("[id*=_constraint2]").each(function () {
+        var cp_id = $(this).prop('id');
+                var cHelper = container.find(".sp-" + cp_id.charAt(0) + "_slider-constraint2");
+        if (cp_id.charAt(0) == "r") {
+                    $(this).change(function () { if ($(this).val() != currentRC2) updateConstraintLocation($(this), cHelper, rsWidth, currentRC1, "r2"); });
+                    $(this).bind("paste", function () {
+                    setTimeout(updateConstraintLocation($(this), cHelper, rsWidth, currentRC1, "r2"), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, rsWidth, currentRC1, "r2"); } });
+        } else if (cp_id.charAt(0) == "g") {
+                    $(this).change(function () { if ($(this).val() != currentGC2) updateConstraintLocation($(this), cHelper, gsWidth, currentGC1, "g2"); });
+                    $(this).bind("paste", function () {
+                    setTimeout(updateConstraintLocation($(this), cHelper, gsWidth, currentGC1, "g2"), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, gsWidth, currentGC1, "g2"); } });
+        } else {
+                    $(this).change(function () { if ($(this).val() != currentBC2) updateConstraintLocation($(this), cHelper, bsWidth, currentBC1, "b2"); });
+                    $(this).bind("paste", function () {
+                    setTimeout(updateConstraintLocation($(this), cHelper, bsWidth, currentBC1, "b2"), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, bsWidth, currentBC1, "b2"); } });
+        }
+        });
+
+        container.find(".sp-rgb_modes-legend").mouseover(function () { $(this).toggleClass("sp-legend-tooltip-show", true); });
+        container.find(".sp-rgb_modes-legend").mouseout(function () { $(this).toggleClass("sp-legend-tooltip-show", false); });
+
+        paletteFilters.on('change', function() {
+            if (this.value == '1') {
+                paletteFilteringStatus = 1;
+                container.find("[id*=r_filter]").prop('disabled', false);
+                container.find("[id*=g_filter]").prop('disabled', false);
+                container.find("[id*=b_filter]").prop('disabled', false);
+                if (opts.showAlpha) container.find("[id*=a_filter]").prop('disabled', false);
+            }
+            else {
+                paletteFilteringStatus = 0;
+                container.find("[id*=_filter]").prop('disabled', true);
+            }
+            container.toggleClass("sp-palette-filters-on", (paletteFilteringStatus == 1)); // activate/deactivate palette colors filtering
+            drawPalette(); // and then re-draw palette (with/without colors filtering)
+        });
+
+        container.find("[id*=_filter1]").each(function () {
+        var cp_id = $(this).prop('id');
+        if (cp_id.charAt(0) == "r") {
+                    $(this).change(function () { updatePaletteFiltering($(this), +300 + (+currentRF2), "r1", currentRF1); });
+                $(this).bind("paste", function () {
+                    setTimeout(updatePaletteFiltering($(this), +300 + (+currentRF2), "r1", currentRF1), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), +300 + (+currentRF2), "r1", currentRF1); } });
+        } else if (cp_id.charAt(0) == "g") {
+                    $(this).change(function () { updatePaletteFiltering($(this), +300 + (+currentGF2), "g1", currentGF1); });
+                $(this).bind("paste", function () {
+                    setTimeout(updatePaletteFiltering($(this), +300 + (+currentGF2), "g1", currentGF1), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), +300 + (+currentGF2), "g1", currentGF1); } });
+        } else if (cp_id.charAt(0) == "b") {
+                    $(this).change(function () { updatePaletteFiltering($(this), +300 + (+currentBF2), "b1", currentBF1); });
+                $(this).bind("paste", function () {
+                    setTimeout(updatePaletteFiltering($(this), +300 + (+currentBF2), "b1", currentBF1), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), +300 + (+currentBF2), "b1", currentBF1); } });
+        } else {
+                    $(this).change(function () { updatePaletteFiltering($(this), +300 + (+currentAF2), "a1", currentAF1); });
+                $(this).bind("paste", function () {
+                    setTimeout(updatePaletteFiltering($(this), +300 + (+currentAF2), "a1", currentAF1), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), +300 + (+currentAF2), "a1", currentAF1); } });
+        }
+        });
+        container.find("[id*=_filter2]").each(function () {
+        var cp_id = $(this).prop('id');
+        if (cp_id.charAt(0) == "r") {
+                    $(this).change(function () { updatePaletteFiltering($(this), currentRF1, "r2", currentRF2); });
+                $(this).bind("paste", function () {
+                    setTimeout(updatePaletteFiltering($(this), currentRF1, "r2", currentRF2), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), currentRF1, "r2", currentRF2); } });
+        } else if (cp_id.charAt(0) == "g") {
+                    $(this).change(function () { updatePaletteFiltering($(this), currentGF1, "g2", currentGF2); });
+                $(this).bind("paste", function () {
+                    setTimeout(updatePaletteFiltering($(this), currentGF1, "g2", currentGF2), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), currentGF1, "g2", currentGF2); } });
+        } else if (cp_id.charAt(0) == "b") {
+                    $(this).change(function () { updatePaletteFiltering($(this), currentBF1, "b2", currentBF2); });
+                $(this).bind("paste", function () {
+                    setTimeout(updatePaletteFiltering($(this), currentBF1, "b2", currentBF2), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), currentBF1, "b2", currentBF2); } });
+        } else {
+                    $(this).change(function () { updatePaletteFiltering($(this), currentAF1, "a2", currentAF2); });
+                $(this).bind("paste", function () {
+                    setTimeout(updatePaletteFiltering($(this), currentAF1, "a2", currentAF2), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), currentAF1, "a2", currentAF2); } });
+        }
+        });
+
             // Handle user typed input
             textInput.change(setFromTextInput);
-            textInput.on("paste", function () {
+            textInput.bind("paste", function () {
                 setTimeout(setFromTextInput, 1);
             });
             textInput.keydown(function (e) { if (e.keyCode == 13) { setFromTextInput(); } });
 
             cancelButton.text(opts.cancelText);
-            cancelButton.on("click.spectrum", function (e) {
+            cancelButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
                 revert();
@@ -339,7 +675,7 @@
             });
 
             clearButton.attr("title", opts.clearText);
-            clearButton.on("click.spectrum", function (e) {
+            clearButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
                 isEmpty = true;
@@ -352,7 +688,7 @@
             });
 
             chooseButton.text(opts.chooseText);
-            chooseButton.on("click.spectrum", function (e) {
+            chooseButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
 
@@ -367,7 +703,7 @@
             });
 
             toggleButton.text(opts.showPaletteOnly ? opts.togglePaletteMoreText : opts.togglePaletteLessText);
-            toggleButton.on("click.spectrum", function (e) {
+            toggleButton.bind("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
 
@@ -384,12 +720,109 @@
                 applyOptions();
             });
 
+
+            clearFilteredPaletteButton.text(opts.clearFilteredPaletteText);
+            clearFilteredPaletteButton.bind("click.spectrum", function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+
+                clearPalette(1, true);
+            });
+
+
+            draggable(rSlider, function (dragX, dragY, e) {
+var diff = currentR;
+                currentR = (dragX / rsWidth * 255);
+                isEmpty = false;
+                if (e.shiftKey) {
+                    currentR = Math.round(currentR * 10) / 10;
+                }
+                if (!opts.showAlpha) {
+                    currentAlpha = 1;
+            currentAP = opts.aPickerScale;
+                }
+if (currentRGBMode !== 0) {
+    diff = currentR - diff;
+    if (currentRGBMode == 1) { // linked
+        currentG = (currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
+        currentB = (currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
+    } else if (currentRGBMode == 2) { // prop
+        if ((+currentR) >= (+currentRC2)) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
+        else if ((+currentR) <= (+currentRC1)) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
+        else {
+            diff = (+currentR) - (+currentRC1); currentG = (+currentGC1) + Math.round(diff * (currentGC2 - currentGC1) / (currentRC2 - currentRC1)); currentB = (+currentBC1) + Math.round(diff * (currentBC2 - currentBC1) / (currentRC2 - currentRC1));
+        }
+    }
+}
+updateHSVbyDrag();
+                move();
+            }, dragStart, dragStop);
+
+            draggable(gSlider, function (dragX, dragY, e) {
+var diff = currentG;
+                currentG = (dragX / gsWidth * 255);
+                isEmpty = false;
+                if (e.shiftKey) {
+                    currentG = Math.round(currentG * 10) / 10;
+                }
+                if (!opts.showAlpha) {
+                    currentAlpha = 1;
+            currentAP = opts.aPickerScale;
+                }
+if (currentRGBMode !== 0) {
+    diff = currentG - diff;
+    if (currentRGBMode == 1) { // linked
+        currentR = (currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
+        currentB = (currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
+    } else if (currentRGBMode == 2) { // prop
+        if ((+currentG) >= (+currentGC2)) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
+        else if ((+currentG) <= (+currentGC1)) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
+        else {
+            diff = (+currentG) - (+currentGC1); currentR = (+currentRC1) + Math.round(diff * (currentRC2 - currentRC1) / (currentGC2 - currentGC1)); currentB = (+currentBC1) + Math.round(diff * (currentBC2 - currentBC1) / (currentGC2 - currentGC1));
+        }
+    }
+}
+updateHSVbyDrag();
+                move();
+            }, dragStart, dragStop);
+
+            draggable(bSlider, function (dragX, dragY, e) {
+var diff = currentB;
+                currentB = (dragX / bsWidth * 255);
+                isEmpty = false;
+                if (e.shiftKey) {
+                    currentB = Math.round(currentB * 10) / 10;
+                }
+                if (!opts.showAlpha) {
+                    currentAlpha = 1;
+            currentAP = opts.aPickerScale;
+                }
+if (currentRGBMode !== 0) {
+    diff = currentB - diff;
+    if (currentRGBMode == 1) { // linked
+        currentR = (currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
+        currentG = (currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
+    } else if (currentRGBMode == 2) { // prop
+        if ((+currentB) >= (+currentBC2)) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
+        else if ((+currentB) <= (+currentBC1)) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
+        else {
+            diff = (+currentB) - (+currentBC1); currentR = (+currentRC1) + Math.round(diff * (currentRC2 - currentRC1) / (currentBC2 - currentBC1)); currentG = (+currentGC1) + Math.round(diff * (currentGC2 - currentGC1) / (currentBC2 - currentBC1));
+        }
+    }
+}
+updateHSVbyDrag();
+                move();
+            }, dragStart, dragStop);
+
+
             draggable(alphaSlider, function (dragX, dragY, e) {
                 currentAlpha = (dragX / alphaWidth);
                 isEmpty = false;
                 if (e.shiftKey) {
                     currentAlpha = Math.round(currentAlpha * 10) / 10;
                 }
+
+        currentAP = currentAlpha * opts.aPickerScale;
 
                 move();
             }, dragStart, dragStop);
@@ -399,8 +832,18 @@
                 isEmpty = false;
                 if (!opts.showAlpha) {
                     currentAlpha = 1;
+
+            currentAP = opts.aPickerScale;
+
                 }
+
+updateRGBbyDrag();
+draggerHueUpdateOnBW = true;
+
                 move();
+
+draggerHueUpdateOnBW = false;
+
             }, dragStart, dragStop);
 
             draggable(dragger, function (dragX, dragY, e) {
@@ -430,10 +873,14 @@
                 isEmpty = false;
                 if (!opts.showAlpha) {
                     currentAlpha = 1;
+
+            currentAP = opts.aPickerScale;
+
                 }
 
-                move();
+updateRGBbyDrag();
 
+                move();
             }, dragStart, dragStop);
 
             if (!!initialColor) {
@@ -454,31 +901,38 @@
                 show();
             }
 
-            function paletteElementClick(e) {
-                if (e.data && e.data.ignore) {
-                    set($(e.target).closest(".sp-thumb-el").data("color"));
-                    move();
-                }
-                else {
-                    set($(e.target).closest(".sp-thumb-el").data("color"));
-                    move();
 
-                    // If the picker is going to close immediately, a palette selection
-                    // is a change.  Otherwise, it's a move only.
-                    if (opts.hideAfterPaletteSelect) {
+            function updateHSVbyDrag() {
+                var new_hsv = new tinycolor({ r: currentR, g: currentG, b: currentB }).toHsv();
+                if (currentR+currentG+currentB > 0 && currentR+currentG+currentB < 765) currentHue = (new_hsv.h % 360) / 360;
+                currentSaturation = new_hsv.s;
+                currentValue = new_hsv.v;
+            }
+
+            function updateRGBbyDrag() {
+                var new_rgb = new tinycolor({ h: currentHue * 360, s: currentSaturation, v: currentValue }).toRgb();
+                currentR = new_rgb.r;
+                currentG = new_rgb.g;
+                currentB = new_rgb.b;
+            }
+
+
+            function paletteElementClick(e) {
+                var thumb_el = $(e.target).closest(".sp-thumb-el");
+                if (!(thumb_el.hasClass('sp-thumb-active') || thumb_el.hasClass('sp-thumb-inactive'))) {
+                    set(thumb_el.data("color"));
+                    move();
+                    if (!(e.data && e.data.ignore)) {
                         updateOriginalInput(true);
-                        hide();
-                    } else {
-                        updateOriginalInput();
+                        if (opts.hideAfterPaletteSelect) hide();
                     }
                 }
-
                 return false;
             }
 
             var paletteEvent = IE ? "mousedown.spectrum" : "click.spectrum touchstart.spectrum";
-            paletteContainer.on(paletteEvent, ".sp-thumb-el", paletteElementClick);
-            initialColorContainer.on(paletteEvent, ".sp-thumb-el:nth-child(1)", { ignore: true }, paletteElementClick);
+            paletteContainer.delegate(".sp-thumb-el", paletteEvent, paletteElementClick);
+            initialColorContainer.delegate(".sp-thumb-el:nth-child(1)", paletteEvent, { ignore: true }, paletteElementClick);
         }
 
         function updateSelectionPaletteFromStorage() {
@@ -508,6 +962,25 @@
             if (showSelectionPalette) {
                 var rgb = tinycolor(color).toRgbString();
                 if (!paletteLookup[rgb] && $.inArray(rgb, selectionPalette) === -1) {
+
+                    if (paletteFilteringStatus && (selectionPalette.length >= maxSelectionSize)) {
+                        var AF1 = 1, AF2 = 1;
+                        if (opts.showAlpha) {
+                            AF1 = Math.round(100*currentAF1/opts.aPickerScale)/100;
+                            AF2 = Math.round(100*currentAF2/opts.aPickerScale)/100;
+                        }
+                        var lowerbound = { r: currentRF1, g: currentGF1, b: currentBF1, a: AF1 },
+                            upperbound = { r: currentRF2, g: currentGF2, b: currentBF2, a: AF2 };
+
+                        for (var i = 0; i < selectionPalette.length; ++i) {
+                            var current_color = tinycolor(selectionPalette[i]);
+                            if (! current_color.inRange(lowerbound, upperbound)) {
+                                selectionPalette.splice(i, 1);
+                                break;
+                            }
+                        }
+                    }
+
                     selectionPalette.push(rgb);
                     while(selectionPalette.length > maxSelectionSize) {
                         selectionPalette.shift();
@@ -549,7 +1022,18 @@
             updateSelectionPaletteFromStorage();
 
             if (selectionPalette) {
-                html.push(paletteTemplate(getUniqueSelectionPalette(), currentColor, "sp-palette-row sp-palette-row-selection", opts));
+
+                var paletteFiltering = null;
+                if (paletteFilteringStatus) {
+                    var AF1 = 1, AF2 = 1;
+                    if (opts.showAlpha) {
+                        AF1 = Math.round(100*currentAF1/opts.aPickerScale)/100;
+                        AF2 = Math.round(100*currentAF2/opts.aPickerScale)/100;
+                    }
+                    paletteFiltering = {isOn: paletteFilteringStatus, lowerbound: { r: currentRF1, g: currentGF1, b: currentBF1, a: AF1 }, upperbound: { r: currentRF2, g: currentGF2, b: currentBF2, a: AF2 }};
+                }
+                html.push(paletteTemplate(getUniqueSelectionPalette(), currentColor, "sp-palette-row sp-palette-row-selection", opts, paletteFiltering));
+                
             }
 
             paletteContainer.html(html.join(""));
@@ -585,21 +1069,89 @@
 
             if ((value === null || value === "") && allowEmpty) {
                 set(null);
-                move();
-                updateOriginalInput();
+                updateOriginalInput(true);
             }
             else {
                 var tiny = tinycolor(value);
                 if (tiny.isValid()) {
+
+            if ((tiny.getFormat() == "rgb" || tiny.getFormat() == "hex") && currentRGBMode == 2) {
+            if (tiny._r > currentRC2) tiny._r = currentRC2;
+            else if (tiny._r < currentRC1) tiny._r = currentRC1;
+            if (tiny._g > currentGC2) tiny._g = currentGC2;
+            else if (tiny._g < currentGC1) tiny._g = currentGC1;
+            if (tiny._b > currentBC2) tiny._b = currentBC2;
+            else if (tiny._b < currentBC1) tiny._b = currentBC1;
+            }
+
                     set(tiny);
-                    move();
-                    updateOriginalInput();
+                    updateOriginalInput(true);
                 }
                 else {
                     textInput.addClass("sp-validation-error");
                 }
             }
         }
+
+function setFromPickerInput(pickerInput, old, mv) {
+    if (mv === undefined || mv === null) mv = 255;
+    // (I need to do this because click on pickers number input arrows doesn't immediately make contraints lose focus more about this on updateUI() )
+        if ($( document.activeElement ).prop("id").indexOf("_constraint") >= 0) $(document.activeElement).blur();
+
+        var value = pickerInput.val();
+    if (value == old) return;
+    if (value < 0) value = 0;
+    else if (value > mv) value = mv;
+
+    if (currentRGBMode !== 0 && $.isNumeric(value)) {
+        var c_id = pickerInput.prop('id').charAt(0);
+        var diff = value;
+        if (c_id == 'r') {
+            diff -= currentR;
+            if (currentRGBMode == 1) { // fixed
+                gPickerInput.val(currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
+                bPickerInput.val(currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
+            } else if (currentRGBMode == 2) { // prop
+                if ((+value) >= (+currentRC2)) { value = currentRC2; gPickerInput.val(currentGC2); bPickerInput.val(currentBC2); }
+                else if ((+value) <= (+currentRC1)) { value = currentRC1; gPickerInput.val(currentGC1); bPickerInput.val(currentBC1); }
+                else { diff = (+value) - (+currentRC1); gPickerInput.val((+currentGC1) + Math.round(diff * (currentGC2 - currentGC1) / (currentRC2 - currentRC1))); bPickerInput.val((+currentBC1) + Math.round(diff * (currentBC2 - currentBC1) / (currentRC2 - currentRC1))); }
+            }
+        } else if (c_id == 'g') {
+            diff -= currentG;
+            if (currentRGBMode == 1) { // fixed
+                rPickerInput.val(currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
+                bPickerInput.val(currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
+            } else if (currentRGBMode == 2) { // prop
+                if ((+value) >= (+currentGC2)) { value = currentGC2; rPickerInput.val(currentRC2); bPickerInput.val(currentBC2); }
+                else if ((+value) <= (+currentGC1)) { value = currentGC1; rPickerInput.val(currentRC1); bPickerInput.val(currentBC1); }
+                else { diff = (+value) - (+currentGC1); rPickerInput.val((+currentRC1) + Math.round(diff * (currentRC2 - currentRC1) / (currentGC2 - currentGC1))); bPickerInput.val((+currentBC1) + Math.round(diff * (currentBC2 - currentBC1) / (currentGC2 - currentGC1))); }
+            }
+        } else if (c_id == 'b') {
+            diff -= currentB;
+            if (currentRGBMode == 1) { // fixed
+                rPickerInput.val(currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
+                gPickerInput.val(currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
+            } else if (currentRGBMode == 2) { // prop
+                if ((+value) >= (+currentBC2)) { value = currentBC2; rPickerInput.val(currentRC2); gPickerInput.val(currentGC2); }
+                else if ((+value) <= (+currentBC1)) { value = currentBC1; rPickerInput.val(currentRC1); gPickerInput.val(currentGC1); }
+                else { diff = (+value) - (+currentBC1); rPickerInput.val((+currentRC1) + Math.round(diff * (currentRC2 - currentRC1) / (currentBC2 - currentBC1))); gPickerInput.val((+currentGC1) + Math.round(diff * (currentGC2 - currentGC1) / (currentBC2 - currentBC1))); }
+            }
+        }
+    }
+    pickerInput.val(value);
+        value = "(" + rPickerInput.val() + ", " + gPickerInput.val() + ", " + bPickerInput.val();
+
+    if (opts.showAlpha) {
+            value = "rgba" + value + ", " + Math.round(aPickerInput.val() / mv * 100)/100 + ")";
+    }
+    else {
+            value = "rgb" + value + ")";
+    }
+                var tiny = tinycolor(value);
+                if (tiny.isValid()) {
+                    set(tiny);
+                }
+}
 
         function toggle() {
             if (visible) {
@@ -627,9 +1179,9 @@
             hideAll();
             visible = true;
 
-            $(doc).on("keydown.spectrum", onkeydown);
-            $(doc).on("click.spectrum", clickout);
-            $(window).on("resize.spectrum", resize);
+            $(doc).bind("keydown.spectrum", onkeydown);
+            $(doc).bind("click.spectrum", clickout);
+            $(window).bind("resize.spectrum", resize);
             replacer.addClass("sp-active");
             container.removeClass("sp-hidden");
 
@@ -651,6 +1203,10 @@
         }
 
         function clickout(e) {
+
+        // (I already explained why I need this on updateUI() )
+            if ($( document.activeElement ).prop("id").indexOf("_constraint") >= 0) $( document.activeElement ).trigger( "change" );
+
             // Return on right click.
             if (e.button == 2) { return; }
 
@@ -672,9 +1228,9 @@
             if (!visible || flat) { return; }
             visible = false;
 
-            $(doc).off("keydown.spectrum", onkeydown);
-            $(doc).off("click.spectrum", clickout);
-            $(window).off("resize.spectrum", resize);
+            $(doc).unbind("keydown.spectrum", onkeydown);
+            $(doc).unbind("click.spectrum", clickout);
+            $(window).unbind("resize.spectrum", resize);
 
             replacer.removeClass("sp-active");
             container.addClass("sp-hidden");
@@ -685,7 +1241,6 @@
 
         function revert() {
             set(colorOnShow, true);
-            updateOriginalInput(true);
         }
 
         function set(color, ignoreFormatChange) {
@@ -704,7 +1259,12 @@
                 newColor = tinycolor(color);
                 newHsv = newColor.toHsv();
 
-                currentHue = (newHsv.h % 360) / 360;
+                currentR = newColor._r;
+                currentG = newColor._g;
+                currentB = newColor._b;
+                currentAP = newHsv.a * opts.aPickerScale;
+
+                if (currentR+currentG+currentB > 0 && currentR+currentG+currentB < 765) currentHue = (newHsv.h % 360) / 360;
                 currentSaturation = newHsv.s;
                 currentValue = newHsv.v;
                 currentAlpha = newHsv.a;
@@ -727,7 +1287,7 @@
                 h: currentHue,
                 s: currentSaturation,
                 v: currentValue,
-                a: Math.round(currentAlpha * 1000) / 1000
+                a: Math.round(currentAlpha * 100) / 100
             }, { format: opts.format || currentPreferredFormat });
         }
 
@@ -746,11 +1306,21 @@
 
             textInput.removeClass("sp-validation-error");
 
+// need to manually trigger contraints update if I moved from one contraints input to a dragger or arrows of a picker number input (because constraint input doesn't lose its focus)
+            if ($( document.activeElement ).prop("id") !== undefined && ($( document.activeElement ).prop("id").indexOf("_constraint") >= 0 || $( document.activeElement ).prop("id").indexOf("_picker") >= 0 )) $(document.activeElement).blur(); //second line for picker updating when passing to rgb sliders without hitting enter
+
             updateHelperLocations();
+
+            var realColor = get({ format: format }),
+                displayColor = '';
+
+if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(true) == "fff")) { // only update when not black|white : this should prevent square to always drop back to red even when sliding/picking from green, blue, etc. (BUT forced to ALWAYS update after Hue slider drag)
 
             // Update dragger background color (gradients take care of saturation and value).
             var flatColor = tinycolor.fromRatio({ h: currentHue, s: 1, v: 1 });
             dragger.css("background-color", flatColor.toHexString());
+
+}
 
             // Get a format that alpha will be included in (hex and names ignore alpha)
             var format = currentPreferredFormat;
@@ -760,8 +1330,6 @@
                 }
             }
 
-            var realColor = get({ format: format }),
-                displayColor = '';
 
              //reset background info for preview element
             previewElement.removeClass("sp-clear-display");
@@ -784,8 +1352,23 @@
                     previewElement.css("filter", realColor.toFilter());
                 }
 
-                if (opts.showAlpha) {
+                if (opts.showRGBsliders) {
+                    updateRGBSlidersGradients(realHex);
+                }
+
+            if (opts.showRGBApickers || opts.showAlpha) {
                     var rgb = realColor.toRgb();
+
+                if (opts.showRGBApickers) {
+                    rPickerInput.val(rgb.r);
+                    gPickerInput.val(rgb.g);
+                    bPickerInput.val(rgb.b);
+                }
+
+                if (opts.showAlpha) {
+
+                    if (opts.showRGBApickers) aPickerInput.val(Math.round(rgb.a * opts.aPickerScale));
+
                     rgb.a = 0;
                     var realAlpha = tinycolor(rgb).toRgbString();
                     var gradient = "linear-gradient(left, " + realAlpha + ", " + realHex + ")";
@@ -802,6 +1385,7 @@
                             "linear-gradient(to right, " + realAlpha + ", " + realHex + ")");
                     }
                 }
+            }
 
                 displayColor = realColor.toString(format);
             }
@@ -818,18 +1402,94 @@
             drawInitial();
         }
 
+        function updateRGBSlidersGradients(realHex) { //### IE gradient-filters ok ??
+            if (realHex === undefined || realHex === null) realHex = get().toHexString();
+            var g_left = "linear-gradient(left,", gradientR = " ", gradientG = " ", gradientB = " ";
+            if (currentRGBMode == 2) {
+            if (IE) { gradientR = gradientG = gradientB = tinycolor({ r: currentRC1, g: currentGC1, b: currentBC1 }).toFilter({ gradientType: false }, tinycolor({ r: currentRC2, g: currentGC2, b: currentBC2 })); }
+            else { gradientR = gradientG = gradientB += "rgb("+currentRC1+","+currentGC1+","+currentBC1+"),rgb("+currentRC2+","+currentGC2+","+currentBC2+")"; }
+            } else if (currentRGBMode == 1) {
+            if (IE) {
+                gradientR = tinycolor({ r: 0, g: Math.max(0, (+currentG) - (+currentR)), b: Math.max(0, (+currentB) - (+currentR)) }).toFilter({ gradientType: false }, tinycolor({ r: 255, g: Math.min(255, 255 + (+currentG) - (+currentR)), b: Math.min(255, 255 + (+currentB) - (+currentR)) }));
+                gradientG = tinycolor({ r: Math.max(0, (+currentR) - (+currentG)), g: 0, b: Math.max(0, (+currentB) - (+currentG)) }).toFilter({ gradientType: false }, tinycolor({ r: Math.min(255, 255 + (+currentR) - (+currentG)), g: 255, b: Math.min(255, 255 + (+currentB) - (+currentG)) }));
+                gradientB = tinycolor({ r: Math.max(0, (+currentR) - (+currentB)), g: Math.max(0, (+currentG) - (+currentB)), b: 0 }).toFilter({ gradientType: false }, tinycolor({ r: Math.min(255, 255 + (+currentR) - (+currentB)), g: Math.min(255, 255 + (+currentG) - (+currentB)), b: 255 }));
+            }
+            else {
+                gradientR += "rgb(0,"+Math.max(0, (+currentG) - (+currentR))+","+Math.max(0, (+currentB) - (+currentR))+"),rgb(255,"+Math.min(255, 255 + (+currentG) - (+currentR))+","+Math.min(255, 255 + (+currentB) - (+currentR))+")";
+                gradientG += "rgb("+Math.max(0, (+currentR) - (+currentG))+",0,"+Math.max(0, (+currentB) - (+currentG))+"),rgb("+Math.min(255, 255 + (+currentR) - (+currentG))+",255,"+Math.min(255, 255 + (+currentB) - (+currentG))+")";
+                gradientB += "rgb("+Math.max(0, (+currentR) - (+currentB))+","+Math.max(0, (+currentG) - (+currentB))+",0),rgb("+Math.min(255, 255 + (+currentR) - (+currentB))+","+Math.min(255, 255 + (+currentG) - (+currentB))+",255)";
+            }
+            } else {
+            if (IE) {
+                gradientR = tinycolor(realHex.replaceAt(1, "00")).toFilter({ gradientType: false }, realHex.replaceAt(1, "ff"));
+                gradientG = tinycolor(realHex.replaceAt(3, "00")).toFilter({ gradientType: false }, realHex.replaceAt(3, "ff"));
+                gradientB = tinycolor(realHex.replaceAt(5, "00")).toFilter({ gradientType: false }, realHex.replaceAt(5, "ff"));
+            }
+            else {
+                gradientR += realHex.replaceAt(1, "00") + "," + realHex.replaceAt(1, "ff");
+                gradientG += realHex.replaceAt(3, "00") + "," + realHex.replaceAt(3, "ff");
+                gradientB += realHex.replaceAt(5, "00") + "," + realHex.replaceAt(5, "ff");
+            }
+            }
+                    if (IE) {
+                        rSliderInner.css("filter", gradientR);
+                    }
+                    else {
+                gradientR += ")";
+                        rSliderInner.css("background", "-webkit-" + g_left + gradientR);
+                        rSliderInner.css("background", "-moz-" + g_left + gradientR);
+                        rSliderInner.css("background", "-ms-" + g_left + gradientR);
+                        // Use current syntax gradient on unprefixed property.
+                        rSliderInner.css("background", "linear-gradient(to right," + gradientR);
+                    }
+
+                    if (IE) {
+                        gSliderInner.css("filter", gradientG);
+                    }
+                    else {
+                gradientG += ")";
+                        gSliderInner.css("background", "-webkit-" + g_left + gradientG);
+                        gSliderInner.css("background", "-moz-" + g_left + gradientG);
+                        gSliderInner.css("background", "-ms-" + g_left + gradientG);
+                        // Use current syntax gradient on unprefixed property.
+                        gSliderInner.css("background", "linear-gradient(to right, " + gradientG);
+                    }
+
+                    if (IE) {
+                        bSliderInner.css("filter", gradientB);
+                    }
+                    else {
+                gradientB += ")";
+                        bSliderInner.css("background", "-webkit-" + g_left + gradientB);
+                        bSliderInner.css("background", "-moz-" + g_left + gradientB);
+                        bSliderInner.css("background", "-ms-" + g_left + gradientB);
+                        // Use current syntax gradient on unprefixed property.
+                        bSliderInner.css("background", "linear-gradient(to right, " + gradientB);
+                    }
+        }
+
         function updateHelperLocations() {
             var s = currentSaturation;
             var v = currentValue;
 
             if(allowEmpty && isEmpty) {
                 //if selected color is empty, hide the helpers
+
+                rSlideHelper.hide();
+                gSlideHelper.hide();
+                bSlideHelper.hide();
+
                 alphaSlideHelper.hide();
                 slideHelper.hide();
                 dragHelper.hide();
             }
             else {
                 //make sure helpers are visible
+
+                rSlideHelper.show();
+                gSlideHelper.show();
+                bSlideHelper.show();
+
                 alphaSlideHelper.show();
                 slideHelper.show();
                 dragHelper.show();
@@ -850,6 +1510,21 @@
                     "left": dragX + "px"
                 });
 
+
+                var rsX = Math.round(currentR * rsWidth / 255);
+                rSlideHelper.css({
+                    "left": (rsX - (rSlideHelperWidth / 2)) + "px"
+                });
+                var gsX = Math.round(currentG * gsWidth / 255);
+                gSlideHelper.css({
+                    "left": (gsX - (gSlideHelperWidth / 2)) + "px"
+                });
+                var bsX = Math.round(currentB * bsWidth / 255);
+                bSlideHelper.css({
+                    "left": (bsX - (bSlideHelperWidth / 2)) + "px"
+                });
+
+
                 var alphaX = currentAlpha * alphaWidth;
                 alphaSlideHelper.css({
                     "left": (alphaX - (alphaSlideHelperWidth / 2)) + "px"
@@ -860,6 +1535,140 @@
                 slideHelper.css({
                     "top": (slideY - slideHelperHeight) + "px"
                 });
+            }
+        }
+
+
+        function updateConstraintLocation(pickerInput, cHelper, sWidth, mv, cp_id) {
+            var value = pickerInput.val();
+        if (value < 0) value = 0;
+        else if (value > 255) value = 255;
+
+        if (value >= 0 && value <= 255) {
+            if (mv < 300) { // C2, mv=C1
+                if ((+value) < (+mv)) value = mv;
+            } else { // C1, mv=C2
+                if ((+value) > (+mv) - 300) value = (+mv) - 300;
+            }
+            pickerInput.val(value);
+                    cHelper.css({
+                        "left": (Math.round(value * sWidth / 255) - (mv < 300 ? 1 : 2)) + "px"
+                    });
+
+            switch (cp_id) {
+                case "r1":
+                    currentRC1 = value;
+                break;
+                case "g1":
+                    currentGC1 = value;
+                break;
+                case "b1":
+                    currentBC1 = value;
+                break;
+                case "r2":
+                    currentRC2 = value;
+                break;
+                case "g2":
+                    currentGC2 = value;
+                break;
+                case "b2":
+                    currentBC2 = value;
+                break;
+            }
+            if (opts.showRGBsliders) updateRGBSlidersGradients();
+        }
+        }
+
+        function updatePaletteFiltering(pickerInput, mv, cp_id, old) {
+            var value = pickerInput.val();
+            if (value == old) return;
+            if (value < 0) value = 0;
+            else if (value > 255) value = 255;
+
+            if (value >= 0 && value <= 255) {
+             if (mv < 300) { // F2, mv=F1
+                 if ((+value) < (+mv)) value = mv;
+            } else { // F1, mv=f2
+                 if ((+value) > (+mv) - 300) value = (+mv) - 300;
+            }
+
+            switch (cp_id) {
+                case "r1":
+                    currentRF1 = value;
+                break;
+                case "g1":
+                    currentGF1 = value;
+                break;
+                case "b1":
+                    currentBF1 = value;
+                break;
+                case "a1":
+                    currentAF1 = value;
+                break;
+                case "r2":
+                    currentRF2 = value;
+                break;
+                case "g2":
+                    currentGF2 = value;
+                break;
+                case "b2":
+                    currentBF2 = value;
+                break;
+                case "a2":
+                    if ((+value) > +opts.aPickerScale) value = opts.aPickerScale;
+                    currentAF2 = value;
+                break;
+            }
+            pickerInput.val(value);
+            drawPalette(); // update palette with colors filtering
+        }
+        }
+
+        function clearPalette(target, exposeCurrent) { // target color(s) to remove : 0 = current only, 1 = unfiltered (may or not preserve current), 2 = all (may or not preserve current)
+            if (showSelectionPalette && ((target === 0 && exposeCurrent === true) || (target == 1 && paletteFilteringStatus) || (target == 2))) {
+                var color, i;
+                if (! exposeCurrent || target === 0) color = get();
+                switch (target) {
+                    case 0: // I know exposeCurrent is always true in this case
+                        i = selectionPalette.indexOf(tinycolor(color).toRgbString());
+                        if (i >= 0) selectionPalette.splice(i, 1);
+                    break;
+
+                    case 1: // I know paletteFilteringStatus is always on in this case
+                        var AF1 = 1, AF2 = 1;
+                        if (opts.showAlpha) {
+                            AF1 = Math.round(100*currentAF1/opts.aPickerScale)/100;
+                            AF2 = Math.round(100*currentAF2/opts.aPickerScale)/100;
+                        }
+                        var lowerbound = { r: currentRF1, g: currentGF1, b: currentBF1, a: AF1 },
+                            upperbound = { r: currentRF2, g: currentGF2, b: currentBF2, a: AF2 };
+
+                        for (i = selectionPalette.length-1; i>=0; i--) {
+                            var current_tiny = tinycolor(selectionPalette[i]);
+                            if (! current_tiny.inRange(lowerbound, upperbound)) if (exposeCurrent || ! tinycolor.equals(color, selectionPalette[i])) selectionPalette.splice(i, 1);
+                        }
+                    break;
+
+                    case 2:
+                        var preserveCurrent = false;
+                        var current;
+                        if (! exposeCurrent) {
+                            current = tinycolor(color).toRgbString();
+                            if (selectionPalette.indexOf(current) >= 0) preserveCurrent = true;
+                        }
+                        selectionPalette = [];
+                        if (preserveCurrent) selectionPalette.push(current);
+                    break;
+                }
+
+                if (localStorageKey && window.localStorage) {
+                    try {
+                        window.localStorage[localStorageKey] = selectionPalette.join(";");
+                    }
+                    catch(e) { }
+                }
+
+                drawPalette();
             }
         }
 
@@ -894,6 +1703,14 @@
             slideWidth = slider.width();
             slideHeight = slider.height();
             slideHelperHeight = slideHelper.height();
+
+            rsWidth = rSlider.width();
+            rSlideHelperWidth = rSlideHelper.width();
+            gsWidth = gSlider.width();
+            gSlideHelperWidth = gSlideHelper.width();
+            bsWidth = bSlider.width();
+            bSlideHelperWidth = bSlideHelper.width();
+
             alphaWidth = alphaSlider.width();
             alphaSlideHelperWidth = alphaSlideHelper.width();
 
@@ -917,7 +1734,7 @@
 
         function destroy() {
             boundElement.show();
-            offsetElement.off("click.spectrum touchstart.spectrum");
+            offsetElement.unbind("click.spectrum touchstart.spectrum");
             container.remove();
             replacer.remove();
             spectrums[spect.id] = null;
@@ -996,27 +1813,17 @@
         var viewWidth = docElem.clientWidth + $(doc).scrollLeft();
         var viewHeight = docElem.clientHeight + $(doc).scrollTop();
         var offset = input.offset();
-        var offsetLeft = offset.left;
-        var offsetTop = offset.top;
+        offset.top += inputHeight;
 
-        offsetTop += inputHeight;
+        offset.left -=
+            Math.min(offset.left, (offset.left + dpWidth > viewWidth && viewWidth > dpWidth) ?
+            Math.abs(offset.left + dpWidth - viewWidth) : 0);
 
-        offsetLeft -=
-            Math.min(offsetLeft, (offsetLeft + dpWidth > viewWidth && viewWidth > dpWidth) ?
-            Math.abs(offsetLeft + dpWidth - viewWidth) : 0);
-
-        offsetTop -=
-            Math.min(offsetTop, ((offsetTop + dpHeight > viewHeight && viewHeight > dpHeight) ?
+        offset.top -=
+            Math.min(offset.top, ((offset.top + dpHeight > viewHeight && viewHeight > dpHeight) ?
             Math.abs(dpHeight + inputHeight - extraY) : extraY));
 
-        return {
-            top: offsetTop,
-            bottom: offset.bottom,
-            left: offsetLeft,
-            right: offset.right,
-            width: offset.width,
-            height: offset.height
-        };
+        return offset;
     }
 
     /**
@@ -1109,7 +1916,7 @@
                     maxWidth = $(element).width();
                     offset = $(element).offset();
 
-                    $(doc).on(duringDragEvents);
+                    $(doc).bind(duringDragEvents);
                     $(doc.body).addClass("sp-dragging");
 
                     move(e);
@@ -1121,7 +1928,7 @@
 
         function stop() {
             if (dragging) {
-                $(doc).off(duringDragEvents);
+                $(doc).unbind(duringDragEvents);
                 $(doc.body).removeClass("sp-dragging");
 
                 // Wait a tick before notifying observers to allow the click event
@@ -1133,7 +1940,7 @@
             dragging = false;
         }
 
-        $(element).on("touchstart mousedown", start);
+        $(element).bind("touchstart mousedown", start);
     }
 
     function throttle(func, wait, debounce) {
@@ -1196,7 +2003,7 @@
 
         // Initializing a new instance of spectrum
         return this.spectrum("destroy").each(function () {
-            var options = $.extend({}, $(this).data(), opts);
+            var options = $.extend({}, opts, $(this).data());
             var spect = spectrum(this, options);
             $(this).data(dataID, spect.id);
         });
@@ -1262,7 +2069,7 @@
         this._g = rgb.g,
         this._b = rgb.b,
         this._a = rgb.a,
-        this._roundA = mathRound(1000 * this._a) / 1000,
+        this._roundA = mathRound(100*this._a) / 100,
         this._format = opts.format || rgb.format;
         this._gradientType = opts.gradientType;
 
@@ -1303,7 +2110,7 @@
         },
         setAlpha: function(value) {
             this._a = boundAlpha(value);
-            this._roundA = mathRound(1000 * this._a) / 1000;
+            this._roundA = mathRound(100*this._a) / 100;
             return this;
         },
         toHsv: function() {
@@ -1421,6 +2228,10 @@
             }
 
             return formattedString || this.toHexString();
+        },
+
+        inRange: function(color1, color2) {
+            return inRange(this, color1, color2);
         },
 
         _applyModification: function(fn, args) {
@@ -1740,6 +2551,15 @@
         if (!color1 || !color2) { return false; }
         return tinycolor(color1).toRgbString() == tinycolor(color2).toRgbString();
     };
+
+    function inRange(color, lowerbound_color, upperbound_color) {
+        if (lowerbound_color !== undefined && lowerbound_color !== null && typeof lowerbound_color == "object" && lowerbound_color.hasOwnProperty("r") && lowerbound_color.hasOwnProperty("g") && lowerbound_color.hasOwnProperty("b") && lowerbound_color.hasOwnProperty("a"))
+            if ( +lowerbound_color.r > +color._r || +lowerbound_color.g > +color._g || +lowerbound_color.b > +color._b || +lowerbound_color.a > +color._roundA) return false;
+        if (upperbound_color !== undefined && upperbound_color !== null && typeof upperbound_color == "object" && upperbound_color.hasOwnProperty("r") && upperbound_color.hasOwnProperty("g") && upperbound_color.hasOwnProperty("b") && upperbound_color.hasOwnProperty("a"))
+            if ( +upperbound_color.r < +color._r || +upperbound_color.g < +color._g || +upperbound_color.b < +color._b || +upperbound_color.a < +color._roundA) return false;
+        return true;
+    }
+
     tinycolor.random = function() {
         return tinycolor.fromRatio({
             r: mathRandom(),
