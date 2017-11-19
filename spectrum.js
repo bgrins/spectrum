@@ -1093,7 +1093,8 @@ updateRGBbyDrag();
             }
         }
 
-function setFromPickerInput(pickerInput, old, mv=255) {
+function setFromPickerInput(pickerInput, old, mv) {
+	if (mv === undefined) mv = 255;
 	// (I need to do this because click on pickers number input arrows doesn't immediately make contraints lose focus more about this on updateUI() )
         if ($( document.activeElement ).prop("id").indexOf("_constraint") >= 0) $(document.activeElement).blur();
 
@@ -1306,7 +1307,7 @@ function setFromPickerInput(pickerInput, old, mv=255) {
             textInput.removeClass("sp-validation-error");
 
 // need to manually trigger contraints update if I moved from one contraints input to a dragger or arrows of a picker number input (because constraint input doesn't lose its focus)
-            if ($( document.activeElement ).prop("id").indexOf("_constraint") >= 0
+            if ($( document.activeElement ).prop("id") !== undefined && ($( document.activeElement ).prop("id").indexOf("_constraint") >= 0
              || $( document.activeElement ).prop("id").indexOf("_picker") >= 0 ) $(document.activeElement).blur(); //second line for picker updating when passing to rgb sliders without hitting enter
 
             updateHelperLocations();
@@ -1400,7 +1401,8 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
             drawInitial();
         }
 
-        function updateRGBSlidersGradients(realHex = get().toHexString()) { //### IE gradient-filters ok ??
+        function updateRGBSlidersGradients(realHex) { //### IE gradient-filters ok ??
+            if (realHex === undefined) realHex = get().toHexString();
             var g_left = "linear-gradient(left,", gradientR = " ", gradientG = " ", gradientB = " ";
             if (currentRGBMode == 2) {
             if (IE) { gradientR = gradientG = gradientB = tinycolor({ r: currentRC1, g: currentGC1, b: currentBC1 }).toFilter({ gradientType: false }, tinycolor({ r: currentRC2, g: currentGC2, b: currentBC2 })); }
