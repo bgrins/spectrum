@@ -540,23 +540,23 @@
         var cp_id = $(this).prop('id');
                 var cHelper = container.find(".sp-" + cp_id.charAt(0) + "_slider-constraint1");
         if (cp_id.charAt(0) == "r") {
-                    $(this).change(function () { if ($(this).val() != currentRC1) updateConstraintLocation($(this), cHelper, rsWidth, +300 + +currentRC2, "r1"); });
+                    $(this).change(function () { if ($(this).val() != currentRC1) updateConstraintLocation($(this), cHelper, rsWidth, +300 + (+currentRC2), "r1"); });
                     $(this).bind("paste", function () {
-                    setTimeout(updateConstraintLocation($(this), cHelper, rsWidth, +300 + +currentRC2, "r1"), 1);
+                    setTimeout(updateConstraintLocation($(this), cHelper, rsWidth, +300 + (+currentRC2), "r1"), 1);
                 });
-                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, rsWidth, +300 + +currentRC2, "r1"); } });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, rsWidth, +300 + (+currentRC2), "r1"); } });
         } else if (cp_id.charAt(0) == "g") {
-                    $(this).change(function () { if ($(this).val() != currentGC1) updateConstraintLocation($(this), cHelper, gsWidth, +300 + +currentGC2, "g1"); });
+                    $(this).change(function () { if ($(this).val() != currentGC1) updateConstraintLocation($(this), cHelper, gsWidth, +300 + (+currentGC2), "g1"); });
                     $(this).bind("paste", function () {
-                    setTimeout(updateConstraintLocation($(this), cHelper, gsWidth, +300 + +currentGC2, "g1"), 1);
+                    setTimeout(updateConstraintLocation($(this), cHelper, gsWidth, +300 + (+currentGC2), "g1"), 1);
                 });
-                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, gsWidth, +300 + +currentGC2, "g1"); } });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, gsWidth, +300 + (+currentGC2), "g1"); } });
         } else {
-                    $(this).change(function () { if ($(this).val() != currentBC1) updateConstraintLocation($(this), cHelper, bsWidth, +300 + +currentBC2, "b1"); });
+                    $(this).change(function () { if ($(this).val() != currentBC1) updateConstraintLocation($(this), cHelper, bsWidth, +300 + (+currentBC2), "b1"); });
                     $(this).bind("paste", function () {
-                    setTimeout(updateConstraintLocation($(this), cHelper, bsWidth, +300 + +currentBC2, "b1"), 1);
+                    setTimeout(updateConstraintLocation($(this), cHelper, bsWidth, +300 + (+currentBC2), "b1"), 1);
                 });
-                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, bsWidth, +300 + +currentBC2, "b1"); } });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, bsWidth, +300 + (+currentBC2), "b1"); } });
         }
         });
         container.find("[id*=_constraint2]").each(function () {
@@ -605,29 +605,29 @@
         container.find("[id*=_filter1]").each(function () {
         var cp_id = $(this).prop('id');
         if (cp_id.charAt(0) == "r") {
-                    $(this).change(function () { updatePaletteFiltering($(this), +300 + +currentRF2, "r1", currentRF1); });
+                    $(this).change(function () { updatePaletteFiltering($(this), +300 + (+currentRF2), "r1", currentRF1); });
                 $(this).bind("paste", function () {
-                    setTimeout(updatePaletteFiltering($(this), +300 + +currentRF2, "r1", currentRF1), 1);
+                    setTimeout(updatePaletteFiltering($(this), +300 + (+currentRF2), "r1", currentRF1), 1);
                 });
-                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), +300 + +currentRF2, "r1", currentRF1); } });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), +300 + (+currentRF2), "r1", currentRF1); } });
         } else if (cp_id.charAt(0) == "g") {
-                    $(this).change(function () { updatePaletteFiltering($(this), +300 + +currentGF2, "g1", currentGF1); });
+                    $(this).change(function () { updatePaletteFiltering($(this), +300 + (+currentGF2), "g1", currentGF1); });
                 $(this).bind("paste", function () {
-                    setTimeout(updatePaletteFiltering($(this), +300 + +currentGF2, "g1", currentGF1), 1);
+                    setTimeout(updatePaletteFiltering($(this), +300 + (+currentGF2), "g1", currentGF1), 1);
                 });
-                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), +300 + +currentGF2, "g1", currentGF1); } });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), +300 + (+currentGF2), "g1", currentGF1); } });
         } else if (cp_id.charAt(0) == "b") {
-                    $(this).change(function () { updatePaletteFiltering($(this), +300 + +currentBF2, "b1", currentBF1); });
+                    $(this).change(function () { updatePaletteFiltering($(this), +300 + (+currentBF2), "b1", currentBF1); });
                 $(this).bind("paste", function () {
-                    setTimeout(updatePaletteFiltering($(this), +300 + +currentBF2, "b1", currentBF1), 1);
+                    setTimeout(updatePaletteFiltering($(this), +300 + (+currentBF2), "b1", currentBF1), 1);
                 });
-                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), +300 + +currentBF2, "b1", currentBF1); } });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), +300 + (+currentBF2), "b1", currentBF1); } });
         } else {
-                    $(this).change(function () { updatePaletteFiltering($(this), +300 + +currentAF2, "a1", currentAF1); });
+                    $(this).change(function () { updatePaletteFiltering($(this), +300 + (+currentAF2), "a1", currentAF1); });
                 $(this).bind("paste", function () {
-                    setTimeout(updatePaletteFiltering($(this), +300 + +currentAF2, "a1", currentAF1), 1);
+                    setTimeout(updatePaletteFiltering($(this), +300 + (+currentAF2), "a1", currentAF1), 1);
                 });
-                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), +300 + +currentAF2, "a1", currentAF1); } });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updatePaletteFiltering($(this), +300 + (+currentAF2), "a1", currentAF1); } });
         }
         });
         container.find("[id*=_filter2]").each(function () {
@@ -747,10 +747,10 @@ if (currentRGBMode !== 0) {
         currentG = (currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
         currentB = (currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
     } else if (currentRGBMode == 2) { // prop
-        if (+currentR >= +currentRC2) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
-        else if (+currentR <= +currentRC1) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
+        if ((+currentR) >= (+currentRC2)) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
+        else if ((+currentR) <= (+currentRC1)) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
         else {
-            diff = +currentR - +currentRC1; currentG = +currentGC1 + Math.round(diff * (currentGC2 - currentGC1) / (currentRC2 - currentRC1)); currentB = +currentBC1 + Math.round(diff * (currentBC2 - currentBC1) / (currentRC2 - currentRC1));
+            diff = (+currentR) - (+currentRC1); currentG = (+currentGC1) + Math.round(diff * (currentGC2 - currentGC1) / (currentRC2 - currentRC1)); currentB = (+currentBC1) + Math.round(diff * (currentBC2 - currentBC1) / (currentRC2 - currentRC1));
         }
     }
 }
@@ -775,10 +775,10 @@ if (currentRGBMode !== 0) {
         currentR = (currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
         currentB = (currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
     } else if (currentRGBMode == 2) { // prop
-        if (+currentG >= +currentGC2) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
-        else if (+currentG <= +currentGC1) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
+        if ((+currentG) >= (+currentGC2)) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
+        else if ((+currentG) <= (+currentGC1)) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
         else {
-            diff = +currentG - +currentGC1; currentR = +currentRC1 + Math.round(diff * (currentRC2 - currentRC1) / (currentGC2 - currentGC1)); currentB = +currentBC1 + Math.round(diff * (currentBC2 - currentBC1) / (currentGC2 - currentGC1));
+            diff = (+currentG) - (+currentGC1); currentR = (+currentRC1) + Math.round(diff * (currentRC2 - currentRC1) / (currentGC2 - currentGC1)); currentB = (+currentBC1) + Math.round(diff * (currentBC2 - currentBC1) / (currentGC2 - currentGC1));
         }
     }
 }
@@ -803,10 +803,10 @@ if (currentRGBMode !== 0) {
         currentR = (currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
         currentG = (currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
     } else if (currentRGBMode == 2) { // prop
-        if (+currentB >= +currentBC2) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
-        else if (+currentB <= +currentBC1) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
+        if ((+currentB) >= (+currentBC2)) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
+        else if ((+currentB) <= (+currentBC1)) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
         else {
-            diff = +currentB - +currentBC1; currentR = +currentRC1 + Math.round(diff * (currentRC2 - currentRC1) / (currentBC2 - currentBC1)); currentG = +currentGC1 + Math.round(diff * (currentGC2 - currentGC1) / (currentBC2 - currentBC1));
+            diff = (+currentB) - (+currentBC1); currentR = (+currentRC1) + Math.round(diff * (currentRC2 - currentRC1) / (currentBC2 - currentBC1)); currentG = (+currentGC1) + Math.round(diff * (currentGC2 - currentGC1) / (currentBC2 - currentBC1));
         }
     }
 }
@@ -1112,9 +1112,9 @@ function setFromPickerInput(pickerInput, old, mv) {
                 gPickerInput.val(currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
                 bPickerInput.val(currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
             } else if (currentRGBMode == 2) { // prop
-                if (+value >= +currentRC2) { value = currentRC2; gPickerInput.val(currentGC2); bPickerInput.val(currentBC2); }
-                else if (+value <= +currentRC1) { value = currentRC1; gPickerInput.val(currentGC1); bPickerInput.val(currentBC1); }
-                else { diff = +value - +currentRC1; gPickerInput.val(+currentGC1 + Math.round(diff * (currentGC2 - currentGC1) / (currentRC2 - currentRC1))); bPickerInput.val(+currentBC1 + Math.round(diff * (currentBC2 - currentBC1) / (currentRC2 - currentRC1))); }
+                if ((+value) >= (+currentRC2)) { value = currentRC2; gPickerInput.val(currentGC2); bPickerInput.val(currentBC2); }
+                else if ((+value) <= (+currentRC1)) { value = currentRC1; gPickerInput.val(currentGC1); bPickerInput.val(currentBC1); }
+                else { diff = (+value) - (+currentRC1); gPickerInput.val((+currentGC1) + Math.round(diff * (currentGC2 - currentGC1) / (currentRC2 - currentRC1))); bPickerInput.val((+currentBC1) + Math.round(diff * (currentBC2 - currentBC1) / (currentRC2 - currentRC1))); }
             }
         } else if (c_id == 'g') {
             diff -= currentG;
@@ -1122,9 +1122,9 @@ function setFromPickerInput(pickerInput, old, mv) {
                 rPickerInput.val(currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
                 bPickerInput.val(currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
             } else if (currentRGBMode == 2) { // prop
-                if (+value >= +currentGC2) { value = currentGC2; rPickerInput.val(currentRC2); bPickerInput.val(currentBC2); }
-                else if (+value <= +currentGC1) { value = currentGC1; rPickerInput.val(currentRC1); bPickerInput.val(currentBC1); }
-                else { diff = +value - +currentGC1; rPickerInput.val(+currentRC1 + Math.round(diff * (currentRC2 - currentRC1) / (currentGC2 - currentGC1))); bPickerInput.val(+currentBC1 + Math.round(diff * (currentBC2 - currentBC1) / (currentGC2 - currentGC1))); }
+                if ((+value) >= (+currentGC2)) { value = currentGC2; rPickerInput.val(currentRC2); bPickerInput.val(currentBC2); }
+                else if ((+value) <= (+currentGC1)) { value = currentGC1; rPickerInput.val(currentRC1); bPickerInput.val(currentBC1); }
+                else { diff = (+value) - (+currentGC1); rPickerInput.val((+currentRC1) + Math.round(diff * (currentRC2 - currentRC1) / (currentGC2 - currentGC1))); bPickerInput.val((+currentBC1) + Math.round(diff * (currentBC2 - currentBC1) / (currentGC2 - currentGC1))); }
             }
         } else if (c_id == 'b') {
             diff -= currentB;
@@ -1132,9 +1132,9 @@ function setFromPickerInput(pickerInput, old, mv) {
                 rPickerInput.val(currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
                 gPickerInput.val(currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
             } else if (currentRGBMode == 2) { // prop
-                if (+value >= +currentBC2) { value = currentBC2; rPickerInput.val(currentRC2); gPickerInput.val(currentGC2); }
-                else if (+value <= +currentBC1) { value = currentBC1; rPickerInput.val(currentRC1); gPickerInput.val(currentGC1); }
-                else { diff = +value - +currentBC1; rPickerInput.val(+currentRC1 + Math.round(diff * (currentRC2 - currentRC1) / (currentBC2 - currentBC1))); gPickerInput.val(+currentGC1 + Math.round(diff * (currentGC2 - currentGC1) / (currentBC2 - currentBC1))); }
+                if ((+value) >= (+currentBC2)) { value = currentBC2; rPickerInput.val(currentRC2); gPickerInput.val(currentGC2); }
+                else if ((+value) <= (+currentBC1)) { value = currentBC1; rPickerInput.val(currentRC1); gPickerInput.val(currentGC1); }
+                else { diff = (+value) - (+currentBC1); rPickerInput.val((+currentRC1) + Math.round(diff * (currentRC2 - currentRC1) / (currentBC2 - currentBC1))); gPickerInput.val((+currentGC1) + Math.round(diff * (currentGC2 - currentGC1) / (currentBC2 - currentBC1))); }
             }
         }
     }
@@ -1410,14 +1410,14 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
             else { gradientR = gradientG = gradientB += "rgb("+currentRC1+","+currentGC1+","+currentBC1+"),rgb("+currentRC2+","+currentGC2+","+currentBC2+")"; }
             } else if (currentRGBMode == 1) {
             if (IE) {
-                gradientR = tinycolor({ r: 0, g: Math.max(0, +currentG - +currentR), b: Math.max(0, +currentB - +currentR) }).toFilter({ gradientType: false }, tinycolor({ r: 255, g: Math.min(255, 255 + +currentG - +currentR), b: Math.min(255, 255 + +currentB - +currentR) }));
-                gradientG = tinycolor({ r: Math.max(0, +currentR - +currentG), g: 0, b: Math.max(0, +currentB - +currentG) }).toFilter({ gradientType: false }, tinycolor({ r: Math.min(255, 255 + +currentR - +currentG), g: 255, b: Math.min(255, 255 + +currentB - +currentG) }));
-                gradientB = tinycolor({ r: Math.max(0, +currentR - +currentB), g: Math.max(0, +currentG - +currentB), b: 0 }).toFilter({ gradientType: false }, tinycolor({ r: Math.min(255, 255 + +currentR - +currentB), g: Math.min(255, 255 + +currentG - +currentB), b: 255 }));
+                gradientR = tinycolor({ r: 0, g: Math.max(0, (+currentG) - (+currentR)), b: Math.max(0, (+currentB) - (+currentR)) }).toFilter({ gradientType: false }, tinycolor({ r: 255, g: Math.min(255, 255 + (+currentG) - (+currentR)), b: Math.min(255, 255 + (+currentB) - (+currentR)) }));
+                gradientG = tinycolor({ r: Math.max(0, (+currentR) - (+currentG)), g: 0, b: Math.max(0, (+currentB) - (+currentG)) }).toFilter({ gradientType: false }, tinycolor({ r: Math.min(255, 255 + (+currentR) - (+currentG)), g: 255, b: Math.min(255, 255 + (+currentB) - (+currentG)) }));
+                gradientB = tinycolor({ r: Math.max(0, (+currentR) - (+currentB)), g: Math.max(0, (+currentG) - (+currentB)), b: 0 }).toFilter({ gradientType: false }, tinycolor({ r: Math.min(255, 255 + (+currentR) - (+currentB)), g: Math.min(255, 255 + (+currentG) - (+currentB)), b: 255 }));
             }
             else {
-                gradientR += "rgb(0,"+Math.max(0, +currentG - +currentR)+","+Math.max(0, +currentB - +currentR)+"),rgb(255,"+Math.min(255, 255 + +currentG - +currentR)+","+Math.min(255, 255 + +currentB - +currentR)+")";
-                gradientG += "rgb("+Math.max(0, +currentR - +currentG)+",0,"+Math.max(0, +currentB - +currentG)+"),rgb("+Math.min(255, 255 + +currentR - +currentG)+",255,"+Math.min(255, 255 + +currentB - +currentG)+")";
-                gradientB += "rgb("+Math.max(0, +currentR - +currentB)+","+Math.max(0, +currentG - +currentB)+",0),rgb("+Math.min(255, 255 + +currentR - +currentB)+","+Math.min(255, 255 + +currentG - +currentB)+",255)";
+                gradientR += "rgb(0,"+Math.max(0, (+currentG) - (+currentR))+","+Math.max(0, (+currentB) - (+currentR))+"),rgb(255,"+Math.min(255, 255 + (+currentG) - (+currentR))+","+Math.min(255, 255 + (+currentB) - (+currentR))+")";
+                gradientG += "rgb("+Math.max(0, (+currentR) - (+currentG))+",0,"+Math.max(0, (+currentB) - (+currentG))+"),rgb("+Math.min(255, 255 + (+currentR) - (+currentG))+",255,"+Math.min(255, 255 + (+currentB) - (+currentG))+")";
+                gradientB += "rgb("+Math.max(0, (+currentR) - (+currentB))+","+Math.max(0, (+currentG) - (+currentB))+",0),rgb("+Math.min(255, 255 + (+currentR) - (+currentB))+","+Math.min(255, 255 + (+currentG) - (+currentB))+",255)";
             }
             } else {
             if (IE) {
@@ -1546,9 +1546,9 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
 
         if (value >= 0 && value <= 255) {
             if (mv < 300) { // C2, mv=C1
-                if (+value < +mv) value = mv;
+                if ((+value) < (+mv)) value = mv;
             } else { // C1, mv=C2
-                if (+value > +mv - 300) value = +mv - 300;
+                if ((+value) > (+mv) - 300) value = (+mv) - 300;
             }
             pickerInput.val(value);
                     cHelper.css({
@@ -1587,9 +1587,9 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
 
             if (value >= 0 && value <= 255) {
              if (mv < 300) { // F2, mv=F1
-                 if (+value < +mv) value = mv;
+                 if ((+value) < (+mv)) value = mv;
             } else { // F1, mv=f2
-                 if (+value > +mv - 300) value = +mv - 300;
+                 if ((+value) > (+mv) - 300) value = (+mv) - 300;
             }
 
             switch (cp_id) {
@@ -1615,7 +1615,7 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
                     currentBF2 = value;
                 break;
                 case "a2":
-                    if (+value > +opts.aPickerScale) value = opts.aPickerScale;
+                    if ((+value) > +opts.aPickerScale) value = opts.aPickerScale;
                     currentAF2 = value;
                 break;
             }
