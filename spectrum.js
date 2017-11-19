@@ -1626,10 +1626,11 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
 
         function clearPalette(target, exposeCurrent) { // target color(s) to remove : 0 = current only, 1 = unfiltered (may or not preserve current), 2 = all (may or not preserve current)
             if (showSelectionPalette && ((target === 0 && exposeCurrent === true) || (target == 1 && paletteFilteringStatus) || (target == 2))) {
-                if (! exposeCurrent || target === 0) var color = get();
+                var color, i;
+                if (! exposeCurrent || target === 0) color = get();
                 switch (target) {
                     case 0: // I know exposeCurrent is always true in this case
-                        var i = selectionPalette.indexOf(tinycolor(color).toRgbString());
+                        i = selectionPalette.indexOf(tinycolor(color).toRgbString());
                         if (i >= 0) selectionPalette.splice(i, 1);
                     break;
 
@@ -1642,7 +1643,7 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
                         var lowerbound = { r: currentRF1, g: currentGF1, b: currentBF1, a: AF1 },
                             upperbound = { r: currentRF2, g: currentGF2, b: currentBF2, a: AF2 };
 
-                        for (var i = selectionPalette.length-1; i>=0; i--) {
+                        for (i = selectionPalette.length-1; i>=0; i--) {
                             var current_tiny = tinycolor(selectionPalette[i]);
                             if (! current_tiny.inRange(lowerbound, upperbound)) if (exposeCurrent || ! tinycolor.equals(color, selectionPalette[i])) selectionPalette.splice(i, 1);
                         }
@@ -1650,8 +1651,9 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
 
                     case 2:
                         var preserveCurrent = false;
+                        var current;
                         if (! exposeCurrent) {
-                            var current = tinycolor(color).toRgbString();
+                            current = tinycolor(color).toRgbString();
                             if (selectionPalette.indexOf(current) >= 0) preserveCurrent = true;
                         }
                         selectionPalette = [];
@@ -2556,7 +2558,7 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
         if (upperbound_color !== undefined && upperbound_color !== null && typeof upperbound_color == "object" && upperbound_color.hasOwnProperty("r") && upperbound_color.hasOwnProperty("g") && upperbound_color.hasOwnProperty("b") && upperbound_color.hasOwnProperty("a"))
             if ( +upperbound_color.r < +color._r || +upperbound_color.g < +color._g || +upperbound_color.b < +color._b || +upperbound_color.a < +color._roundA) return false;
         return true;
-    };
+    }
 
     tinycolor.random = function() {
         return tinycolor.fromRatio({
