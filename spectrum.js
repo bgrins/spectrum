@@ -1629,12 +1629,12 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
                 if (! exposeCurrent || target === 0) var color = get();
                 switch (target) {
                     case 0: // I know exposeCurrent is always true in this case
-                        let i = selectionPalette.indexOf(tinycolor(color).toRgbString());
+                        var i = selectionPalette.indexOf(tinycolor(color).toRgbString());
                         if (i >= 0) selectionPalette.splice(i, 1);
                     break;
 
                     case 1: // I know paletteFilteringStatus is always on in this case
-                        let AF1 = 1, AF2 = 1;
+                        var AF1 = 1, AF2 = 1;
                         if (opts.showAlpha) {
                             AF1 = Math.round(100*currentAF1/opts.aPickerScale)/100;
                             AF2 = Math.round(100*currentAF2/opts.aPickerScale)/100;
@@ -1642,14 +1642,14 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
                         var lowerbound = { r: currentRF1, g: currentGF1, b: currentBF1, a: AF1 },
                             upperbound = { r: currentRF2, g: currentGF2, b: currentBF2, a: AF2 };
 
-                        for (let i = selectionPalette.length-1; i>=0; i--) {
-                            let current_tiny = tinycolor(selectionPalette[i]);
+                        for (var i = selectionPalette.length-1; i>=0; i--) {
+                            var current_tiny = tinycolor(selectionPalette[i]);
                             if (! current_tiny.inRange(lowerbound, upperbound)) if (exposeCurrent || ! tinycolor.equals(color, selectionPalette[i])) selectionPalette.splice(i, 1);
                         }
                     break;
 
                     case 2:
-                        let preserveCurrent = false;
+                        var preserveCurrent = false;
                         if (! exposeCurrent) {
                             var current = tinycolor(color).toRgbString();
                             if (selectionPalette.indexOf(current) >= 0) preserveCurrent = true;
