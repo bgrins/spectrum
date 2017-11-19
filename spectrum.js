@@ -71,11 +71,11 @@
         theme: "sp-light",
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
         selectionPalette: [],
+
+        paletteRGBAfiltering: false,
+
         disabled: false,
         offset: null
-
-        ,paletteRGBAfiltering: false
-
     },
     spectrums = [],
     IE = !!/msie/i.exec( window.navigator.userAgent ),
@@ -204,7 +204,7 @@
                 var c = tiny.toHsl().l < 0.5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
 
                 if (tinycolor.equals(color, current)) c += " sp-thumb-active";
-                else if (filter != undefined && filter.isOn && ! tiny.inRange(filter.lowerbound, filter.upperbound)) c += " sp-thumb-inactive";
+                else if (filter !== undefined && filter.isOn && ! tiny.inRange(filter.lowerbound, filter.upperbound)) c += " sp-thumb-inactive";
 
                 var formattedString = tiny.toString(opts.preferredFormat || "rgb");
                 var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
@@ -497,94 +497,94 @@
 
 
             // Handle user typed input on RGBA pickers
-            rPickerInput.change(function () { setFromPickerInput(rPickerInput, currentR) });
+            rPickerInput.change(function () { setFromPickerInput(rPickerInput, currentR); });
             rPickerInput.bind("paste", function () {
                 setTimeout(setFromPickerInput(rPickerInput, currentR), 1);
             });
             rPickerInput.keydown(function (e) { if (e.keyCode == 13) { setFromPickerInput(rPickerInput, currentR); } });
-            gPickerInput.change(function () { setFromPickerInput(gPickerInput, currentG) });
+            gPickerInput.change(function () { setFromPickerInput(gPickerInput, currentG); });
             gPickerInput.bind("paste", function () {
                 setTimeout(setFromPickerInput(gPickerInput, currentG), 1);
             });
             gPickerInput.keydown(function (e) { if (e.keyCode == 13) { setFromPickerInput(gPickerInput, currentG); } });
-            bPickerInput.change(function () { setFromPickerInput(bPickerInput, currentB) });
+            bPickerInput.change(function () { setFromPickerInput(bPickerInput, currentB); });
             bPickerInput.bind("paste", function () {
                 setTimeout(setFromPickerInput(bPickerInput, currentB), 1);
             });
             bPickerInput.keydown(function (e) { if (e.keyCode == 13) { setFromPickerInput(bPickerInput, currentB); } });
-            aPickerInput.change(function () { setFromPickerInput(aPickerInput, currentAP, opts.aPickerScale) });
+            aPickerInput.change(function () { setFromPickerInput(aPickerInput, currentAP, opts.aPickerScale); });
             aPickerInput.bind("paste", function () {
                 setTimeout(setFromPickerInput(aPickerInput, currentAP, opts.aPickerScale), 1);
             });
             aPickerInput.keydown(function (e) { if (e.keyCode == 13) { setFromPickerInput(aPickerInput, currentAP, opts.aPickerScale); } });
 
-	    rgbModes.on('change', function() {
-            	if (this.value == '2') { //proportional
-            		currentRGBMode = 2;
-        	}
-        	else if (this.value == '1') { //linked
-            		currentRGBMode = 1;
-        	}
+        rgbModes.on('change', function() {
+                if (this.value == '2') { //proportional
+                    currentRGBMode = 2;
+            }
+            else if (this.value == '1') { //linked
+                    currentRGBMode = 1;
+            }
                 else { //normal
-            		currentRGBMode = 0;
+                    currentRGBMode = 0;
                 }
             //(CSS) classtoggle = handles color + enable/disable+show/hide contraints BUT nothing more (constraints don't have to move here nor handles have to)
                 container.toggleClass("sp-rgb_linked", (currentRGBMode == 1));
                 container.toggleClass("sp-rgb_prop", (currentRGBMode == 2));
                 container.find("[id*=_constraint]").prop('disabled', (currentRGBMode != 2));
                 if (opts.showRGBsliders) updateRGBSlidersGradients();
-    	    });
+            });
 
             // Handle user typed input on RGB constraints
-	    container.find("[id*=_constraint1]").each(function () {
-		var cp_id = $(this).prop('id');
-            	var cHelper = container.find(".sp-" + cp_id.charAt(0) + "_slider-constraint1");
-		if (cp_id.charAt(0) == "r") {
+        container.find("[id*=_constraint1]").each(function () {
+        var cp_id = $(this).prop('id');
+                var cHelper = container.find(".sp-" + cp_id.charAt(0) + "_slider-constraint1");
+        if (cp_id.charAt(0) == "r") {
                     $(this).change(function () { if ($(this).val() != currentRC1) updateConstraintLocation($(this), cHelper, rsWidth, +300 + +currentRC2, "r1"); });
-      	   	    $(this).bind("paste", function () {
-        	        setTimeout(updateConstraintLocation($(this), cHelper, rsWidth, +300 + +currentRC2, "r1"), 1);
-        	    });
-	            $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, rsWidth, +300 + +currentRC2, "r1"); } });
-		} else if (cp_id.charAt(0) == "g") {
+                    $(this).bind("paste", function () {
+                    setTimeout(updateConstraintLocation($(this), cHelper, rsWidth, +300 + +currentRC2, "r1"), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, rsWidth, +300 + +currentRC2, "r1"); } });
+        } else if (cp_id.charAt(0) == "g") {
                     $(this).change(function () { if ($(this).val() != currentGC1) updateConstraintLocation($(this), cHelper, gsWidth, +300 + +currentGC2, "g1"); });
-      	   	    $(this).bind("paste", function () {
-        	        setTimeout(updateConstraintLocation($(this), cHelper, gsWidth, +300 + +currentGC2, "g1"), 1);
-        	    });
-	            $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, gsWidth, +300 + +currentGC2, "g1"); } });
-		} else {
+                    $(this).bind("paste", function () {
+                    setTimeout(updateConstraintLocation($(this), cHelper, gsWidth, +300 + +currentGC2, "g1"), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, gsWidth, +300 + +currentGC2, "g1"); } });
+        } else {
                     $(this).change(function () { if ($(this).val() != currentBC1) updateConstraintLocation($(this), cHelper, bsWidth, +300 + +currentBC2, "b1"); });
-      	   	    $(this).bind("paste", function () {
-        	        setTimeout(updateConstraintLocation($(this), cHelper, bsWidth, +300 + +currentBC2, "b1"), 1);
-        	    });
-	            $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, bsWidth, +300 + +currentBC2, "b1"); } });
-		}
-	    });
-	    container.find("[id*=_constraint2]").each(function () {
-		var cp_id = $(this).prop('id');
-            	var cHelper = container.find(".sp-" + cp_id.charAt(0) + "_slider-constraint2");
-		if (cp_id.charAt(0) == "r") {
+                    $(this).bind("paste", function () {
+                    setTimeout(updateConstraintLocation($(this), cHelper, bsWidth, +300 + +currentBC2, "b1"), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, bsWidth, +300 + +currentBC2, "b1"); } });
+        }
+        });
+        container.find("[id*=_constraint2]").each(function () {
+        var cp_id = $(this).prop('id');
+                var cHelper = container.find(".sp-" + cp_id.charAt(0) + "_slider-constraint2");
+        if (cp_id.charAt(0) == "r") {
                     $(this).change(function () { if ($(this).val() != currentRC2) updateConstraintLocation($(this), cHelper, rsWidth, currentRC1, "r2"); });
-      	   	    $(this).bind("paste", function () {
-        	        setTimeout(updateConstraintLocation($(this), cHelper, rsWidth, currentRC1, "r2"), 1);
-        	    });
-	            $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, rsWidth, currentRC1, "r2"); } });
-		} else if (cp_id.charAt(0) == "g") {
+                    $(this).bind("paste", function () {
+                    setTimeout(updateConstraintLocation($(this), cHelper, rsWidth, currentRC1, "r2"), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, rsWidth, currentRC1, "r2"); } });
+        } else if (cp_id.charAt(0) == "g") {
                     $(this).change(function () { if ($(this).val() != currentGC2) updateConstraintLocation($(this), cHelper, gsWidth, currentGC1, "g2"); });
-      	   	    $(this).bind("paste", function () {
-        	        setTimeout(updateConstraintLocation($(this), cHelper, gsWidth, currentGC1, "g2"), 1);
-        	    });
-	            $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, gsWidth, currentGC1, "g2"); } });
-		} else {
+                    $(this).bind("paste", function () {
+                    setTimeout(updateConstraintLocation($(this), cHelper, gsWidth, currentGC1, "g2"), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, gsWidth, currentGC1, "g2"); } });
+        } else {
                     $(this).change(function () { if ($(this).val() != currentBC2) updateConstraintLocation($(this), cHelper, bsWidth, currentBC1, "b2"); });
-      	   	    $(this).bind("paste", function () {
-        	        setTimeout(updateConstraintLocation($(this), cHelper, bsWidth, currentBC1, "b2"), 1);
-        	    });
-	            $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, bsWidth, currentBC1, "b2"); } });
-		}
-	    });
+                    $(this).bind("paste", function () {
+                    setTimeout(updateConstraintLocation($(this), cHelper, bsWidth, currentBC1, "b2"), 1);
+                });
+                $(this).keydown(function (e) { if (e.keyCode == 13) { updateConstraintLocation($(this), cHelper, bsWidth, currentBC1, "b2"); } });
+        }
+        });
 
-	    container.find(".sp-rgb_modes-legend").mouseover(function () { $(this).toggleClass("sp-legend-tooltip-show", true); });
-	    container.find(".sp-rgb_modes-legend").mouseout(function () { $(this).toggleClass("sp-legend-tooltip-show", false); });
+        container.find(".sp-rgb_modes-legend").mouseover(function () { $(this).toggleClass("sp-legend-tooltip-show", true); });
+        container.find(".sp-rgb_modes-legend").mouseout(function () { $(this).toggleClass("sp-legend-tooltip-show", false); });
 
         paletteFilters.on('change', function() {
             if (this.value == '1') {
@@ -739,20 +739,20 @@ var diff = currentR;
                 }
                 if (!opts.showAlpha) {
                     currentAlpha = 1;
-		    currentAP = opts.aPickerScale;
+            currentAP = opts.aPickerScale;
                 }
 if (currentRGBMode != 0) {
-	diff = currentR - diff;
-	if (currentRGBMode == 1) { // linked
-		currentG = (currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
-		currentB = (currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
-	} else if (currentRGBMode == 2) { // prop
-		if (+currentR >= +currentRC2) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
-		else if (+currentR <= +currentRC1) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
-		else {
+    diff = currentR - diff;
+    if (currentRGBMode == 1) { // linked
+        currentG = (currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
+        currentB = (currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
+    } else if (currentRGBMode == 2) { // prop
+        if (+currentR >= +currentRC2) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
+        else if (+currentR <= +currentRC1) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
+        else {
             diff = +currentR - +currentRC1; currentG = +currentGC1 + Math.round(diff * (currentGC2 - currentGC1) / (currentRC2 - currentRC1)); currentB = +currentBC1 + Math.round(diff * (currentBC2 - currentBC1) / (currentRC2 - currentRC1));
         }
-	}
+    }
 }
 updateHSVbyDrag();
                 move();
@@ -767,20 +767,20 @@ var diff = currentG;
                 }
                 if (!opts.showAlpha) {
                     currentAlpha = 1;
-		    currentAP = opts.aPickerScale;
+            currentAP = opts.aPickerScale;
                 }
 if (currentRGBMode != 0) {
-	diff = currentG - diff;
-	if (currentRGBMode == 1) { // linked
-		currentR = (currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
-		currentB = (currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
-	} else if (currentRGBMode == 2) { // prop
-		if (+currentG >= +currentGC2) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
-		else if (+currentG <= +currentGC1) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
-		else {
+    diff = currentG - diff;
+    if (currentRGBMode == 1) { // linked
+        currentR = (currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
+        currentB = (currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
+    } else if (currentRGBMode == 2) { // prop
+        if (+currentG >= +currentGC2) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
+        else if (+currentG <= +currentGC1) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
+        else {
             diff = +currentG - +currentGC1; currentR = +currentRC1 + Math.round(diff * (currentRC2 - currentRC1) / (currentGC2 - currentGC1)); currentB = +currentBC1 + Math.round(diff * (currentBC2 - currentBC1) / (currentGC2 - currentGC1));
         }
-	}
+    }
 }
 updateHSVbyDrag();
                 move();
@@ -795,20 +795,20 @@ var diff = currentB;
                 }
                 if (!opts.showAlpha) {
                     currentAlpha = 1;
-		    currentAP = opts.aPickerScale;
+            currentAP = opts.aPickerScale;
                 }
 if (currentRGBMode != 0) {
-	diff = currentB - diff;
-	if (currentRGBMode == 1) { // linked
-		currentR = (currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
-		currentG = (currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
-	} else if (currentRGBMode == 2) { // prop
-		if (+currentB >= +currentBC2) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
-		else if (+currentB <= +currentBC1) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
-		else {
+    diff = currentB - diff;
+    if (currentRGBMode == 1) { // linked
+        currentR = (currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
+        currentG = (currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
+    } else if (currentRGBMode == 2) { // prop
+        if (+currentB >= +currentBC2) { currentR = currentRC2; currentG = currentGC2; currentB = currentBC2; updateHelperLocations(); }
+        else if (+currentB <= +currentBC1) { currentR = currentRC1; currentG = currentGC1; currentB = currentBC1; updateHelperLocations(); }
+        else {
             diff = +currentB - +currentBC1; currentR = +currentRC1 + Math.round(diff * (currentRC2 - currentRC1) / (currentBC2 - currentBC1)); currentG = +currentGC1 + Math.round(diff * (currentGC2 - currentGC1) / (currentBC2 - currentBC1));
         }
-	}
+    }
 }
 updateHSVbyDrag();
                 move();
@@ -833,7 +833,7 @@ updateHSVbyDrag();
                 if (!opts.showAlpha) {
                     currentAlpha = 1;
 
-		    currentAP = opts.aPickerScale;
+            currentAP = opts.aPickerScale;
 
                 }
 
@@ -874,7 +874,7 @@ draggerHueUpdateOnBW = false;
                 if (!opts.showAlpha) {
                     currentAlpha = 1;
 
-		    currentAP = opts.aPickerScale;
+            currentAP = opts.aPickerScale;
 
                 }
 
@@ -1075,14 +1075,14 @@ updateRGBbyDrag();
                 var tiny = tinycolor(value);
                 if (tiny.isValid()) {
 
-		    if ((tiny.getFormat() == "rgb" || tiny.getFormat() == "hex") && currentRGBMode == 2) {
-			if (tiny._r > currentRC2) tiny._r = currentRC2;
-			else if (tiny._r < currentRC1) tiny._r = currentRC1;
-			if (tiny._g > currentGC2) tiny._g = currentGC2;
-			else if (tiny._g < currentGC1) tiny._g = currentGC1;
-			if (tiny._b > currentBC2) tiny._b = currentBC2;
-			else if (tiny._b < currentBC1) tiny._b = currentBC1;
-		    }
+            if ((tiny.getFormat() == "rgb" || tiny.getFormat() == "hex") && currentRGBMode == 2) {
+            if (tiny._r > currentRC2) tiny._r = currentRC2;
+            else if (tiny._r < currentRC1) tiny._r = currentRC1;
+            if (tiny._g > currentGC2) tiny._g = currentGC2;
+            else if (tiny._g < currentGC1) tiny._g = currentGC1;
+            if (tiny._b > currentBC2) tiny._b = currentBC2;
+            else if (tiny._b < currentBC1) tiny._b = currentBC1;
+            }
 
                     set(tiny);
                     updateOriginalInput(true);
@@ -1094,59 +1094,59 @@ updateRGBbyDrag();
         }
 
 function setFromPickerInput(pickerInput, old, mv) {
-	if (mv === undefined) mv = 255;
-	// (I need to do this because click on pickers number input arrows doesn't immediately make contraints lose focus more about this on updateUI() )
+    if (mv === undefined) mv = 255;
+        // (I need to do this because click on pickers number input arrows doesn't immediately make contraints lose focus more about this on updateUI() )
         if ($( document.activeElement ).prop("id").indexOf("_constraint") >= 0) $(document.activeElement).blur();
 
         var value = pickerInput.val();
-	if (value == old) return;
-	if (value < 0) value = 0;
-	else if (value > mv) value = mv;
+    if (value == old) return;
+    if (value < 0) value = 0;
+    else if (value > mv) value = mv;
 
-	if (currentRGBMode != 0 && $.isNumeric(value)) {
-		var c_id = pickerInput.prop('id').charAt(0);
-		var diff = value;
-		if (c_id == 'r') {
-			diff -= currentR;
-			if (currentRGBMode == 1) { // fixed
-				gPickerInput.val(currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
-				bPickerInput.val(currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
-			} else if (currentRGBMode == 2) { // prop
-				if (+value >= +currentRC2) { value = currentRC2; gPickerInput.val(currentGC2); bPickerInput.val(currentBC2); }
-				else if (+value <= +currentRC1) { value = currentRC1; gPickerInput.val(currentGC1); bPickerInput.val(currentBC1); }
-				else { diff = +value - +currentRC1; gPickerInput.val(+currentGC1 + Math.round(diff * (currentGC2 - currentGC1) / (currentRC2 - currentRC1))); bPickerInput.val(+currentBC1 + Math.round(diff * (currentBC2 - currentBC1) / (currentRC2 - currentRC1))); }
-			}
-		} else if (c_id == 'g') {
-			diff -= currentG;
-			if (currentRGBMode == 1) { // fixed
-				rPickerInput.val(currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
-				bPickerInput.val(currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
-			} else if (currentRGBMode == 2) { // prop
-				if (+value >= +currentGC2) { value = currentGC2; rPickerInput.val(currentRC2); bPickerInput.val(currentBC2); }
-				else if (+value <= +currentGC1) { value = currentGC1; rPickerInput.val(currentRC1); bPickerInput.val(currentBC1); }
-				else { diff = +value - +currentGC1; rPickerInput.val(+currentRC1 + Math.round(diff * (currentRC2 - currentRC1) / (currentGC2 - currentGC1))); bPickerInput.val(+currentBC1 + Math.round(diff * (currentBC2 - currentBC1) / (currentGC2 - currentGC1))); }
-			}
-		} else if (c_id == 'b') {
-			diff -= currentB;
-			if (currentRGBMode == 1) { // fixed
-				rPickerInput.val(currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
-				gPickerInput.val(currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
-			} else if (currentRGBMode == 2) { // prop
-				if (+value >= +currentBC2) { value = currentBC2; rPickerInput.val(currentRC2); gPickerInput.val(currentGC2); }
-				else if (+value <= +currentBC1) { value = currentBC1; rPickerInput.val(currentRC1); gPickerInput.val(currentGC1); }
-				else { diff = +value - +currentBC1; rPickerInput.val(+currentRC1 + Math.round(diff * (currentRC2 - currentRC1) / (currentBC2 - currentBC1))); gPickerInput.val(+currentGC1 + Math.round(diff * (currentGC2 - currentGC1) / (currentBC2 - currentBC1))); }
-			}
-		}
-	}
-	pickerInput.val(value);
+    if (currentRGBMode != 0 && $.isNumeric(value)) {
+        var c_id = pickerInput.prop('id').charAt(0);
+        var diff = value;
+        if (c_id == 'r') {
+            diff -= currentR;
+            if (currentRGBMode == 1) { // fixed
+                gPickerInput.val(currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
+                bPickerInput.val(currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
+            } else if (currentRGBMode == 2) { // prop
+                if (+value >= +currentRC2) { value = currentRC2; gPickerInput.val(currentGC2); bPickerInput.val(currentBC2); }
+                else if (+value <= +currentRC1) { value = currentRC1; gPickerInput.val(currentGC1); bPickerInput.val(currentBC1); }
+                else { diff = +value - +currentRC1; gPickerInput.val(+currentGC1 + Math.round(diff * (currentGC2 - currentGC1) / (currentRC2 - currentRC1))); bPickerInput.val(+currentBC1 + Math.round(diff * (currentBC2 - currentBC1) / (currentRC2 - currentRC1))); }
+            }
+        } else if (c_id == 'g') {
+            diff -= currentG;
+            if (currentRGBMode == 1) { // fixed
+                rPickerInput.val(currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
+                bPickerInput.val(currentB + diff > 0 ? (currentB + diff < 255 ? currentB + diff : 255) : 0);
+            } else if (currentRGBMode == 2) { // prop
+                if (+value >= +currentGC2) { value = currentGC2; rPickerInput.val(currentRC2); bPickerInput.val(currentBC2); }
+                else if (+value <= +currentGC1) { value = currentGC1; rPickerInput.val(currentRC1); bPickerInput.val(currentBC1); }
+                else { diff = +value - +currentGC1; rPickerInput.val(+currentRC1 + Math.round(diff * (currentRC2 - currentRC1) / (currentGC2 - currentGC1))); bPickerInput.val(+currentBC1 + Math.round(diff * (currentBC2 - currentBC1) / (currentGC2 - currentGC1))); }
+            }
+        } else if (c_id == 'b') {
+            diff -= currentB;
+            if (currentRGBMode == 1) { // fixed
+                rPickerInput.val(currentR + diff > 0 ? (currentR + diff < 255 ? currentR + diff : 255) : 0);
+                gPickerInput.val(currentG + diff > 0 ? (currentG + diff < 255 ? currentG + diff : 255) : 0);
+            } else if (currentRGBMode == 2) { // prop
+                if (+value >= +currentBC2) { value = currentBC2; rPickerInput.val(currentRC2); gPickerInput.val(currentGC2); }
+                else if (+value <= +currentBC1) { value = currentBC1; rPickerInput.val(currentRC1); gPickerInput.val(currentGC1); }
+                else { diff = +value - +currentBC1; rPickerInput.val(+currentRC1 + Math.round(diff * (currentRC2 - currentRC1) / (currentBC2 - currentBC1))); gPickerInput.val(+currentGC1 + Math.round(diff * (currentGC2 - currentGC1) / (currentBC2 - currentBC1))); }
+            }
+        }
+    }
+    pickerInput.val(value);
         value = "(" + rPickerInput.val() + ", " + gPickerInput.val() + ", " + bPickerInput.val();
 
-	if (opts.showAlpha) {
+    if (opts.showAlpha) {
             value = "rgba" + value + ", " + Math.round(aPickerInput.val() / mv * 100)/100 + ")";
-	}
-	else {
+    }
+    else {
             value = "rgb" + value + ")";
-	}
+    }
                 var tiny = tinycolor(value);
                 if (tiny.isValid()) {
                     set(tiny);
@@ -1204,7 +1204,7 @@ function setFromPickerInput(pickerInput, old, mv) {
 
         function clickout(e) {
 
-	    // (I already explained why I need this on updateUI() )
+        // (I already explained why I need this on updateUI() )
             if ($( document.activeElement ).prop("id").indexOf("_constraint") >= 0) $( document.activeElement ).trigger( "change" );
 
             // Return on right click.
@@ -1539,20 +1539,20 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
 
 
         function updateConstraintLocation(pickerInput, cHelper, sWidth, mv, cp_id) {
-        	var value = pickerInput.val();
-		if (value < 0) value = 0;
-		else if (value > 255) value = 255;
+            var value = pickerInput.val();
+        if (value < 0) value = 0;
+        else if (value > 255) value = 255;
 
-		if (value >= 0 && value <= 255) {
-			if (mv < 300) { // C2, mv=C1
-				if (+value < +mv) value = mv;
-			} else { // C1, mv=C2
-				if (+value > +mv - 300) value = +mv - 300;
-			}
-			pickerInput.val(value);
-                	cHelper.css({
-                		"left": (Math.round(value * sWidth / 255) - (mv < 300 ? 1 : 2)) + "px"
-                	});
+        if (value >= 0 && value <= 255) {
+            if (mv < 300) { // C2, mv=C1
+                if (+value < +mv) value = mv;
+            } else { // C1, mv=C2
+                if (+value > +mv - 300) value = +mv - 300;
+            }
+            pickerInput.val(value);
+                    cHelper.css({
+                        "left": (Math.round(value * sWidth / 255) - (mv < 300 ? 1 : 2)) + "px"
+                    });
 
             switch (cp_id) {
                 case "r1":
@@ -1575,7 +1575,7 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
                 break;
             }
             if (opts.showRGBsliders) updateRGBSlidersGradients();
-		}
+        }
         }
 
         function updatePaletteFiltering(pickerInput, mv, cp_id, old) {
