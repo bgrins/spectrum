@@ -204,7 +204,7 @@
                 var c = tiny.toHsl().l < 0.5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
 
                 if (tinycolor.equals(color, current)) c += " sp-thumb-active";
-                else if (filter !== undefined && filter.isOn && ! tiny.inRange(filter.lowerbound, filter.upperbound)) c += " sp-thumb-inactive";
+                else if (filter !== undefined && filter !== null && filter.isOn && ! tiny.inRange(filter.lowerbound, filter.upperbound)) c += " sp-thumb-inactive";
 
                 var formattedString = tiny.toString(opts.preferredFormat || "rgb");
                 var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
@@ -1094,7 +1094,7 @@ updateRGBbyDrag();
         }
 
 function setFromPickerInput(pickerInput, old, mv) {
-    if (mv === undefined) mv = 255;
+    if (mv === undefined || mv === null) mv = 255;
     // (I need to do this because click on pickers number input arrows doesn't immediately make contraints lose focus more about this on updateUI() )
         if ($( document.activeElement ).prop("id").indexOf("_constraint") >= 0) $(document.activeElement).blur();
 
@@ -1307,7 +1307,7 @@ function setFromPickerInput(pickerInput, old, mv) {
             textInput.removeClass("sp-validation-error");
 
 // need to manually trigger contraints update if I moved from one contraints input to a dragger or arrows of a picker number input (because constraint input doesn't lose its focus)
-            if ($( document.activeElement ).prop("id") !== undefined && ($( document.activeElement ).prop("id").indexOf("_constraint") >= 0 || $( document.activeElement ).prop("id").indexOf("_picker") >= 0 ) $(document.activeElement).blur(); //second line for picker updating when passing to rgb sliders without hitting enter
+            if ($( document.activeElement ).prop("id") !== undefined && ($( document.activeElement ).prop("id").indexOf("_constraint") >= 0 || $( document.activeElement ).prop("id").indexOf("_picker") >= 0 )) $(document.activeElement).blur(); //second line for picker updating when passing to rgb sliders without hitting enter
 
             updateHelperLocations();
 
@@ -1403,7 +1403,7 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
         }
 
         function updateRGBSlidersGradients(realHex) { //### IE gradient-filters ok ??
-            if (realHex === undefined) realHex = get().toHexString();
+            if (realHex === undefined || realHex === null) realHex = get().toHexString();
             var g_left = "linear-gradient(left,", gradientR = " ", gradientG = " ", gradientB = " ";
             if (currentRGBMode == 2) {
             if (IE) { gradientR = gradientG = gradientB = tinycolor({ r: currentRC1, g: currentGC1, b: currentBC1 }).toFilter({ gradientType: false }, tinycolor({ r: currentRC2, g: currentGC2, b: currentBC2 })); }
@@ -2551,9 +2551,9 @@ if (draggerHueUpdateOnBW || !(realColor.toHex(true) == "000" || realColor.toHex(
     };
 
     function inRange(color, lowerbound_color, upperbound_color) {
-        if (lowerbound_color !== undefined && typeof lowerbound_color == "object" && lowerbound_color.hasOwnProperty("r") && lowerbound_color.hasOwnProperty("g") && lowerbound_color.hasOwnProperty("b") && lowerbound_color.hasOwnProperty("a"))
+        if (lowerbound_color !== undefined && lowerbound_color !== null && typeof lowerbound_color == "object" && lowerbound_color.hasOwnProperty("r") && lowerbound_color.hasOwnProperty("g") && lowerbound_color.hasOwnProperty("b") && lowerbound_color.hasOwnProperty("a"))
             if ( +lowerbound_color.r > +color._r || +lowerbound_color.g > +color._g || +lowerbound_color.b > +color._b || +lowerbound_color.a > +color._roundA) return false;
-        if (upperbound_color !== undefined && typeof upperbound_color == "object" && upperbound_color.hasOwnProperty("r") && upperbound_color.hasOwnProperty("g") && upperbound_color.hasOwnProperty("b") && upperbound_color.hasOwnProperty("a"))
+        if (upperbound_color !== undefined && upperbound_color !== null && typeof upperbound_color == "object" && upperbound_color.hasOwnProperty("r") && upperbound_color.hasOwnProperty("g") && upperbound_color.hasOwnProperty("b") && upperbound_color.hasOwnProperty("a"))
             if ( +upperbound_color.r < +color._r || +upperbound_color.g < +color._g || +upperbound_color.b < +color._b || +upperbound_color.a < +color._roundA) return false;
         return true;
     };
