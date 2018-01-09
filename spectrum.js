@@ -37,6 +37,7 @@
         showInitial: false,
         showPalette: false,
         showPaletteOnly: false,
+        showHexText: false,
         hideAfterPaletteSelect: false,
         togglePaletteOnly: false,
         showSelectionPalette: true,
@@ -766,6 +767,13 @@
              //reset background info for preview element
             previewElement.removeClass("sp-clear-display");
             previewElement.css('background-color', 'transparent');
+
+            //if showHexText is enabled, then change the text to the correct val, and update its color based on if it should be black/white
+            if(opts.showHexText){
+                var HexTextColor = tinycolor(realColor).isLight() ? "#000000": "#FFFFFF";
+                previewElement.text(realColor.toHexString());
+                previewElement.css("color", HexTextColor);
+            }
 
             if (!realColor && allowEmpty) {
                 // Update the replaced elements background with icon indicating no color selection
