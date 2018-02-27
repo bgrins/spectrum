@@ -13,6 +13,6 @@
         togglePaletteLessText: "Λιγότερα"
     };
 
-    $.extend($.gr.spectrum.defaults, localization);
+    $.extend($.fn.spectrum.defaults, localization);
 
 })( jQuery );
