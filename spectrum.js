@@ -31,6 +31,7 @@
         color: false,
         flat: false,
         showInput: false,
+        colorInput: false,
         allowEmpty: false,
         showButtons: true,
         clickoutFiresChange: true,
@@ -762,6 +763,17 @@
 
             var realColor = get({ format: format }),
                 displayColor = '';
+
+            if (opts.colorInput) {
+
+                function isDark( r, g, b ){
+                    return (299*r +587*g + 114*b)/1000 <= 130;
+                }
+
+                var bg = realColor.toHexString();
+                var txt = isDark(realColor._r, realColor._g, realColor._b)? "#fff": "#000";
+                textInput.css({'background':bg, 'color':txt});
+            }
 
              //reset background info for preview element
             previewElement.removeClass("sp-clear-display");
