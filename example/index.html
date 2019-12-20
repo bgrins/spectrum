@@ -8,7 +8,6 @@
     <meta name="author" content="Brian Grinstead and Spectrum contributors">
 
     <link rel="stylesheet" type="text/css" href="../spectrum.css">
-    <link rel="stylesheet" type="text/css" href="../docs/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../docs/docs.css">
     <script type="text/javascript" src="../docs/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="../spectrum.js"></script>
@@ -16,46 +15,29 @@
     <script type='text/javascript' src='example.js'></script>
 
     <style>
-
     .example-container {
         margin-top: 10px;
         text-align: center;
-        background: #333;
-        background: linear-gradient(to bottom, #eee, #ccc);
-        padding: 3px;
-        padding-top: 0;
+        background: #eee;
+        padding: 1rem;
         border-radius: 5px;
-    }
-    .example-controls {
-        background: #999;
-        margin: 0 -3px;
-        padding: 10px 0;
-        margin-bottom: 15px;
-
     }
     label {
         display: inline-block;
         font-weight: bold;
 
     }
+    .btn-group button {
+        margin-bottom: 1rem;
+        background-color: var(--neutral-color);
+    }
+    .btn-group button.active {
+        background-color: var(--secondary-color);
+    }
     #palettes .sp-palette {
         max-width: 500px;
     }
 
-
-    .newGmail .sp-palette-row-0, .newGmail .sp-palette-row-1 {
-        margin-bottom: 5px;
-    }
-
-    .newGmail .sp-palette .sp-thumb-el {
-        width: 20px;
-        height: 20px;
-        margin: 1px 1px;
-    }
-
-    .newGmail .sp-palette .sp-thumb-el:hover, .newGmail  .sp-palette .sp-thumb-el.sp-thumb-active {
-        border-color: #000;
-    }
     </style>
 </head>
 <body>
@@ -65,7 +47,6 @@
         View the <a href='http://github.com/bgrins/spectrum'>Source code</a>.
         Spectrum is a project by <a href='http://twitter.com/bgrins'>@bgrins</a>.
     </div>
-    <br style='clear:both;' />
 </div>
 
 <div class="container">
@@ -88,20 +69,12 @@
                 <button class='btn toggleBtn' data-rule='togglePaletteOnly'>Show Picker Toggle Button</button>
                 <button class='btn toggleBtn' data-rule='showButtons'>Show Buttons</button>
             </div>
-            <br />
-            <br />
-            <p>
-            <label>Draggable Size <input type='range' value='172' id='size' max='500' min='50' /></label>
-
-            <label>Hue Size <input type='range' value='16' id='huesize' max='90' min='5' /></label>
-            </p>
         </div>
 
         <input id="full">
 
     </div>
 
-    <hr />
     <h2>Spectrum Colorpicker Localization</h2>
     <div class='alert'>
         <p>
@@ -111,27 +84,14 @@
 
 	<input id="langdemo" />
 
-    <hr />
     <h2>Spectrum Colorpicker Sample Palettes</h2>
-    <div class='alert'>
 
-        <p>
-        NOTE: these palettes are also a work in progress.  Ideally the site will eventually allow you to choose between a few options and download them.
-        </p>
-
-        <p>
-        The <code>newGmail</code> palette below is an example of customizing the palette size and layout with CSS.
-        </p>
-
-    </div>
     <div id="palettes" class="example-container">
 
     </div>
 
 </div>
 
-
-<script type="text/javascript" src="../docs/prettify.js"></script>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
