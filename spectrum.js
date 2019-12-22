@@ -29,7 +29,8 @@
 
         // Options
         color: false,
-        flat: false,
+        flat: false, // Deprecated - use type instead
+        type: '', // text, color, component or flat
         showInput: false,
         allowEmpty: true,
         showButtons: true,
@@ -187,7 +188,8 @@
     function spectrum(element, o) {
 
         var opts = instanceOptions(o, element),
-            flat = opts.flat,
+            type = opts.type,
+            flat = (type == 'flat'),
             showSelectionPalette = opts.showSelectionPalette,
             localStorageKey = opts.localStorageKey,
             theme = opts.theme,
@@ -237,7 +239,7 @@
             toggleButton = container.find(".sp-palette-toggle"),
             isInput = boundElement.is("input"),
             isInputTypeColor = isInput && boundElement.attr("type") === "color" && inputTypeColorSupport(),
-            shouldReplace = isInput && !flat,
+            shouldReplace = isInput && type == 'color',
             replacer = (shouldReplace) ? $(replaceInput).addClass(theme).addClass(opts.className).addClass(opts.replacerClassName) : $([]),
             offsetElement = (shouldReplace) ? replacer : boundElement,
             previewElement = replacer.find(".sp-preview-inner"),
@@ -247,6 +249,11 @@
             clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange,
             isEmpty = !initialColor,
             allowEmpty = opts.allowEmpty && !isInputTypeColor;
+
+        // Element to be updated with the input color. Populated in initialize method
+        var colorizeElement = null,
+            colorizeElementInitialColor = null,
+            colorizeElementInitialBackground = null;
 
         function applyOptions() {
 
@@ -292,7 +299,27 @@
 
             if (shouldReplace) {
                 boundElement.after(replacer).hide();
+            } else if (type == 'text') {
+                boundElement.addClass('spectrum sp-colorize').wrap('<span class="sp-original-input-container sp-colorize-container"></span>');
+            } else if (type == 'component') {
+                boundElement.addClass('spectrum').wrap('<span class="sp-original-input-container"></span>');
+                var addOn = $("<div class='sp-colorize-container sp-add-on'> \
+                    <div class='sp-colorize'></div>                \
+                </div>");
+                boundElement.addClass('with-add-on').after(addOn);
+                addOn.width(boundElement.outerHeight())
+                     .css('border-radius', boundElement.css('border-radius'))
+                     .css('border', boundElement.css('border'));
             }
+
+            var originalInputContainer = boundElement.closest('.sp-original-input-container');
+            ['padding-top', 'padding-bottom', 'border-radius', 'height'].forEach(function(cssProp) {
+                originalInputContainer.css(cssProp, boundElement.css(cssProp));
+            })
+
+            colorizeElement = boundElement.parent().find('.sp-colorize');
+            colorizeElementInitialColor = colorizeElement.css('color');
+            colorizeElementInitialBackground = colorizeElement.css('background-color');
 
             if (!allowEmpty) {
                 clearButton.hide();
@@ -333,11 +360,16 @@
             container.click(stopPropagation);
 
             // Handle user typed input
-            textInput.change(setFromTextInput);
-            textInput.on("paste", function () {
-                setTimeout(setFromTextInput, 1);
-            });
-            textInput.keydown(function (e) { if (e.keyCode == 13) { setFromTextInput(); } });
+            [textInput, boundElement].forEach(function(input) {
+                input.change(function() { setFromTextInput (input.val()) });
+                input.on("paste", function () {
+                    setTimeout(function() { setFromTextInput (input.val()) }, 1);
+                });
+                input.keydown(function (e) { if (e.keyCode == 13) {
+                    setFromTextInput($(input).val());
+                    if (input == boundElement) hide();
+                } });
+            })
 
             cancelButton.text(opts.cancelText);
             cancelButton.on("click.spectrum", function (e) {
@@ -452,7 +484,6 @@
                 // since the set function will not run (default color is black).
                 updateUI();
                 currentPreferredFormat = opts.preferredFormat || tinycolor(initialColor).format;
-
                 addColorToSelectionPalette(initialColor);
             }
             else {
@@ -588,10 +619,7 @@
             boundElement.trigger('dragstop.spectrum', [ get() ]);
         }
 
-        function setFromTextInput() {
-
-            var value = textInput.val();
-
+        function setFromTextInput(value) {
             if ((value === null || value === "") && allowEmpty) {
                 set(null);
                 move();
@@ -768,6 +796,7 @@
                     format = "rgb";
                 }
             }
+            currentPreferredFormat = format;
 
             var realColor = get({ format: format }),
                 displayColor = '';
@@ -824,6 +853,7 @@
                 drawPalette();
             }
 
+            updateOriginalInput();
             drawInitial();
         }
 
@@ -881,6 +911,13 @@
                 displayColor = color.toString(currentPreferredFormat);
                 // Update the selection palette with the current color
                 addColorToSelectionPalette(color);
+            }
+
+            if (color && colorizeElement) {
+                var textColor = (color.isLight() || color.getAlpha() < 0.4) ? 'black' : 'white';
+                colorizeElement.css('background-color', color.toRgbString()).css('color', textColor);
+            } else {
+                colorizeElement.css('background-color', colorizeElementInitialBackground).css('color', colorizeElementInitialColor);
             }
 
             if (isInput) {
@@ -1206,6 +1243,13 @@
         // Initializing a new instance of spectrum
         return this.spectrum("destroy").each(function () {
             var options = $.extend({}, $(this).data(), opts);
+            // Infer default type from input params and deprecated options
+            if (!options.type) {
+                if (options.flat) options.type = 'flat';
+                else if (!$(this).is('input')) options.type = 'noInput';
+                else if ($(this).attr('type') == 'color') options.type = 'color';
+                else options.type = 'component';
+            }
             var spect = spectrum(this, options);
             $(this).data(dataID, spect.id);
         });
@@ -1735,13 +1779,13 @@
 
             var hex = [
                 pad2(convertDecimalToHex(a)),
-                pad2(mathRound(r).toString(16)),
-                pad2(mathRound(g).toString(16)),
-                pad2(mathRound(b).toString(16))
-            ];
+            pad2(mathRound(r).toString(16)),
+            pad2(mathRound(g).toString(16)),
+            pad2(mathRound(b).toString(16))
+        ];
 
-            return hex.join("");
-        }
+        return hex.join("");
+    }
 
     // `equals`
     // Can be called with any tinycolor input
