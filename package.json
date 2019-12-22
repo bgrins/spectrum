@@ -4,16 +4,22 @@
     "version": "1.8.0",
     "main": "spectrum.js",
     "license": "MIT",
-    "keywords": ["jquery-plugin", "ecosystem:jquery", "color", "colorpicker", "ui"],
+    "keywords": [
+        "jquery-plugin",
+        "ecosystem:jquery",
+        "color",
+        "colorpicker",
+        "ui"
+    ],
     "homepage": "http://bgrins.github.com/spectrum",
     "repository": {
         "type": "git",
         "url": "https://bgrins.github.com/spectrum"
     },
     "author": {
-        "name" : "Brian Grinstead",
-        "email" : "briangrinstead@gmail.com",
-        "url" : "http://briangrinstead.com/"
+        "name": "Brian Grinstead",
+        "email": "briangrinstead@gmail.com",
+        "url": "http://briangrinstead.com/"
     },
     "devDependencies": {
         "grunt": "~0.4.0",
