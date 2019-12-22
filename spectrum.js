@@ -31,7 +31,7 @@
         color: false,
         flat: false,
         showInput: false,
-        allowEmpty: false,
+        allowEmpty: true,
         showButtons: true,
         clickoutFiresChange: true,
         showInitial: false,
