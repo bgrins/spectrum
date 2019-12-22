@@ -49,7 +49,7 @@
         togglePaletteLessText: "less",
         clearText: "Clear Color Selection",
         noColorSelectedText: "No Color Selected",
-        preferredFormat: false,
+        preferredFormat: 'hex',
         className: "", // Deprecated - use containerClassName and replacerClassName instead.
         containerClassName: "",
         replacerClassName: "",
