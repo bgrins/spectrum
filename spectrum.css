@@ -280,7 +280,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 .sp-top {
     margin-bottom: 10px;
 }
-.sp-color, .sp-hue, .sp-clear {
+.sp-color, .sp-hue, .sp-clear, .sp-val, .sp-sat {
     border-radius: 3px;
 }
 
@@ -442,10 +442,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 }
 
 /* Color Picker */
-.sp-palette {
-    *width: 220px;
-    max-width: 220px;
-}
 .sp-palette .sp-thumb-el {
     width: 16px;
     height: 16px;
@@ -470,6 +466,9 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     text-transform: capitalize;
     text-align: center;
     vertical-align: middle;
+    cursor: pointer;
+    color: #606c72;
+    font-weight: bold;
 }
 .sp-container button.sp-choose {
     background-color: #3cab3b;
@@ -482,6 +481,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 .sp-container button.sp-palette-toggle {
     width: 100%;
     background-color: #f3f3f3;
+    margin: 0;
 }
 
 
