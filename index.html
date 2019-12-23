@@ -24,7 +24,6 @@
     <h1><a href='http://bgrins.github.com/spectrum'>Spectrum</a></h1>
     <h2 class="subtitle"><em>The No Hassle jQuery Colorpicker</em></h2>
     <div id='links'>
-        <a href='https://github.com/bgrins/spectrum/releases/latest' class="btn btn-primary">Download Zip</a>
         View the <a href='http://github.com/bgrins/spectrum'>Source code</a>.
         Spectrum is a project by <a href='http://twitter.com/bgrins'>@bgrins</a>.
     </div>
@@ -35,142 +34,37 @@
         <div style='text-align:center;'>
 
             <input id="full" type='color' value='#276cb8' />
-            <pre id='code-heading'>&lt;input type='color' value='#276cb8' /&gt;</pre>
+            <pre>&lt;input type='color' value='#276cb8' /&gt;</pre>
+            <pre>$('input[type=color]').spectrum();</pre>
 
         </div>
-        <h2 id="why">Why A Colorpicker?</h2>
-        <p><em>I wasn't satisfied with the solutions available for colorpicking</em>.
-        Many of them included a ton of images, were hard to skin or customize, or were very large plugins.
-        Here are the goals I had when making a new one:
-        </p>
 
-        <h3 id="why-footprint" class='point'>Small Footprint</h3>
-        <div class='note'>see a working <a href='http://jsfiddle.net/bgrins/ctkY3/'>jsFiddle example</a></div>
-        <p>Just include the needed CSS and JavaScript files, and you are ready to go!  </p>
-<pre id='code-subheading'>
-&lt;script src='<a href='http://bgrins.github.com/spectrum/spectrum.js' target="_blank">spectrum.js</a>'&gt;&lt;/script&gt;
-&lt;link rel='stylesheet' href='<a href='http://bgrins.github.com/spectrum/spectrum.css' target="_blank">spectrum.css</a>' /&gt;
-</pre>
-        <p><strong>We don't need no stinkin' images!</strong></p>
-        <p>Nobody wants to add a bunch of code into their project.  Spectrum is contained in two files, and both are careful not to mess with your existing code.</p>
-
-        <h3 id="why-polyfill" class='point'>Polyfill</h3>
-        <p>I wanted an option for the most basic use case, a polyfill for the <a href='http://dev.w3.org/html5/markup/input.color.html'>input[type=color]</a> HTML5 control.
-           This mode needs to work without JavaScript enabled - and fallback to an input[type=text] like other HTML5 inputs.
-        </p>
-        <p>If you don't want this behavior to happen, but still want to use spectrum elsewhere on the page, you can set <code>$.fn.spectrum.load = false;</code> right after loading the script file.</p>
-
-
-        <h3 id="why-customizable" class='point'>Customizable</h3>
-        <p>Just because you don't <em>have</em> to change anything to get it to work, doesn't mean you <em>can't</em>!
-        It is easy to skin and customize the plugin with CSS, and there are a wide range of modes and options to explore.
-        </p>
-
-        <h3 id="why-mobile" class='point'>Mobile Support</h3>
-        <p>Along with desktop browser support, I wanted a mobile colorpicker that was touch friendly, worked in iOS and Android, and used standards
-            that maximize future mobile support.
-        </p>
-
-        <h3 id="why-devtools" class='point'>Devtools</h3>
-
-        <p>
-            Believe it or not, <strong>this colorpicker lives inside of Chrome, Firefox, and Safari devtools</strong> to make picking colors easier for web developers and designers.
-        </p>
-
-        <p>
-            When I started the project, I wrote about <a href="http://www.briangrinstead.com/blog/chrome-developer-tools-colorpicker-concept">developer tools concept colorpicker implementation</a>.  After that, I was <a href="http://groups.google.com/group/google-chrome-developer-tools/browse_thread/thread/4dd1e853b8051727/4549a6f0788885d4">contacted on the devtools mailing list</a> and got some initial feedback about the possibility of integrating it with devtools.  Then I pulled the jQuery dependency out of a branch and I submitted a patch to the WebKit project.
-        </p>
-
-        <p>
-            From there, I opened a <a href="https://bugs.webkit.org/show_bug.cgi?id=71262">bug</a> to start working on it Web Inspector.  50+ comments and 10 patches later, the case <a href="http://www.webkit.org/blog/1804/last-week-in-webkit-calculated-css-values-and-the-translate-attribute/">landed in WebKit</a>. Here is the <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=911702'>Firefox bug</a> where it was added.
-        </p>
-
-
-        <h2 id="modes">Modes</h2>
-
-        <h3 id="modes-custom" class='point'>Custom</h3>
-    <p>If you want to get more into the functionality, just create a normal input and initialize it as a normal jQuery plugin.
-    <strong>You can set a lot of options</strong> when initializing the colorpicker.
-    See the 'Options' section below.
-    </p>
-
+    <h2>Usage</h2>
+    <h3>CDN</h3>
 <pre>
-&lt;input type='text' id="custom" /&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker@2.0.0/spectrum.min.js"></script>
+&lt;link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker@2.0.0/spectrum.min.css">
 </pre>
+    <h3>npm</h3>
+    <pre>npm install spectrum-colorpicker</pre>
+    <h3>Bower</h3>
+    <pre>bower install spectrum</pre>
 
+    <h3>Download files</h3>
+    <a href='https://github.com/bgrins/spectrum/releases/latest' class="btn btn-primary">Download Zip</a>
 <pre>
-&lt;script&gt;
-$("#custom").spectrum({
-    color: "#f00"
-});
-&lt;/script&gt;
+&lt;script src="spectrum.min.js"></script>
+&lt;link rel="stylesheet" type="text/css" href="spectrum.min.css">
 </pre>
 
-        <div class='example'>
-            <input type='text' id='custom' />
-        </div>
 
-        <h3 id="modes-flat" class='point'>Flat</h3>
-        <p><strong>Flat</strong>
-            This means that it will always show up at full size,
-            and be positioned as an inline-block element.
-            Look to the left for a full sized flat picker.
-        </p>
 
-<pre>
-&lt;input type='text' id="flat" /&gt;
-&lt;br/&gt;
-&lt;input type='text' id="flat" /&gt;
-</pre>
-<pre>
-$("#flat").spectrum({
-    flat: true,
-    showInput: true
-});
-$("#flatClearable").spectrum({
-    flat: true,
-    showInput: true,
-    allowEmpty:true
-});
-</pre>
-
-        <div class='example'>
-            <input type='text' id='flat' value="#276cb8" />
-            <br/>
-            <input type='text' id='flatClearable' value="#276cb8" />
-        </div>
-
-        <h3 id="modes-input" class='point'>input[type=color]</h3>
-
-    <p>
-    If you just want to provide a polyfill for the native color input,
-    the easiest way is to create an input with the type of color.
-    Once a user's browser supports a native color control, it will opt to use their native control instead.
-    </p>
-    <p><strong>Unlike the other modes, your value must be a 6 character hex value starting with a '#'.</strong>  Why?  Because the spec <a href='http://dev.w3.org/html5/markup/input.color.html#input.color.attrs.value'>says so</a>, that's why.
-    </p>
-
-<pre id='code-subheading'>
-&lt;input type='color' name='color' /&gt;
-&lt;input type='color' name='color2' value='#3355cc' /&gt;
-</pre>
-    <div class='example'>
-    <form method="get">
-        <input type='color' name='color' />
-        <input type='color' name='color2' value='#3355cc' />
-        <input type='color' name='color3' value='#000000' />
-    </form>
-    </div>
-    <p><strong>That's it!</strong>
-    The field will degrade to a text input if the user does not have JavaScript enabled,
-    so that they will still be able to manually enter a color.  You don't need to add a single line of code.
-    </p>
 
     <h2 id="options">Options</h2>
 <pre>
 $("#picker").spectrum({
     color: <strong>tinycolor</strong>,
-    flat: bool,
+    type: sting, // text, component, color, flat
     showInput: bool,
     showInitial: bool,
     allowEmpty: bool,
@@ -325,7 +219,6 @@ $("#showPalette").spectrum({
 
         <h3 id="options-showPaletteOnly">Show Palette Only</h3>
         <div class='option-content'>
-            <div class='note'>see a working <a href='http://jsfiddle.net/bgrins/S45tW/'>jsFiddle example</a></div>
             <div class='description'>
             <p>If you'd like, spectrum can show the palettes you specify, and nothing else.</p>
             </div>
@@ -343,9 +236,6 @@ $("#showPaletteOnly").spectrum({
 });
             </pre>
             <div class='example'>
-            <span class='label label-result'>
-            Result
-            </span>
                 <input type='text' name='showPaletteOnly' id='showPaletteOnly'  />
                 <em data-label-for="showPaletteOnly" class='em-label'></em>
             </div>
@@ -379,9 +269,6 @@ $("#togglePaletteOnly").spectrum({
 });
             </pre>
             <div class='example'>
-            <span class='label label-result'>
-            Result
-            </span>
                 <input type='text' name='togglePaletteOnly' id='togglePaletteOnly'  />
             </div>
         </div>
@@ -481,9 +368,6 @@ $("#hideAfterPaletteSelect").spectrum({
 });
             </pre>
             <div class='example'>
-            <span class='label label-result'>
-            Result
-            </span>
                 <input type='text' name='hideAfterPaletteSelect' id='hideAfterPaletteSelect'  />
                 <em data-label-for="hideAfterPaletteSelect" class='em-label'></em>
             </div>
@@ -1102,6 +986,32 @@ $("input").spectrum("option", "showInput"); // false
 
         <h2 id="details">Nitty Gritty</h2>
 
+        <h3 id="modes-input" class='point'>input[type=color]</h3>
+
+    <p>
+    If you just want to provide a polyfill for the native color input,
+    the easiest way is to create an input with the type of color.
+    Once a user's browser supports a native color control, it will opt to use their native control instead.
+    </p>
+    <p><strong>Unlike the other modes, your value must be a 6 character hex value starting with a '#'.</strong>  Why?  Because the spec <a href='http://dev.w3.org/html5/markup/input.color.html#input.color.attrs.value'>says so</a>, that's why.
+    </p>
+
+<pre id='code-subheading'>
+&lt;input type='color' name='color' /&gt;
+&lt;input type='color' name='color2' value='#3355cc' /&gt;
+</pre>
+    <div class='example'>
+    <form method="get">
+        <input type='color' name='color' />
+        <input type='color' name='color2' value='#3355cc' />
+        <input type='color' name='color3' value='#000000' />
+    </form>
+    </div>
+    <p><strong>That's it!</strong>
+    The field will degrade to a text input if the user does not have JavaScript enabled,
+    so that they will still be able to manually enter a color.  You don't need to add a single line of code.
+    </p>
+
         <h3 id="details-browserSupport" class='point'>Browser Support</h3>
         <p>I wanted this to work in the latest and greatest browsers, but also target backwords compatibility and <strong>mobile support</strong>.
         Here are the currently supported browers:
@@ -1156,6 +1066,51 @@ t.toHslString() // "hsl(0, 100%, 50%)"
 t.toName()      // "red"
 </pre>
 
+        <h2 id="why">Why A Colorpicker?</h2>
+        <p><em>I wasn't satisfied with the solutions available for colorpicking</em>.
+        Many of them included a ton of images, were hard to skin or customize, or were very large plugins.
+        Here are the goals I had when making a new one:
+        </p>
+
+        <h3 id="why-footprint" class='point'>Small Footprint</h3>
+        <p>Just include the needed CSS and JavaScript files, and you are ready to go!  </p>
+<pre id='code-subheading'>
+&lt;script src='<a href='http://bgrins.github.com/spectrum/spectrum.js' target="_blank">spectrum.js</a>'&gt;&lt;/script&gt;
+&lt;link rel='stylesheet' href='<a href='http://bgrins.github.com/spectrum/spectrum.css' target="_blank">spectrum.css</a>' /&gt;
+</pre>
+        <p><strong>We don't need no stinkin' images!</strong></p>
+        <p>Nobody wants to add a bunch of code into their project.  Spectrum is contained in two files, and both are careful not to mess with your existing code.</p>
+
+        <h3 id="why-polyfill" class='point'>Polyfill</h3>
+        <p>I wanted an option for the most basic use case, a polyfill for the <a href='http://dev.w3.org/html5/markup/input.color.html'>input[type=color]</a> HTML5 control.
+           This mode needs to work without JavaScript enabled - and fallback to an input[type=text] like other HTML5 inputs.
+        </p>
+        <p>If you don't want this behavior to happen, but still want to use spectrum elsewhere on the page, you can set <code>$.fn.spectrum.load = false;</code> right after loading the script file.</p>
+
+
+        <h3 id="why-customizable" class='point'>Customizable</h3>
+        <p>Just because you don't <em>have</em> to change anything to get it to work, doesn't mean you <em>can't</em>!
+        It is easy to skin and customize the plugin with CSS, and there are a wide range of modes and options to explore.
+        </p>
+
+        <h3 id="why-mobile" class='point'>Mobile Support</h3>
+        <p>Along with desktop browser support, I wanted a mobile colorpicker that was touch friendly, worked in iOS and Android, and used standards
+            that maximize future mobile support.
+        </p>
+
+        <h3 id="why-devtools" class='point'>Devtools</h3>
+
+        <p>
+            Believe it or not, <strong>this colorpicker lives inside of Chrome, Firefox, and Safari devtools</strong> to make picking colors easier for web developers and designers.
+        </p>
+
+        <p>
+            When I started the project, I wrote about <a href="http://www.briangrinstead.com/blog/chrome-developer-tools-colorpicker-concept">developer tools concept colorpicker implementation</a>.  After that, I was <a href="http://groups.google.com/group/google-chrome-developer-tools/browse_thread/thread/4dd1e853b8051727/4549a6f0788885d4">contacted on the devtools mailing list</a> and got some initial feedback about the possibility of integrating it with devtools.  Then I pulled the jQuery dependency out of a branch and I submitted a patch to the WebKit project.
+        </p>
+
+        <p>
+            From there, I opened a <a href="https://bugs.webkit.org/show_bug.cgi?id=71262">bug</a> to start working on it Web Inspector.  50+ comments and 10 patches later, the case <a href="http://www.webkit.org/blog/1804/last-week-in-webkit-calculated-css-values-and-the-translate-attribute/">landed in WebKit</a>. Here is the <a href='https://bugzilla.mozilla.org/show_bug.cgi?id=911702'>Firefox bug</a> where it was added.
+        </p>
 
     <div class='footer'>
         <h2>Share</h2>
