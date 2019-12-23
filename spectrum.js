@@ -303,9 +303,9 @@
                 boundElement.addClass('spectrum sp-colorize').wrap('<span class="sp-original-input-container sp-colorize-container"></span>');
             } else if (type == 'component') {
                 boundElement.addClass('spectrum').wrap('<span class="sp-original-input-container"></span>');
-                var addOn = $("<div class='sp-colorize-container sp-add-on'> \
-                    <div class='sp-colorize'></div>                \
-                </div>");
+                var addOn = $(["<div class='sp-colorize-container sp-add-on'>",
+                    "<div class='sp-colorize'></div> ",
+                "</div>"].join(''));
                 boundElement.addClass('with-add-on').after(addOn);
                 addOn.width(boundElement.outerHeight())
                      .css('border-radius', boundElement.css('border-radius'))
@@ -315,7 +315,7 @@
             var originalInputContainer = boundElement.closest('.sp-original-input-container');
             ['padding-top', 'padding-bottom', 'border-radius', 'height'].forEach(function(cssProp) {
                 originalInputContainer.css(cssProp, boundElement.css(cssProp));
-            })
+            });
 
             colorizeElement = boundElement.parent().find('.sp-colorize');
             colorizeElementInitialColor = colorizeElement.css('color');
@@ -361,15 +361,15 @@
 
             // Handle user typed input
             [textInput, boundElement].forEach(function(input) {
-                input.change(function() { setFromTextInput (input.val()) });
+                input.change(function() { setFromTextInput(input.val()); });
                 input.on("paste", function () {
-                    setTimeout(function() { setFromTextInput (input.val()) }, 1);
+                    setTimeout(function() { setFromTextInput(input.val()); }, 1);
                 });
                 input.keydown(function (e) { if (e.keyCode == 13) {
                     setFromTextInput($(input).val());
                     if (input == boundElement) hide();
                 } });
-            })
+            });
 
             cancelButton.text(opts.cancelText);
             cancelButton.on("click.spectrum", function (e) {
