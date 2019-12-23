@@ -1,7 +1,7 @@
 {
     "name": "spectrum-colorpicker",
     "description": "Spectrum: the no hassle jQuery colorpicker",
-    "version": "1.8.0",
+    "version": "2.0.0",
     "main": "spectrum.js",
     "license": "MIT",
     "keywords": [
@@ -11,7 +11,7 @@
         "colorpicker",
         "ui"
     ],
-    "homepage": "http://bgrins.github.com/spectrum",
+    "homepage": "http://bgrins.github.io/spectrum",
     "repository": {
         "type": "git",
         "url": "https://bgrins.github.com/spectrum"
