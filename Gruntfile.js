@@ -36,8 +36,19 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'build/spectrum-min.js': ['spectrum.js']
+          'dist/spectrum.min.js': ['spectrum.js']
         }
+      }
+    },
+
+    cssmin: {
+      target: {
+        files: [{
+          expand: true,
+          src: ['spectrum.css'],
+          dest: 'dist',
+          ext: '.min.css'
+        }]
       }
     }
 
@@ -47,6 +58,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
 
   // Testing tasks
@@ -59,6 +71,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['test']);
 
   //Build Task.
-  grunt.registerTask('build', ['test', 'uglify']);
+  grunt.registerTask('build', ['test', 'uglify', 'cssmin']);
 
 };
