@@ -179,6 +179,7 @@
         if (o.locale != 'en' && $.spectrum.localization[o.locale]) {
             o = $.extend({}, $.spectrum.localization[o.locale], o);
         }
+        console.log("init", o);
         var opts = $.extend({}, defaultOpts, o);
 
         opts.callbacks = {
@@ -2414,3 +2415,404 @@
     });
 
 });
+
+// Spectrum Colorpicker
+// Arabic (ar) localization
+// https://github.com/bgrins/spectrum
+(function ( $ ) {
+
+  var localization = $.spectrum.localization["ar"] = {
+      cancelText: "إلغاء",
+      chooseText: "إختار",
+      clearText: "إرجاع الألوان على ما كانت",
+      noColorSelectedText: "لم تختار أي لون",
+      togglePaletteMoreText: "أكثر",
+      togglePaletteLessText: "أقل"
+  };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Catalan (ca) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["ca"] = {
+        cancelText: "Cancel·lar",
+        chooseText: "Escollir",
+        clearText: "Esborrar color seleccionat",
+        noColorSelectedText: "Cap color seleccionat",
+        togglePaletteMoreText: "Més",
+        togglePaletteLessText: "Menys"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Czech (cs) localization
+// https://github.com/bgrins/spectrum
+// author localization cs Pavel Laupe Dvorak pavel@pavel-dvorak.cz
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["cs"] = {
+        cancelText: "zrušit",
+        chooseText: "vybrat",
+        clearText: "Resetovat výměr barev",
+        noColorSelectedText: "Žádná barva nebyla vybrána",
+        togglePaletteMoreText: "více",
+        togglePaletteLessText: "méně"
+    };
+
+})( jQuery );
+// Spectrum Colorpicker
+// German (de) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["de"] = {
+        cancelText: "Abbrechen",
+        chooseText: "Wählen",
+        clearText: "Farbauswahl zurücksetzen",
+        noColorSelectedText: "Keine Farbe ausgewählt",
+        togglePaletteMoreText: "Mehr",
+        togglePaletteLessText: "Weniger"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Danish (dk) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["dk"] = {
+		cancelText: "annuller",
+		chooseText: "Vælg"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Spanish (es) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["es"] = {
+        cancelText: "Cancelar",
+        chooseText: "Elegir",
+        clearText: "Borrar color seleccionado",
+        noColorSelectedText: "Ningún color seleccionado",
+        togglePaletteMoreText: "Más",
+        togglePaletteLessText: "Menos"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Persian (fa) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["fa"] = {
+        cancelText: "لغو",
+        chooseText: "انتخاب",
+        clearText: "تنظیم مجدد رنگ",
+        noColorSelectedText: "هیچ رنگی انتخاب نشده است!",
+        togglePaletteMoreText: "بیشتر",
+        togglePaletteLessText: "کمتر"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Finnish (fi) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["fi"] = {
+        cancelText: "Kumoa",
+        chooseText: "Valitse"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// French (fr) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["fr"] = {
+        cancelText: "Annuler",
+        chooseText: "Valider",
+        clearText: "Effacer couleur sélectionnée",
+        noColorSelectedText: "Aucune couleur sélectionnée",
+        togglePaletteMoreText: "Plus",
+        togglePaletteLessText: "Moins"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Greek (gr) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["gr"] = {
+        cancelText: "Ακύρωση",
+        chooseText: "Επιλογή",
+        clearText: "Καθαρισμός επιλεγμένου χρώματος",
+        noColorSelectedText: "Δεν έχει επιλεχθεί κάποιο χρώμα",
+        togglePaletteMoreText: "Περισσότερα",
+        togglePaletteLessText: "Λιγότερα"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Hebrew (he) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["he"] = {
+        cancelText: "בטל בחירה",
+        chooseText: "בחר צבע",
+        clearText: "אפס בחירה",
+        noColorSelectedText: "לא נבחר צבע",
+        togglePaletteMoreText: "עוד צבעים",
+        togglePaletteLessText: "פחות צבעים"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Croatian (hr) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["hr"] = {
+        cancelText: "Odustani",
+        chooseText: "Odaberi",
+        clearText: "Poništi odabir",
+        noColorSelectedText: "Niti jedna boja nije odabrana",
+        togglePaletteMoreText: "Više",
+        togglePaletteLessText: "Manje"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Indonesia/Bahasa Indonesia (id) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["id"] = {
+        cancelText: "Batal",
+        chooseText: "Pilih",
+        clearText: "Hapus Pilihan Warna",
+        noColorSelectedText: "Warna Tidak Dipilih",
+        togglePaletteMoreText: "tambah",
+        togglePaletteLessText: "kurangi"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Italian (it) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["it"] = {
+		cancelText: "annulla",
+		chooseText: "scegli",
+		clearText: "Annulla selezione colore",
+		noColorSelectedText: "Nessun colore selezionato"
+	};
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Japanese (ja) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["ja"] = {
+        cancelText: "中止",
+        chooseText: "選択"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Korean (ko) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["ko"] = {
+        cancelText: "취소",
+        chooseText: "선택",
+        clearText: "선택 초기화",
+        noColorSelectedText: "선택된 색상 없음",
+        togglePaletteMoreText: "더보기",
+        togglePaletteLessText: "줄이기"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Lithuanian (lt) localization
+// https://github.com/liesislukas
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["lt"] = {
+        cancelText: "Atšaukti",
+        chooseText: "Pasirinkti",
+        clearText: "Išvalyti pasirinkimą",
+        noColorSelectedText: "Spalva nepasirinkta",
+        togglePaletteMoreText: "Daugiau",
+        togglePaletteLessText: "Mažiau"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Dutch (nl-nl) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["nl-nl"] = {
+        cancelText: "Annuleer",
+        chooseText: "Kies",
+        clearText: "Wis kleur selectie",
+        togglePaletteMoreText: 'Meer',
+        togglePaletteLessText: 'Minder'
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Polish (pl) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["pl"] = {
+        cancelText: "Anuluj",
+        chooseText: "Wybierz",
+        clearText: "Usuń wybór koloru",
+        noColorSelectedText: "Nie wybrano koloru",
+        togglePaletteMoreText: "Więcej",
+        togglePaletteLessText: "Mniej"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Brazilian (pt-br) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["pt-br"] = {
+        cancelText: "Cancelar",
+        chooseText: "Escolher",
+        clearText: "Limpar cor selecionada",
+        noColorSelectedText: "Nenhuma cor selecionada",
+        togglePaletteMoreText: "Mais",
+        togglePaletteLessText: "Menos"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Russian (ru) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["ru"] = {
+        cancelText: "Отмена",
+        chooseText: "Выбрать",
+        clearText: "Сбросить",
+        noColorSelectedText: "Цвет не выбран",
+        togglePaletteMoreText: "Ещё",
+        togglePaletteLessText: "Скрыть"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Swedish (sv) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["sv"] = {
+        cancelText: "Avbryt",
+        chooseText: "Välj"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Turkish (tr) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["tr"] = {
+		cancelText: "iptal",
+		chooseText: "tamam"
+	};
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Simplified Chinese (zh-cn) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["zh-cn"] = {
+        cancelText: "取消",
+        chooseText: "选择",
+        clearText: "清除",
+        togglePaletteMoreText: "更多选项",
+        togglePaletteLessText: "隐藏",
+        noColorSelectedText: "尚未选择任何颜色"
+    };
+
+})( jQuery );
+
+// Spectrum Colorpicker
+// Traditional Chinese (zh-tw) localization
+// https://github.com/bgrins/spectrum
+
+(function ( $ ) {
+
+    var localization = $.spectrum.localization["zh-tw"] = {
+        cancelText: "取消",
+        chooseText: "選擇",
+        clearText: "清除",
+        togglePaletteMoreText: "更多選項",
+        togglePaletteLessText: "隱藏",
+        noColorSelectedText: "尚未選擇任何顏色"
+    };
+
+})( jQuery );

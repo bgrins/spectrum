@@ -400,9 +400,8 @@ $("#custom").spectrum({
 });
 
 $("#buttonText").spectrum({
-    allowEmpty:true,
-    chooseText: "Alright",
-    cancelText: "No way"
+    locale: 'fr',
+    chooseText: "OK!"
 });
 
 

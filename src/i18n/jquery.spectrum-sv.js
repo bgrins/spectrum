@@ -9,6 +9,4 @@
         chooseText: "Välj"
     };
 
-    $.extend($.fn.spectrum.defaults, localization);
-
 })( jQuery );

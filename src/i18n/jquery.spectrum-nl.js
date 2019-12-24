@@ -12,6 +12,4 @@
         togglePaletteLessText: 'Minder'
     };
 
-    $.extend($.fn.spectrum.defaults, localization);
-
 })( jQuery );

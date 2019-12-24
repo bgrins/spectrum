@@ -13,6 +13,4 @@
         togglePaletteLessText: "kurangi"
     };
 
-    $.extend($.fn.spectrum.defaults, localization);
-
 })( jQuery );

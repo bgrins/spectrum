@@ -13,6 +13,4 @@
         togglePaletteLessText: "Manje"
     };
 
-    $.extend($.fn.spectrum.defaults, localization);
-
 })( jQuery );

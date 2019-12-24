@@ -9,6 +9,4 @@
         chooseText: "選択"
     };
 
-    $.extend($.fn.spectrum.defaults, localization);
-
 })( jQuery );

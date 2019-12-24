@@ -103,16 +103,21 @@ $("#picker").spectrum({
     togglePaletteOnly: bool,
     showSelectionPalette: bool,
     clickoutFiresChange: bool,
-    cancelText: string,
-    chooseText: string,
-    togglePaletteMoreText: string,
-    togglePaletteLessText: string,
     containerClassName: string,
     replacerClassName: string,
     preferredFormat: string,
     maxSelectionSize: int,
     palette: [[string]],
-    selectionPalette: [string]
+    selectionPalette: [string],
+    // specify locale
+    locale: string,
+    // or directly change the translations
+    cancelText: string,
+    chooseText: string,
+    togglePaletteMoreText: string,
+    togglePaletteLessText: string,
+    clearText: string,
+    noColorSelectedText: string,
 });
 </pre>
         <div class="alert alert-info">
@@ -476,17 +481,15 @@ $("#showInputInitialClear").spectrum({
                     <input type='text' name='showInputInitialClear' id='showInputInitialClear' value='' />
             </div>
         </div>
-        <h3 id="options-buttonText">Button Text</h3>
+        <h3 id="options-buttonText">Internationalisation</h3>
         <div class='option-content'>
             <div class='description'>
-                <p>You can set the button's text using <code>cancelText</code> and <code>chooseText</code> properties.</p>
+                <p>Specify `locale` so choose a language. If not specified, spectrum will try to use the navigator language. Alternatly, you can directly specify translated text with <code>cancelText</code>, <code>chooseText</code>, <code>togglePaletteMoreText</code>, <code>togglePaletteLessText</code>, <code>clearText</code> and <code>noColorSelectedText</code> properties.</p>
             </div>
-
             <pre>
 $("#buttonText").spectrum({
-    allowEmpty:true,
-    chooseText: "Alright",
-    cancelText: "No way"
+    locale: "fr"
+    chooseText: "OK!" // use 'OK' instead of 'Valider'
 });
             </pre>
 

@@ -13,6 +13,4 @@
         togglePaletteLessText: "줄이기"
     };
 
-    $.extend($.fn.spectrum.defaults, localization);
-
 })( jQuery );

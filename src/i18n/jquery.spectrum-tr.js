@@ -9,6 +9,4 @@
 		chooseText: "tamam"
 	};
 
-    $.extend($.fn.spectrum.defaults, localization);
-
 })( jQuery );

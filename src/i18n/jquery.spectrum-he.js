@@ -13,6 +13,4 @@
         togglePaletteLessText: "פחות צבעים"
     };
 
-    $.extend($.fn.spectrum.defaults, localization);
-
 })( jQuery );

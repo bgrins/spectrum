@@ -13,6 +13,4 @@
         togglePaletteLessText: "Mažiau"
     };
 
-    $.extend($.fn.spectrum.defaults, localization);
-
 })( jQuery );

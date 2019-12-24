@@ -11,6 +11,4 @@
 		noColorSelectedText: "Nessun colore selezionato"
 	};
 
-    $.extend($.fn.spectrum.defaults, localization);
-
 })( jQuery );

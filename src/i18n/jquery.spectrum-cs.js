@@ -14,6 +14,4 @@
         togglePaletteLessText: "méně"
     };
 
-    $.extend($.fn.spectrum.defaults, localization);
-
 })( jQuery );

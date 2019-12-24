@@ -13,6 +13,4 @@
         togglePaletteLessText: "Menys"
     };
 
-    $.extend($.fn.spectrum.defaults, localization);
-
 })( jQuery );

@@ -13,6 +13,4 @@
         noColorSelectedText: "尚未選擇任何顏色"
     };
 
-    $.extend($.fn.spectrum.defaults, localization);
-
 })( jQuery );
