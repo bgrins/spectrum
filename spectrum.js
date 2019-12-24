@@ -251,7 +251,8 @@
             allowEmpty = opts.allowEmpty && !isInputTypeColor;
 
         // Element to be updated with the input color. Populated in initialize method
-        var colorizeElement = null,
+        var originalInputContainer = null,
+            colorizeElement = null,
             colorizeElementInitialColor = null,
             colorizeElementInitialBackground = null;
 
@@ -297,25 +298,28 @@
 
             applyOptions();
 
+            originalInputContainer = $('<span class="sp-original-input-container"></span>');
+            ['margin'].forEach(function(cssProp) {
+                originalInputContainer.css(cssProp, boundElement.css(cssProp));
+            });
+            // inline-flex by default, switching to flex if needed
+            if (boundElement.css('display') == 'block') originalInputContainer.css('display', 'flex');
+
             if (shouldReplace) {
                 boundElement.after(replacer).hide();
             } else if (type == 'text') {
-                boundElement.addClass('spectrum sp-colorize').wrap('<span class="sp-original-input-container sp-colorize-container"></span>');
+                originalInputContainer.addClass('sp-colorize-container')
+                boundElement.addClass('spectrum sp-colorize').wrap(originalInputContainer);
             } else if (type == 'component') {
-                boundElement.addClass('spectrum').wrap('<span class="sp-original-input-container"></span>');
+                boundElement.addClass('spectrum').wrap(originalInputContainer);
                 var addOn = $(["<div class='sp-colorize-container sp-add-on'>",
                     "<div class='sp-colorize'></div> ",
                 "</div>"].join(''));
-                boundElement.addClass('with-add-on').after(addOn);
-                addOn.width(boundElement.outerHeight())
+                addOn.width(boundElement.outerHeight() + 'px')
                      .css('border-radius', boundElement.css('border-radius'))
                      .css('border', boundElement.css('border'));
+                boundElement.addClass('with-add-on').before(addOn);
             }
-
-            var originalInputContainer = boundElement.closest('.sp-original-input-container');
-            ['padding-top', 'padding-bottom', 'border-radius', 'height', 'margin'].forEach(function(cssProp) {
-                originalInputContainer.css(cssProp, boundElement.css(cssProp));
-            });
 
             colorizeElement = boundElement.parent().find('.sp-colorize');
             colorizeElementInitialColor = colorizeElement.css('color');

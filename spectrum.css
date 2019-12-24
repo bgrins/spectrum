@@ -18,24 +18,23 @@ License: MIT
 }
 .sp-original-input-container {
     position: relative;
+    display: inline-flex;
 }
 .sp-original-input-container input {
     margin: 0 !important;
 }
-.sp-original-input-container input + .sp-add-on {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    border-top: none !important;
-    border-bottom: none !important;
+.sp-original-input-container .sp-add-on {
+    width: 40px;
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
 }
 input.spectrum.with-add-on {
-    padding-left: 45px;
+    /*padding-left: 45px;*/
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 0;
 }
-.sp-original-input-container input + .sp-add-on .sp-colorize {
+.sp-original-input-container .sp-add-on .sp-colorize {
     height: 100%;
     width: 100%;
     border-radius: inherit;
