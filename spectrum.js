@@ -313,7 +313,7 @@
             }
 
             var originalInputContainer = boundElement.closest('.sp-original-input-container');
-            ['padding-top', 'padding-bottom', 'border-radius', 'height'].forEach(function(cssProp) {
+            ['padding-top', 'padding-bottom', 'border-radius', 'height', 'margin'].forEach(function(cssProp) {
                 originalInputContainer.css(cssProp, boundElement.css(cssProp));
             });
 
@@ -962,10 +962,18 @@
         }
 
         function destroy() {
-            boundElement.show();
+            boundElement.show().removeClass('spectrum with-add-on sp-colorize');
             offsetElement.off("click.spectrum touchstart.spectrum");
             container.remove();
             replacer.remove();
+            if (colorizeElement) {
+                colorizeElement.css('background-color', colorizeElementInitialBackground)
+                               .css('color', colorizeElementInitialColor);
+            }
+            var originalInputContainer = boundElement.closest('.sp-original-input-container');
+            if (originalInputContainer.length > 0) {
+                originalInputContainer.after(boundElement).remove();
+            }
             spectrums[spect.id] = null;
         }
 
