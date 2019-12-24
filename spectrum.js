@@ -1256,12 +1256,11 @@
         return this.spectrum("destroy").each(function () {
             var options = $.extend({}, $(this).data(), opts);
             // Infer default type from input params and deprecated options
-            if (!options.type) {
-                if (options.flat) options.type = 'flat';
-                else if (!$(this).is('input')) options.type = 'noInput';
-                else if ($(this).attr('type') == 'color') options.type = 'color';
-                else options.type = 'component';
-            }
+            if (!$(this).is('input')) options.type = 'noInput';
+            else if (options.flat || options.type == "flat") options.type = 'flat';
+            else if ($(this).attr('type') == 'color') options.type = 'color';
+            else options.type = options.type || 'component';
+
             var spect = spectrum(this, options);
             $(this).data(dataID, spect.id);
         });
