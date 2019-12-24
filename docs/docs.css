@@ -4,8 +4,8 @@
   font-style: normal;
   font-weight: 400;
   src: local('Nunito Regular'), local('Nunito-Regular'),
-       url('../fonts/nunito-v11-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('../fonts/nunito-v11-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+       url('fonts/nunito-v11-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('fonts/nunito-v11-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* nunito-600 - latin */
@@ -14,8 +14,8 @@
   font-style: normal;
   font-weight: 600;
   src: local('Nunito SemiBold'), local('Nunito-SemiBold'),
-       url('../fonts/nunito-v11-latin-600.woff2') format('woff2'), /* Super Modern Browsers */
-       url('../fonts/nunito-v11-latin-600.woff') format('woff'); /* Modern Browsers */
+       url('fonts/nunito-v11-latin-600.woff2') format('woff2'), /* Super Modern Browsers */
+       url('fonts/nunito-v11-latin-600.woff') format('woff'); /* Modern Browsers */
 }
 
 /* nunito-800 - latin */
@@ -24,8 +24,8 @@
   font-style: normal;
   font-weight: 800;
   src: local('Nunito ExtraBold'), local('Nunito-ExtraBold'),
-       url('../fonts/nunito-v11-latin-800.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('../fonts/nunito-v11-latin-800.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+       url('fonts/nunito-v11-latin-800.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('fonts/nunito-v11-latin-800.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 :root {

@@ -7,7 +7,7 @@ require.config({
 
 asyncTest ("requirejs", function() {
   require([
-    "../spectrum"
+    "../src/spectrum"
   ], function(spectrum) {
     ok ($.fn.spectrum, "Plugin has been loaded");
 

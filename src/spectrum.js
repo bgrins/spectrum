@@ -483,7 +483,6 @@
             }, dragStart, dragStop);
 
             if (!!initialColor) {
-                console.log("initial color", initialColor)
                 set(initialColor);
 
                 // In case color was black - update the preview UI and set the format
@@ -627,7 +626,6 @@
 
         function setFromTextInput(value) {
             if (abortNextInputChange) { abortNextInputChange = false; return; }
-            console.log("setFromTextInput", value);
             if ((value === null || value === "") && allowEmpty) {
                 set(null);
                 move();
@@ -921,7 +919,6 @@
         }
 
         function updateOriginalInput(fireCallback) {
-            console.log("updateOriginalInput")
             var color = get(),
                 displayColor = '',
                 hasChanged = !tinycolor.equals(color, colorOnShow);
