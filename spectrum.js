@@ -852,12 +852,22 @@
             if (opts.showInput) {
                 textInput.val(displayColor);
             }
+            boundElement.val(displayColor);
+            if (opts.type == "text" || opts.type == "component") {
+                var color = realColor;
+                if (color && colorizeElement) {
+                    var textColor = (color.isLight() || color.getAlpha() < 0.4) ? 'black' : 'white';
+                    colorizeElement.css('background-color', color.toRgbString()).css('color', textColor);
+                } else {
+                    colorizeElement.css('background-color', colorizeElementInitialBackground)
+                                   .css('color', colorizeElementInitialColor);
+                }
+            }
 
             if (opts.showPalette) {
                 drawPalette();
             }
 
-            updateOriginalInput();
             drawInitial();
         }
 
@@ -915,17 +925,6 @@
                 displayColor = color.toString(currentPreferredFormat);
                 // Update the selection palette with the current color
                 addColorToSelectionPalette(color);
-            }
-
-            if (color && colorizeElement) {
-                var textColor = (color.isLight() || color.getAlpha() < 0.4) ? 'black' : 'white';
-                colorizeElement.css('background-color', color.toRgbString()).css('color', textColor);
-            } else {
-                colorizeElement.css('background-color', colorizeElementInitialBackground).css('color', colorizeElementInitialColor);
-            }
-
-            if (isInput) {
-                boundElement.val(displayColor);
             }
 
             if (fireCallback && hasChanged) {
