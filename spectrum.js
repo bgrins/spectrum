@@ -36,7 +36,7 @@
         showButtons: true,
         clickoutFiresChange: true,
         showInitial: false,
-        showPalette: false,
+        showPalette: true,
         showPaletteOnly: false,
         hideAfterPaletteSelect: false,
         togglePaletteOnly: false,
@@ -54,7 +54,7 @@
         className: "", // Deprecated - use containerClassName and replacerClassName instead.
         containerClassName: "",
         replacerClassName: "",
-        showAlpha: false,
+        showAlpha: true,
         theme: "sp-light",
         palette: [
             ["#000000", "#434343", "#666666", "#999999", "#b7b7b7", "#cccccc", "#d9d9d9", "#efefef", "#f3f3f3", "#ffffff"],
