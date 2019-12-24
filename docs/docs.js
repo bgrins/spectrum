@@ -1,10 +1,5 @@
-
 function updateBorders(color) {
-    var hexColor = "transparent";
-    if(color) {
-        hexColor = color.toHexString();
-    }
-    $("#docs-content").css("border-color", hexColor);
+    // do nothing
 }
 
 $(function() {
@@ -23,14 +18,11 @@ $('#toc').toc({
     }
 });
 
-var colorpickerInput = $("#full");
-colorpickerInput.change(function() {
-    document.documentElement.style.setProperty('--primary-color',  $(this).val());
-});
-colorpickerInput.spectrum({});
+// ----- CONFIGURATOR -----
+$('.configurator-renderer input').spectrum();
+var colorpickerInput = $("#color-picker");
+
 initConfigurator();
-var firstUpdate = true;
-var initialConfig = {};
 updateColorPickerAndJavascriptCode();
 
 $('.configurator-container').find('input[type=radio], input[type=checkbox]').click(function() {
@@ -47,7 +39,10 @@ function initConfigurator() {
 }
 
 function updateColorPickerAndJavascriptCode() {
-
+    colorpickerInput.off();
+    colorpickerInput.change(function() {
+        document.documentElement.style.setProperty('--primary-color',  $(this).val());
+    });
     var options = {
         type: $('.configurator-container input[name=type]:checked').val()
     };
@@ -57,17 +52,10 @@ function updateColorPickerAndJavascriptCode() {
         options[optionName] = value;
     })
 
-    if (firstUpdate) {
-        initialConfig = options;
-        firstUpdate = false;
-    }
-
-    colorpickerInput.spectrum("destroy");
-
     var javascriptCode = "$('#color-picker').spectrum({";
     var optionsCount = 0;
     for(var i in options) {
-        if (options[i] != initialConfig[i]) {
+        if (options[i] != $.fn.spectrum.defaults[i]) {
             optionsCount++;
             javascriptCode += "\n  " + i + ': "' + options[i] + '",';
         }
@@ -82,8 +70,7 @@ function updateColorPickerAndJavascriptCode() {
 
     colorpickerInput.spectrum(options);
 }
-
-
+// ----- END CONFIGURATOR -----
 
 $("#hideButtons").spectrum({
     showButtons: false,

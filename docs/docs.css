@@ -190,11 +190,10 @@ input {
   margin-right: 10px;
   background-color: white;
 }
-
 .configurator-container {
   background-color: #f8f8f8;
   padding: 1rem;
-  border: 2px solid #dddfe0;
+  /*border: 2px solid #dddfe0;*/
   padding: 1rem;
   border-radius: 5px;
   display: flex;
