@@ -19,6 +19,9 @@ License: MIT
 .sp-original-input-container {
     position: relative;
 }
+.sp-original-input-container input {
+    margin: 0 !important;
+}
 .sp-original-input-container input + .sp-add-on {
     position: absolute;
     left: 0;
@@ -36,7 +39,6 @@ input.spectrum.with-add-on {
     height: 100%;
     width: 100%;
     border-radius: inherit;
-    backgrou
 }
 .sp-colorize-container {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==)
@@ -100,7 +102,7 @@ input.spectrum.with-add-on {
 }
 
 .sp-alpha-enabled .sp-top {
-    margin-bottom: 28px;
+    margin-bottom: 28px !important;
 }
 .sp-alpha-enabled .sp-alpha {
     display: block;
@@ -288,6 +290,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 */
 
 .sp-container {
+    display: inline-flex;
     border-radius: 0;
     background-color: white;
     padding: 0;
@@ -311,12 +314,14 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 
 .sp-input-container {
     margin-top: -5px;
-    margin-bottom: 10px;
 }
 .sp-input-container.sp-cf,
 .sp-initial.sp-thumb.sp-cf,
 .sp-button-container.sp-cf {
     height: 25px;
+}
+.sp-picker-container .sp-cf {
+    margin-bottom: 10px;
 }
 
 .sp-palette-row-initial > span:first-child {
@@ -349,15 +354,12 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     background: #fdd;
 }
 .sp-picker-container , .sp-palette-container {
-    float:left;
     position: relative;
     padding: 10px;
-    padding-bottom: 300px;
-    margin-bottom: -290px;
 }
 .sp-picker-container {
     width: 200px;
-    border-left: solid 1px #fff;
+    padding-bottom: 0;
 }
 
 /* Palettes */
@@ -425,9 +427,9 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     cursor:pointer;
     display:inline-block;
     border-radius: 3px;
-    border: 1px solid #ccc;
+    border: 1px solid #aaa;
     color: #666;
-    transition: color .3s, border-color .3s;
+    transition: border-color .3s;
     vertical-align: middle;
     width: 3rem;
     height: 1.5rem;
@@ -462,8 +464,10 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     transition: background-color .2s;
 }
 .sp-preview-inner.sp-clear-display {
-    width: 1rem;
-    margin-left: .3rem;
+    /*width: 20px;
+    margin-left: 10px;
+    margin-top: 2px;*/
+    display: none;
 }
 
 /* Color Picker */
@@ -473,10 +477,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     margin: 3px;
     border: none;
     border-radius: 3px;
-}
-
-.sp-container {
-    padding-bottom:0;
 }
 
 
