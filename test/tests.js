@@ -184,19 +184,11 @@ test( "Default Color Is Set By Input Value", function() {
   equal ( noColor.spectrum("get").toHex(), "000000", "Defaults to black with an invalid color");
 
   var noValue = $("<input id='spec' />").spectrum();
-  equal ( noValue.spectrum("get").toHex(), "000000", "Defaults to black with no value set");
-
-  var noValueHex3 = $("<input id='spec' />").spectrum({
-    preferredFormat: "hex3"
-  });
-  equal ( noValueHex3.spectrum("get").toHex(true), "000", "Defaults to 3 char hex with no value set");
-  equal ( noValueHex3.spectrum("get").toString(), "#000", "Defaults to 3 char hex with no value set");
-
+  equal ( noValue.spectrum("get"), null, "Defaults to null with no value set");
 
   red.spectrum("destroy");
   noColor.spectrum("destroy");
   noValue.spectrum("destroy");
-  noValueHex3.spectrum("destroy");
 });
 
 module("Palettes");
@@ -379,7 +371,7 @@ test ("allowEmpty", function() {
   ok(!el.spectrum("get"), "input[type] color does not allow null values");
   el.spectrum("destroy");
 
-  el = $("<input value='red' />").spectrum();
+  el = $("<input value='red' />").spectrum({allowEmpty: false});
   el.spectrum("set", null);
   ok(el.spectrum("get"), "input[type] color does not allow null values");
   el.spectrum("destroy");
@@ -410,6 +402,7 @@ test ("clickoutFiresChange", function() {
 
 test ("replacerClassName", function() {
   var el = $("<input />").appendTo("body").spectrum({
+    type: 'color',
     replacerClassName: "test"
   });
   ok (el.next(".sp-replacer").hasClass("test"), "Replacer class has been applied");
@@ -464,16 +457,16 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
   });
 
   var container = $("<div id='c' />").appendTo("body");
-  var appendToOther = $("<input />").spectrum({
+  var appendToOther = $("<input  type='color'/>").spectrum({
     appendTo: container
   });
 
-  var appendToParent = $("<input />").appendTo("#c").spectrum({
+  var appendToParent = $("<input type='color'/>").appendTo("#c").spectrum({
     appendTo: "parent"
   });
 
 
-  var appendToOtherFlat = $("<input />").spectrum({
+  var appendToOtherFlat = $("<input  type='color'/>").spectrum({
     appendTo: container,
     flat: true
   });
@@ -509,6 +502,7 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
 test ("Show Input works as expected", function() {
   var el = $("<input />").spectrum({
     showInput: true,
+    allowEmpty: false,
     color: "red"
   });
   var input = el.spectrum("container").find(".sp-input");
@@ -531,12 +525,12 @@ test ("Toggle Picker Area button works as expected", function() {
       el = $("<input />").appendTo(div);
   el.spectrum({
     showInput: true,
-	showPaletteOnly: true,
+    showPaletteOnly: true,
     togglePaletteOnly: true,
     color: "red"
   });
 
-  var spectrum = el.spectrum("container").show(),
+  var spectrum = el.spectrum("container"),
       toggle = spectrum.find(".sp-palette-toggle"),
       picker = spectrum.find(".sp-picker-container"),
       palette = spectrum.find(".sp-palette-container");
@@ -581,11 +575,9 @@ test ("Tooltip is formatted based on preferred format", function() {
     }).toArray().join(" ");
   }
 
-  equal (getTitlesString(), "rgb(255, 0, 0) rgba(255, 255, 255, 0.5) rgb(0, 0, 255)", "Titles use rgb format by default");
-
-  el.spectrum("option", "preferredFormat", "hex");
-  equal (getTitlesString(), "#ff0000 #ffffff #0000ff", "Titles are updated to hex");
-  equal (el.spectrum("get").toString(), "#ff0000", "Value's format is updated");
+  el.spectrum("option", "preferredFormat", "rgb");
+  equal (getTitlesString(), "rgb(255, 0, 0) rgba(255, 255, 255, 0.5) rgb(0, 0, 255)", "Titles are updated to rgb");
+  equal (el.spectrum("get").toString(), "rgb(255, 0, 0)", "Value's format is updated");
 
   el.spectrum("option", "preferredFormat", "hex6");
   equal (getTitlesString(), "#ff0000 #ffffff #0000ff", "Titles are updated to hex6");

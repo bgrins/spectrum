@@ -50,7 +50,7 @@
         togglePaletteLessText: "less",
         clearText: "Clear Color Selection",
         noColorSelectedText: "No Color Selected",
-        preferredFormat: 'hex',
+        preferredFormat: "name",
         className: "", // Deprecated - use containerClassName and replacerClassName instead.
         containerClassName: "",
         replacerClassName: "",
@@ -215,6 +215,7 @@
             selectionPalette = opts.selectionPalette.slice(0),
             maxSelectionSize = opts.maxSelectionSize,
             draggingClass = "sp-dragging",
+            abortNextInputChange = false,
             shiftMovementDirection = null;
 
         var doc = element.ownerDocument,
@@ -308,7 +309,7 @@
             if (shouldReplace) {
                 boundElement.after(replacer).hide();
             } else if (type == 'text') {
-                originalInputContainer.addClass('sp-colorize-container')
+                originalInputContainer.addClass('sp-colorize-container');
                 boundElement.addClass('spectrum sp-colorize').wrap(originalInputContainer);
             } else if (type == 'component') {
                 boundElement.addClass('spectrum').wrap(originalInputContainer);
@@ -482,12 +483,13 @@
             }, dragStart, dragStop);
 
             if (!!initialColor) {
+                console.log("initial color", initialColor)
                 set(initialColor);
 
                 // In case color was black - update the preview UI and set the format
                 // since the set function will not run (default color is black).
                 updateUI();
-                currentPreferredFormat = opts.preferredFormat || tinycolor(initialColor).format;
+                currentPreferredFormat = tinycolor(initialColor).format || opts.preferredFormat;
                 addColorToSelectionPalette(initialColor);
             }
             else {
@@ -624,6 +626,8 @@
         }
 
         function setFromTextInput(value) {
+            if (abortNextInputChange) { abortNextInputChange = false; return; }
+            console.log("setFromTextInput", value);
             if ((value === null || value === "") && allowEmpty) {
                 set(null);
                 move();
@@ -652,6 +656,7 @@
         }
 
         function show() {
+            // debugger;
             var event = $.Event('beforeShow.spectrum');
 
             if (visible) {
@@ -800,7 +805,6 @@
                     format = "rgb";
                 }
             }
-            currentPreferredFormat = format;
 
             var realColor = get({ format: format }),
                 displayColor = '';
@@ -917,6 +921,7 @@
         }
 
         function updateOriginalInput(fireCallback) {
+            console.log("updateOriginalInput")
             var color = get(),
                 displayColor = '',
                 hasChanged = !tinycolor.equals(color, colorOnShow);
@@ -929,6 +934,9 @@
 
             if (fireCallback && hasChanged) {
                 callbacks.change(color);
+                // we trigger the change event or input, but the input change event is also binded
+                // to some spectrum processing, that we do no need
+                abortNextInputChange = true;
                 boundElement.trigger('change', [ color ]);
             }
         }
