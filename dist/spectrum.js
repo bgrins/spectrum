@@ -179,7 +179,6 @@
         if (o.locale != 'en' && $.spectrum.localization[o.locale]) {
             o = $.extend({}, $.spectrum.localization[o.locale], o);
         }
-        console.log("init", o);
         var opts = $.extend({}, defaultOpts, o);
 
         opts.callbacks = {
