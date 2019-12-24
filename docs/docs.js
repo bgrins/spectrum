@@ -23,19 +23,67 @@ $('#toc').toc({
     }
 });
 
-$("#full").spectrum({
-    allowEmpty:true,
-    color: "#276cb8",
-    showInput: true,
-    containerClassName: "full-spectrum",
-    showInitial: true,
-    showPalette: true,
-    showSelectionPalette: true,
-    showAlpha: true,
-    maxPaletteSize: 10,
-    preferredFormat: "hex",
-    localStorageKey: "spectrum.demo",
+var colorpickerInput = $("#full");
+colorpickerInput.change(function() {
+    document.documentElement.style.setProperty('--primary-color',  $(this).val());
 });
+colorpickerInput.spectrum({});
+initConfigurator();
+var firstUpdate = true;
+var initialConfig = {};
+updateColorPickerAndJavascriptCode();
+
+$('.configurator-container').find('input[type=radio], input[type=checkbox]').click(function() {
+    updateColorPickerAndJavascriptCode();
+});
+
+function initConfigurator() {
+    $('.configurator-container input[type=checkbox]').each(function() {
+        var value = colorpickerInput.spectrum('option', $(this).data("rule"));
+        $(this).prop('checked', value);
+    });
+    var type = colorpickerInput.spectrum('option', 'type');
+    $('.configurator-container input[name=type]').val([type]);
+}
+
+function updateColorPickerAndJavascriptCode() {
+
+    var options = {
+        type: $('.configurator-container input[name=type]:checked').val()
+    };
+    $('.configurator-container input[type=checkbox]').each(function() {
+        var optionName = $(this).data("rule");
+        var value = $(this).is('[type=checkbox]') ? $(this).is(':checked') : $(this).val();
+        options[optionName] = value;
+    })
+
+    if (firstUpdate) {
+        initialConfig = options;
+        firstUpdate = false;
+    }
+
+    colorpickerInput.spectrum("destroy");
+
+    var javascriptCode = "$('#color-picker').spectrum({";
+    var optionsCount = 0;
+    for(var i in options) {
+        if (options[i] != initialConfig[i]) {
+            optionsCount++;
+            javascriptCode += "\n  " + i + ': "' + options[i] + '",';
+        }
+    }
+    if (optionsCount > 0) {
+        javascriptCode = javascriptCode.slice(0, -1); // remove last ",\n"
+        javascriptCode += '\n';
+    }
+    javascriptCode += "});";
+    $('pre#sp-options').html(javascriptCode);
+    hljs.highlightBlock($('pre#sp-options')[0]);
+
+    colorpickerInput.spectrum(options);
+}
+
+
 
 $("#hideButtons").spectrum({
     showButtons: false,

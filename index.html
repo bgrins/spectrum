@@ -31,13 +31,40 @@
 
 <div id='docs'>
     <div id='docs-content'>
-        <div style='text-align:center;'>
+        <h2>Configurator</h2>
+        <div class="configurator-container">
+            <div class="config-section type-selector">
+                <h5>Type</h5>
+                <label><input type="radio" name="type" data-rule="type" value="color"><span>Color</span></label>
+                <label><input type="radio" name="type" data-rule="type" value="text"><span>Text</span></label>
+                <label><input type="radio" name="type" data-rule="type" value="component"><span>Text + Color</span></label>
+                <label><input type="radio" name="type" data-rule="type" value="flat"><span>Flat</span></label>
+            </div>
 
-            <input id="full" type='color' value='#276cb8' />
-            <pre>&lt;input type='color' value='#276cb8' /&gt;</pre>
-            <pre>$('input[type=color]').spectrum();</pre>
+            <div class="config-section palette-options">
+                <h5>Palette</h5>
+                <label><input type="checkbox" data-rule='showPalette'><span>Show Palette</span></label>
+                <label><input type="checkbox" data-rule='showPaletteOnly'><span>Show Palette Only</span></label>
+                <label><input type="checkbox" data-rule='togglePaletteOnly'><span>Toggle Picker Button</span></label>
+                <label><input type="checkbox" data-rule='hideAfterPaletteSelect'><span>Hide After Palette Select</span></label>
+            </div>
 
+            <div class="config-section picker-options">
+                <h5>Picker</h5>
+                <label><input type="checkbox" data-rule='showInput'><span>Show Input</span></label>
+                <label><input type="checkbox" data-rule='showInitial'><span>Show Initial Color</span></label>
+                <label><input type="checkbox" data-rule='showAlpha'><span>Transparency</span></label>
+                <label><input type="checkbox" data-rule='showButtons'><span>Show Cancel/Submit Buttons</span></label>
+                <label><input type="checkbox" data-rule='allowEmpty'><span>Clear Button</span></label>
+            </div>
         </div>
+
+        <div class="configurator-renderer">
+            <input id="full" value='#276cb8' />
+            <pre>&lt;input id="color-picker" value='#276cb8' /&gt;</pre>
+            <pre id="sp-options">$('#color-picker').spectrum();</pre>
+        </div>
+
 
     <h2>Usage</h2>
     <h3>CDN</h3>
@@ -60,7 +87,7 @@
 
 
 
-    <h2 id="options">Options</h2>
+    <h2 id="options">All Options</h2>
 <pre>
 $("#picker").spectrum({
     color: <strong>tinycolor</strong>,

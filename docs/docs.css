@@ -188,4 +188,37 @@ input {
   font-family: inherit;
   margin-bottom: 10px;
   margin-right: 10px;
+  background-color: white;
+}
+
+.configurator-container {
+  background-color: #f8f8f8;
+  padding: 1rem;
+  border: 2px solid #dddfe0;
+  padding: 1rem;
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.config-section {
+  /*width: 33%;*/
+}
+.config-section label {
+  display: block;
+}
+.config-section h5 {
+  margin: 0 0 .5rem 0;
+  font-size: 1rem;
+}
+
+.configurator-renderer {
+  text-align: center;
+}
+.configurator-renderer .sp-flat {
+  margin-bottom: 10px;
+}
+#sp-options {
+  text-align: left;
 }
