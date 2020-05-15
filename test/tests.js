@@ -6,31 +6,31 @@
 // Pretend like the color inputs aren't supported for initial load.
 $.fn.spectrum.inputTypeColorSupport = function() { return false; };
 
-module("Initialization");
+QUnit.module("Initialization");
 
-test( "jQuery Plugin Can Be Created", function() {
+QUnit.test( "jQuery Plugin Can Be Created", function(assert) {
   var el = $("<input id='spec' />").spectrum();
 
-  ok(el.attr("id") === "spec", "Element returned from plugin" );
+  assert.ok(el.attr("id") === "spec", "Element returned from plugin" );
 
   el.spectrum("set", "red");
-  equal(el.spectrum("get").toName(), "red", "Basic color setting");
+  assert.equal(el.spectrum("get").toName(), "red", "Basic color setting");
 
-  equal(el.spectrum("option", "showInput"), false, "Undefined option is false.");
+  assert.equal(el.spectrum("option", "showInput"), false, "Undefined option is false.");
 
   el.spectrum({showInput: true});
 
-  equal(el.spectrum("option", "showInput"), true, "Double initialized spectrum is destroyed before recreating.");
+  assert.equal(el.spectrum("option", "showInput"), true, "Double initialized spectrum is destroyed before recreating.");
 
   el.spectrum("destroy");
 
-  equal(el.spectrum("container"), el, "After destroying spectrum, string function returns input.");
+  assert.equal(el.spectrum("container"), el, "After destroying spectrum, string function returns input.");
 
 });
 
-test ("Polyfill", function() {
+QUnit.test("Polyfill", function(assert) {
   var el = $("#type-color-on-page");
-  ok (el.spectrum("get").toHex, "The input[type=color] has been initialized on load");
+  assert.ok(el.spectrum("get").toHex, "The input[type=color] has been initialized on load");
   el.spectrum("destroy");
 
   // Pretend like the color inputs are supported.
@@ -40,14 +40,14 @@ test ("Polyfill", function() {
     allowEmpty: true
   });
   el.spectrum("set", null);
-  ok(el.spectrum("get"), "input[type] color does not allow null values");
+  assert.ok(el.spectrum("get"), "input[type] color does not allow null values");
   el.spectrum("destroy");
 });
 
-test( "Per-element Options Are Read From Data Attributes", function() {
+QUnit.test( "Per-element Options Are Read From Data Attributes", function(assert) {
   var el = $("<input id='spec' data-show-alpha='true' />").spectrum();
 
-  equal ( el.spectrum("option", "showAlpha"), true, "Took showAlpha value from data attribute");
+  assert.equal( el.spectrum("option", "showAlpha"), true, "Took showAlpha value from data attribute");
 
   el.spectrum("destroy");
 
@@ -55,7 +55,7 @@ test( "Per-element Options Are Read From Data Attributes", function() {
     showAlpha: true
   });
 
-  equal ( changeDefault.spectrum("option", "showAlpha"), true, "Took showAlpha value from options arg");
+  assert.equal( changeDefault.spectrum("option", "showAlpha"), true, "Took showAlpha value from options arg");
 
   changeDefault.spectrum("destroy");
 
@@ -63,45 +63,45 @@ test( "Per-element Options Are Read From Data Attributes", function() {
     showAlpha: true
   });
 
-  equal ( noData.spectrum("option", "showAlpha"), true, "Kept showAlpha without data attribute");
+  assert.equal( noData.spectrum("option", "showAlpha"), true, "Kept showAlpha without data attribute");
 
   noData.spectrum("destroy");
 });
 
-test( "Events Fire", function() {
-  expect(4);
+QUnit.test( "Events Fire", function(assert) {
+  assert.expect(4);
   var count = 0;
   var el = $("<input id='spec' />").spectrum();
 
   el.on("beforeShow.spectrum", function(e) {
     // Cancel the event the first time
     if (count === 0) {
-      ok(true, "Cancel beforeShow");
+      assert.ok(true, "Cancel beforeShow");
       count++;
       return false;
     }
 
-    equal(count, 1, "Allow beforeShow");
+    assert.equal(count, 1, "Allow beforeShow");
     count++;
   });
 
 
   el.on("show.spectrum", function(e) {
-    equal(count, 2, "Show");
+    assert.equal(count, 2, "Show");
     count++;
   });
 
   el.on("hide.spectrum", function(e) {
-    equal(count, 3, "Hide");
+    assert.equal(count, 3, "Hide");
     count++;
   });
 
   el.on("move.spectrum", function(e) {
-    ok(false, "Change should not fire from `move` call");
+    assert.ok(false, "Change should not fire from `move` call");
   });
 
   el.on("change", function(e, color) {
-    ok(false, "Change should not fire from `set` call");
+    assert.ok(false, "Change should not fire from `set` call");
   });
 
   el.spectrum("show");
@@ -112,19 +112,19 @@ test( "Events Fire", function() {
   el.spectrum("destroy");
 });
 
-test( "Events Fire (text input change)", function() {
-  expect(3);
+QUnit.test( "Events Fire (text input change)", function(assert) {
+  assert.expect(3);
   var count = 0;
   var el = $("<input id='spec' />").spectrum({
     showInput: true
   });
   el.on("move.spectrum", function(e, color) {
-    equal(count, 0, "Move fires when input changes");
+    assert.equal(count, 0, "Move fires when input changes");
     count++;
   });
 
   el.on("change.spectrum", function(e, color) {
-    equal(count, 2, "Change should not fire when input changes, only when chosen");
+    assert.equal(count, 2, "Change should not fire when input changes, only when chosen");
     count++;
   });
 
@@ -133,14 +133,14 @@ test( "Events Fire (text input change)", function() {
   el.spectrum("container").find(".sp-choose").click();
   el.spectrum("destroy");
 
-  equal(count, 3, "All events fired");
+  assert.equal(count, 3, "All events fired");
 });
 
-test( "Escape hides the colorpicker", function() {
-  expect(1);
+QUnit.test( "Escape hides the colorpicker", function(assert) {
+  assert.expect(1);
   var el = $("<input id='spec' />").spectrum();
   el.on("hide.spectrum", function(e) {
-    ok(true, "Hide event should fire");
+    assert.ok(true, "Hide event should fire");
   });
 
   // Simulate an escape before showing -- should do nothing
@@ -156,41 +156,41 @@ test( "Escape hides the colorpicker", function() {
   el.spectrum("destroy");
 });
 
-test( "Dragging", function() {
+QUnit.test( "Dragging", function(assert) {
   var el = $("<input id='spec' />").spectrum();
   var hueSlider = el.spectrum("container").find(".sp-hue");
 
-  ok (hueSlider.length, "There is a hue slider");
+  assert.ok(hueSlider.length, "There is a hue slider");
 
   hueSlider.trigger("mousedown");
 
-  ok ($("body").hasClass("sp-dragging"), "The body has dragging class");
+  assert.ok($("body").hasClass("sp-dragging"), "The body has dragging class");
 
   hueSlider.trigger("mouseup");
 
-  ok (!$("body").hasClass("sp-dragging"), "The body does not have a dragging class");
+  assert.ok(!$("body").hasClass("sp-dragging"), "The body does not have a dragging class");
 
   el.spectrum("destroy");
 });
 
-module("Defaults");
+QUnit.module("Defaults");
 
-test( "Default Color Is Set By Input Value", function() {
+QUnit.test( "Default Color Is Set By Input Value", function(assert) {
 
   var red = $("<input id='spec' value='red' />").spectrum();
-  equal ( red.spectrum("get").toName(), "red", "Basic color setting");
+  assert.equal( red.spectrum("get").toName(), "red", "Basic color setting");
 
   var noColor = $("<input id='spec' value='not a color' />").spectrum();
-  equal ( noColor.spectrum("get").toHex(), "000000", "Defaults to black with an invalid color");
+  assert.equal( noColor.spectrum("get").toHex(), "000000", "Defaults to black with an invalid color");
 
   var noValue = $("<input id='spec' />").spectrum();
-  equal ( noValue.spectrum("get").toHex(), "000000", "Defaults to black with no value set");
+  assert.equal( noValue.spectrum("get").toHex(), "000000", "Defaults to black with no value set");
 
   var noValueHex3 = $("<input id='spec' />").spectrum({
     preferredFormat: "hex3"
   });
-  equal ( noValueHex3.spectrum("get").toHex(true), "000", "Defaults to 3 char hex with no value set");
-  equal ( noValueHex3.spectrum("get").toString(), "#000", "Defaults to 3 char hex with no value set");
+  assert.equal( noValueHex3.spectrum("get").toHex(true), "000", "Defaults to 3 char hex with no value set");
+  assert.equal( noValueHex3.spectrum("get").toString(), "#000", "Defaults to 3 char hex with no value set");
 
 
   red.spectrum("destroy");
@@ -199,10 +199,10 @@ test( "Default Color Is Set By Input Value", function() {
   noValueHex3.spectrum("destroy");
 });
 
-module("Palettes");
+QUnit.module("Palettes");
 
-test( "Palette Events Fire In Correct Order ", function() {
-  expect(4);
+QUnit.test( "Palette Events Fire In Correct Order ", function(assert) {
+  assert.expect(4);
   var el = $("<input id='spec' value='red' />").spectrum({
     showPalette: true,
     palette: [
@@ -215,26 +215,26 @@ test( "Palette Events Fire In Correct Order ", function() {
 
   var count = 0;
   el.on("move.spectrum", function(e) {
-    equal(count, 0, "move fires before change");
+    assert.equal(count, 0, "move fires before change");
     count++;
   });
 
   el.on("change.spectrum", function(e) {
-    equal(count, 1, "change fires after move");
+    assert.equal(count, 1, "change fires after move");
     count++;
   });
 
   el.spectrum("container").find(".sp-thumb-el:last-child").click();
-  equal(count, 1, "Change event hasn't fired after palette click");
+  assert.equal(count, 1, "Change event hasn't fired after palette click");
 
   el.spectrum("container").find(".sp-choose").click();
-  equal(count, 2, "Change event has fired after choose button click");
+  assert.equal(count, 2, "Change event has fired after choose button click");
 
   el.spectrum("destroy");
 });
 
-test( "Palette click events work", function() {
-  expect(7);
+QUnit.test( "Palette click events work", function(assert) {
+  assert.expect(7);
 
   var moveCount = 0;
   var moves = ["blue", "green", "red"];
@@ -247,15 +247,15 @@ test( "Palette click events work", function() {
       ["red", "green", "blue"]
     ],
     show: function(c) {
-      equal(c.toName(), "orange", "correct shown color");
+      assert.equal(c.toName(), "orange", "correct shown color");
     },
     move: function(c) {
-      equal(c.toName(), moves[moveCount], "Move # " + moveCount + " is correct");
+      assert.equal(c.toName(), moves[moveCount], "Move # " + moveCount + " is correct");
       moveCount++;
     },
     change: function(c) {
-      equal(changeCount, 0, "Only one change happens");
-      equal(c.toName(), "red");
+      assert.equal(changeCount, 0, "Only one change happens");
+      assert.equal(c.toName(), "red");
       changeCount++;
     }
   }).spectrum("show");
@@ -265,12 +265,12 @@ test( "Palette click events work", function() {
   el.spectrum("container").find(".sp-thumb-el:nth-child(1) .sp-thumb-inner").click();
   el.spectrum("container").find(".sp-choose").click();
 
-  equal(el.val(), "red", "Element's value is set");
+  assert.equal(el.val(), "red", "Element's value is set");
   el.spectrum("destroy");
 });
 
-test( "Palette doesn't changes don't stick if cancelled", function() {
-  expect(4);
+QUnit.test( "Palette doesn't changes don't stick if cancelled", function(assert) {
+  assert.expect(4);
 
   var moveCount = 0;
   var moves = ["blue", "green", "red", "orange"];
@@ -283,11 +283,11 @@ test( "Palette doesn't changes don't stick if cancelled", function() {
       ["red", "green", "blue"]
     ],
     move: function(c) {
-      equal(c.toName(), moves[moveCount], "Move # " + moveCount + " is correct");
+      assert.equal(c.toName(), moves[moveCount], "Move # " + moveCount + " is correct");
       moveCount++;
     },
     change: function(c) {
-      ok(false, "No change fires");
+      assert.ok(false, "No change fires");
     }
   }).spectrum("show");
 
@@ -296,11 +296,11 @@ test( "Palette doesn't changes don't stick if cancelled", function() {
   el.spectrum("container").find(".sp-thumb-el:nth-child(1)").click();
   el.spectrum("container").find(".sp-cancel").click();
 
-  equal(el.val(), "orange", "Element's value is the same");
+  assert.equal(el.val(), "orange", "Element's value is the same");
   el.spectrum("destroy");
 });
 
-test( "hideAfterPaletteSelect: Palette stays open after color select when false", function() {
+QUnit.test( "hideAfterPaletteSelect: Palette stays open after color select when false", function(assert) {
   var el = $("<input id='spec' value='orange' />").spectrum({
     showPalette: true,
     hideAfterPaletteSelect: false,
@@ -312,17 +312,17 @@ test( "hideAfterPaletteSelect: Palette stays open after color select when false"
   el.spectrum("show");
   el.spectrum("container").find(".sp-thumb-el:nth-child(1)").click();
 
-  ok(!el.spectrum("container").hasClass('sp-hidden'), "palette is still visible after color selection");
+  assert.ok(!el.spectrum("container").hasClass('sp-hidden'), "palette is still visible after color selection");
   el.spectrum("destroy");
 });
 
-test( "hideAfterPaletteSelect: Palette closes after color select when true", function() {
-  expect(2);
+QUnit.test( "hideAfterPaletteSelect: Palette closes after color select when true", function(assert) {
+  assert.expect(2);
   var el = $("<input id='spec' value='orange' />").spectrum({
     showPalette: true,
     hideAfterPaletteSelect: true,
     change: function(c) {
-      equal(c.toName(), "red", "change fires");
+      assert.equal(c.toName(), "red", "change fires");
     },
     palette: [
       ["red", "green", "blue"]
@@ -332,11 +332,11 @@ test( "hideAfterPaletteSelect: Palette closes after color select when true", fun
   el.spectrum("show");
   el.spectrum("container").find(".sp-thumb-el:nth-child(1)").click();
 
-  ok(el.spectrum("container").hasClass('sp-hidden'), "palette is still hidden after color selection");
+  assert.ok(el.spectrum("container").hasClass('sp-hidden'), "palette is still hidden after color selection");
   el.spectrum("destroy");
 });
 
-test( "Local Storage Is Limited ", function() {
+QUnit.test( "Local Storage Is Limited ", function(assert) {
 
   var el = $("<input id='spec' value='red' />").spectrum({
     localStorageKey: "spectrum.tests",
@@ -351,7 +351,7 @@ test( "Local Storage Is Limited ", function() {
   el.spectrum("set", "#b00");
   el.spectrum("set", "#a00");
 
-  equal (
+  assert.equal(
     localStorage["spectrum.tests"],
     "rgb(204, 0, 0);rgb(187, 0, 0);rgb(170, 0, 0)",
     "Local storage array has been limited"
@@ -360,7 +360,7 @@ test( "Local Storage Is Limited ", function() {
   el.spectrum("set", "#ff0");
   el.spectrum("set", "#0ff");
 
-  equal (
+  assert.equal(
     localStorage["spectrum.tests"],
     "rgb(204, 0, 0);rgb(187, 0, 0);rgb(170, 0, 0)",
     "Local storage array did not get changed by selecting palette items"
@@ -369,62 +369,62 @@ test( "Local Storage Is Limited ", function() {
 
 });
 
-module("Options");
+QUnit.module("Options");
 
-test ("allowEmpty", function() {
+QUnit.test("allowEmpty", function(assert) {
   var el = $("<input value='red' />").spectrum({
     allowEmpty: true
   });
   el.spectrum("set", null);
-  ok(!el.spectrum("get"), "input[type] color does not allow null values");
+  assert.ok(!el.spectrum("get"), "input[type] color does not allow null values");
   el.spectrum("destroy");
 
   el = $("<input value='red' />").spectrum();
   el.spectrum("set", null);
-  ok(el.spectrum("get"), "input[type] color does not allow null values");
+  assert.ok(el.spectrum("get"), "input[type] color does not allow null values");
   el.spectrum("destroy");
 });
 
-test ("clickoutFiresChange", function() {
+QUnit.test("clickoutFiresChange", function(assert) {
   var el = $("<input value='red' />").spectrum({
     clickoutFiresChange: false
   });
   el.spectrum("show");
-  equal ( el.spectrum("get").toName(), "red", "Color is initialized");
+  assert.equal( el.spectrum("get").toName(), "red", "Color is initialized");
   el.spectrum("set", "orange");
-  equal ( el.spectrum("get").toName(), "orange", "Color is set");
+  assert.equal( el.spectrum("get").toName(), "orange", "Color is set");
   $(document).click();
-  equal ( el.spectrum("get").toName(), "red", "Color is reverted after clicking 'cancel'");
+  assert.equal( el.spectrum("get").toName(), "red", "Color is reverted after clicking 'cancel'");
   el.spectrum("destroy");
 
   // Try again with default behavior (clickoutFiresChange = true)
   el = $("<input value='red' />").spectrum();
   el.spectrum("show");
-  equal ( el.spectrum("get").toName(), "red", "Color is initialized");
+  assert.equal( el.spectrum("get").toName(), "red", "Color is initialized");
   el.spectrum("set", "orange");
-  equal ( el.spectrum("get").toName(), "orange", "Color is set");
+  assert.equal( el.spectrum("get").toName(), "orange", "Color is set");
   $(document).click();
-  equal ( el.spectrum("get").toName(), "orange", "Color is changed after clicking out");
+  assert.equal( el.spectrum("get").toName(), "orange", "Color is changed after clicking out");
   el.spectrum("destroy");
 });
 
-test ("replacerClassName", function() {
+QUnit.test("replacerClassName", function(assert) {
   var el = $("<input />").appendTo("body").spectrum({
     replacerClassName: "test"
   });
-  ok (el.next(".sp-replacer").hasClass("test"), "Replacer class has been applied");
+  assert.ok(el.next(".sp-replacer").hasClass("test"), "Replacer class has been applied");
   el.spectrum("destroy").remove();
 });
 
-test ("containerClassName", function() {
+QUnit.test("containerClassName", function(assert) {
   var el = $("<input />").appendTo("body").spectrum({
     containerClassName: "test"
   });
-  ok (el.spectrum("container").hasClass("test"), "Container class has been applied");
+  assert.ok(el.spectrum("container").hasClass("test"), "Container class has been applied");
   el.spectrum("destroy").remove();
 });
 
-test( "Options Can Be Set and Gotten Programmatically", function() {
+QUnit.test( "Options Can Be Set and Gotten Programmatically", function(assert) {
 
   var spec = $("<input id='spec' />").spectrum({
     color: "#ECC",
@@ -441,23 +441,23 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
   });
 
   var allOptions = spec.spectrum("option");
-  equal ( allOptions.flat, true, "Fetching all options provides accurate value");
+  assert.equal( allOptions.flat, true, "Fetching all options provides accurate value");
 
   var singleOption = spec.spectrum("option", "className");
-  equal ( singleOption, "full-spectrum", "Fetching a single option returns that value");
+  assert.equal( singleOption, "full-spectrum", "Fetching a single option returns that value");
 
   spec.spectrum("option", "className", "changed");
   singleOption = spec.spectrum("option", "className");
-  equal ( singleOption, "changed", "Changing an option then fetching it is updated");
+  assert.equal( singleOption, "changed", "Changing an option then fetching it is updated");
 
 
   var numPaletteElements = spec.spectrum("container").find(".sp-palette-row:not(.sp-palette-row-selection) .sp-thumb-el").length;
-  equal (numPaletteElements, 2, "Two palette elements to start");
+  assert.equal(numPaletteElements, 2, "Two palette elements to start");
   spec.spectrum("option", "palette", [['red'], ['green'], ['blue']]);
   var optPalette = spec.spectrum("option", "palette");
-  deepEqual (optPalette, [['red'], ['green'], ['blue']], "Changing an option then fetching it is updated");
+  assert.deepEqual(optPalette, [['red'], ['green'], ['blue']], "Changing an option then fetching it is updated");
   numPaletteElements = spec.spectrum("container").find(".sp-palette-row:not(.sp-palette-row-selection) .sp-thumb-el").length;
-  equal (numPaletteElements, 3, "Three palette elements after updating");
+  assert.equal(numPaletteElements, 3, "Three palette elements after updating");
 
   var appendToDefault = $("<input />").spectrum({
 
@@ -478,24 +478,24 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
     flat: true
   });
 
-  equal ( appendToDefault.spectrum("container").parent()[0], document.body, "Appended to body by default");
+  assert.equal( appendToDefault.spectrum("container").parent()[0], document.body, "Appended to body by default");
 
-  equal ( appendToOther.spectrum("container").parent()[0], container[0], "Can be appended to another element");
+  assert.equal( appendToOther.spectrum("container").parent()[0], container[0], "Can be appended to another element");
 
-  equal ( appendToOtherFlat.spectrum("container").parent()[0], $(appendToOtherFlat).parent()[0], "Flat CANNOT be appended to another element, will be same as input");
+  assert.equal( appendToOtherFlat.spectrum("container").parent()[0], $(appendToOtherFlat).parent()[0], "Flat CANNOT be appended to another element, will be same as input");
 
-  equal ( appendToParent.spectrum("container").parent()[0], container[0], "Passing 'parent' to appendTo works as expected");
+  assert.equal( appendToParent.spectrum("container").parent()[0], container[0], "Passing 'parent' to appendTo works as expected");
 
 
   // Issue #70 - https://github.com/bgrins/spectrum/issues/70
-  equal (spec.spectrum("option", "showPalette"), true, "showPalette is true by default");
+  assert.equal(spec.spectrum("option", "showPalette"), true, "showPalette is true by default");
   spec.spectrum("option", "showPalette", false);
 
-  equal (spec.spectrum("option", "showPalette"), false, "showPalette is false after setting showPalette");
+  assert.equal(spec.spectrum("option", "showPalette"), false, "showPalette is false after setting showPalette");
   spec.spectrum("option", "showPaletteOnly", true);
 
-  equal (spec.spectrum("option", "showPaletteOnly"), true, "showPaletteOnly is true after setting showPaletteOnly");
-  equal (spec.spectrum("option", "showPalette"), true, "showPalette is true after setting showPaletteOnly");
+  assert.equal(spec.spectrum("option", "showPaletteOnly"), true, "showPaletteOnly is true after setting showPaletteOnly");
+  assert.equal(spec.spectrum("option", "showPalette"), true, "showPalette is true after setting showPaletteOnly");
 
   spec.spectrum("destroy");
   appendToDefault.spectrum("destroy");
@@ -506,27 +506,27 @@ test( "Options Can Be Set and Gotten Programmatically", function() {
   container.remove();
 });
 
-test ("Show Input works as expected", function() {
+QUnit.test("Show Input works as expected", function(assert) {
   var el = $("<input />").spectrum({
     showInput: true,
     color: "red"
   });
   var input = el.spectrum("container").find(".sp-input");
 
-  equal(input.val(), "red", "Input is set to color by default");
+  assert.equal(input.val(), "red", "Input is set to color by default");
   input.val("").trigger("change");
 
-  ok(input.hasClass("sp-validation-error"), "Input has validation error class after being emptied.");
+  assert.ok(input.hasClass("sp-validation-error"), "Input has validation error class after being emptied.");
 
   input.val("red").trigger("change");
 
-  ok(!input.hasClass("sp-validation-error"), "Input does not have validation error class after being reset to original color.");
+  assert.ok(!input.hasClass("sp-validation-error"), "Input does not have validation error class after being reset to original color.");
 
-  equal (el.spectrum("get").toHexString(), "#ff0000", "Color is still red");
+  assert.equal(el.spectrum("get").toHexString(), "#ff0000", "Color is still red");
   el.spectrum("destroy");
 });
 
-test ("Toggle Picker Area button works as expected", function() {
+QUnit.test("Toggle Picker Area button works as expected", function(assert) {
   var div = $("<div style='position:absolute; right:0; height:20px; width:150px'>").appendTo('body').show(),
       el = $("<input />").appendTo(div);
   el.spectrum({
@@ -543,21 +543,21 @@ test ("Toggle Picker Area button works as expected", function() {
 
   // Open the Colorpicker
   el.spectrum("show");
-  equal(picker.is(":hidden"), true, "The picker area is hidden by default.");
-  ok(spectrum.hasClass("sp-palette-only"), "The 'palette-only' class is enabled.");
+  assert.equal(picker.is(":hidden"), true, "The picker area is hidden by default.");
+  assert.ok(spectrum.hasClass("sp-palette-only"), "The 'palette-only' class is enabled.");
 
   // Click the Picker area Toggle button to show the Picker
   toggle.click();
 
-  equal(picker.is(":hidden"), false, "After toggling, the picker area is visible.");
-  ok(!spectrum.hasClass("sp-palette-only"), "The 'palette-only' class is disabled.");
-  equal(Math.round(picker.offset().top), Math.round(palette.offset().top), "The picker area is next to the palette.");
+  assert.equal(picker.is(":hidden"), false, "After toggling, the picker area is visible.");
+  assert.ok(!spectrum.hasClass("sp-palette-only"), "The 'palette-only' class is disabled.");
+  assert.equal(Math.round(picker.offset().top), Math.round(palette.offset().top), "The picker area is next to the palette.");
 
   // Click the toggle again to hide the picker
   toggle.trigger("click");
 
-  equal(picker.is(":hidden"), true, "After toggling again, the picker area is hidden.");
-  ok(spectrum.hasClass("sp-palette-only"), "And the 'palette-only' class is enabled.");
+  assert.equal(picker.is(":hidden"), true, "After toggling again, the picker area is hidden.");
+  assert.ok(spectrum.hasClass("sp-palette-only"), "And the 'palette-only' class is enabled.");
 
   // Cleanup
   el.spectrum("hide");
@@ -566,7 +566,7 @@ test ("Toggle Picker Area button works as expected", function() {
   div.remove();
 });
 
-test ("Tooltip is formatted based on preferred format", function() {
+QUnit.test("Tooltip is formatted based on preferred format", function(assert) {
   var el = $("<input />").spectrum({
     showInput: true,
     color: "red",
@@ -581,69 +581,69 @@ test ("Tooltip is formatted based on preferred format", function() {
     }).toArray().join(" ");
   }
 
-  equal (getTitlesString(), "rgb(255, 0, 0) rgba(255, 255, 255, 0.5) rgb(0, 0, 255)", "Titles use rgb format by default");
+  assert.equal(getTitlesString(), "rgb(255, 0, 0) rgba(255, 255, 255, 0.5) rgb(0, 0, 255)", "Titles use rgb format by default");
 
   el.spectrum("option", "preferredFormat", "hex");
-  equal (getTitlesString(), "#ff0000 #ffffff #0000ff", "Titles are updated to hex");
-  equal (el.spectrum("get").toString(), "#ff0000", "Value's format is updated");
+  assert.equal(getTitlesString(), "#ff0000 #ffffff #0000ff", "Titles are updated to hex");
+  assert.equal(el.spectrum("get").toString(), "#ff0000", "Value's format is updated");
 
   el.spectrum("option", "preferredFormat", "hex6");
-  equal (getTitlesString(), "#ff0000 #ffffff #0000ff", "Titles are updated to hex6");
-  equal (el.spectrum("get").toString(), "#ff0000", "Value's format is updated");
+  assert.equal(getTitlesString(), "#ff0000 #ffffff #0000ff", "Titles are updated to hex6");
+  assert.equal(el.spectrum("get").toString(), "#ff0000", "Value's format is updated");
 
   el.spectrum("option", "preferredFormat", "hex3");
-  equal (getTitlesString(), "#f00 #fff #00f", "Titles are updated to hex3");
-  equal (el.spectrum("get").toString(), "#f00", "Value's format is updated");
+  assert.equal(getTitlesString(), "#f00 #fff #00f", "Titles are updated to hex3");
+  assert.equal(el.spectrum("get").toString(), "#f00", "Value's format is updated");
 
   el.spectrum("option", "preferredFormat", "name");
-  equal (getTitlesString(), "red #ffffff blue", "Titles are updated to name");
-  equal (el.spectrum("get").toString(), "red", "Value's format is updated");
+  assert.equal(getTitlesString(), "red #ffffff blue", "Titles are updated to name");
+  assert.equal(el.spectrum("get").toString(), "red", "Value's format is updated");
 
   el.spectrum("option", "preferredFormat", "hsv");
-  equal (getTitlesString(), "hsv(0, 100%, 100%) hsva(0, 0%, 100%, 0.5) hsv(240, 100%, 100%)", "Titles are updated to hsv");
-  equal (el.spectrum("get").toString(), "hsv(0, 100%, 100%)", "Value's format is updated");
+  assert.equal(getTitlesString(), "hsv(0, 100%, 100%) hsva(0, 0%, 100%, 0.5) hsv(240, 100%, 100%)", "Titles are updated to hsv");
+  assert.equal(el.spectrum("get").toString(), "hsv(0, 100%, 100%)", "Value's format is updated");
 
   el.spectrum("option", "preferredFormat", "hsl");
-  equal (getTitlesString(), "hsl(0, 100%, 50%) hsla(0, 0%, 100%, 0.5) hsl(240, 100%, 50%)", "Titles are updated to hsl");
-  equal (el.spectrum("get").toString(), "hsl(0, 100%, 50%)", "Value's format is updated");
+  assert.equal(getTitlesString(), "hsl(0, 100%, 50%) hsla(0, 0%, 100%, 0.5) hsl(240, 100%, 50%)", "Titles are updated to hsl");
+  assert.equal(el.spectrum("get").toString(), "hsl(0, 100%, 50%)", "Value's format is updated");
 
   el.spectrum("option", "preferredFormat", "rgb");
-  equal (getTitlesString(), "rgb(255, 0, 0) rgba(255, 255, 255, 0.5) rgb(0, 0, 255)", "Titles are updated to rgb");
-  equal (el.spectrum("get").toString(), "rgb(255, 0, 0)", "Value's format is updated");
+  assert.equal(getTitlesString(), "rgb(255, 0, 0) rgba(255, 255, 255, 0.5) rgb(0, 0, 255)", "Titles are updated to rgb");
+  assert.equal(el.spectrum("get").toString(), "rgb(255, 0, 0)", "Value's format is updated");
 
   el.spectrum("destroy");
 });
 
-module("Methods");
+QUnit.module("Methods");
 
-test( "Methods work as described", function() {
+QUnit.test( "Methods work as described", function(assert) {
   var el = $("<input id='spec' />").spectrum();
 
   // Method - show
   el.spectrum("show");
-  ok (el.spectrum("container").is(":visible"), "Spectrum is visible");
+  assert.ok(el.spectrum("container").is(":visible"), "Spectrum is visible");
 
   // Method - hide
   el.spectrum("hide");
-  ok (el.spectrum("container").not(":visible"), "Spectrum is no longer visible");
+  assert.ok(el.spectrum("container").not(":visible"), "Spectrum is no longer visible");
 
   // Method - toggle
   el.spectrum("toggle");
-  ok (el.spectrum("container").is(":visible"), "Spectrum is visible after toggle");
+  assert.ok(el.spectrum("container").is(":visible"), "Spectrum is visible after toggle");
 
   el.spectrum("toggle");
-  ok (el.spectrum("container").not(":visible"), "Spectrum is no longer visible after toggle");
+  assert.ok(el.spectrum("container").not(":visible"), "Spectrum is no longer visible after toggle");
 
   // Method - set / get
   el.spectrum("set", "orange");
   var color = el.spectrum("get", "color");
 
-  ok (color.toHexString() == "#ffa500", "Color has been set and gotten as hex");
-  ok (color.toName() == "orange", "Color has been set and gotten as name");
-  ok (color.toHsvString() == "hsv(39, 100%, 100%)", "Color has been set and gotten as hsv");
-  ok (color.toRgbString() == "rgb(255, 165, 0)", "Color has been set and gotten as rgb");
-  ok (color.toHslString() == "hsl(39, 100%, 50%)", "Color has been set and gotten as hsl");
-  ok (
+  assert.ok(color.toHexString() == "#ffa500", "Color has been set and gotten as hex");
+  assert.ok(color.toName() == "orange", "Color has been set and gotten as name");
+  assert.ok(color.toHsvString() == "hsv(39, 100%, 100%)", "Color has been set and gotten as hsv");
+  assert.ok(color.toRgbString() == "rgb(255, 165, 0)", "Color has been set and gotten as rgb");
+  assert.ok(color.toHslString() == "hsl(39, 100%, 50%)", "Color has been set and gotten as hsl");
+  assert.ok(
     (function() {
       var i, argb, a;
       for (i = 0; i < 16; i++) {
@@ -661,50 +661,50 @@ test( "Methods work as described", function() {
   );
 
   // Method - container
-  ok (el.spectrum("container").hasClass("sp-container"), "Container can be retrieved");
+  assert.ok(el.spectrum("container").hasClass("sp-container"), "Container can be retrieved");
 
   // Method - disable
   el.spectrum("disable");
-  ok (el.is(":disabled") , "Can be disabled");
+  assert.ok(el.is(":disabled") , "Can be disabled");
 
   el.spectrum("show");
-  ok (el.not(":visible") , "Cannot show when disabled");
+  assert.ok(el.not(":visible") , "Cannot show when disabled");
 
   // Method - enable
   el.spectrum("enable");
-  ok (!el.is(":disabled") , "Can be enabled");
+  assert.ok(!el.is(":disabled") , "Can be enabled");
 
   // Method - reflow
   el.spectrum("reflow");
 
   // Method - throw exception when not existing
-  raises(function() {
+  assert.throws(function() {
     el.spectrum("no method");
   }, "Expecting exception to be thrown when calling with no method");
 
   // Method - destroy
   el.spectrum("destroy");
 
-  equal (el.spectrum("container"), el , "No usage after being destroyed");
-  equal (el.spectrum("get"), el , "No usage after being destroyed");
+  assert.equal(el.spectrum("container"), el , "No usage after being destroyed");
+  assert.equal(el.spectrum("get"), el , "No usage after being destroyed");
 
   el.spectrum("destroy");
 });
 
 // https://github.com/bgrins/spectrum/issues/97
-test( "Change events fire as described" , function() {
+QUnit.test( "Change events fire as described" , function(assert) {
 
-  expect(0);
+  assert.expect(0);
   var input = $("<input />");
 
   input.on("change", function() {
-    ok(false, "Change should not be fired inside of input change");
+    assert.ok(false, "Change should not be fired inside of input change");
   });
 
   input.spectrum({
     color: "red",
     change: function() {
-      ok (false, "Change should not be fired inside of spectrum callback");
+      assert.ok(false, "Change should not be fired inside of spectrum callback");
     }
   });
 
@@ -712,7 +712,7 @@ test( "Change events fire as described" , function() {
 
 });
 
-test("The selectedPalette should be updated in each spectrum instance, when storageKeys are identical.", function () {
+QUnit.test("The selectedPalette should be updated in each spectrum instance, when storageKeys are identical.", function (assert) {
 
   delete window.localStorage["spectrum.tests"];
 
@@ -731,7 +731,7 @@ test("The selectedPalette should be updated in each spectrum instance, when stor
   secondEl.spectrum("toggle");
 
   var selectedColor = secondEl.spectrum("container").find('span[data-color="' + colorToChoose + '"]');
-  ok(selectedColor.length > 0, "Selected color is also shown in the others instance's palette.");
+  assert.ok(selectedColor.length > 0, "Selected color is also shown in the others instance's palette.");
 
   delete window.localStorage["spectrum.tests"];
 
@@ -739,7 +739,7 @@ test("The selectedPalette should be updated in each spectrum instance, when stor
   secondEl.spectrum("destroy");
 });
 
-test("The selectedPalette should not be updated in spectrum instances that have different storageKeys.", function () {
+QUnit.test("The selectedPalette should not be updated in spectrum instances that have different storageKeys.", function (assert) {
 
   delete window.localStorage["spectrum.test_1"];
   delete window.localStorage["spectrum.test_2"];
@@ -759,7 +759,7 @@ test("The selectedPalette should not be updated in spectrum instances that have 
   secondEl.spectrum("toggle");
 
   var selectedColor = secondEl.spectrum("container").find('span[data-color="' + colorToChoose + '"]');
-  ok(selectedColor.length === 0, "Selected color should not be available in instances with other storageKey.");
+  assert.ok(selectedColor.length === 0, "Selected color should not be available in instances with other storageKey.");
 
   firstEl.spectrum("destroy");
   secondEl.spectrum("destroy");
@@ -768,40 +768,40 @@ test("The selectedPalette should not be updated in spectrum instances that have 
   delete window.localStorage["spectrum.test_2"];
 });
 
-test( "Cancelling reverts color", function() {
+QUnit.test( "Cancelling reverts color", function(assert) {
   var el = $("<input value='red' />").spectrum();
   el.spectrum("show");
-  equal ( el.spectrum("get").toName(), "red", "Color is initialized");
+  assert.equal( el.spectrum("get").toName(), "red", "Color is initialized");
   el.spectrum("set", "orange");
-  equal ( el.spectrum("get").toName(), "orange", "Color is set");
+  assert.equal( el.spectrum("get").toName(), "orange", "Color is set");
   el.spectrum("container").find(".sp-cancel").click();
-  equal ( el.spectrum("get").toName(), "red", "Color is reverted after clicking 'cancel'");
+  assert.equal( el.spectrum("get").toName(), "red", "Color is reverted after clicking 'cancel'");
   el.spectrum("destroy");
 });
 
-test( "Choosing updates the color", function() {
+QUnit.test( "Choosing updates the color", function(assert) {
   var el = $("<input value='red' />").spectrum();
   el.spectrum("show");
-  equal ( el.spectrum("get").toName(), "red", "Color is initialized");
+  assert.equal( el.spectrum("get").toName(), "red", "Color is initialized");
   el.spectrum("set", "orange");
-  equal ( el.spectrum("get").toName(), "orange", "Color is set");
+  assert.equal( el.spectrum("get").toName(), "orange", "Color is set");
   el.spectrum("container").find(".sp-choose").click();
-  equal ( el.spectrum("get").toName(), "orange", "Color is kept after clicking 'choose'");
+  assert.equal( el.spectrum("get").toName(), "orange", "Color is kept after clicking 'choose'");
   el.spectrum("destroy");
 });
 
-test( "Custom offset", function() {
+QUnit.test( "Custom offset", function(assert) {
   var el = $("<input value='red' />").spectrum();
   el.spectrum("show");
-  deepEqual (el.spectrum("container").offset(), {top: 0, left: 0});
+  assert.deepEqual(el.spectrum("container").offset(), {top: 0, left: 0});
   el.spectrum("hide");
   el.spectrum("offset", {top: 10, left: 10});
   el.spectrum("show");
-  deepEqual (el.spectrum("container").offset(), {top: 10, left: 10});
+  assert.deepEqual(el.spectrum("container").offset(), {top: 10, left: 10});
   el.spectrum("hide");
   el.spectrum("offset", null);
   el.spectrum("show");
-  deepEqual (el.spectrum("container").offset(), {top: 0, left: 0});
+  assert.deepEqual(el.spectrum("container").offset(), {top: 0, left: 0});
   el.spectrum("hide");
   el.spectrum("destroy");
 
@@ -809,6 +809,6 @@ test( "Custom offset", function() {
     offset: { top: 100, left: 100 }
   });
   el2.spectrum("show");
-  deepEqual (el2.spectrum("container").offset(), {top: 100, left: 100});
+  assert.deepEqual(el2.spectrum("container").offset(), {top: 100, left: 100});
   el2.spectrum("hide");
 });
