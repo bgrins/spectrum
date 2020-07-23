@@ -45,6 +45,7 @@
         maxSelectionSize: 7,
         cancelText: "cancel",
         chooseText: "choose",
+        chooseClassName: "",
         togglePaletteMoreText: "more",
         togglePaletteLessText: "less",
         clearText: "Clear Color Selection",
@@ -352,6 +353,7 @@
             });
 
             chooseButton.text(opts.chooseText);
+            chooseButton.addClass(opts.chooseClassName);
             chooseButton.on("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
