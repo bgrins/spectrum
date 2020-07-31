@@ -1099,3 +1099,51 @@ QUnit.test("Custom offset", function (assert) {
   assert.deepEqual(el2.spectrum("container").offset(), { top: 100, left: 100 });
   el2.spectrum("hide");
 });
+
+test( "Keyboard navigation", function() {
+  var el = $("<input id='spec' value='red' />").spectrum({
+    showPalette: true,
+    showInitial: true,
+    showInput: true,
+    palette: [
+      ["red", "green", "blue"],
+      ["orange", "yellow", "brown"],
+      ["black", "purple", "cyan"]
+    ]
+  });
+  el.spectrum("show");
+
+  // keyboard focus on the palette
+  var palette = el.spectrum("container").find(".sp-palette-container").find(".sp-palette");
+  palette.focus();
+
+  // right-arrow twice to blue; click enter
+  palette.trigger($.Event("keydown", {keyCode: 39})); // right
+  palette.trigger($.Event("keydown", {keyCode: 39})); // right
+  palette.trigger($.Event("keydown", {keyCode: 13})); // enter
+  equal ( el.spectrum("get").toName(), "blue", "Right arrow works");
+
+  // down-arrow then left-arrow to yellow; click enter
+  palette.trigger($.Event("keydown", {keyCode: 40})); // down
+  palette.trigger($.Event("keydown", {keyCode: 37})); // left
+  palette.trigger($.Event("keydown", {keyCode: 13})); // enter
+  equal ( el.spectrum("get").toName(), "yellow", "Down and Left arrow works");
+
+  // down-, left-, then up-arrow to orange; click enter
+  palette.trigger($.Event("keydown", {keyCode: 40})); // down
+  palette.trigger($.Event("keydown", {keyCode: 37})); // left
+  palette.trigger($.Event("keydown", {keyCode: 38})); // up
+  palette.trigger($.Event("keydown", {keyCode: 13})); // enter
+  equal ( el.spectrum("get").toName(), "orange", "Up arrow works");
+
+  // keyboard focus on Initial Color (red)
+  var initial = el.spectrum("container").find(".sp-picker-container").find(".sp-initial").find(".sp-thumb-el").first();
+  initial.focus();
+
+  // click enter on Initial Color
+  initial.trigger($.Event("keydown", {keyCode: 13})); // enter
+  equal ( el.spectrum("get").toName(), "red", "initial color enter key works");
+
+  el.spectrum("hide");
+  el.spectrum("destroy");
+});
