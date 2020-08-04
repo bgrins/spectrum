@@ -40,6 +40,8 @@
         hideAfterPaletteSelect: false,
         togglePaletteOnly: false,
         showSelectionPalette: true,
+        showColor: true, // Show the color selection
+        showHue: true, // Show the hue selection
         localStorageKey: false,
         appendTo: "body",
         maxSelectionSize: 7,
@@ -108,11 +110,13 @@
                                     "</div>",
                                 "</div>",
                             "</div>",
-                            "<div class='sp-clear sp-clear-display'>",
-                            "</div>",
-                            "<div class='sp-hue'>",
-                                "<div class='sp-slider'></div>",
-                                gradientFix,
+                            "<div class='sp-vertical'>",
+                                "<div class='sp-clear sp-clear-display'>",
+                                "</div>",
+                                "<div class='sp-hue'>",
+                                    "<div class='sp-slider'></div>",
+                                    gradientFix,
+                                "</div>",
                             "</div>",
                         "</div>",
                         "<div class='sp-alpha'><div class='sp-alpha-inner'><div class='sp-alpha-handle'></div></div></div>",
@@ -268,6 +272,8 @@
             container.toggleClass("sp-palette-disabled", !opts.showPalette);
             container.toggleClass("sp-palette-only", opts.showPaletteOnly);
             container.toggleClass("sp-initial-disabled", !opts.showInitial);
+            container.toggleClass("sp-color-disabled", !opts.showColor);
+            container.toggleClass("sp-hue-disabled", !opts.showHue);
             container.addClass(opts.className).addClass(opts.containerClassName);
 
             reflow();
