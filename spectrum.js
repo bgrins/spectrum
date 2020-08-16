@@ -137,18 +137,12 @@
             if(current) {
                 var tiny = tinycolor(current);
                 var c = tiny.toHsl().l < 0.5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
-                c += (tinycolor.equals(color, current)) ? " sp-thumb-active" : "";
+                c += (tinycolor.equals(color, current)) ? " sp-thumb-active" : "";    
                 var formattedString = tiny.toString(opts.preferredFormat || "rgb");
                 var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
                 html.push('<span title="' + formattedString + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><span class="sp-thumb-inner" style="' + swatchStyle + ';"></span></span>');
             } else {
-                var cls = 'sp-clear-display';
-                html.push($('<div />')
-                    .append($('<span data-color="" style="background-color:transparent;" class="' + cls + '"></span>')
-                        .attr('title', opts.noColorSelectedText)
-                    )
-                    .html()
-                );
+                html.push('<span class="sp-thumb-el sp-clear-display" ><span class="sp-clear-palette-only" style="background-color: transparent;" /></span>');
             }
         }
         return "<div class='sp-cf " + className + "'>" + html.join('') + "</div>";
@@ -237,7 +231,7 @@
             currentPreferredFormat = opts.preferredFormat,
             clickoutFiresChange = !opts.showButtons || opts.clickoutFiresChange,
             isEmpty = !initialColor,
-            allowEmpty = opts.allowEmpty && !isInputTypeColor;
+            allowEmpty = opts.allowEmpty;
 
         function applyOptions() {
 
@@ -256,6 +250,12 @@
                         var rgb = tinycolor(paletteArray[i][j]).toRgbString();
                         paletteLookup[rgb] = true;
                     }
+                }
+
+                // if showPaletteOnly and didn't set initialcolor
+                // set initialcolor to first palette
+                if (opts.showPaletteOnly && !opts.color) {
+                    initialColor = (palette[0][0] === '') ? palette[0][0] : Object.keys(paletteLookup)[0];
                 }
             }
 
@@ -445,8 +445,10 @@
                 currentPreferredFormat = opts.preferredFormat || tinycolor(initialColor).format;
 
                 addColorToSelectionPalette(initialColor);
-            }
-            else {
+            } else if (initialColor === '') {
+                set(initialColor);
+                updateUI();
+            } else {
                 updateUI();
             }
 
@@ -697,7 +699,7 @@
             }
 
             var newColor, newHsv;
-            if (!color && allowEmpty) {
+            if ((!color || color === undefined) && allowEmpty) {
                 isEmpty = true;
             } else {
                 isEmpty = false;
