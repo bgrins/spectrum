@@ -1099,3 +1099,47 @@ QUnit.test("Custom offset", function (assert) {
   assert.deepEqual(el2.spectrum("container").offset(), { top: 100, left: 100 });
   el2.spectrum("hide");
 });
+
+test( "Extended Offset", function() {
+  var sandbox = $('<div></div>').css({position: 'fixed', top: 0, left: 0}),
+      elContainer = $("<div></div>").css({position: 'relative', top: 10, left: 10}),
+      el = $("<input value='red' />"),
+      previewHeight, el2;
+  $(document.body).prepend(
+    sandbox.append(
+      elContainer.append(el)
+    )
+  );
+
+  el.spectrum({appendTo: 'parent'});
+  previewHeight = el.next().outerHeight();
+
+  el.spectrum("show");
+  deepEqual (el.spectrum("container").offset(), {top: 10 + previewHeight, left: 10});
+  el.spectrum("hide");
+  el.spectrum("extendedOffset", {top: 10, left: 10});
+  el.spectrum("show");
+  deepEqual (el.spectrum("container").offset(), {top: 20 + previewHeight, left: 20});
+  el.spectrum("hide");
+  el.spectrum("extendedOffset", null);
+  el.spectrum("show");
+  deepEqual (el.spectrum("container").offset(), {top: 10 + previewHeight, left: 10});
+  el.spectrum("hide");
+  el.spectrum("destroy");
+
+  el2 = $("<input value='red' />");
+
+  el.replaceWith(el2);
+
+  el2.spectrum({
+    extendedOffset: { top: 100, left: 100 }
+  });
+
+  previewHeight = el2.next().outerHeight();
+
+  el2.spectrum("show");
+  deepEqual (el2.spectrum("container").offset(), {top: 110 + previewHeight, left: 110});
+  el2.spectrum("hide");
+
+  sandbox.remove();
+});

@@ -207,6 +207,8 @@ $("#picker").spectrum({
     replacerClassName: string,
     preferredFormat: string,
     maxSelectionSize: int,
+    offset: {top: int, left: int},
+    extendedOffset: {top: int, left: int},
     palette: [[string]],
     selectionPalette: [string]
 });
@@ -736,6 +738,49 @@ $("#preferredNone").spectrum({
                     <input type='text' name='preferredName' id='preferredName' value='orangered' />
                     <div class='alert alert-info'>None (Depends on input - try changing formats with the text box)</div>
                     <input type='text' name='preferredNone' id='preferredNone' value='orangered' />
+            </div>
+        </div>
+
+        <h3 id="options-customOffset">Offset</h3>
+        <div class='option-content'>
+            <div class='description'>
+                <p>You can set a custom offset for the palette container.</p>
+            </div>
+
+            <pre class='prettyprint'>
+var documentOffset = $("#customOffset").offset();
+
+$("#customOffset").spectrum({
+    offset: {
+      top: documentOffset.top,
+      left: documentOffset.left
+    }
+});
+            </pre>
+            <div class='example'>
+                    <div class='alert alert-info'>Custom Offset</div>
+                    <input type='text' name='customOffset' id='customOffset' value='orangered' />
+            </div>
+        </div>
+
+        <h3 id="options-extendedOffset">Extended Offset</h3>
+        <div class='option-content'>
+            <div class='description'>
+                <p>You can set an extended offset which will apply on top of spectrums own offset calculator.</p>
+            </div>
+
+            <pre class='prettyprint'>
+$("#extendedOffset").spectrum({
+    appendTo: 'parent',
+    extendedOffset: {
+      top: 20,
+      left: 0
+    }
+});
+            </pre>
+            <div class='example'>
+                    <div class='alert alert-info'>Extended Offset</div>
+                    <input type='text' name='extendedOffset' id='extendedOffset' value='orangered' />
             </div>
         </div>
 

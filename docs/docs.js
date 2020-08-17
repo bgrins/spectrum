@@ -457,6 +457,23 @@ $("#preferredNone").spectrum({
     palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 
+var documentOffset = $("#customOffset").offset();
+
+$("#customOffset").spectrum({
+    offset: {
+      top: documentOffset.top + 32,
+      left: documentOffset.left
+    }
+});
+
+$("#extendedOffset").spectrum({
+    appendTo: 'parent',
+    extendedOffset: {
+      top: 5,
+      left: 5
+    }
+});
+
 $("#triggerSet").spectrum({
     change: updateBorders
 });
