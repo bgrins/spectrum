@@ -250,6 +250,26 @@ $("#showPaletteOnly").spectrum({
     }
 });
 
+$("#showPaletteOnlyEmpty").spectrum({
+    color: 'blanchedalmond',
+    showPaletteOnly: true,
+    showPalette:true,
+    palette: [
+        ['black', 'white', 'blanchedalmond', 'violet'],
+        ['red', 'yellow', 'green', 'blue']
+    ],
+    change: function(c) {
+        var label = $("[data-label-for=" + this.id + "]");
+        label.text("Change called: " + (c ? c.toHexString() : "transparent"));
+    },
+    move: function(c) {
+        var label = $("[data-label-for=" + this.id + "]");
+        label.text("Move called: " + (c ? c.toHexString() : "transparent"));
+    },
+    allowEmpty: true
+});
+
+
 $("#hideAfterPaletteSelect").spectrum({
     showPaletteOnly: true,
     showPalette:true,

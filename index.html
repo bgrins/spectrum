@@ -350,13 +350,23 @@ $("#showPalette").spectrum({
             <pre class='prettyprint'>
 $("#showPaletteOnly").spectrum({
     showPaletteOnly: true,
-    showPalette:true,
+    showPalette: true,
     color: 'blanchedalmond',
     palette: [
         ['black', 'white', 'blanchedalmond',
         'rgb(255, 128, 0);', 'hsv 100 70 50'],
         ['red', 'yellow', 'green', 'blue', 'violet']
     ]
+});
+$("#showPaletteOnlyEmpty").spectrum({
+    showPaletteOnly: true,
+    showPalette: true,
+    color: 'blanchedalmond',
+    palette: [
+        ['black', 'white', 'blanchedalmond', 'violet'],
+        ['red', 'yellow', 'green', 'blue']
+    ],
+    allowEmpty: true
 });
             </pre>
             <div class='example'>
@@ -365,6 +375,10 @@ $("#showPaletteOnly").spectrum({
             </span>
                 <input type='text' name='showPaletteOnly' id='showPaletteOnly'  />
                 <em data-label-for="showPaletteOnly" class='em-label'></em>
+            </div>
+            <div class="example">
+                <input type="text" name="showPaletteOnlyEmpty" id="showPaletteOnlyEmpty">
+                <em data-label-for="showPaletteOnlyEmpty" class='em-label'></em>
             </div>
         </div>
 

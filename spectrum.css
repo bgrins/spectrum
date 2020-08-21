@@ -102,7 +102,8 @@ License: MIT
     border: solid 1px #333;
 }
 
-.sp-clear {
+.sp-clear,
+.sp-container .sp-clear-palette-only {
     display: none;
 }
 
@@ -118,6 +119,20 @@ License: MIT
     bottom:0;
     left:84%;
     height: 28px;
+}
+
+.sp-clear-enabled.sp-palette-only .sp-clear-palette-only {
+    display: block;
+    position: static;
+    height: 16px;
+    margin: 3px 2px;
+    width: 16px;
+
+    -webkit-box-shadow: inset 0 0 0 1px #ccc;
+    -moz-box-shadow: inset 0 0 0 1px #ccc;
+    -ms-box-shadow: inset 0 0 0 1px #ccc;
+    -o-box-shadow: inset 0 0 0 1px #ccc;
+    box-shadow: inset 0 0 0 1px #ccc;
 }
 
 /* Don't allow text selection */
