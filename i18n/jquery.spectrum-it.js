@@ -8,7 +8,9 @@
 		cancelText: "annulla",
 		chooseText: "scegli",
 		clearText: "Annulla selezione colore",
-		noColorSelectedText: "Nessun colore selezionato"
+		noColorSelectedText: "Nessun colore selezionato",
+		togglePaletteMoreText: "Più",
+		togglePaletteLessText: "Meno"
 	};
 
     $.extend($.fn.spectrum.defaults, localization);
