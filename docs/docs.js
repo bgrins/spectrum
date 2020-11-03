@@ -13,7 +13,7 @@ $("#full").spectrum({
     allowEmpty:true,
     color: "#ECC",
     showInput: true,
-    className: "full-spectrum",
+    containerClassName: "full-spectrum",
     showInitial: true,
     showPalette: true,
     showSelectionPalette: true,
@@ -201,13 +201,32 @@ $("#className").spectrum({
     className: 'awesome'
 });
 
+$("#replacerClassName").spectrum({
+    replacerClassName: 'awesome'
+});
+
+$("#containerClassName").spectrum({
+    containerClassName: 'awesome'
+});
+
 $("#showPalette").spectrum({
     showPalette: true,
     palette: [
         ['black', 'white', 'blanchedalmond'],
         ['rgb(255, 128, 0);', 'hsv 100 70 50', 'lightyellow']
     ],
-    change: updateBorders
+    hide: function(c) {
+        var label = $("[data-label-for=" + this.id + "]");
+        label.text("Hidden: " + c.toHexString());
+    },
+    change: function(c) {
+        var label = $("[data-label-for=" + this.id + "]");
+        label.text("Change called: " + c.toHexString());
+    },
+    move: function(c) {
+        var label = $("[data-label-for=" + this.id + "]");
+        label.text("Move called: " + c.toHexString());
+    }
 });
 
 var textPalette = ["rgb(255, 255, 255)", "rgb(204, 204, 204)", "rgb(192, 192, 192)", "rgb(153, 153, 153)", "rgb(102, 102, 102)", "rgb(51, 51, 51)", "rgb(0, 0, 0)", "rgb(255, 204, 204)", "rgb(255, 102, 102)", "rgb(255, 0, 0)", "rgb(204, 0, 0)", "rgb(153, 0, 0)", "rgb(102, 0, 0)", "rgb(51, 0, 0)", "rgb(255, 204, 153)", "rgb(255, 153, 102)", "rgb(255, 153, 0)", "rgb(255, 102, 0)", "rgb(204, 102, 0)", "rgb(153, 51, 0)", "rgb(102, 51, 0)", "rgb(255, 255, 153)", "rgb(255, 255, 102)", "rgb(255, 204, 102)", "rgb(255, 204, 51)", "rgb(204, 153, 51)", "rgb(153, 102, 51)", "rgb(102, 51, 51)", "rgb(255, 255, 204)", "rgb(255, 255, 51)", "rgb(255, 255, 0)", "rgb(255, 204, 0)", "rgb(153, 153, 0)", "rgb(102, 102, 0)", "rgb(51, 51, 0)", "rgb(153, 255, 153)", "rgb(102, 255, 153)", "rgb(51, 255, 51)", "rgb(51, 204, 0)", "rgb(0, 153, 0)", "rgb(0, 102, 0)", "rgb(0, 51, 0)", "rgb(153, 255, 255)", "rgb(51, 255, 255)", "rgb(102, 204, 204)", "rgb(0, 204, 204)", "rgb(51, 153, 153)", "rgb(51, 102, 102)", "rgb(0, 51, 51)", "rgb(204, 255, 255)", "rgb(102, 255, 255)", "rgb(51, 204, 255)", "rgb(51, 102, 255)", "rgb(51, 51, 255)", "rgb(0, 0, 153)", "rgb(0, 0, 102)", "rgb(204, 204, 255)", "rgb(153, 153, 255)", "rgb(102, 102, 204)", "rgb(102, 51, 255)", "rgb(102, 0, 204)", "rgb(51, 51, 153)", "rgb(51, 0, 153)", "rgb(255, 204, 255)", "rgb(255, 153, 255)", "rgb(204, 102, 204)", "rgb(204, 51, 204)", "rgb(153, 51, 153)", "rgb(102, 51, 102)", "rgb(51, 0, 51)"];
@@ -220,16 +239,61 @@ $("#showPaletteOnly").spectrum({
         ['black', 'white', 'blanchedalmond',
         'rgb(255, 128, 0);', 'hsv 100 70 50'],
         ['red', 'yellow', 'green', 'blue', 'violet']
+    ],
+    change: function(c) {
+        var label = $("[data-label-for=" + this.id + "]");
+        label.text("Change called: " + c.toHexString());
+    },
+    move: function(c) {
+        var label = $("[data-label-for=" + this.id + "]");
+        label.text("Move called: " + c.toHexString());
+    }
+});
+
+$("#hideAfterPaletteSelect").spectrum({
+    showPaletteOnly: true,
+    showPalette:true,
+    hideAfterPaletteSelect:true,
+    color: 'blanchedalmond',
+    palette: [
+        ['black', 'white', 'blanchedalmond',
+        'rgb(255, 128, 0);', 'hsv 100 70 50'],
+        ['red', 'yellow', 'green', 'blue', 'violet']
+    ],
+    change: function(c) {
+        var label = $("[data-label-for=" + this.id + "]");
+        label.text("Change called: " + c.toHexString());
+    },
+    move: function(c) {
+        var label = $("[data-label-for=" + this.id + "]");
+        label.text("Move called: " + c.toHexString());
+    }
+});
+
+$("#togglePaletteOnly").spectrum({
+    color: 'blanchedalmond',
+    showPaletteOnly: true,
+    togglePaletteOnly: true,
+    showPalette:true,
+    palette: [
+        ["#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"],
+        ["#f00","#f90","#ff0","#0f0","#0ff","#00f","#90f","#f0f"],
+        ["#f4cccc","#fce5cd","#fff2cc","#d9ead3","#d0e0e3","#cfe2f3","#d9d2e9","#ead1dc"],
+        ["#ea9999","#f9cb9c","#ffe599","#b6d7a8","#a2c4c9","#9fc5e8","#b4a7d6","#d5a6bd"],
+        ["#e06666","#f6b26b","#ffd966","#93c47d","#76a5af","#6fa8dc","#8e7cc3","#c27ba0"],
+        ["#c00","#e69138","#f1c232","#6aa84f","#45818e","#3d85c6","#674ea7","#a64d79"],
+        ["#900","#b45f06","#bf9000","#38761d","#134f5c","#0b5394","#351c75","#741b47"],
+        ["#600","#783f04","#7f6000","#274e13","#0c343d","#073763","#20124d","#4c1130"]
     ]
 });
 
 $("#clickoutFiresChange").spectrum({
-    clickoutFiresChange: true,
     change: updateBorders
 });
 
 $("#clickoutDoesntFireChange").spectrum({
-    change: updateBorders
+    change: updateBorders,
+    clickoutFiresChange: false
 });
 
 $("#showInitial").spectrum({
@@ -249,14 +313,14 @@ $("#showInputInitialClear").spectrum({
 
 $("#changeOnMove").spectrum({
     move: function(c) {
-        var label = $("#changeOnMoveLabel");
+        var label = $("[data-label-for=" + this.id + "]");
         label.text("Move called: " + c.toHexString());
     }
 });
 $("#changeOnMoveNo").spectrum({
     showInput: true,
     change: function(c) {
-        var label = $("#changeOnMoveNoLabel");
+        var label = $("[data-label-for=" + this.id + "]");
         label.text("Change called: " + c.toHexString());
     }
 });
@@ -342,29 +406,55 @@ $("#showSelectionPaletteStorage2").spectrum({
     palette: [ ]
 });
 
+$("#selectionPalette").spectrum({
+    showPalette: true,
+    palette: [ ],
+    showSelectionPalette: true, // true by default
+    selectionPalette: ["red", "green", "blue"]
+});
+
+$("#maxSelectionSize").spectrum({
+    showPalette: true,
+    palette: [ ],
+    showSelectionPalette: true, // true by default
+    selectionPalette: ["red", "green", "blue"],
+    maxSelectionSize: 2
+});
 
 $("#preferredHex").spectrum({
     preferredFormat: "hex",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
-$("#preferredHex6").spectrum({
-    preferredFormat: "hex6",
-    showInput: true
+$("#preferredHex3").spectrum({
+    preferredFormat: "hex3",
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredHsl").spectrum({
     preferredFormat: "hsl",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredRgb").spectrum({
     preferredFormat: "rgb",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredName").spectrum({
     preferredFormat: "name",
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 $("#preferredNone").spectrum({
-    showInput: true
+    showInput: true,
+    showPalette: true,
+    palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]]
 });
 
 $("#triggerSet").spectrum({

@@ -6,7 +6,11 @@
 
     var localization = $.spectrum.localization["de"] = {
         cancelText: "Abbrechen",
-        chooseText: "Wählen"
+        chooseText: "Wählen",
+        clearText: "Farbauswahl zurücksetzen",
+        noColorSelectedText: "Keine Farbe ausgewählt",
+        togglePaletteMoreText: "Mehr",
+        togglePaletteLessText: "Weniger"
     };
 
     $.extend($.fn.spectrum.defaults, localization);

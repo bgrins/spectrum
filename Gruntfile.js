@@ -5,25 +5,40 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     qunit: {
-      all: ['test/index.html']
+      all: {
+        options: {
+          urls: ['test/index.html', 'test/loaders.html'],
+
+        },
+
+      }
     },
 
     jshint: {
       options: {
-        browser: true,
         sub: true,
-
+        strict: true,
+        newcap: false,
         globals: {
           jQuery: true
         }
       },
+
+      with_overrides: {
+        options: {
+          strict: false
+        },
+        files: {
+          src: ['i18n/*.js', 'test/tests.js']
+        }
+      },
+
       all: ['spectrum.js']
     },
 
 
     uglify: {
       options: {
-        mangle: false
       },
       dist: {
         files: {
