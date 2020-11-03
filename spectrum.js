@@ -626,6 +626,9 @@
 
             hideAll();
             visible = true;
+           
+            //this bind is for the clickoutFiresChange if you click on iframe.
+            $("body iframe").contents().on("click.spectrum", clickout);
 
             $(doc).on("keydown.spectrum", onkeydown);
             $(doc).on("click.spectrum", clickout);
