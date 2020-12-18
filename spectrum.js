@@ -130,14 +130,34 @@
         ].join("");
     })();
 
+    function getCSSForThumb (tiny, color) {
+        var thumbColor = tinycolor("#000");
+        if (tiny.getAlpha() > 0.5) {
+            thumbColor = tinycolor.mostReadable(tiny, ["#fff", "#000"]);
+        }
+
+        var c = "sp-thumb-el ";
+
+        if (thumbColor.isDark()) {
+            c += "sp-thumb-dark";
+        } else {
+            c += "sp-thumb-light";
+        }
+
+        if (tinycolor.equals(color, tiny)) {
+            c += " sp-thumb-active";
+        }
+
+        return c;
+    }
+
     function paletteTemplate (p, color, className, opts) {
         var html = [];
         for (var i = 0; i < p.length; i++) {
             var current = p[i];
             if(current) {
                 var tiny = tinycolor(current);
-                var c = tiny.toHsl().l < 0.5 ? "sp-thumb-el sp-thumb-dark" : "sp-thumb-el sp-thumb-light";
-                c += (tinycolor.equals(color, current)) ? " sp-thumb-active" : "";
+                var c = getCSSForThumb(tiny, color);
                 var formattedString = tiny.toString(opts.preferredFormat || "rgb");
                 var swatchStyle = rgbaSupport ? ("background-color:" + tiny.toRgbString()) : "filter:" + tiny.toFilter();
                 html.push('<span title="' + formattedString + '" data-color="' + tiny.toRgbString() + '" class="' + c + '"><span class="sp-thumb-inner" style="' + swatchStyle + ';"></span></span>');
