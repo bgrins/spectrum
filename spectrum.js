@@ -646,6 +646,7 @@
         function onkeydown(e) {
             // Close on ESC
             if (e.keyCode === 27) {
+                revert();
                 hide();
             }
         }
