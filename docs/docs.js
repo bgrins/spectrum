@@ -61,7 +61,7 @@ $("#hideButtons").spectrum({
 
 
 var isDisabled = true;
-$("#toggle-disabled").click(function() {
+$("#toggle-disabled").on("click", function() {
     if (isDisabled) {
         $("#disabled").spectrum("enable");
     }
@@ -464,12 +464,12 @@ $("#triggerSet").spectrum({
 // Show the original input to demonstrate the value changing when calling `set`
 $("#triggerSet").show();
 
-$("#btnEnterAColor").click(function() {
+$("#btnEnterAColor").on("click", function() {
     $("#triggerSet").spectrum("set", $("#enterAColor").val());
 });
 
 $("#toggle").spectrum();
-$("#btn-toggle").click(function() {
+$("#btn-toggle").on("click", function() {
     $("#toggle").spectrum("toggle");
     return false;
 });

@@ -61,14 +61,14 @@ $(function() {
         ]
     });
 
-    $("#size").change(function() {
+    $("#size").on("change", function() {
         var size = Math.min(500, Math.max(50, $(this).val()));
         $(".sp-picker-container").width(size);
 
         colorpickerInput.spectrum("reflow");
     });
 
-    $("#huesize").change(function() {
+    $("#huesize").on("change", function() {
         var size = Math.min(80, Math.max(5, $(this).val()));
 
         $(".sp-hue").css("left", (103 - size) + "%");

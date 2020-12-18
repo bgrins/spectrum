@@ -759,10 +759,10 @@ $("#picker").spectrum({
 });
 
 // Alternatively, they can be added as an event listener:
-$("#picker").on('move.spectrum', function(e, tinycolor) { });
-$("#picker").on('show.spectrum', function(e, tinycolor) { });
-$("#picker").on('hide.spectrum', function(e, tinycolor) { });
-$("#picker").on('beforeShow.spectrum', function(e, tinycolor) { });
+$("#picker").on("move.spectrum", function(e, tinycolor) { });
+$("#picker").on("show.spectrum", function(e, tinycolor) { });
+$("#picker").on("hide.spectrum", function(e, tinycolor) { });
+$("#picker").on("beforeShow.spectrum", function(e, tinycolor) { });
 </pre>
 
         <h3 id="events-change">change</h3>
@@ -965,7 +965,7 @@ $("#picker").spectrum("option", optionName, newOptionValue);
             </div>
 
             <pre class='prettyprint'>
-$("#btn-toggle").click(function() {
+$("#btn-toggle").on("click", function() {
     $("#toggle").spectrum("toggle");
     return false;
 });
@@ -1011,7 +1011,7 @@ $("#triggerSet").spectrum();
 // Show the original input to demonstrate the value changing when calling `set`
 $("#triggerSet").show();
 
-$("#btnEnterAColor").click(function() {
+$("#btnEnterAColor").on("click", function() {
     $("#triggerSet").spectrum("set", $("#enterAColor").val());
 });
 &lt;/script&gt;
