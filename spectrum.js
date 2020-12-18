@@ -899,11 +899,16 @@
 
             if (!flat) {
                 container.css("position", "absolute");
+                var coords = getOffset(container, offsetElement);
                 if (opts.offset) {
-                    container.offset(opts.offset);
-                } else {
-                    container.offset(getOffset(container, offsetElement));
+                    if (opts.offset.hasOwnProperty('top')) {
+                        coords.top += opts.offset.top;
+                    }
+                    if (opts.offset.hasOwnProperty('left')) {
+                        coords.left += opts.offset.left;
+                    }
                 }
+                container.offset(coords);
             }
 
             updateHelperLocations();
