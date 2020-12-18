@@ -270,6 +270,8 @@
             container.toggleClass("sp-initial-disabled", !opts.showInitial);
             container.addClass(opts.className).addClass(opts.containerClassName);
 
+            replacer.addClass(opts.replacerClassName);
+
             reflow();
         }
 
