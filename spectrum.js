@@ -302,6 +302,10 @@
                 appendTo.append(container);
             }
 
+            if (isInput) {
+                boundElement.bind("input", function () { set($(this).val()); });
+            }
+
             updateSelectionPaletteFromStorage();
 
             offsetElement.on("click.spectrum touchstart.spectrum", function (e) {
