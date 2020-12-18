@@ -306,7 +306,7 @@
 
             offsetElement.on("click.spectrum touchstart.spectrum", function (e) {
                 if (!disabled) {
-                    toggle();
+                    toggle(e);
                 }
 
                 e.stopPropagation();
@@ -601,16 +601,16 @@
             }
         }
 
-        function toggle() {
+        function toggle(e) {
             if (visible) {
                 hide();
             }
             else {
-                show();
+                show(e);
             }
         }
 
-        function show() {
+        function show(e) {
             var event = $.Event('beforeShow.spectrum');
 
             if (visible) {
@@ -618,7 +618,7 @@
                 return;
             }
 
-            boundElement.trigger(event, [ get() ]);
+            boundElement.trigger(event, [ get(), e ]);
 
             if (callbacks.beforeShow(get()) === false || event.isDefaultPrevented()) {
                 return;
@@ -640,7 +640,7 @@
 
             drawInitial();
             callbacks.show(colorOnShow);
-            boundElement.trigger('show.spectrum', [ colorOnShow ]);
+            boundElement.trigger('show.spectrum', [ colorOnShow, e ]);
         }
 
         function onkeydown(e) {
