@@ -330,7 +330,7 @@
             });
             textInput.on("keydown", function (e) { if (e.keyCode == 13) { setFromTextInput(); } });
 
-            cancelButton.text(opts.cancelText);
+            cancelButton.html(opts.cancelText);
             cancelButton.on("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
@@ -351,7 +351,7 @@
                 }
             });
 
-            chooseButton.text(opts.chooseText);
+            chooseButton.html(opts.chooseText);
             chooseButton.on("click.spectrum", function (e) {
                 e.stopPropagation();
                 e.preventDefault();
