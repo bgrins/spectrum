@@ -8,7 +8,7 @@
     var localization = $.spectrum.localization["cs"] = {
         cancelText: "zrušit",
         chooseText: "vybrat",
-        clearText: "Resetovat výměr barev",
+        clearText: "Resetovat výběr barev",
         noColorSelectedText: "Žádná barva nebyla vybrána",
         togglePaletteMoreText: "více",
         togglePaletteLessText: "méně"
