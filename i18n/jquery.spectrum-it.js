@@ -5,11 +5,13 @@
 (function ( $ ) {
 
     var localization = $.spectrum.localization["it"] = {
-		cancelText: "annulla",
-		chooseText: "scegli",
-		clearText: "Annulla selezione colore",
-		noColorSelectedText: "Nessun colore selezionato"
-	};
+        cancelText: "Annulla",
+        chooseText: "Scegli",
+        clearText: "Annulla colore selezionato",
+        noColorSelectedText: "Nessun colore selezionato",
+        togglePaletteMoreText: "Altro",
+        togglePaletteLessText: "Meno"
+    };
 
     $.extend($.fn.spectrum.defaults, localization);
 
