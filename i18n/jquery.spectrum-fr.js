@@ -7,7 +7,7 @@
     var localization = $.spectrum.localization["fr"] = {
         cancelText: "Annuler",
         chooseText: "Valider",
-        clearText: "Effacer couleur sélectionnée",
+        clearText: "Effacer la couleur sélectionnée",
         noColorSelectedText: "Aucune couleur sélectionnée",
         togglePaletteMoreText: "Plus",
         togglePaletteLessText: "Moins"
