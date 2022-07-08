@@ -42,7 +42,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'build/spectrum-min.js': ['spectrum.js']
+          'build/spectrum.min.js': ['spectrum.js']
         }
       }
     }

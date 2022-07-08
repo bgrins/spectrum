@@ -58,7 +58,8 @@
         palette: [["#ffffff", "#000000", "#ff0000", "#ff8000", "#ffff00", "#008000", "#0000ff", "#4b0082", "#9400d3"]],
         selectionPalette: [],
         disabled: false,
-        offset: null
+        offset: null,
+        keepAlpha: false
     },
     spectrums = [],
     IE = !!/msie/i.exec( window.navigator.userAgent ),
@@ -437,7 +438,7 @@
             }, dragStart, dragStop);
 
             if (!!initialColor) {
-                set(initialColor);
+                set(initialColor, false, true);
 
                 // In case color was black - update the preview UI and set the format
                 // since the set function will not run (default color is black).
@@ -688,7 +689,7 @@
             updateOriginalInput(true);
         }
 
-        function set(color, ignoreFormatChange) {
+        function set(color, ignoreFormatChange, initialColor) {
             if (tinycolor.equals(color, get())) {
                 // Update UI just in case a validation error needs
                 // to be cleared.
@@ -707,7 +708,12 @@
                 currentHue = (newHsv.h % 360) / 360;
                 currentSaturation = newHsv.s;
                 currentValue = newHsv.v;
-                currentAlpha = newHsv.a;
+
+                if(initialColor){
+                    currentAlpha = newHsv.a;
+                }else if(!opts.keepAlpha) {
+                    currentAlpha = newHsv.a;
+                }
             }
             updateUI();
 
