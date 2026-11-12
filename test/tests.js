@@ -10,6 +10,23 @@ $.fn.spectrum.inputTypeColorSupport = function () {
 
 QUnit.module("Initialization");
 
+QUnit.test("Palette selection respects a disabled input", function (assert) {
+  var input = $("<input value='#ff0000' />").appendTo("body").spectrum({
+    showPaletteOnly: true,
+    palette: [["#ff0000", "#0000ff"]],
+    preferredFormat: "hex"
+  });
+
+  input.spectrum("show");
+  input.prop("disabled", true);
+  input.spectrum("container").find('.sp-thumb-el[data-color="rgb(0, 0, 255)"]').trigger("click");
+
+  assert.equal(input.val(), "#ff0000", "The input preserves its color");
+  assert.equal(input.spectrum("get").toHexString(), "#ff0000", "The picker preserves its color");
+
+  input.spectrum("destroy").remove();
+});
+
 QUnit.test("jQuery Plugin Can Be Created", function (assert) {
   var el = $("<input id='spec' />").spectrum();
 

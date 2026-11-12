@@ -455,6 +455,10 @@
             }
 
             function paletteElementClick(e) {
+                if (disabled || boundElement.is(":disabled")) {
+                    return false;
+                }
+
                 if (e.data && e.data.ignore) {
                     set($(e.target).closest(".sp-thumb-el").data("color"));
                     move();
